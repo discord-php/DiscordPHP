@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,9 +17,9 @@ namespace Discord\Parts;
 use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
+use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -43,6 +44,20 @@ trait PartTrait
      */
     protected function afterConstruct(): void
     {
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return AbstractRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository()
+    {
+        throw new \Exception('This part does not have an originating repository.');
     }
 
     /**
@@ -379,6 +394,7 @@ trait PartTrait
             if (array_key_exists($key, $this->attributes)) {
                 $attr[$key] = $value;
             } elseif (is_int($key) && array_key_exists($value, $this->attributes)) {
+                // The key is an index, not a key-value pair, and needs to be stripped.
                 $attr[$value] = $this->attributes[$value];
             }
         }
@@ -483,9 +499,10 @@ trait PartTrait
      *
      * @since 10.19.0
      */
-    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
+    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id', ?array $extraData = []): ExCollectionInterface
     {
-        $collection = Collection::for($class, $discrim);
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->getCollectionClass()::for($class, $discrim);
 
         if (empty($this->attributes[$key])) {
             return $collection;
@@ -495,7 +512,7 @@ trait PartTrait
             $collection->pushItem(
                 $part instanceof $class
                     ? $part
-                    : $part = $this->createOf($class, $part)
+                    : $part = $this->createOf($class, ((array) $part) + $extraData)
             );
         }
 
@@ -510,9 +527,10 @@ trait PartTrait
      *
      * @return ExCollectionInterface
      */
-    protected function attributeTypedCollectionHelper(string $class, string $key): ExCollectionInterface
+    protected function attributeTypedCollectionHelper(string $class, $key): ExCollectionInterface
     {
-        $collection = Collection::for($class);
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->getCollectionClass()::for($class);
 
         if (empty($this->attributes[$key])) {
             return $collection;

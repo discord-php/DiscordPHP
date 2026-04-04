@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,6 +17,7 @@ namespace Discord\Parts\Guild;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\SoundRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -28,7 +30,7 @@ use function React\Promise\reject;
  * There is a set of default sounds available to all users. Soundboard sounds can also be created in a guild; users will be able to use the sounds in the guild, and Nitro subscribers can use them in all guilds.
  * Soundboard sounds in a set of guilds can be retrieved over the Gateway using Request Soundboard Sounds.
  *
- * @link https://discord.com/developers/docs/resources/soundboard
+ * @link https://docs.discord.com/developers/resources/soundboard
  *
  * @since 10.0.0
  *
@@ -113,7 +115,7 @@ class Sound extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/soundboard#modify-guild-soundboard-sound
+     * @link https://docs.discord.com/developers/resources/soundboard#modify-guild-soundboard-sound
      */
     public function getUpdatableAttributes(): array
     {
@@ -123,6 +125,27 @@ class Sound extends Part implements Stringable
             'emoji_id' => $this->emoji_id,
             'emoji_name' => $this->emoji_name,
         ]);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return SoundRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): SoundRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->sounds;
     }
 
     /**

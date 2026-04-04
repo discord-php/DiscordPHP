@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,8 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use JsonSerializable;
 
 /**
@@ -22,14 +21,14 @@ use JsonSerializable;
  * This will always validate against the message and components to avoid phantom pings
  * (e.g. to ping everyone, you must still have @everyone in the message), and check against user/bot permissions.
  *
- * @link https://discord.com/developers/docs/resources/message#allowed-mentions-object
+ * @link https://docs.discord.com/developers/resources/message#allowed-mentions-object
  *
  * @since 10.10.1
  *
- * @property ExCollectionInterface $parse        An array of allowed mention types to parse from the content.
- * @property ExCollectionInterface $roles        Array of role_ids to mention (Max size of 100).
- * @property ExCollectionInterface $users        Array of user_ids to mention (Max size of 100).
- * @property bool                  $replied_user For replies, whether to mention the author of the message being replied to (default false).
+ * @property ?string[]|null $parse        An array of allowed mention types to parse from the content.
+ * @property ?string[]|null $roles        Array of role_ids to mention (Max size of 100).
+ * @property ?string[]|null $users        Array of user_ids to mention (Max size of 100).
+ * @property bool           $replied_user For replies, whether to mention the author of the message being replied to (default false).
  */
 class AllowedMentions implements JsonSerializable
 {
@@ -43,19 +42,19 @@ class AllowedMentions implements JsonSerializable
     /**
      * An array of allowed mention types to parse from the content.
      *
-     * @var ExCollectionInterface|null
+     * @var string[]|null
      */
     protected $parse;
     /**
      * 	Array of role_ids to mention (Max size of 100).
      *
-     * @var ExCollectionInterface|null
+     * @var array|null
      */
     protected $roles;
     /**
      * Array of user_ids to mention (Max size of 100).
      *
-     * @var ExCollectionInterface|null
+     * @var array|null
      */
     protected $users;
     /**
@@ -89,14 +88,14 @@ class AllowedMentions implements JsonSerializable
     }
 
     /**
-     * Sets the list of current allowed mention types to a new, empty ExCollectionInterface instance.
+     * Sets the list of current allowed mention types to a new, empty array.
      * This effectively disallows all mentions on the message.
      *
      * @return self
      */
     public function disallowAllMentions(): self
     {
-        $this->parse = new Collection();
+        $this->parse = [];
         $this->clearRoles();
         $this->clearUsers();
 
@@ -106,7 +105,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets the list of allowed mentioned types.
      *
-     * @param ExCollectionInterface|string[]|null $items
+     * @param string[]|null $items
      *
      * @throws \InvalidArgumentException Allowed mention type must be one of: roles, users, everyone
      *
@@ -146,14 +145,16 @@ class AllowedMentions implements JsonSerializable
         }
 
         if (! isset($this->parse)) {
-            $this->parse = new Collection();
+            $this->parse = [];
         }
 
         foreach ($items as $item) {
-            if (! in_array($item, $this->parse->values(), true)) {
-                $this->parse->pushItem($item);
+            if (! in_array($item, $this->parse, true)) {
+                $this->parse[] = $item;
             }
         }
+
+        $this->parse = array_unique($this->parse);
 
         return $this;
     }
@@ -167,8 +168,8 @@ class AllowedMentions implements JsonSerializable
     public function removeParse(...$parse): self
     {
         foreach ($parse as $item) {
-            if (isset($this->parse) && ($idx = $this->parse->search($item)) !== false) {
-                $this->parse->splice($idx, 1);
+            if (isset($this->parse) && ($idx = array_search($item, $this->parse, true)) !== false) {
+                array_splice($this->parse, $idx, 1);
             }
         }
 
@@ -190,9 +191,9 @@ class AllowedMentions implements JsonSerializable
     /**
      * Retrieves the list of allowed mentioned types.
      *
-     * @return ?ExCollectionInterface
+     * @return string[]|null
      */
-    public function getParse(): ?ExCollectionInterface
+    public function getParse(): ?array
     {
         return $this->parse ?? null;
     }
@@ -200,7 +201,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets the list of allowed mentioned roles.
      *
-     * @param ExCollectionInterface|string[]|null $items
+     * @param string[]|null $items
      *
      * @throws \InvalidArgumentException Allowed mention type must be one of: roles, users, everyone
      *
@@ -213,6 +214,8 @@ class AllowedMentions implements JsonSerializable
         foreach ($items as $item) {
             $this->addRole($item);
         }
+
+        $this->roles = array_unique($this->roles);
 
         return $this;
     }
@@ -236,14 +239,16 @@ class AllowedMentions implements JsonSerializable
         }
 
         if (! isset($this->roles)) {
-            $this->roles = new Collection();
+            $this->roles = [];
         }
 
         foreach ($items as $item) {
-            if (! in_array($item, $this->roles->values(), true)) {
-                $this->roles->pushItem($item);
+            if (! in_array($item, $this->roles, true)) {
+                $this->roles[] = $item;
             }
         }
+
+        $this->roles = array_unique($this->roles);
 
         return $this;
     }
@@ -257,8 +262,8 @@ class AllowedMentions implements JsonSerializable
     public function removeRoles(...$roles): self
     {
         foreach ($roles as $item) {
-            if (isset($this->roles) && ($idx = $this->roles->search($item)) !== false) {
-                $this->roles->splice($idx, 1);
+            if (isset($this->roles) && ($idx = array_search($item, $this->roles, true)) !== false) {
+                array_splice($this->roles, $idx, 1);
             }
         }
 
@@ -280,9 +285,9 @@ class AllowedMentions implements JsonSerializable
     /**
      * Retrieves the list of allowed mentioned roles.
      *
-     * @return ?ExCollectionInterface
+     * @return string[]|null
      */
-    public function getRoles(): ?ExCollectionInterface
+    public function getRoles(): ?array
     {
         return $this->roles ?? null;
     }
@@ -290,7 +295,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets the list of allowed mentioned users.
      *
-     * @param ExCollectionInterface|string[]|null $items
+     * @param string[]|null $items
      *
      * @throws \InvalidArgumentException Allowed mention type must be one of: users, users, everyone
      *
@@ -326,14 +331,16 @@ class AllowedMentions implements JsonSerializable
         }
 
         if (! isset($this->users)) {
-            $this->users = new Collection();
+            $this->users = [];
         }
 
         foreach ($items as $item) {
-            if (! in_array($item, $this->users->values(), true)) {
-                $this->users->pushItem($item);
+            if (! in_array($item, $this->users, true)) {
+                $this->users[] = $item;
             }
         }
+
+        $this->users = array_unique($this->users);
 
         return $this;
     }
@@ -347,8 +354,8 @@ class AllowedMentions implements JsonSerializable
     public function removeUser(...$users): self
     {
         foreach ($users as $item) {
-            if (isset($this->users) && ($idx = $this->users->search($item)) !== false) {
-                $this->users->splice($idx, 1);
+            if (isset($this->users) && ($idx = array_search($item, $this->users, true)) !== false) {
+                array_splice($this->users, $idx, 1);
             }
         }
 
@@ -370,9 +377,9 @@ class AllowedMentions implements JsonSerializable
     /**
      * Retrieves the list of allowed mentioned users.
      *
-     * @return ?ExCollectionInterface
+     * @return string[]|null
      */
-    public function getUsers(): ?ExCollectionInterface
+    public function getUsers(): ?array
     {
         return $this->users ?? null;
     }
@@ -398,23 +405,23 @@ class AllowedMentions implements JsonSerializable
         $data = [];
 
         // Remove invalid configurations
-        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse->values(), true)) {
+        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse, true)) {
             unset($this->roles);
         }
-        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse->values(), true)) {
+        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse, true)) {
             unset($this->users);
         }
 
         if (isset($this->parse)) {
-            $data['parse'] = $this->parse->values();
+            $data['parse'] = $this->parse;
         }
 
         if (isset($this->roles)) {
-            $data['roles'] = $this->roles->values();
+            $data['roles'] = $this->roles;
         }
 
         if (isset($this->users)) {
-            $data['users'] = $this->users->values();
+            $data['users'] = $this->users;
         }
 
         if (isset($this->replied_user)) {
@@ -422,10 +429,10 @@ class AllowedMentions implements JsonSerializable
         }
 
         // Remove invalid configurations
-        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse->values(), true)) {
+        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse, true)) {
             $this->removeParse(self::TYPE_ROLE);
         }
-        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse->values(), true)) {
+        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse, true)) {
             $this->removeParse(self::TYPE_USER);
         }
 

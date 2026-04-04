@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,7 +16,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\MessageInteractionMetadata;
@@ -40,7 +40,9 @@ use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\ReactionRepository;
+use Discord\Repository\Channel\WebhookMessageRepository;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -51,7 +53,7 @@ use function React\Promise\reject;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @link https://discord.com/developers/docs/resources/message#message-object
+ * @link https://docs.discord.com/developers/resources/message#message-object
  *
  * @since 2.0.0
  *
@@ -386,7 +388,8 @@ class Message extends Part
      */
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Channel::class);
+        /** @var ExCollectionInterface<Channel> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -536,7 +539,8 @@ class Message extends Part
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['mention_roles'])) {
             return $roles;
@@ -565,7 +569,8 @@ class Message extends Part
      */
     protected function getMentionsAttribute(): ExCollectionInterface
     {
-        $users = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $users */
+        $users = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
             $users->pushItem($this->discord->users->get('id', $mention->id) ?? $this->factory->part(User::class, (array) $mention, true));
@@ -852,7 +857,7 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-from-message
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-from-message
      *
      * @param array       $options                          Thread params.
      * @param string      $options['name']                  The name of the thread.
@@ -940,7 +945,7 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#create-message
+     * @link https://docs.discord.com/developers/resources/message#create-message
      *
      * @param string|MessageBuilder $message The reply message.
      *
@@ -962,7 +967,7 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels (publish announcement).
      *
-     * @link https://discord.com/developers/docs/resources/message#crosspost-message
+     * @link https://docs.discord.com/developers/resources/message#crosspost-message
      *
      * @throws \RuntimeException      Message has already been crossposted.
      * @throws NoPermissionsException Missing permission:
@@ -1044,7 +1049,7 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#create-reaction
+     * @link https://docs.discord.com/developers/resources/message#create-reaction
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
@@ -1073,8 +1078,8 @@ class Message extends Part
      *
      * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
      *
-     * @link https://discord.com/developers/docs/resources/message#delete-own-reaction
-     * @link https://discord.com/developers/docs/resources/message#delete-user-reaction
+     * @link https://docs.discord.com/developers/resources/message#delete-own-reaction
+     * @link https://docs.discord.com/developers/resources/message#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -1223,7 +1228,7 @@ class Message extends Part
     /**
      * Edits the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#edit-message
+     * @link https://docs.discord.com/developers/resources/message#edit-message
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
@@ -1252,7 +1257,7 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @link https://discord.com/developers/docs/resources/message#delete-message
+     * @link https://docs.discord.com/developers/resources/message#delete-message
      *
      * @param string|null $reason Reason for Audit Log (if supported).
      *
@@ -1295,12 +1300,12 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<ExCollectionInterface<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new Collection([], null, null);
+        $reactions = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([
@@ -1385,7 +1390,7 @@ class Message extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/message#edit-message-jsonform-params
+     * @link https://docs.discord.com/developers/resources/message#edit-message-jsonform-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -1393,6 +1398,28 @@ class Message extends Part
             'content' => $this->content,
             'flags' => $this->flags,
         ];
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MessageRepository|WebhookMessageRepository The repository.
+     */
+    public function getRepository(): MessageRepository|WebhookMessageRepository
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+        if (isset($this->attributes['webhook_id'])) {
+            $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id']);
+            
+            return $webhook->messages;
+        }
+
+        return $channel->messages;
     }
 
     /**
@@ -1417,15 +1444,12 @@ class Message extends Part
             }
 
             if (isset($this->attributes['webhook_id'])) {
-                if (! $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
+                if (! $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
                     return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
                 }
-
-                return $webhook->messages->save($this, $reason);
             }
 
-            /** @var Channel $channel */
-            return $channel->messages->save($this, $reason);
+            return $this->getRepository()->save($this, $reason);
         }
 
         return parent::save();

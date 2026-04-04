@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,6 +19,26 @@ final class DiscordTest extends TestCase
 {
     public function testCheckEnvVariablesPresent()
     {
+        if (file_exists(__DIR__.'/../.env')) {
+            $envFile = file_get_contents(__DIR__.'/../.env');
+            $lines = explode("\n", $envFile);
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line) || strpos($line, '#') === 0) {
+                    continue;
+                }
+                if (strpos($line, '=') === false) {
+                    continue;
+                }
+                [$key, $value] = explode('=', $line, 2);
+                $key = trim($key);
+                $value = trim($value);
+                if (! empty($key)) {
+                    putenv("$key=$value");
+                }
+            }
+        }
+
         $this->assertNotFalse(getenv('DISCORD_TOKEN'), 'Discord token is missing');
         $this->assertNotFalse(getenv('TEST_CHANNEL'), 'Test channel ID is missing');
         $this->assertNotFalse(getenv('TEST_CHANNEL_NAME'), 'Test channel name is missing');

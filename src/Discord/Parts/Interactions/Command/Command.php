@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,16 +14,19 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
+use Discord\Builders\CommandAttributes;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
 /**
  * Represents a command registered on the Discord servers.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-structure
  *
  * @since 7.0.0
  *
@@ -34,7 +38,7 @@ use Stringable;
  */
 class Command extends Part implements Stringable
 {
-    use \Discord\Builders\CommandAttributes;
+    use CommandAttributes;
 
     /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
@@ -93,7 +97,7 @@ class Command extends Part implements Stringable
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('options', Option::class);
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**
@@ -113,8 +117,8 @@ class Command extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command-json-params
-     * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#create-global-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#create-guild-application-command-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -132,10 +136,11 @@ class Command extends Part implements Stringable
             'type' => $this->type,
             'nsfw' => $this->nsfw,
             'integration_types',
-            'contexts',
             'handler' => $this->handler,
 
-            'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
+            // Guild command might omit these fillables
+            'dm_permission' => $this->dm_permission,
+            'contexts',
         ]);
 
         return $attr;
@@ -144,7 +149,7 @@ class Command extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#edit-global-application-command-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -158,13 +163,13 @@ class Command extends Part implements Stringable
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,
             'integration_types',
-            'contexts',
             'handler' => $this->handler,
         ]);
 
-        if (! isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             $attr += $this->makeOptionalAttributes([
                 'dm_permission' => $this->dm_permission,
+                'contexts',
             ]);
         }
 
@@ -172,18 +177,32 @@ class Command extends Part implements Stringable
     }
 
     /**
-     * @inheritDoc
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return GuildCommandRepository|GlobalCommandRepository The repository.
      */
-    public function save(?string $reason = null): PromiseInterface
+    public function getRepository(): GuildCommandRepository|GlobalCommandRepository
     {
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            return $guild->commands->save($this, $reason);
+            return $guild->commands;
         }
 
-        return $this->discord->commands->save($this, $reason);
+        return $this->discord->application->commands;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**
@@ -196,6 +215,23 @@ class Command extends Part implements Stringable
             'application_id' => $this->application_id,
             'command_id' => $this->id,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
     }
 
     /**

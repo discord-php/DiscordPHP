@@ -1,0 +1,35 @@
+# Welcome to Mago!
+# For full documentation, see https://mago.carthage.software/tools/overview
+php-version = "8.1.2"
+
+[source]
+workspace = "."
+paths = ["src/Discord"]
+includes = ["vendor"]
+excludes = []
+
+[formatter]
+preset = "pint"
+
+[linter]
+integrations = ["symfony", "laravel", "pest"]
+
+[linter.rules]
+ambiguous-function-call = { enabled = false }
+literal-named-argument = { enabled = false }
+halstead = { effort-threshold = 7000 }
+
+[analyzer]
+plugins = []
+find-unused-definitions = true
+find-unused-expressions = false
+analyze-dead-code = true
+memoize-properties = true
+allow-possibly-undefined-array-keys = true
+check-throws = true
+check-missing-override = true
+find-unused-parameters = true
+strict-list-index-checks = false
+no-boolean-literal-comparison = false
+check-missing-type-hints = true
+register-super-globals = true

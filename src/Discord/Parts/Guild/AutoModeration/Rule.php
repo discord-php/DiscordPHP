@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AutoModeration;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -21,6 +21,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\AutoModerationRuleRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -33,7 +34,7 @@ use function React\Promise\reject;
  * trigger. For example, if a user tries to send a message which contains a
  * certain keyword, a rule can trigger and block the message before it is sent.
  *
- * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object
+ * @link https://docs.discord.com/developers/resources/auto-moderation#auto-moderation-rule-object
  *
  * @since 7.1.0
  *
@@ -140,7 +141,8 @@ class Rule extends Part
      */
     protected function getExemptRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['exempt_roles'])) {
             return $roles;
@@ -164,7 +166,8 @@ class Rule extends Part
      */
     protected function getExemptChannelsAttribute(): ExCollectionInterface
     {
-        $channels = new Collection();
+        /** @var ExCollectionInterface $channels */
+        $channels = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['exempt_channels'])) {
             return $channels;
@@ -184,7 +187,7 @@ class Rule extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule-json-params
+     * @link https://docs.discord.com/developers/resources/auto-moderation#create-auto-moderation-rule-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -192,9 +195,7 @@ class Rule extends Part
             'name' => $this->name,
             'event_type' => $this->event_type,
             'trigger_type' => $this->trigger_type,
-            'actions' => array_values($this->actions->map(function (Action $action) {
-                return $action->getCreatableAttributes();
-            })->toArray()),
+            'actions' => array_values($this->actions->map(fn (Action $action) => $action->getCreatableAttributes())->jsonSerialize()),
         ];
 
         $attr += $this->makeOptionalAttributes([
@@ -213,7 +214,7 @@ class Rule extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule-json-params
+     * @link https://docs.discord.com/developers/resources/auto-moderation#modify-auto-moderation-rule-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -231,6 +232,27 @@ class Rule extends Part
         }
 
         return $attr;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return AutoModerationRuleRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): AutoModerationRuleRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->auto_moderation_rules;
     }
 
     /**

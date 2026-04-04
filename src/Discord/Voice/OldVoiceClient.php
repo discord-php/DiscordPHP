@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,7 +19,6 @@ use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Helpers\Buffer as RealBuffer;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
@@ -45,11 +45,11 @@ use function React\Promise\resolve;
 /**
  * The Discord voice client.
  *
- * @link https://discord.com/developers/docs/topics/voice-connections
+ * @link https://docs.discord.com/developers/topics/voice-connections
  *
  * @since 3.2.0
  */
-class VoiceClient extends EventEmitter
+class OldVoiceClient extends EventEmitter
 {
     /** Not speaking. */
     public const NOT_SPEAKING = 0;
@@ -63,7 +63,7 @@ class VoiceClient extends EventEmitter
     /**
      * The Opus Silence Frame.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     * @link https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
      */
@@ -72,7 +72,7 @@ class VoiceClient extends EventEmitter
     /**
      * Supported encryption modes for voice connections.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-modes
      *
      * @var string[] The supported transport encryption modes.
      */
@@ -84,7 +84,7 @@ class VoiceClient extends EventEmitter
     /**
      * Maximum DAVE protocol version supported.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#endtoend-encryption-dave-protocol
+     * @link https://docs.discord.com/developers/topics/voice-connections#endtoend-encryption-dave-protocol
      *
      * @var int The maximum DAVE protocol version supported.
      */
@@ -471,7 +471,7 @@ class VoiceClient extends EventEmitter
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
-        $this->speakingStatus = new Collection([], 'ssrc');
+        $this->speakingStatus = new ($this->discord->getCollectionClass())([], 'ssrc');
         $this->dnsConfig = $data['dnsConfig'];
     }
 
@@ -534,7 +534,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sends an identify payload to the voice gateway to authenticate the client.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload
+     * @link https://docs.discord.com/developers/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload
      *
      * @since 10.19.0
      */
@@ -563,7 +563,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sends a heartbeat payload to the voice server to maintain the connection.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#heartbeating
+     * @link https://docs.discord.com/developers/topics/voice-connections#heartbeating
      *
      * @since 10.19.0
      */
@@ -597,7 +597,7 @@ class VoiceClient extends EventEmitter
 
         $this->discord->getLogger()->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
-        $this->emit('ws-heartbeat-ack', [$data->d]);
+        $this->emit('ws-heartbeat-ack', [$data->d['t']]);
     }
 
     /**
@@ -678,13 +678,13 @@ class VoiceClient extends EventEmitter
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
             $this->client = $client;
 
-            $buffer = new Buffer(74);
+            $buffer = new OldBuffer(74);
             $buffer[1] = "\x01";
             $buffer[3] = "\x46";
             $buffer->writeUInt32BE($this->ssrc, 4);
 
             $this->udpHeartbeat = $this->discord->getLoop()->addPeriodicTimer(5, function () {
-                $buffer = new Buffer(9);
+                $buffer = new OldBuffer(9);
                 $buffer[0] = "\xC9";
                 $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                 ++$this->heartbeatSeq;
@@ -1033,7 +1033,7 @@ class VoiceClient extends EventEmitter
          * A64 (string)         | Address   | 64 bytes  | The IP address of the sender
          * n (unsigned short)   | Port      | 2 bytes   | The port of the sender
          *
-         * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
+         * @see https://docs.discord.com/developers/topics/voice-connections#ip-discovery
          * @see https://www.php.net/manual/en/function.unpack.php
          * @see https://www.php.net/manual/en/function.pack.php For the formats
          */
@@ -1286,7 +1286,7 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(self::MICROPHONE);
 
-        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
+        OldOggStream::fromBuffer($this->buffer)->then(function (OldOggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
             $this->readOpusTimer = $this->discord->getLoop()->addTimer(0.5, fn () => $this->readOpus($deferred, $os, $loops));
         });
@@ -1297,14 +1297,14 @@ class VoiceClient extends EventEmitter
     /**
      * Reads and processes Opus audio packets from an OGG stream.
      *
-     * @param Deferred  $deferred The deferred promise that will be resolved when the stream ends.
-     * @param OggStream &$ogg     Reference to the OGG stream object to read packets from.
-     * @param int       &$loops   Reference to the loop counter used for timing calculations.
+     * @param Deferred     $deferred The deferred promise that will be resolved when the stream ends.
+     * @param OldOggStream &$ogg     Reference to the OGG stream object to read packets from.
+     * @param int          &$loops   Reference to the loop counter used for timing calculations.
      *
      *
      * @throws \Exception If packet retrieval fails.
      */
-    public function readOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
+    public function readOpus(Deferred $deferred, OldOggStream &$ogg, int &$loops)
     {
         $this->readOpusTimer = null;
 
@@ -1395,7 +1395,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the speaking value of the client.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#speaking
+     * @link https://docs.discord.com/developers/topics/voice-connections#speaking
      *
      * @param int|bool $speaking The speaking mode.
      *
@@ -1677,7 +1677,7 @@ class VoiceClient extends EventEmitter
         $this->sentLoginFrame = false;
         $this->startTime = null;
         $this->streamTime = 0.0;
-        $this->speakingStatus = new Collection([], 'ssrc');
+        $this->speakingStatus = new ($this->discord->getCollectionClass())([], 'ssrc');
 
         $this->emit('close');
     }
@@ -1822,13 +1822,11 @@ class VoiceClient extends EventEmitter
     /**
      * Decodes voice packet data.
      *
-     * @param string      $decrypted   The decrypted voice data.
-     * @param VoiceClient $vc          The voice client instance.
-     * @param VoicePacket $voicePacket The voice packet to decode.
-     *
-     * @todo
+     * @param string         $decrypted   The decrypted voice data.
+     * @param OldVoiceClient $vc          The voice client instance.
+     * @param VoicePacket    $voicePacket The voice packet to decode.
      */
-    public static function decodeVoicePacket(string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
+    public static function decodeVoicePacket(string $decrypted, OldVoiceClient $vc, VoicePacket $voicePacket): void
     {
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
 
@@ -1852,7 +1850,7 @@ class VoiceClient extends EventEmitter
             $vc->voiceDecoders[$ss->ssrc] = $decoder;
         }
 
-        $buff = new Buffer(strlen($vp->getData()) + 2);
+        $buff = new OldBuffer(strlen($vp->getData()) + 2);
         $buff->write(pack('s', strlen($vp->getData())), 0);
         $buff->write($vp->getData(), 2);
 
@@ -1861,8 +1859,6 @@ class VoiceClient extends EventEmitter
 
     /**
      * Creates and starts a decoder process for the given stream source.
-     *
-     * @todo Implement MLS decoding and use the appropriate decoder.
      *
      * @param object $ss The stream source object containing ssrc and user_id properties.
      *
@@ -1988,7 +1984,7 @@ class VoiceClient extends EventEmitter
      * will be appended to the FFmpeg command _before_ setting the input
      * arguments.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-and-sending-voice
+     * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-and-sending-voice
      *
      * @param ?string $filename Path to file to be converted into Ogg Opus, or
      *                          null for pipe via stdin.
@@ -2057,7 +2053,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sends five frames of Opus silence to avoid unintended interpolation when there is a break in the sent data.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     * @link https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation
      *
      * @return PromiseInterface Resolves after all silence frames have been sent.
      */

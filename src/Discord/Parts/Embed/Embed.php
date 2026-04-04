@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,7 +15,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
@@ -24,7 +24,7 @@ use function Discord\poly_strlen;
 /**
  * An embed object to be sent with a message.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
  *
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
@@ -42,6 +42,7 @@ use function Discord\poly_strlen;
  * @property-read ?Provider|null                        $provider    The provider of the embed.
  * @property      ?Author|null                          $author      The author of the embed.
  * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
+ * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
  */
 class Embed extends Part
 {
@@ -71,6 +72,9 @@ class Embed extends Part
     /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
 
+    /** This embed is a reply to an activity card and is no longer displayed. */
+    public const FLAG_IS_CONTENT_INVENTORY_ENTRY = 1 << 5;
+
     /**
      * @inheritDoc
      */
@@ -88,6 +92,7 @@ class Embed extends Part
         'provider',
         'author',
         'fields',
+        'flags',
     ];
 
     /**

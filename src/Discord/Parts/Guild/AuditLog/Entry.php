@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AuditLog;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -23,7 +23,7 @@ use Discord\Parts\User\User;
  *
  * @since 5.1.0
  *
- * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
+ * @link https://docs.discord.com/developers/resources/audit-log#audit-log-entry-object
  *
  * @property      ?string               $target_id   ID of the affected entity (webhook, user, role, etc.).
  * @property      ExCollectionInterface $changes     Changes made to the target_id.
@@ -171,6 +171,12 @@ class Entry extends Part
     public const HOME_SETTINGS_CREATE = 190;
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
+    /** Guild Scheduled Event Exception was created */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE = 200;
+    /** Guild Scheduled Event Exception was updated */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE = 201;
+    /** Guild Scheduled Event Exception was deleted */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE = 202;
     /** Guild Profile was updated. */
     public const GUILD_PROFILE_UPDATE = 211;
     /** Guild migrated and bypassed slowmode permission. */
@@ -202,13 +208,13 @@ class Entry extends Part
     /**
      * Returns a collection of changes.
      *
-     * @link https://discord.com/developers/docs/resources/audit-log#audit-log-change-object
+     * @link https://docs.discord.com/developers/resources/audit-log#audit-log-change-object
      *
      * @return ExCollectionInterface
      */
     protected function getChangesAttribute(): ExCollectionInterface
     {
-        return new Collection($this->attributes['changes'] ?? [], 'key', null);
+        return new ($this->discord->getCollectionClass())($this->attributes['changes'] ?? [], 'key', null);
     }
 
     /**

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,10 +14,10 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Channel;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Thread;
+use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
@@ -75,7 +76,7 @@ class ThreadRepository extends AbstractRepository
             foreach ($items as $thread) {
                 foreach ($members as $member) {
                     if ($member->id === $thread->id) {
-                        $thread->members->cache->set($member->id, $thread->members->create((array) $member + ['guild_id' => $thread->guild_id], true));
+                        $thread->members->cache->set($member->id, $this->factory->part(Member::class, (array) $member + ['guild_id' => $thread->guild_id], true));
                         break;
                     }
                 }
@@ -88,9 +89,9 @@ class ThreadRepository extends AbstractRepository
     /**
      * Fetches all the active threads on the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#list-active-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-active-threads
      *
-     * @return PromiseInterface<Collection<Thread[]>>
+     * @return PromiseInterface<ExCollectionInterface<Thread[]>>
      */
     public function active(): PromiseInterface
     {
@@ -101,9 +102,9 @@ class ThreadRepository extends AbstractRepository
     /**
      * Fetches archived threads based on a set of options.
      *
-     * @link https://discord.com/developers/docs/resources/channel#list-public-archived-threads
-     * @link https://discord.com/developers/docs/resources/channel#list-private-archived-threads
-     * @link https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-public-archived-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-private-archived-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-joined-private-archived-threads
      *
      * @param bool               $private Whether we are fetching archived private threads.
      * @param bool               $joined  Whether we are fetching private threads that we have joined. Note `private` cannot be false while `joined` is true.
@@ -112,7 +113,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @throws \InvalidArgumentException
      *
-     * @return PromiseInterface<Collection<Thread[]>>
+     * @return PromiseInterface<ExCollectionInterface<Thread[]>>
      */
     public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): PromiseInterface
     {
@@ -157,7 +158,8 @@ class ThreadRepository extends AbstractRepository
      */
     private function handleThreadPaginationResponse(object $response): ExCollectionInterface
     {
-        $collection = Collection::for(Thread::class);
+        /** @var ExCollectionInterface<Thread> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Thread::class);
 
         foreach ($response->threads as $thread) {
             /** @var Thread */
@@ -165,7 +167,7 @@ class ThreadRepository extends AbstractRepository
 
             foreach ($response->members as $member) {
                 if ($member->id === $thread->id) {
-                    $thread->members->pushItem($thread->members->create($member, true));
+                    $thread->members->pushItem($this->factory->part(Member::class, (array) $member, true));
                 }
             }
 

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,7 +23,7 @@ use Discord\Parts\Part;
  *
  * Note: The const declared here are the bit position, not the bitwise value.
  *
- * @link https://discord.com/developers/docs/topics/permissions
+ * @link https://docs.discord.com/developers/topics/permissions
  *
  * @since 10.19.0 Added constants for all permissions.
  * @since 2.1.3 Namespace moved from Guild to Permissions
@@ -183,7 +184,7 @@ abstract class Permission extends Part
     public const USE_EXTERNAL_APPS = 50;
     /** Allows pinning and unpinning messages. */
     public const PIN_MESSAGES = 51;
-    /** Allows members to send messages in this channel without being affected by slowmode. */
+    /** Allows bypassing slowmode restrictions. */
     public const BYPASS_SLOWMODE = 52;
 
     /**
@@ -229,6 +230,7 @@ abstract class Permission extends Part
         'use_external_sounds' => self::USE_EXTERNAL_SOUNDS,
         'send_voice_messages' => self::SEND_VOICE_MESSAGES,
         'send_polls' => self::SEND_POLLS,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
@@ -247,6 +249,7 @@ abstract class Permission extends Part
         'request_to_speak' => self::REQUEST_TO_SPEAK,
         'manage_events' => self::MANAGE_EVENTS,
         'create_events' => self::CREATE_EVENTS,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
@@ -302,7 +305,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    private $permissions = [];
+    protected $permissions = [];
 
     /**
      * @inheritDoc
@@ -332,7 +335,7 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
-     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags
      *
      * @return int|string
      */
@@ -362,7 +365,7 @@ abstract class Permission extends Part
     /**
      * Sets the bitwise attribute of the permission.
      *
-     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags
      *
      * @param int|string $bitwise
      */

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository;
 
 use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
 use Traversable;
@@ -21,9 +23,11 @@ use Traversable;
 interface AbstractRepositoryInterface extends CollectionInterface
 {
     public function __construct($discord, array $vars = []);
+    /** @return ExCollectionInterface */
+    public function collect();
     public function freshen(array $queryparams = []): PromiseInterface;
     public function create(array|object $attributes = [], bool $created = false): Part;
-    /** @deprecated v10.38.0 Use `Part->save($reason)` to ensure permissions are checked. */
+    /** @deprecated 10.38.0 Use `Part->save($reason)` to ensure permissions are checked. */
     public function save(Part $part, ?string $reason = null): PromiseInterface;
     public function delete($part, ?string $reason = null): PromiseInterface;
     public function fresh(Part $part, array $queryparams = []): PromiseInterface;
@@ -37,9 +41,11 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function first();
     public function last();
     public function has(...$keys): bool;
+    /** @return ExCollectionInterface */
     public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
+    /** @deprecated 10.42.0 Use `jsonSerialize` */
     public function toArray(bool $assoc = true): array;
     public function keys(): array;
     public function values(): array;
@@ -48,7 +54,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function offsetGet($offset);
     public function offsetSet($offset, $value): void;
     public function offsetUnset($offset): void;
-    public function jsonSerialize(): array;
+    public function jsonSerialize(bool $assoc = true): array;
     public function &getIterator(): Traversable;
     public function __get(string $key);
 

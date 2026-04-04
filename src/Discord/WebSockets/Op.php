@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,7 +17,7 @@ namespace Discord\WebSockets;
 /**
  * Contains constants used in websockets.
  *
- * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes
+ * @link https://docs.discord.com/developers/topics/opcodes-and-status-codes
  *
  * @since 3.2.1
  */
@@ -29,7 +30,7 @@ class Op
      * payload type. Your connection to our gateway may also sometimes close.
      * When it does, you will receive a close code that tells you what happened.
      *
-     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+     * @link https://docs.discord.com/developers/topics/opcodes-and-status-codes#gateway-gateway-opcodes
      */
 
     /** Dispatches an event. */
@@ -70,7 +71,7 @@ class Op
      *
      * Our voice gateways have their own set of opcodes and close codes.
      *
-     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-opcodes
+     * @link https://docs.discord.com/developers/topics/opcodes-and-status-codes#voice-voice-opcodes
      */
 
     /** Used to begin a voice WebSocket connection. */
@@ -140,7 +141,7 @@ class Op
      * what the application defined close codes for the gateway are, and which
      * close codes you should not attempt to reconnect.
      *
-     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes
+     * @link https://docs.discord.com/developers/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes
      */
 
     /** Normal close or heartbeat is invalid. */
@@ -181,7 +182,7 @@ class Op
     /**
      * Voice Close Event Codes.
      *
-     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes
+     * @link https://docs.discord.com/developers/topics/opcodes-and-status-codes#voice-voice-close-event-codes
      */
 
     /** Can't find the server. */
@@ -194,6 +195,8 @@ class Op
     public const CLOSE_VOICE_SERVER_CRASH = 4015;
     /** Unknown encryption mode. */
     public const CLOSE_VOICE_UNKNOWN_ENCRYPT = 4016;
+    /** E2EE/DAVE protocol required. */
+    public const CLOSE_VOICE_E2EE_DAVE_REQUIRED = 4017;
     /** You sent a malformed request. */
     public const CLOSE_VOICE_BAD_REQUEST = 4020;
     /** Disconnect due to rate limit exceeded. Should not reconnect. */

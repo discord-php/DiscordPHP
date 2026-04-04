@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,6 +21,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\VoiceStateRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -27,7 +29,7 @@ use function React\Promise\reject;
 /**
  * Notifies the client of voice state updates about users.
  *
- * @link https://discord.com/developers/docs/resources/voice#voice-state-object
+ * @link https://docs.discord.com/developers/resources/voice#voice-state-object
  *
  * @since 3.2.1
  *
@@ -141,6 +143,27 @@ class VoiceStateUpdate extends Part
     protected function getRequestToSpeakTimestampAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('request_to_speak_timestamp');
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return VoiceStateRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): VoiceStateRepository|null
+    {
+        if (! isset($this->attributes['guild_id'], $this->attributes['user_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->voice_states;
     }
 
     /**

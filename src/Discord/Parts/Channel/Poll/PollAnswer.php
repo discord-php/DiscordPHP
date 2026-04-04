@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Poll;
 
-use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
@@ -29,7 +29,7 @@ use function Discord\normalizePartId;
 /**
  * An answer to a poll.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-answer-object
+ * @link https://docs.discord.com/developers/resources/poll#poll-answer-object
  *
  * @since 10.0.0
  *
@@ -137,7 +137,7 @@ class PollAnswer extends Part
      * @param string|null $options['after'] Get users after this user ID.
      * @param int|null    $options['limit'] Max number of users to return (1-100).
      *
-     * @link https://discord.com/developers/docs/resources/poll#get-answer-voters
+     * @link https://docs.discord.com/developers/resources/poll#get-answer-voters
      *
      * @throws \OutOfRangeException
      *
@@ -163,7 +163,8 @@ class PollAnswer extends Part
 
         return $this->http->get($query)
             ->then(function ($response) {
-                $users = Collection::for(User::class);
+                /** @var ExCollectionInterface<User> $users */
+                $users = $this->discord->getCollectionClass()::for(User::class);
 
                 foreach ($response->users ?? [] as $user) {
                     if (! $part = $this->discord->users->get('id', $user->id)) {

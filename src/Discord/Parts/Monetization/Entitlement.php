@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,6 +16,7 @@ namespace Discord\Parts\Monetization;
 
 use Carbon\Carbon;
 use Discord\Parts\Part;
+use Discord\Repository\Monetization\EntitlementRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -22,7 +24,7 @@ use function React\Promise\reject;
 /**
  * Entitlements in Discord represent that a user or guild has access to a premium offering in your application.
  *
- * @link https://discord.com/developers/docs/resources/entitlement#entitlement-object
+ * @link https://docs.discord.com/developers/resources/entitlement#entitlement-object
  *
  * @since 10.15.0
  *
@@ -94,6 +96,20 @@ class Entitlement extends Part
     protected function getEndsAtAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('ends_at');
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return EntitlementRepository The repository.
+     */
+    public function getRepository(): EntitlementRepository
+    {
+        return $this->discord->application->entitlements;
     }
 
     /**

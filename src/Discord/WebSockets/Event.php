@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -65,6 +66,10 @@ abstract class Event
     public const GUILD_SCHEDULED_EVENT_USER_ADD = 'GUILD_SCHEDULED_EVENT_USER_ADD';
     public const GUILD_SCHEDULED_EVENT_USER_REMOVE = 'GUILD_SCHEDULED_EVENT_USER_REMOVE';
 
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE = 'GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE';
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE = 'GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE';
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE = 'GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE';
+
     public const GUILD_INTEGRATIONS_UPDATE = 'GUILD_INTEGRATIONS_UPDATE';
     public const INTEGRATION_CREATE = 'INTEGRATION_CREATE';
     public const INTEGRATION_UPDATE = 'INTEGRATION_UPDATE';
@@ -85,6 +90,7 @@ abstract class Event
     public const GUILD_SOUNDBOARD_SOUND_CREATE = 'GUILD_SOUNDBOARD_SOUND_CREATE';
     public const GUILD_SOUNDBOARD_SOUND_UPDATE = 'GUILD_SOUNDBOARD_SOUND_UPDATE';
     public const GUILD_SOUNDBOARD_SOUND_DELETE = 'GUILD_SOUNDBOARD_SOUND_DELETE';
+    public const GUILD_SOUNDBOARD_SOUNDS_UPDATE = 'GUILD_SOUNDBOARD_SOUNDS_UPDATE';
     public const SOUNDBOARD_SOUNDS = 'SOUNDBOARD_SOUNDS';
 
     // Channel
@@ -126,6 +132,14 @@ abstract class Event
     public const ENTITLEMENT_CREATE = 'ENTITLEMENT_CREATE';
     public const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
     public const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
+
+    // Subscriptions
+    public const SUBSCRIPTION_CREATE = 'SUBSCRIPTION_CREATE';
+    public const SUBSCRIPTION_UPDATE = 'SUBSCRIPTION_UPDATE';
+    public const SUBSCRIPTION_DELETE = 'SUBSCRIPTION_DELETE';
+
+    // Game Server
+    public const GAME_SERVER_UPDATE = 'GAME_SERVER_UPDATE';
 
     /**
      * The Discord client instance.

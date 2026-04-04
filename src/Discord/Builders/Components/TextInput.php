@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,7 +19,7 @@ use function Discord\poly_strlen;
 /**
  * Text inputs are an interactive component that render on modals. They can be used to collect short-form or long-form text.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#text-inputs
+ * @link https://docs.discord.com/developers/components/reference#text-inputs
  *
  * @since 7.0.0
  *
@@ -101,11 +102,11 @@ class TextInput extends Interactive
     /**
      * Creates a new text input.
      *
-     * @param string      $label     The label of the text input.
+     * @param string|null $label     (Deprecated) The label of the text input.
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, a UUID will be used
      */
-    public function __construct(?string $label, int $style, ?string $custom_id = null)
+    public function __construct(?string $label = null, int $style = self::STYLE_SHORT, ?string $custom_id = null)
     {
         $this->setLabel($label);
         $this->setStyle($style);
@@ -115,13 +116,13 @@ class TextInput extends Interactive
     /**
      * Creates a new text input.
      *
-     * @param string      $label     The label of the text input.
+     * @param string|null $label     (Deprecated) The label of the text input.
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input.
      *
      * @return self
      */
-    public static function new(?string $label, int $style, ?string $custom_id = null): self
+    public static function new(?string $label = null, int $style = self::STYLE_SHORT, ?string $custom_id = null): self
     {
         return new self($label, $style, $custom_id);
     }
@@ -148,6 +149,8 @@ class TextInput extends Interactive
 
     /**
      * Sets the label of the text input.
+     *
+     * @deprecated Use a top-level `ComponentObject::Label`
      *
      * @param string|null $label Label of the text input. Maximum 45 characters.
      *

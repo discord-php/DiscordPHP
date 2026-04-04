@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,8 +21,10 @@ use function Discord\poly_strlen;
 /**
  * Option for select menu component.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+ * @link https://docs.discord.com/developers/components/reference#select-menu-object-select-option-structure
  *
+ * @todo Deprecate Option in v11.
+ * @since 10.46.0 Use SelectMenuOption instead of Option.
  * @since 7.0.0
  */
 class Option extends Component
@@ -31,35 +34,35 @@ class Option extends Component
      *
      * @var string
      */
-    private $label;
+    protected $label;
 
     /**
      * Developer value for the option. Maximum 100 characters.
      *
      * @var string
      */
-    private $value;
+    protected $value;
 
     /**
      * Description for the option. Maximum 50 characters.
      *
      * @var string|null
      */
-    private $description;
+    protected $description;
 
     /**
      * Emoji to display alongside the option.
      *
      * @var array|null
      */
-    private $emoji;
+    protected $emoji;
 
     /**
      * Whether the option should be enabled as default.
      *
      * @var bool
      */
-    private $default = false;
+    protected $default = false;
 
     /**
      * Creates a new select menu option.

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,22 +15,10 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Http\Exceptions\RequestFailedException;
-use Discord\Parts\Channel\AnnouncementThread;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\DM;
-use Discord\Parts\Channel\GroupDM;
-use Discord\Parts\Channel\GuildAnnouncement;
-use Discord\Parts\Channel\GuildCategory;
-use Discord\Parts\Channel\GuildDirectory;
-use Discord\Parts\Channel\GuildForum;
-use Discord\Parts\Channel\GuildMedia;
-use Discord\Parts\Channel\GuildStageVoice;
-use Discord\Parts\Channel\GuildText;
-use Discord\Parts\Channel\GuildVoice;
 use Discord\Parts\Channel\Overwrite;
-use Discord\Parts\Channel\PrivateThread;
-use Discord\Parts\Channel\PublicThread;
 use Discord\Parts\Guild\Emoji;
+use Discord\Repository\Guild\ChannelRepository;
 use Discord\Voice\Region;
 use JsonSerializable;
 
@@ -38,27 +27,13 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build guild channels.
  *
- * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+ * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
  *
  * @since 10.23.0
  */
 class ChannelBuilder extends Builder implements JsonSerializable
 {
-    public const TYPES = [
-        Channel::TYPE_GUILD_TEXT => GuildText::class, // A text channel within a server
-        Channel::TYPE_DM => DM::class, // A direct message between users
-        Channel::TYPE_GUILD_VOICE => GuildVoice::class, // A voice channel within a server
-        Channel::TYPE_GROUP_DM => GroupDM::class, // A direct message between multiple users
-        Channel::TYPE_GUILD_CATEGORY => GuildCategory::class, // An organizational category that contains up to 50 channels
-        Channel::TYPE_GUILD_ANNOUNCEMENT => GuildAnnouncement::class, // A channel that users can follow and crosspost into their own server (formerly news channels)
-        Channel::TYPE_ANNOUNCEMENT_THREAD => AnnouncementThread::class, // A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
-        Channel::TYPE_PUBLIC_THREAD => PublicThread::class, // A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
-        Channel::TYPE_PRIVATE_THREAD => PrivateThread::class, // A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
-        Channel::TYPE_GUILD_STAGE_VOICE => GuildStageVoice::class, // A voice channel for hosting events with an audience
-        Channel::TYPE_GUILD_DIRECTORY => GuildDirectory::class, // The channel in a hub containing the listed servers
-        Channel::TYPE_GUILD_FORUM => GuildForum::class, // Channel that can only contain threads
-        Channel::TYPE_GUILD_MEDIA => GuildMedia::class, // Channel that can only contain threads, similar to GUILD_FORUM channels
-    ];
+    public const TYPES = Channel::TYPES;
 
     protected string $name;
     protected ?int $type;
@@ -79,9 +54,28 @@ class ChannelBuilder extends Builder implements JsonSerializable
     protected ?int $default_forum_layout; // Forum
     protected ?int $default_thread_rate_limit_per_user; // Text, Announcement, Forum, Media
 
+    /**
+     * Creates a new channel builder.
+     *
+     * @return static
+     */
     public static function new(string $name): self
     {
         return (new static())->setName($name);
+    }
+
+    /**
+     * Creates the channel in the given repository.
+     *
+     * @param ChannelRepository $repository
+     *
+     * @return Channel
+     *
+     * @since 10.41.0
+     */
+    public function create(ChannelRepository $repository): Channel
+    {
+        return $repository->create($this->jsonSerialize());
     }
 
     /**

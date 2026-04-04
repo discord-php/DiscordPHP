@@ -3,7 +3,8 @@
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -26,10 +27,7 @@ final class EmbedTest extends DiscordTestCase
             // kek
             $url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
             $this->channel()->sendMessage($url)
-                ->then(function (Message $message) {
-                    // fetch message to ensure embed is present
-                    return $this->channel()->messages->fetch($message->id);
-                })
+                ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
                 ->then(function (Message $message) use ($url) {
                     $this->assertEquals(1, $message->embeds->count());
                     /** @var \Discord\Parts\Embed\Embed */
@@ -53,10 +51,7 @@ final class EmbedTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
             $this->channel()->sendMessage($url)
-                ->then(function (Message $message) {
-                    // fetch message to ensure embed is present
-                    return $this->channel()->messages->fetch($message->id);
-                })
+                ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
                 ->then(function (Message $message) use ($url) {
                     $this->assertEquals(1, $message->embeds->count());
                     /** @var \Discord\Parts\Embed\Embed */

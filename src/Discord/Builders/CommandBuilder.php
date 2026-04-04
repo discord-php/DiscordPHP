@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,14 +14,16 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
+use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 use JsonSerializable;
 
 /**
  * Helper class used to build application commands.
+ *
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-structure
  *
  * @since 7.0.0
  *
@@ -75,14 +78,14 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * Interaction context(s) where the command can be used, only for globally-scoped commands.
      *
-     * @var ExCollectionInterface<int>|int[]|null
+     * @var int[]|null
      */
     protected $contexts = null;
 
     /**
      * The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
      *
-     * @var ExCollectionInterface<Option>|Option[]|null
+     * @var Option[]|null
      */
     protected $options = null;
 
@@ -97,13 +100,27 @@ class CommandBuilder extends Builder implements JsonSerializable
     }
 
     /**
+     * Creates the command in the given repository.
+     *
+     * @param GlobalCommandRepository|GuildCommandRepository $repository
+     *
+     * @return Command
+     *
+     * @since 10.41.0
+     */
+    public function create(GlobalCommandRepository|GuildCommandRepository $repository): Command
+    {
+        return $repository->create($this->jsonSerialize());
+    }
+
+    /**
      * Returns all the options in the command.
      *
-     * @return ExCollectionInterface<Option>|Option[]
+     * @return Option[]
      */
     public function getOptions()
     {
-        return $this->options ?? Collection::for(Option::class, 'name');
+        return $this->options ?? [];
     }
 
     /**
@@ -113,8 +130,18 @@ class CommandBuilder extends Builder implements JsonSerializable
      * @throws \DomainException
      *
      * @return array
+     *
+     * @deprecated 10.42.0 Use `jsonSerialize`
      */
     public function toArray(): array
+    {
+        return $this->jsonSerialize();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
     {
         $arrCommand = [
             'name' => $this->name,
@@ -123,16 +150,15 @@ class CommandBuilder extends Builder implements JsonSerializable
 
         $optionals = [
             'type',
+            'guild_id',
             'name_localizations',
             'description_localizations',
             'default_member_permissions',
             'dm_permission',
             'default_permission',
-            'guild_id',
             'nsfw',
             'integration_types',
             'contexts',
-            'handler',
         ];
 
         foreach ($optionals as $optional) {
@@ -141,21 +167,21 @@ class CommandBuilder extends Builder implements JsonSerializable
             }
         }
 
-        $this->options ??= Collection::for(Option::class, 'name');
+        // options can only be set for application commands of type CHAT_INPUT
+        if ($this->type === Command::CHAT_INPUT) {
+            $this->options ??= [];
 
-        /** @var Option $option */
-        foreach ($this->options as $option) {
-            $arrCommand['options'][] = $option->getRawAttributes();
+            /** @var Option $option */
+            foreach ($this->options as $option) {
+                $arrCommand['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        // handler can only be set for application commands of type PRIMARY_ENTRY_POINT for applications with the EMBEDDED flag (i.e. applications that have an Activity).
+        if ($this->type === Command::PRIMARY_ENTRY_POINT && property_exists($this, 'handler') && $this->handler !== null) {
+            $arrCommand['handler'] = $this->handler;
         }
 
         return $arrCommand;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
     }
 }

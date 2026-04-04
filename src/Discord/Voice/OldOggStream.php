@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -29,7 +30,7 @@ use function React\Promise\resolve;
  *
  * @internal
  */
-class OggStream
+class OldOggStream
 {
     /**
      * Leftover bytes from the previous Ogg packet.
@@ -67,13 +68,13 @@ class OggStream
      * @param Buffer $buffer  Buffer to read Ogg Opus packets from.
      * @param ?int   $timeout Time in milliseconds before a buffer read times out.
      *
-     * @return PromiseInterface<OggStream> A promise containing the Ogg stream.
+     * @return PromiseInterface<OldOggStream> A promise containing the Ogg stream.
      */
     public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): PromiseInterface
     {
         return OggPage::fromBuffer($buffer, $timeout)
             ->then(fn (OggPage $pageHeader) => OggPage::fromBuffer($buffer, $timeout)
-            ->then(fn (OggPage $pageTags) => new OggStream($buffer, new OpusHead($pageHeader->segmentData), new OpusTags($pageTags->segmentData))));
+            ->then(fn (OggPage $pageTags) => new OldOggStream($buffer, new OpusHead($pageHeader->segmentData), new OpusTags($pageTags->segmentData))));
     }
 
     /**

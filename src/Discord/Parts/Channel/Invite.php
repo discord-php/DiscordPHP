@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,13 +15,19 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\ExCollectionInterface;
+use Discord\Helpers\Multipart;
+use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Profile;
+use Discord\Parts\Guild\Role;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Channel\InviteRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -29,7 +36,7 @@ use function React\Promise\reject;
 /**
  * An invite to a Channel and Guild.
  *
- * @link https://discord.com/developers/docs/resources/invite
+ * @link https://docs.discord.com/developers/resources/invite
  *
  * @since 7.0.0 Namespace moved from Guild to Channel
  * @since 2.0.0
@@ -50,6 +57,7 @@ use function React\Promise\reject;
  * @property Carbon              $expires_at                 The expiration date of this invite.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  * @property int                 $flags                      Guild invite flags for guild invites.
+ * @property Role[]              $roles                      The roles assigned to the user upon accepting the invite. Contains a limited amount of role information.
  * @property Profile             $profile                    The guild profile.
  *
  * @property int|null    $uses       How many times the invite has been used.
@@ -273,6 +281,168 @@ class Invite extends Part implements Stringable
     }
 
     /**
+     * Returns the roles for this invite.
+     *
+     * This will only have partial data based on what the invite endpoint provides.
+     * Properties for `description`, `hoist`, `managed`, `mentionable`, `tags`, and `flags` will not be set.
+     * `permissions` will only contain permissions related to the invite and may not be present at all.
+     *
+     * @since 10.46.0
+     *
+     * @return ExCollectionInterface<Role> The roles assigned to the user upon accepting the invite.
+     */
+    protected function getRolesAttribute(): ExCollectionInterface
+    {
+        $class = Role::class;
+
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->getCollectionClass()::for($class, 'id');
+
+        if (empty($this->attributes['roles'])) {
+            return $collection;
+        }
+
+        foreach ($this->attributes['roles'] as &$part) {
+            if (! $part instanceof $class) {
+                $part = $this->createOf($class, $part);
+                if ($guild = $this->guild) {
+                    if ($role = $guild->roles->get('id', $part->id)) {
+                        $part->fill((array) $role);
+                    }
+                }
+            }
+
+            $collection->pushItem($part);
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Gets the users allowed to see and accept this invite.
+     *
+     * Response is a CSV file with the header `user_id` and each user ID from the original file passed to invite create on its own line.
+     *
+     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
+     *
+     * @todo Parse the CSV response to an array.
+     * @since 10.46.0
+     *
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
+     *
+     * @return PromiseInterface<array|string> The CSV file's content containing the user IDs.
+     */
+    public function getTargetUsers(): PromiseInterface
+    {
+        if ($botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $botperms->view_audit_log && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id));
+    }
+
+    /**
+     * Updates the users allowed to see and accept this invite.
+     *
+     * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     *
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
+     *
+     * @since 10.46.0
+     *
+     * @param string      $filepath Path to the file to send.
+     * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
+     *
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
+     * @throws FileNotFoundException  If the file does not exist or is not readable.
+     *
+     * @return PromiseInterface
+     */
+    public function updateTargetUsers(string $filepath, ?string $filename = null): PromiseInterface
+    {
+        if ($this->channel && $botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
+        if (! file_exists($filepath)) {
+            return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
+        }
+
+        if (($content = file_get_contents($filepath)) === false) {
+            return reject(new FileNotFoundException("Unable to read file at path {$filepath}."));
+        }
+
+        return $this->updateTargetUsersFromContent($content, $filename ?? basename($filepath));
+    }
+
+    /**
+     * Updates the users allowed to see and accept this invite.
+     *
+     * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     *
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
+     *
+     * @since 10.46.0
+     *
+     * @param string $content  Content of the file.
+     * @param string $filename Name to send the file as.
+     *
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
+     *
+     * @return PromiseInterface
+     */
+    public function updateTargetUsersFromContent(string $content, string $filename = 'target_users.csv'): PromiseInterface
+    {
+        if ($this->channel && $botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
+        if ($content === '') {
+            return reject(new \BadMethodCallException('The provided CSV contents are empty.'));
+        }
+
+        $multipart = new Multipart([
+            [
+                'name' => 'target_users_file',
+                'filename' => $filename,
+                'content' => $content,
+                'headers' => ['Content-Type' => 'text/csv'],
+            ],
+        ]);
+
+        return $this->http->put(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id), (string) $multipart, $multipart->getHeaders());
+    }
+    
+    /**
+     * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
+     *
+     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
+     *
+     * @todo
+     *
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
+     *
+     * @return PromiseInterface<InviteJobStatus> The job status.
+     */
+    public function getTargetUsersJobStatus()
+    {
+        if ($this->channel && $botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $botperms->view_audit_log && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::INVITE_TARGET_USERS_JOB_STATUS, $this->id))
+            ->then(fn ($response) => $this->factory->part(InviteJobStatus::class, (array) $response));
+    }
+
+    /**
      * Returns the guild profile for this invite.
      *
      * @return Profile The guild profile.
@@ -312,6 +482,27 @@ class Invite extends Part implements Stringable
     protected function getInviteUrlAttribute(): string
     {
         return 'https://discord.gg/'.$this->code;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return InviteRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): InviteRepository|null
+    {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        }
+
+        /** @var Channel $channel */
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+        return $channel->invites;
     }
 
     /**
