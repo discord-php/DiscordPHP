@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
-use Discord\Parts\Channel\Message\Component as ComponentPart;
-
 /**
  * Components allow you to style and structure your messages, modals, and interactions.
  * They are interactive elements that can create rich user experiences in your Discord applications.
