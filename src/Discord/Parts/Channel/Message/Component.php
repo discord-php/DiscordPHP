@@ -40,7 +40,7 @@ class Component extends Part
      * @var array<int, string>
      */
     public const TYPES = [
-        0 => ComponentObject::class, // Fallback for unknown types
+        0 => Component::class, // Fallback for unknown types
         ComponentObject::TYPE_ACTION_ROW => ActionRow::class,
         ComponentObject::TYPE_BUTTON => Button::class,
         ComponentObject::TYPE_STRING_SELECT => StringSelect::class,
@@ -78,7 +78,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        return $this->attributeTypedCollectionHelper(ComponentObject::class, 'components');
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
     }
 
     /**
