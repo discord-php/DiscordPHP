@@ -73,7 +73,7 @@ class GameServer extends Part
 
     /**
      * Gets the guild associated with this game server, if any.
-     * 
+     *
      * @return Guild|null
      */
     protected function getGuildAttribute(): ?Guild
