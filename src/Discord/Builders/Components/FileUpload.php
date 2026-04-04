@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * A File Upload is an interactive component that allows users to upload files in modals.
  *
- * @link https://discord.com/developers/docs/components/reference#file-upload
+ * @link https://docs.discord.com/developers/components/reference#file-upload
  *
  * @since 10.21.0
  *
@@ -35,7 +36,7 @@ class FileUpload extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_FILE_UPLOAD;
+    protected $type = ComponentObject::TYPE_FILE_UPLOAD;
 
     /**
      * Minimum number of files that can be uploaded.
@@ -52,6 +53,13 @@ class FileUpload extends Interactive
      * @var int|null
      */
     protected $max_values;
+
+    /**
+     * Whether the file upload is required to be filled in a modal (defaults to `true`).
+     *
+     * @var bool|null
+     */
+    protected $required;
 
     /**
      * Creates a new file upload.
@@ -82,14 +90,14 @@ class FileUpload extends Interactive
      *
      * @param int|null $min_values Default `1`, minimum `0` and maximum `10`. `null` to set as default.
      *
-     * @throws \LengthException
+     * @throws \OutOfRangeException
      *
      * @return $this
      */
-    public function setMinValues(?int $min_values): self
+    public function setMinValues(?int $min_values = null): self
     {
         if (isset($min_values) && ($min_values < 1 || $min_values > 10)) {
-            throw new \LengthException('Number must be between 0 and 10 inclusive.');
+            throw new \OutOfRangeException('Number must be between 0 and 10 inclusive.');
         }
 
         $this->min_values = $min_values;
@@ -102,14 +110,14 @@ class FileUpload extends Interactive
      *
      * @param int|null $max_values Default `1` and maximum `10`. `null` to set as default.
      *
-     * @throws \LengthException
+     * @throws \OutOfRangeException
      *
      * @return $this
      */
-    public function setMaxValues(?int $max_values): self
+    public function setMaxValues(?int $max_values = null): self
     {
-        if ($max_values && $max_values > 10) {
-            throw new \LengthException('Number must be less than or equal to 10.');
+        if (isset($max_values) && ($max_values < 1 || $max_values > 10)) {
+            throw new \OutOfRangeException('Number must be less than or equal to 10.');
         }
 
         $this->max_values = $max_values;

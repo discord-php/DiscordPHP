@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
@@ -31,7 +31,7 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction emoji to a message by members(s).
  *
- * @link https://discord.com/developers/docs/resources/message#reaction-object
+ * @link https://docs.discord.com/developers/resources/message#reaction-object
  *
  * @since 5.0.0
  *
@@ -146,7 +146,7 @@ class Reaction extends Part
      * @param string|null $options['after'] Get users after this user ID.
      * @param int|null    $options['limit'] Max number of users to return (1-100).
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-reactions
+     * @link https://docs.discord.com/developers/resources/channel#get-reactions
      *
      * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */
@@ -170,7 +170,8 @@ class Reaction extends Part
 
         return $this->http->get($query)
         ->then(function ($response) {
-            $users = Collection::for(User::class);
+            /** @var ExCollectionInterface<User> $users */
+            $users = $this->discord->getCollectionClass()::for(User::class);
 
             foreach ((array) $response as $user) {
                 if (! $part = $this->discord->users->get('id', $user->id)) {
@@ -195,7 +196,7 @@ class Reaction extends Part
      */
     public function getAllUsers(): PromiseInterface
     {
-        return $this->__getUsers(Collection::for(User::class));
+        return $this->__getUsers($this->discord->getCollectionClass()::for(User::class));
     }
 
     /**

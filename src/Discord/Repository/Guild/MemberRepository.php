@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -85,7 +86,7 @@ class MemberRepository extends AbstractRepository
      * Returns a guild member object for the current user.
      * Requires the guilds.members.read OAuth2 scope.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
+     * @link https://docs.discord.com/developers/resources/user#get-current-user-guild-member
      *
      * @param string $guild
      *
@@ -105,7 +106,7 @@ class MemberRepository extends AbstractRepository
     /**
      * Modifies the current member (no validation).
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-current-member-json-params
      *
      * @param Guild|string $guild            The guild or guild ID.
      * @param array        $params           The parameters to modify.
@@ -151,7 +152,7 @@ class MemberRepository extends AbstractRepository
     /**
      * Alias for `$member->delete()`.
      *
-     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member
+     * @link https://docs.discord.com/developers/resources/guild#remove-guild-member
      *
      * @param Member      $member The member to kick.
      * @param string|null $reason Reason for Audit Log.

@@ -5,13 +5,17 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
 namespace Discord\Helpers;
+
+use React\Cache\CacheInterface as ReactCacheInterface;
+use Psr\SimpleCache\CacheInterface as PSRCacheInterface;
 
 /**
  * Cache configuration class. To be used with Discord `cache` Options.
@@ -21,13 +25,13 @@ namespace Discord\Helpers;
  *
  * @since 10.0.0
  *
- * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The PSR-16 cache interface.
- * @property-read string                                                      $separator The cache key prefix separator if supported by the interface. Usually dot `.` for generic cache or colon `:` for Redis/Memcached.
+ * @property-read ReactCacheInterface|PSRCacheInterface $interface The PSR-16 cache interface.
+ * @property-read string                                $separator The cache key prefix separator if supported by the interface. Usually dot `.` for generic cache or colon `:` for Redis/Memcached.
  */
 class CacheConfig
 {
     /**
-     * @var \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
+     * @var ReactCacheInterface|PSRCacheInterface
      */
     protected $interface;
 
@@ -58,11 +62,11 @@ class CacheConfig
     public $ttl;
 
     /**
-     * @param \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The PSR-16 Cache Interface.
-     * @param bool                                                        $compress  Whether to compress cache data before serialization, ignored in ArrayCache.
-     * @param bool                                                        $sweep     Whether to automatically sweep cache.
-     * @param string|null                                                 $separator The cache key prefix separator, null for default.
-     * @param null|int|\DateInterval|float                                $ttl       The cache time to live default value to pass to the interface.
+     * @param ReactCacheInterface|PSRCacheInterface $interface The PSR-16 Cache Interface.
+     * @param bool                                  $compress  Whether to compress cache data before serialization, ignored in ArrayCache.
+     * @param bool                                  $sweep     Whether to automatically sweep cache.
+     * @param string|null                           $separator The cache key prefix separator, null for default.
+     * @param null|int|\DateInterval|float          $ttl       The cache time to live default value to pass to the interface.
      */
     public function __construct($interface, bool $compress = false, bool $sweep = false, ?string $separator = null, $ttl = null)
     {

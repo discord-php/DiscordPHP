@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -42,6 +43,11 @@ class VoiceStateRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
+    protected $discrim = 'user_id';
+
+    /**
+     * @inheritDoc
+     */
     protected $endpoints = [
         'get' => Endpoint::GUILD_USER_VOICE_STATE,
         'update' => Endpoint::GUILD_USER_VOICE_STATE,
@@ -55,7 +61,7 @@ class VoiceStateRepository extends AbstractRepository
     /**
      * Gets the voice regions available.
      *
-     * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
+     * @link https://docs.discord.com/developers/resources/voice#list-voice-regions
      *
      * @return PromiseInterface<Collection>
      *
@@ -69,7 +75,7 @@ class VoiceStateRepository extends AbstractRepository
     /**
      * Returns the current user's voice state in the guild.
      *
-     * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#get-current-user-voice-state
      *
      * @param Guild|string $guild The guild or guild ID.
      *
@@ -100,7 +106,7 @@ class VoiceStateRepository extends AbstractRepository
      * - You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.
      * - You are able to set request_to_speak_timestamp to any present or future time.
      *
-     * @link https://discord.com/developers/docs/resources/voice#modify-current-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#modify-current-user-voice-state
      *
      * @param Guild|string        $guild                              The guild or guild ID.
      * @param array               $data
@@ -122,7 +128,7 @@ class VoiceStateRepository extends AbstractRepository
     /**
      * Returns the specified user's voice state in the guild.
      *
-     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state
      *
      * @param Guild|string       $guild The guild or guild ID.
      * @param Member|User|string $user  The user or user ID.
@@ -156,7 +162,7 @@ class VoiceStateRepository extends AbstractRepository
      * - When unsuppressed, non-bot users will have their request_to_speak_timestamp set to the current time. Bot users will not.
      * - When suppressed, the user will have their request_to_speak_timestamp removed.
      *
-     * @link https://discord.com/developers/docs/resources/voice#modify-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#modify-user-voice-state
      *
      * @param Guild|string       $guild              The guild or guild ID.
      * @param Mmeber|User|string $user               The user ID.

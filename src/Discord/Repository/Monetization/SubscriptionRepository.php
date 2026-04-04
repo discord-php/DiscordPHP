@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,12 +14,13 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Monetization;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Monetization\Subscription;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -46,7 +48,7 @@ class SubscriptionRepository extends AbstractRepository
     /**
      * Returns all subscriptions for a given SKU, optionally filtered by user.
      *
-     * @link https://discord.com/developers/docs/resources/subscription#list-sku-subscriptions
+     * @link https://docs.discord.com/developers/resources/subscription#list-sku-subscriptions
      *
      * @param array                       $options
      * @param Member|User|string|int|null $options['user_id'] User ID to filter subscriptions by. Required except for OAuth queries.
@@ -56,7 +58,7 @@ class SubscriptionRepository extends AbstractRepository
      *
      * @throws \RangeException
      *
-     * @return \React\Promise\PromiseInterface<\Discord\Helpers\Collection<Subscription>>
+     * @return PromiseInterface<ExCollectionInterface<Subscription>>
      */
     public function getSubscriptions(array $options = [])
     {
@@ -91,10 +93,11 @@ class SubscriptionRepository extends AbstractRepository
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $subscriptions = Collection::for(Subscription::class);
+            /** @var ExCollectionInterface<Subscription> $subscriptions */
+            $subscriptions = $this->discord->getCollectionClass()::for(Subscription::class);
 
             foreach ($responses as $response) {
-                $subscriptions->pushItem($this->get('id', $response->id) ?: $this->create($response, true));
+                $subscriptions->pushItem($this->get('id', $response->id) ?? $this->create($response, true));
             }
 
             return $subscriptions;

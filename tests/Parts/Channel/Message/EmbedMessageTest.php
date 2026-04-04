@@ -5,12 +5,14 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
+use Discord\Builders\MessageBuilder;
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Author;
@@ -29,7 +31,6 @@ final class EmbedMessageTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $embed = new Embed($discord);
             $embed->setTitle('Testing Embed')
-                ->setType(Embed::TYPE_RICH)
                 ->setAuthor('DiscordPHP Bot')
                 ->setDescription('Embed Description')
                 ->setColor(getColor('lightblue'))
@@ -45,7 +46,7 @@ final class EmbedMessageTest extends DiscordTestCase
                 ])
                 ->setFooter('Footer Value');
 
-            $this->channel()->sendEmbed($embed)
+            $this->channel()->sendMessage(MessageBuilder::new()->addEmbed($embed))
                 ->then(function (Message $message) use ($resolve) {
                     $this->assertEquals(1, $message->embeds->count());
 

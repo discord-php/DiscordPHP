@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,7 +16,8 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
+use Discord\Discord;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Message\MessagePinData;
@@ -24,7 +26,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
@@ -56,9 +57,11 @@ use function React\Promise\resolve;
  * @property      string       $parent_id           The ID of the parent channel or the channel which the thread was started in.
  * @property-read Channel|null $parent              The parent channel or the channel which the thread was created in.
  *
- * @property bool              $is_private Whether the channel is a private channel.
- * @property MemberRepository  $members    Voice channel only - members in the channel or thread.
- * @property MessageRepository $messages   Text channel only - messages sent in the channel or thread.
+ * @property bool                                   $is_private Whether the channel is a private channel.
+ * @property ExCollectionInterface<Member>|Member[] $members    Voice channel only - members in the channel or thread.
+ * @property MessageRepository                      $messages   Text channel only - messages sent in the channel or thread.
+ *
+ * @property Discord $discord The Discord client instance.
  */
 trait ChannelTrait
 {
@@ -219,7 +222,7 @@ trait ChannelTrait
     /**
      * Fetches message history.
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
+     * @link https://docs.discord.com/developers/resources/channel#get-channel-messages
      *
      * @param array               $options           Array of options.
      * @param string|Message|null $options['around'] Get messages around this message ID.
@@ -231,7 +234,7 @@ trait ChannelTrait
      *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<ExCollectionInterface<Message[]>>
      */
     public function getMessageHistory(array $options = []): PromiseInterface
     {
@@ -275,10 +278,11 @@ trait ChannelTrait
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = Collection::for(Message::class);
+            /** @var ExCollectionInterface $messages */
+            $messages = $this->discord->getCollectionClass()::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
+                $messages->pushItem($this->messages->get('id', $response->id) ?? $this->messages->create($response, true));
             }
 
             return $messages;
@@ -288,7 +292,7 @@ trait ChannelTrait
     /**
      * Bulk deletes an array of messages.
      *
-     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://docs.discord.com/developers/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages An array of messages to delete.
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
@@ -344,8 +348,9 @@ trait ChannelTrait
     /**
      * Returns the channels pinned messages.
      *
-     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
+     * @link https://docs.discord.com/developers/resources/message#get-channel-pins
      *
+     * @param array                 $options           Array of options.
      * @param int                   $options['limit']  The amount of messages to retrieve.
      * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
      *
@@ -399,7 +404,7 @@ trait ChannelTrait
     /**
      * Pin a message in a channel.
      *
-     * @link https://discord.com/developers/docs/resources/message#pin-message
+     * @link https://docs.discord.com/developers/resources/message#pin-message
      *
      * @param Message     $message The message to pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -410,14 +415,12 @@ trait ChannelTrait
      *
      * @return PromiseInterface<Message>
      *
-     * @todo Remove manage_messages permission check on January 12, 2026.
-     *
      * @since 10.19.0 Updated endpoint to use the new pin message endpoint.
      */
     public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->pin_messages && ! $botperms->manage_messages) {
+            if (! $botperms->pin_messages) {
                 return reject(new NoPermissionsException("You do not have permission to pin messages in the channel {$this->id}."));
             }
         }
@@ -445,7 +448,7 @@ trait ChannelTrait
     /**
      * Removes a message from the channels pinboard.
      *
-     * @link https://discord.com/developers/docs/resources/message#unpin-message
+     * @link https://docs.discord.com/developers/resources/message#unpin-message
      *
      * @param Message     $message The message to un-pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -455,14 +458,12 @@ trait ChannelTrait
      *
      * @return PromiseInterface
      *
-     * @todo Remove manage_messages permission check on January 12, 2026.
-     *
      * @since 10.19.0 Updated endpoint to use the new unpin message endpoint.
      */
     public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->pin_messages && ! $botperms->manage_messages) {
+            if (! $botperms->pin_messages) {
                 return reject(new NoPermissionsException("You do not have permission to unpin messages in the channel {$this->id}."));
             }
         }
@@ -494,7 +495,7 @@ trait ChannelTrait
      * parameter. If the first parameter is an instance of `MessageBuilder`, the
      * rest of the arguments are disregarded.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://docs.discord.com/developers/resources/channel#create-message
      *
      * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                       $tts              Whether the message is TTS.
@@ -601,7 +602,7 @@ trait ChannelTrait
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://docs.discord.com/developers/resources/channel#trigger-typing-indicator
      *
      * @throws \RuntimeException
      *
@@ -624,12 +625,13 @@ trait ChannelTrait
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of messages allowed or false.
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<ExCollectionInterface<Message[]>>
      */
     public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $messages = new Collection([], null, null);
+        /** @var ExCollectionInterface $messages */
+        $messages = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([

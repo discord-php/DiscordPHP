@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,10 +14,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\EmojiRepository;
+use Discord\Repository\Guild\EmojiRepository as GuildEmojiRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -25,7 +28,7 @@ use function React\Promise\reject;
 /**
  * An emoji object represents a custom emoji.
  *
- * @link https://discord.com/developers/docs/resources/emoji
+ * @link https://docs.discord.com/developers/resources/emoji
  *
  * @since 4.0.2
  *
@@ -77,7 +80,8 @@ class Emoji extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['roles'])) {
             return $roles;
@@ -143,7 +147,7 @@ class Emoji extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params
+     * @link https://docs.discord.com/developers/resources/emoji#modify-guild-emoji-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -151,6 +155,27 @@ class Emoji extends Part implements Stringable
             'name' => $this->name,
             'roles' => $this->attributes['roles'] ?? null,
         ]);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return EmojiRepository|GuildEmojiRepository The repository.
+     */
+    public function getRepository(): EmojiRepository|GuildEmojiRepository
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->emojis;
+        }
+
+        return $this->discord->emojis;
     }
 
     /**
@@ -164,19 +189,17 @@ class Emoji extends Part implements Stringable
             if ($botperms = $guild->getBotPermissions()) {
                 if ($this->created) {
                     if (! $botperms->create_guild_expressions) {
-                        return reject(new \DomainException("You do not have permission to create emojis in the guild {$guild->id}."));
+                        return reject(new NoPermissionsException("You do not have permission to create emojis in the guild {$guild->id}."));
                     }
                 } elseif (! $botperms->manage_guild_expressions) {
-                    return reject(new \DomainException("You do not have permission to manage emojis in the guild {$guild->id}."));
+                    return reject(new NoPermissionsException("You do not have permission to manage emojis in the guild {$guild->id}."));
                 } elseif ($this->user->id === $this->discord->id && ! $botperms->create_guild_expressions) {
-                    return reject(new \DomainException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
+                    return reject(new NoPermissionsException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
                 }
             }
-
-            return $guild->emojis->save($this, $reason);
         }
 
-        return $this->discord->emojis->save($this, $reason);
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**

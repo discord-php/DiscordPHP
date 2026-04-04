@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,10 +14,12 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\ComponentsTrait;
+
 /**
  * Section components allow you to define up to 3 text display components and add either a thumbnail or button to the right side.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#section
+ * @link https://docs.discord.com/developers/components/reference#section
  *
  * @since 10.5.0
  *
@@ -27,6 +30,8 @@ namespace Discord\Builders\Components;
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
+    use ComponentsTrait;
+
     public const USAGE = ['Message'];
 
     /**
@@ -34,21 +39,21 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_SECTION;
+    protected $type = ComponentObject::TYPE_SECTION;
 
     /**
      * Array of text display components.
      *
      * @var TextDisplay[]
      */
-    private $components = [];
+    protected $components = [];
 
     /**
      * Accessory component (Thumbnail or Button).
      *
      * @var Thumbnail|Button|null
      */
-    private $accessory;
+    protected $accessory;
 
     /**
      * Creates a new section.
@@ -72,7 +77,7 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function addComponent(ComponentObject|string $component): self
+    public function addComponent($component): self
     {
         if (is_string($component)) {
             $component = TextDisplay::new($component);
@@ -87,27 +92,6 @@ class Section extends Layout implements Contracts\ComponentV2
         }
 
         $this->components[] = $component;
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the section.
-     *
-     * @param TextDisplay[]|string[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a TextDisplay.
-     * @throws \OverflowException        Section exceeds 3 text components.
-     *
-     * @return $this
-     *
-     * @since 10.19.0
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
 
         return $this;
     }

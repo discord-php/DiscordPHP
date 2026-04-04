@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -17,9 +18,11 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Embed\Embed;
+use Discord\Parts\Part;
+use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -28,7 +31,7 @@ use function React\Promise\resolve;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @link https://discord.com/developers/docs/resources/user
+ * @link https://docs.discord.com/developers/resources/user
  *
  * @since 2.0.0
  *
@@ -96,7 +99,7 @@ class User extends Part implements Stringable
     public const FLAG_TEAM_PSEUDO_USER = (1 << 10);
     /** @deprecated 10.36.32 use `User::FLAG_TEAM_PSEUDO_USER` */
     public const FLAG_TEAM_USER = (1 << 10);
-    /** @todo Undocumented. */
+    /** Undocumented. */
     public const FLAG_SYSTEM = (1 << 12);
     /** Bug Hunter Level 2. */
     public const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
@@ -112,7 +115,7 @@ class User extends Part implements Stringable
     public const FLAG_DISCORD_CERTIFIED_MODERATOR = self::FLAG_CERTIFIED_MODERATOR;
     /** Bot uses only HTTP interactions and is shown in the online member list. */
     public const FLAG_BOT_HTTP_INTERACTIONS = (1 << 19);
-    /** @todo Undocumented. */
+    /** Undocumented. */
     public const FLAG_SUSPECTED_SPAM = (1 << 20); // Not documented
     /** User is an Active Developer. */
     public const FLAG_ACTIVE_DEVELOPER = (1 << 22);
@@ -150,7 +153,7 @@ class User extends Part implements Stringable
     /**
      * Gets the private channel for the user.
      *
-     * @link https://discord.com/developers/docs/resources/user#create-dm
+     * @link https://docs.discord.com/developers/resources/user#create-dm
      *
      * @return PromiseInterface<Channel>
      */
@@ -174,13 +177,13 @@ class User extends Part implements Stringable
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://docs.discord.com/developers/resources/channel#create-message
      *
-     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                                  $tts              Whether the message is TTS.
-     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return PromiseInterface<Message>
      */
@@ -194,7 +197,7 @@ class User extends Part implements Stringable
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://docs.discord.com/developers/resources/channel#trigger-typing-indicator
      *
      * @throws \RuntimeException
      *
@@ -380,6 +383,20 @@ class User extends Part implements Stringable
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return UserRepositor The repository.
+     */
+    public function getRepository(): UserRepository
+    {
+        return $this->discord->users;
     }
 
     /**

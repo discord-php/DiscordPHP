@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,8 +17,6 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
-use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -25,6 +24,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -33,6 +33,7 @@ use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
+use Discord\Repository\Guild\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -41,7 +42,7 @@ use function React\Promise\reject;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-member-object
+ * @link https://docs.discord.com/developers/resources/guild#guild-member-object
  *
  * @since 2.0.0
  *
@@ -65,6 +66,7 @@ use function React\Promise\reject;
  * @property-read string|null                        $avatar_decoration            The member's guild avatar decoration URL.
  * @property-read string|null                        $avatar_decoration_hash       The member's guild avatar decoration hash.
  * @property      ?AvatarDecorationData|null         $avatar_decoration_data       Data for the member's guild avatar decoration.
+ * @property      ?Collectibles|null                 $collectibles                 Data for the member's collectibles
  *
  * @property      string|null $guild_id The unique identifier of the guild that the member belongs to.
  * @property-read Guild|null  $guild    The guild that the member belongs to.
@@ -118,6 +120,7 @@ class Member extends Part implements Stringable
         'permissions',
         'communication_disabled_until',
         'avatar_decoration_data',
+        'collectibles',
 
         // partial
         'guild_id',
@@ -276,7 +279,7 @@ class Member extends Part implements Stringable
     /**
      * Adds a role to the member.
      *
-     * @link https://discord.com/developers/docs/resources/guild#add-guild-member-role
+     * @link https://docs.discord.com/developers/resources/guild#add-guild-member-role
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
@@ -326,7 +329,7 @@ class Member extends Part implements Stringable
     /**
      * Removes a role from the member.
      *
-     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member-role
+     * @link https://docs.discord.com/developers/resources/guild#remove-guild-member-role
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
@@ -370,7 +373,7 @@ class Member extends Part implements Stringable
     /**
      * Updates member roles.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-member
      *
      * @param ExCollectionInterface<Role|string>|Role[]|string[] $roles  The roles to set to the member.
      * @param string|null                                        $reason Reason for Audit Log.
@@ -381,8 +384,8 @@ class Member extends Part implements Stringable
      */
     public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
-        if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+        if ($roles instanceof ExCollectionInterface) {
+            $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
             return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
@@ -423,11 +426,11 @@ class Member extends Part implements Stringable
      *
      * @see User::sendMessage()
      *
-     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                                  $tts              Whether the message is TTS.
-     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      *
@@ -448,7 +451,7 @@ class Member extends Part implements Stringable
      * Note that Discord permissions are complex and YOU need to account for the
      * fact that you cannot edit a role higher than your own.
      *
-     * @link https://discord.com/developers/docs/topics/permissions
+     * @link https://docs.discord.com/developers/topics/permissions
      *
      * @param Channel|Thread|null $channel The channel to check its permission overwrites. `null` for just Role.
      *
@@ -769,7 +772,8 @@ class Member extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['roles'])) {
             return $roles;
@@ -973,6 +977,16 @@ class Member extends Part implements Stringable
     }
 
     /**
+     * Returns the collectibles for the member.
+     *
+     * @return Collectibles|null The collectibles data.
+     */
+    protected function getCollectiblesAttribute(): ?Collectibles
+    {
+        return $this->attributePartHelper('collectibles', Collectibles::class);
+    }
+
+    /**
      * Returns the voicechannel of the member.
      *
      * @return Channel|null
@@ -980,13 +994,7 @@ class Member extends Part implements Stringable
     public function getVoiceChannel(): ?Channel
     {
         if ($guild = $this->guild) {
-            return $guild->channels->find(function (Channel $channel) {
-                if ($channel->isVoiceBased() && $members = $channel->members) {
-                    return $members->offsetExists($this->id);
-                }
-
-                return false;
-            });
+            return $guild->channels->find(fn (Channel $channel) => $channel->isVoiceBased() && ($members = $channel->members) && $members->offsetExists($this->id));
         }
 
         return null;
@@ -995,13 +1003,34 @@ class Member extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-member-json-params
      */
     public function getUpdatableAttributes(): array
     {
         return [
             'roles' => array_values($this->attributes['roles']),
         ];
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MemberRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): MemberRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->members;
     }
 
     /**
@@ -1035,7 +1064,7 @@ class Member extends Part implements Stringable
         }
 
         // @todo Add more permission checks
-        // @link https://discord.com/developers/docs/resources/guild#modify-guild-member
+        // @link https://docs.discord.com/developers/resources/guild#modify-guild-member
 
         return $guild->members->save($this, $reason);
     }

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,6 +17,7 @@ namespace Discord\Parts\Guild;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Repository\Guild\RoleRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -25,7 +27,7 @@ use function React\Promise\reject;
  * A role defines permissions for the guild. Members can be added to the role.
  * The role belongs to a guild.
  *
- * @link https://discord.com/developers/docs/topics/permissions#role-object
+ * @link https://docs.discord.com/developers/topics/permissions#role-object
  *
  * @since 2.0.0
  *
@@ -227,7 +229,7 @@ class Role extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-role-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-role-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -245,7 +247,7 @@ class Role extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-role-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -261,6 +263,27 @@ class Role extends Part implements Stringable
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return RoleRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): RoleRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->roles;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -269,7 +292,7 @@ class Role extends Part implements Stringable
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            if ($botperms = $this->guild->getBotPermissions()) {
+            if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->manage_roles) {
                     return reject(new NoPermissionsException("The bot does not have permission to manage roles in guild {$this->guild_id}."));
                 }

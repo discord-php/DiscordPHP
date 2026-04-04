@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -27,7 +28,7 @@ use function Discord\poly_strlen;
  * They can be clicked by users, and send an interaction to your app when
  * clicked.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#buttons
+ * @link https://docs.discord.com/developers/components/reference#button
  *
  * @since 7.0.0
  *
@@ -63,7 +64,7 @@ class Button extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_BUTTON;
+    protected $type = ComponentObject::TYPE_BUTTON;
 
     /**
      * Style of button.
@@ -519,7 +520,7 @@ class Button extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type !== Component::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
+            if ($interaction->data->component_type !== ComponentObject::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
                 return;
             }
 
