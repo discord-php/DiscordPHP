@@ -5521,6 +5521,11 @@ Search.appendIndex(
             "summary": "A\u0020url\u0020or\u0020attachment,\u0020except\u0020in\u0020the\u0020case\u0020of\u0020File,\u0020which\u0020only\u0020supports\u0020attachment.",
             "url": "classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\UnfurledMediaItem\u003A\u003AFLAG_IS_ANIMATED",
+            "name": "FLAG_IS_ANIMATED",
+            "summary": "This\u0020image\u0020is\u0020animated.",
+            "url": "classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#constant_FLAG_IS_ANIMATED"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\UnfurledMediaItem\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
