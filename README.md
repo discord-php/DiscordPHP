@@ -45,9 +45,7 @@ Before you start using this Library, you **need** to know how PHP, Event Loops, 
 
 #### Voice Requirements
 
-- 64-bit PHP
-- [`ext-sodium`](https://www.php.net/manual/en/book.sodium.php)
-- [FFmpeg](https://ffmpeg.org/)
+- [DiscordPHP-Voice](https://github.com/discord-php/DiscordPHP-Voice)
 
 ### Windows and SSL
 
