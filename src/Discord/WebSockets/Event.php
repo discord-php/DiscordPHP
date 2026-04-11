@@ -140,6 +140,7 @@ abstract class Event
 
     // Game Server
     public const GAME_SERVER_UPDATE = 'GAME_SERVER_UPDATE';
+    public const GAME_SERVER_DELETE = 'GAME_SERVER_DELETE';
 
     /**
      * The Discord client instance.
