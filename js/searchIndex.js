@@ -5436,6 +5436,11 @@ Search.appendIndex(
             "summary": "Select\u0020menus\u0020are\u0020interactive\u0020components\u0020that\u0020allow\u0020users\u0020to\u0020select\u0020one\u0020or\nmore\u0020options\u0020from\u0020a\u0020dropdown\u0020list\u0020in\u0020messages.",
             "url": "classes/Discord-Parts-Channel-Message-SelectMenu.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SelectMenu\u003A\u003AgetTypeAttribute\u0028\u0029",
+            "name": "getTypeAttribute",
+            "summary": "Gets\u0020the\u0020type\u0020of\u0020the\u0020select\u0020menu.",
+            "url": "classes/Discord-Parts-Channel-Message-SelectMenu.html#method_getTypeAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\SelectMenu\u003A\u003AgetDefaultValuesAttribute\u0028\u0029",
             "name": "getDefaultValuesAttribute",
             "summary": "",
@@ -15976,6 +15981,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_GAME_SERVER_UPDATE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGAME_SERVER_DELETE",
+            "name": "GAME_SERVER_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GAME_SERVER_DELETE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003A\u0024discord",
             "name": "discord",
             "summary": "The\u0020Discord\u0020client\u0020instance.",
@@ -16210,6 +16220,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-EntitlementUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameServerDelete",
+            "name": "GameServerDelete",
+            "summary": "Handles\u0020GAME_SERVER_DELETE\u0020gateway\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GameServerDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameServerDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GameServerDelete.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GameServerUpdate",
             "name": "GameServerUpdate",

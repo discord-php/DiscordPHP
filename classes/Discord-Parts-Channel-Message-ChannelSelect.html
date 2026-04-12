@@ -266,7 +266,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/ChannelSelect.php"><a href="files/src-discord-parts-channel-message-channelselect.html"><abbr title="src/Discord/Parts/Channel/Message/ChannelSelect.php">ChannelSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -427,6 +427,12 @@
     <a class="" href="classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_type">$type</a>
     <span>
                         &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_values">$values</a>
+    <span>
+                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -755,6 +761,13 @@ JSON. Used for JsonSerializable.</dd>
     <span>
                                 &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>    </span>
 </dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-SelectMenu.html#method_getTypeAttribute">getTypeAttribute()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>Gets the type of the select menu.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
@@ -1293,6 +1306,45 @@ JSON. Used for JsonSerializable.</dd>
         class="
             phpdocumentor-element
             -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_values">
+        $values
+        <a href="classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_values" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/ChannelSelect.php"><a href="files/src-discord-parts-channel-message-channelselect.html"><abbr title="src/Discord/Parts/Channel/Message/ChannelSelect.php">ChannelSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$values</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>IDs of the selected channels. (Only included in the response).</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
             -protected
                                                                     "
 >
@@ -1426,7 +1478,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/ChannelSelect.php"><a href="files/src-discord-parts-channel-message-channelselect.html"><abbr title="src/Discord/Parts/Channel/Message/ChannelSelect.php">ChannelSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -1436,7 +1488,20 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;id&#039;, &#039;custom_id&#039;, &#039;channel_types&#039;, &#039;placeholder&#039;, &#039;default_values&#039;, &#039;min_values&#039;, &#039;max_values&#039;, &#039;disabled&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[
+    &#039;type&#039;,
+    &#039;id&#039;,
+    &#039;custom_id&#039;,
+    &#039;channel_types&#039;,
+    &#039;placeholder&#039;,
+    &#039;default_values&#039;,
+    &#039;min_values&#039;,
+    &#039;max_values&#039;,
+    &#039;disabled&#039;,
+    &#039;values&#039;,
+    // @internal
+    &#039;component_type&#039;,
+]</span></code>
 
     
     
@@ -3799,7 +3864,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/SelectMenu.php"><a href="files/src-discord-parts-channel-message-selectmenu.html"><abbr title="src/Discord/Parts/Channel/Message/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -3820,6 +3885,47 @@ JSON. Used for JsonSerializable.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTypeAttribute">
+        getTypeAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-SelectMenu.html#method_getTypeAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/SelectMenu.php"><a href="files/src-discord-parts-channel-message-selectmenu.html"><abbr title="src/Discord/Parts/Channel/Message/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the type of the select menu.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getTypeAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>In message interaction responses <code class="prettyprint">component_type</code> will be returned and in modal interaction responses <code class="prettyprint">type</code> will be returned.</p>
+</section>
+
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
             </section>
 
 </article>
@@ -4136,6 +4242,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_placeholder">$placeholder</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_type">$type</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_values">$values</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
@@ -4188,6 +4295,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-Component.html#method_getComponentsAttribute">getComponentsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-SelectMenu.html#method_getDefaultValuesAttribute">getDefaultValuesAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-SelectMenu.html#method_getTypeAttribute">getTypeAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>

@@ -241,7 +241,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    InteractionCreate
+    GameServerDelete
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-WebSockets-Event.html"><abbr title="\Discord\WebSockets\Event">Event</abbr></a>
@@ -263,37 +263,33 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/InteractionCreate.php"><a href="files/src-discord-websockets-events-interactioncreate.html"><abbr title="src/Discord/WebSockets/Events/InteractionCreate.php">InteractionCreate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/GameServerDelete.php"><a href="files/src-discord-websockets-events-gameserverdelete.html"><abbr title="src/Discord/WebSockets/Events/GameServerDelete.php">GameServerDelete.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Contains constants for WebSocket events as well as handlers for the events.</p>
+            <p class="phpdocumentor-summary">Handles GAME_SERVER_DELETE gateway events.</p>
 
 
+    <section class="phpdocumentor-description"><p>The payload contains a <code class="prettyprint">game_server_id</code> and a <code class="prettyprint">guild_id</code>.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
+                    <span class="phpdocumentor-tag__name">todo</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#interaction-create"> https://docs.discord.com/developers/events/gateway-events#interaction-create </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">6.0.0</span>
                                                                                 
-                                             
+                                                 <section class="phpdocumentor-description"><p>TBD</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -301,7 +297,7 @@
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -313,7 +309,7 @@
 
 <h4 id="toc-constants">
     Constants
-    <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -809,7 +805,7 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -838,7 +834,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -856,14 +852,14 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_handle">handle()</a>
+    <a class="" href="classes/Discord-WebSockets-Events-GameServerDelete.html#method_handle">handle()</a>
     <span>
                                 &nbsp;: <abbr title="\Generator">Generator</abbr>    </span>
 </dt>
 <dd>Transforms the given data, and updates the Discord instance if necessary.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_cacheMember">cacheMember()</a>
+    <a class="" href="classes/Discord-WebSockets-Event.html#method_cacheMember">cacheMember()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -876,13 +872,6 @@
 </dt>
 <dd>Cache User repository from Event data.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_checkCommand">checkCommand()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Recursively checks and handles command options for an interaction.</dd>
-
     </dl>
 
 
@@ -891,7 +880,7 @@
     <section class="phpdocumentor-constants">
         <h3 class="phpdocumentor-elements__header" id="constants">
             Constants
-            <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
@@ -3331,7 +3320,7 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -3459,7 +3448,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -3555,13 +3544,13 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_handle">
         handle()
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_handle" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#method_handle" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/InteractionCreate.php"><a href="files/src-discord-websockets-events-interactioncreate.html"><abbr title="src/Discord/WebSockets/Events/InteractionCreate.php">InteractionCreate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/GameServerDelete.php"><a href="files/src-discord-websockets-events-gameserverdelete.html"><abbr title="src/Discord/WebSockets/Events/GameServerDelete.php">GameServerDelete.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -3591,7 +3580,7 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_handle#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#method_handle#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -3620,13 +3609,13 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_cacheMember">
         cacheMember()
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_cacheMember" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Event.html#method_cacheMember" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/InteractionCreate.php"><a href="files/src-discord-websockets-events-interactioncreate.html"><abbr title="src/Discord/WebSockets/Events/InteractionCreate.php">InteractionCreate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -3665,14 +3654,15 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_cacheMember#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Event.html#method_cacheMember#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                    <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
                                                                                 
                                              
                                     </dd>
@@ -3744,86 +3734,13 @@
     
     
 </article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_checkCommand">
-        checkCommand()
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_checkCommand" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/InteractionCreate.php"><a href="files/src-discord-websockets-events-interactioncreate.html"><abbr title="src/Discord/WebSockets/Events/InteractionCreate.php">InteractionCreate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">107</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Recursively checks and handles command options for an interaction.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">checkCommand</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><abbr title="\Discord\WebSockets\Events\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-ApplicationCommand.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommand">ApplicationCommand</abbr></a>|<a href="classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommandAutocomplete">ApplicationCommandAutocomplete</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$interaction</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$command</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The command or subcommand to check.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$options</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Discord\WebSockets\Events\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The list of options to process.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$interaction</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Interactions-ApplicationCommand.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommand">ApplicationCommand</abbr></a>|<a href="classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommandAutocomplete">ApplicationCommandAutocomplete</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The interaction instance from Discord.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Returns true if a suggestion was triggered, otherwise false.</p>
-</section>
-
-            </section>
-
-</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/WebSockets/Events/InteractionCreate.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/WebSockets/Events/GameServerDelete.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -3924,9 +3841,9 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-WebSockets-Events-InteractionCreate.html#toc-methods">Methods</a></li>
+                                        <li><a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-WebSockets-Events-GameServerDelete.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
@@ -4030,10 +3947,9 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Discord-WebSockets-Event.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Discord-WebSockets-Event.html#method___debugInfo">__debugInfo()</a></li>
-                                            <li class=""><a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_handle">handle()</a></li>
-                                            <li class=""><a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_cacheMember">cacheMember()</a></li>
+                                            <li class=""><a href="classes/Discord-WebSockets-Events-GameServerDelete.html#method_handle">handle()</a></li>
+                                            <li class=""><a href="classes/Discord-WebSockets-Event.html#method_cacheMember">cacheMember()</a></li>
                                             <li class=""><a href="classes/Discord-WebSockets-Event.html#method_cacheUser">cacheUser()</a></li>
-                                            <li class=""><a href="classes/Discord-WebSockets-Events-InteractionCreate.html#method_checkCommand">checkCommand()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -4053,7 +3969,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/Discord-WebSockets-Events-InteractionCreate.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-WebSockets-Events-GameServerDelete.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
