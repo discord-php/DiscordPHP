@@ -28,11 +28,11 @@ use Discord\Helpers\ExCollectionInterface;
  */
 abstract class SelectMenu extends Interactive
 {
-    /** 
+    /**
      * Gets the type of the select menu.
-     * 
+     *
      * In message interaction responses `component_type` will be returned and in modal interaction responses `type` will be returned.
-     * 
+     *
      * @return int
      */
     protected function getTypeAttribute(): int
