@@ -54,6 +54,9 @@ class StringSelect extends SelectMenu
         'required',
         'disabled',
         'values', 
+
+        // @internal
+        'component_type',
     ];
 
     /**

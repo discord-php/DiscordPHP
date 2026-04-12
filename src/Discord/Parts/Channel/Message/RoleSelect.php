@@ -50,5 +50,8 @@ class RoleSelect extends SelectMenu
         'max_values',
         'disabled',
         'values',
+
+        // @internal
+        'component_type',
     ];
 }
