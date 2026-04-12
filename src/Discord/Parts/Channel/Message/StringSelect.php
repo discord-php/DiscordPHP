@@ -52,6 +52,7 @@ class StringSelect extends SelectMenu
         'max_values',
         'required',
         'disabled',
+        'values',
     ];
 
     /**
