@@ -28,6 +28,18 @@ use Discord\Helpers\ExCollectionInterface;
  */
 abstract class SelectMenu extends Interactive
 {
+    /**
+     * Gets the type of the select menu.
+     *
+     * In message interaction responses `component_type` will be returned and in modal interaction responses `type` will be returned.
+     *
+     * @return int
+     */
+    protected function getTypeAttribute(): int
+    {
+        return $this->attributes['type'] ?? $this->attributes['component_type'];
+    }
+
     protected function getDefaultValuesAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('default_values', DefaultValue::class);
