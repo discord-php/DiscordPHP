@@ -40,16 +40,6 @@ abstract class SelectMenu extends Interactive
         return $this->attributes['type'] ?? $this->attributes['component_type'];
     }
 
-    /**
-     * Gets the values selected in a select menu. (Only for Message Component)
-     * 
-     * @return string[]|null
-     */
-    protected function getValuesAttribute(): ?array
-    {
-        return $this->attributes['values'] ?? null;
-    }
-
     protected function getDefaultValuesAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('default_values', DefaultValue::class);

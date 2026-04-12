@@ -35,6 +35,7 @@ use Discord\Helpers\ExCollectionInterface;
  * @property int|null                                           $min_values     Minimum number of items that must be chosen (defaults to 1); min 0, max 25.
  * @property int|null                                           $max_values     Maximum number of items that can be chosen (defaults to 1); max 25.
  * @property bool|null                                          $disabled       Whether select menu is disabled (defaults to false).
+ * @property string[]|null                                      $values         IDs of the selected users. (Only included in the response).
  */
 class UserSelect extends SelectMenu
 {
@@ -50,5 +51,6 @@ class UserSelect extends SelectMenu
         'min_values',
         'max_values',
         'disabled',
+        'values',
     ];
 }

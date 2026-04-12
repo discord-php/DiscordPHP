@@ -33,6 +33,7 @@ namespace Discord\Parts\Channel\Message;
  * @property int|null                                           $min_values     Minimum number of items that must be chosen (defaults to 1); min 0, max 25.
  * @property int|null                                           $max_values     Maximum number of items that can be chosen (defaults to 1); max 25.
  * @property bool|null                                          $disabled       Whether select menu is disabled (defaults to false).
+ * @property string[]|null                                      $values         IDs of the selected mentionables. (Only included in the response).
  */
 class MentionableSelect extends SelectMenu
 {
@@ -48,5 +49,6 @@ class MentionableSelect extends SelectMenu
         'min_values',
         'max_values',
         'disabled',
+        'values',
     ];
 }
