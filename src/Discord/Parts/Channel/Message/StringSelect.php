@@ -53,7 +53,7 @@ class StringSelect extends SelectMenu
         'max_values',
         'required',
         'disabled',
-        'values', 
+        'values',
 
         // @internal
         'component_type',
