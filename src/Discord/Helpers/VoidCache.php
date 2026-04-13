@@ -14,10 +14,12 @@ namespace Discord\Helpers;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * The cache that always be null/void.
+ * A no-op cache that never stores values and always returns the provided default.
  *
  * This class is conditionally defined to remain compatible with
  * psr/simple-cache v1, v2 and v3 method signatures.
+ *
+ * @since v10.48.0
  */
 if ((new \ReflectionMethod(CacheInterface::class, 'get'))->hasReturnType()) {
     class VoidCache implements CacheInterface
