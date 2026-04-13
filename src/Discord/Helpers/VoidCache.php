@@ -14,53 +14,107 @@ namespace Discord\Helpers;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * The cache that always be null/void
+ * The cache that always be null/void.
+ *
+ * This class is conditionally defined to remain compatible with
+ * psr/simple-cache v1, v2 and v3 method signatures.
  */
-class VoidCache implements CacheInterface
-{
-    public function get(string $key, mixed $default = null): mixed
+if ((new \ReflectionMethod(CacheInterface::class, 'get'))->hasReturnType()) {
+    class VoidCache implements CacheInterface
     {
-        return $default;
-    }
-
-    public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
-    {
-        return true;
-    }
-
-    public function delete(string $key): bool
-    {
-        return true;
-    }
-
-    public function getMultiple(iterable $keys, mixed $default = null): iterable
-    {
-        $result = [];
-
-        foreach ($keys as $key) {
-            $result[$key] = $default;
+        public function get(string $key, mixed $default = null): mixed
+        {
+            return $default;
         }
 
-        return $result;
-    }
+        public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
+        {
+            return true;
+        }
 
-    public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
-    {
-        return true;
-    }
+        public function delete(string $key): bool
+        {
+            return true;
+        }
 
-    public function deleteMultiple(iterable $keys): bool
-    {
-        return true;
-    }
+        public function getMultiple(iterable $keys, mixed $default = null): iterable
+        {
+            $result = [];
 
-    public function clear(): bool
-    {
-        return true;
-    }
+            foreach ($keys as $key) {
+                $result[$key] = $default;
+            }
 
-    public function has(string $key): bool
+            return $result;
+        }
+
+        public function setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
+        {
+            return true;
+        }
+
+        public function deleteMultiple(iterable $keys): bool
+        {
+            return true;
+        }
+
+        public function clear(): bool
+        {
+            return true;
+        }
+
+        public function has(string $key): bool
+        {
+            return false;
+        }
+    }
+} else {
+    class VoidCache implements CacheInterface
     {
-        return false;
+        public function get($key, $default = null)
+        {
+            return $default;
+        }
+
+        public function set($key, $value, $ttl = null)
+        {
+            return true;
+        }
+
+        public function delete($key)
+        {
+            return true;
+        }
+
+        public function getMultiple($keys, $default = null)
+        {
+            $result = [];
+
+            foreach ($keys as $key) {
+                $result[$key] = $default;
+            }
+
+            return $result;
+        }
+
+        public function setMultiple($values, $ttl = null)
+        {
+            return true;
+        }
+
+        public function deleteMultiple($keys)
+        {
+            return true;
+        }
+
+        public function clear()
+        {
+            return true;
+        }
+
+        public function has($key)
+        {
+            return false;
+        }
     }
 }
