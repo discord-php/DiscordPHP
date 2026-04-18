@@ -46,7 +46,9 @@
         "symfony/cache": "^5.4",
         "laravel/pint": "^1.21",
         "pestphp/pest": "^4.1.2",
-        "carthage-software/mago": "1.1.0"
+        "carthage-software/mago": "1.1.0",
+        "phpstan/phpstan": "^2.1",
+        "infection/infection": "^0.32.6"
     },
     "autoload": {
         "files": [
@@ -82,7 +84,8 @@
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "carthage-software/mago": true
+            "carthage-software/mago": true,
+            "infection/extension-installer": true
         }
     }
 }
