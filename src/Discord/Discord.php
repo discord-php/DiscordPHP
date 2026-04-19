@@ -1440,8 +1440,12 @@ class Discord
         $this->emittedInit = true;
 
         if (class_exists(Manager::class)) {
-            $this->voice = new Manager($this);
-            $this->logger->info('voice class initialized');
+            try {
+                $this->voice = new Manager($this);
+                $this->logger->info('voice class initialized');
+            } catch (\Throwable $e) {
+                $this->logger->error('failed to initialize voice class', ['exception' => $e]);
+            }
         }
 
         $this->logger->info('client is ready');
