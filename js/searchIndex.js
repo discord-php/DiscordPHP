@@ -5456,6 +5456,41 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Separator.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme",
+            "name": "SharedClientTheme",
+            "summary": "The\u0020shared\u0020client\u0020theme\u0020object\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme\u003A\u003ATYPE_BASE_THEME_UNSET",
+            "name": "TYPE_BASE_THEME_UNSET",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html#constant_TYPE_BASE_THEME_UNSET"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme\u003A\u003ATYPE_BASE_THEME_DARK",
+            "name": "TYPE_BASE_THEME_DARK",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html#constant_TYPE_BASE_THEME_DARK"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme\u003A\u003ATYPE_BASE_THEME_LIGHT",
+            "name": "TYPE_BASE_THEME_LIGHT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html#constant_TYPE_BASE_THEME_LIGHT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme\u003A\u003ATYPE_BASE_THEME_DARKER",
+            "name": "TYPE_BASE_THEME_DARKER",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html#constant_TYPE_BASE_THEME_DARKER"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme\u003A\u003ATYPE_BASE_THEME_MIDNIGHT",
+            "name": "TYPE_BASE_THEME_MIDNIGHT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html#constant_TYPE_BASE_THEME_MIDNIGHT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\SharedClientTheme\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-SharedClientTheme.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\StringSelect",
             "name": "StringSelect",
             "summary": "A\u0020String\u0020Select\u0020is\u0020an\u0020interactive\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020select\u0020one\u0020or\u0020more\u0020provided\u0020options\u0020in\u0020a\u0020message.",
@@ -5740,6 +5775,11 @@ Search.appendIndex(
             "name": "getCallAttribute",
             "summary": "Returns\u0020the\u0020call\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getCallAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetSharedClientThemeAttribute\u0028\u0029",
+            "name": "getSharedClientThemeAttribute",
+            "summary": "Returns\u0020the\u0020shared_client_theme\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getSharedClientThemeAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetLinkAttribute\u0028\u0029",
             "name": "getLinkAttribute",
