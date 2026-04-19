@@ -646,7 +646,7 @@ class Channel extends Part implements Stringable
                 if (! $voiceChannel = $member->getVoiceChannel()) {
                     return reject(new \RuntimeException('Bot must be connected to a voice channel to send soundboard sounds.'));
                 }
-                if (! $voiceChannel->id === $this->id) {
+                if ($voiceChannel->id !== $this->id) {
                     return reject(new \RuntimeException("Bot must be connected to the voice channel {$this->id} to send it soundboard sounds."));
                 }
                 if ($member->deaf || $member->mute) { // Member can also not be self-muted or suppressed
@@ -1285,7 +1285,7 @@ class Channel extends Part implements Stringable
                     return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
                 }
             }
-            
+
             return $repository->save($this, $reason);
         } elseif ($this->created && $repository->get('id', $this->id)) {
             $data = [];
