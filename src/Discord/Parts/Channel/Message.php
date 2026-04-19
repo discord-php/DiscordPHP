@@ -71,7 +71,7 @@ use function React\Promise\reject;
  * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
  * @property      ExCollectionInterface<?Role>|array<string, ?Role>        $mention_roles          A collection of roles that were mentioned in the message.
  * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
- * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects.
+ * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects. This will be empty if the message has the `IS_COMPONENTS_V2` flag (`1 << 15`) set and attachments will instead be included within the `components` field.
  * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
  * @property      string|null                                              $nonce                  A randomly generated string that provides verification for the client. Not required.
  * @property      bool                                                     $pinned                 Whether the message is pinned to the channel.
