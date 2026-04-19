@@ -12,5 +12,5 @@
         "@default": true
     },
     "testFramework": "phpunit",
-    "testFrameworkOptions": "--filter=InviteTest"
+    "testFrameworkOptions": "--filter=\"(InviteTest|MemberTest)\""
 }

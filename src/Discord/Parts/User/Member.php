@@ -196,7 +196,7 @@ class Member extends Part implements Stringable
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
             if (null === $guild) {
-                return new \RuntimeException('Member has no Guild Part');
+                return reject(new \RuntimeException('Member has no Guild Part'));
             }
 
             if ($botperms = $guild->getBotPermissions()) {
