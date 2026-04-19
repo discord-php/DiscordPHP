@@ -162,7 +162,7 @@ class Member extends Part implements Stringable
      * @param string|null $reason               Reason of the Ban.
      *
      * @throws PartRequestFailedException Member has no `$guild`.
-     * @throws NoPermissionsException Missing `ban_members` permission.
+     * @throws NoPermissionsException     Missing `ban_members` permission.
      *
      * @return PromiseInterface<Ban>
      */
@@ -189,7 +189,7 @@ class Member extends Part implements Stringable
      * @param string|null $reason Reason for Audit Log.
      *
      * @throws PartRequestFailedException Member has no `$guild`.
-     * @throws NoPermissionsException Missing `kick_members` permission.
+     * @throws NoPermissionsException     Missing `kick_members` permission.
      *
      * @return PromiseInterface<self>
      */
@@ -286,7 +286,7 @@ class Member extends Part implements Stringable
      * @param string|null $reason Reason for Audit Log.
      *
      * @throws PartRequestFailedException Member already has role.
-     * @throws NoPermissionsException Missing manage_roles permission.
+     * @throws NoPermissionsException     Missing manage_roles permission.
      *
      * @return PromiseInterface
      */
