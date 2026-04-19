@@ -35,6 +35,7 @@ use Discord\Parts\Channel\Message\Activity;
 use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Channel\Message\RoleSubscriptionData;
+use Discord\Parts\Channel\Message\SharedClientTheme;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
@@ -70,7 +71,7 @@ use function React\Promise\reject;
  * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
  * @property      ExCollectionInterface<?Role>|array<string, ?Role>        $mention_roles          A collection of roles that were mentioned in the message.
  * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
- * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects.
+ * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects. This will be empty if the message has the `IS_COMPONENTS_V2` flag (`1 << 15`) set and attachments will instead be included within the `components` field.
  * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
  * @property      string|null                                              $nonce                  A randomly generated string that provides verification for the client. Not required.
  * @property      bool                                                     $pinned                 Whether the message is pinned to the channel.
@@ -93,7 +94,8 @@ use function React\Promise\reject;
  * @property      RoleSubscriptionData|null                                $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  * @property      Resolved|null                                            $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
  * @property      Poll|null                                                $poll                   The poll attached to the message.
- * @property      MessageCall|null                                         $call                   The call associated with the message
+ * @property      MessageCall|null                                         $call                   The call associated with the message.
+ * @property      SharedClientTheme|null                                   $shared_client_theme    The custom client-side theme shared via the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -838,6 +840,16 @@ class Message extends Part
     protected function getCallAttribute(): ?MessageCall
     {
         return $this->attributePartHelper('call', MessageCall::class);
+    }
+
+    /**
+     * Returns the shared_client_theme attribute.
+     *
+     * @return SharedClientTheme|null
+     */
+    protected function getSharedClientThemeAttribute(): ?SharedClientTheme
+    {
+        return $this->attributePartHelper('shared_client_theme', SharedClientTheme::class);
     }
 
     /**
