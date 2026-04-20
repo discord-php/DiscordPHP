@@ -19,9 +19,9 @@ use Discord\WebSockets\Event;
 
 /**
  * Sent when the voice channel start time changes.
- * 
+ *
  * This can be used to sync up the client's voice connection if it becomes out of sync.
- * 
+ *
  * @since 10.48.0
  */
 class VoiceChannelStartTimeUpdate extends Event

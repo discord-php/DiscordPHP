@@ -674,6 +674,59 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Sets the voice channel status string for this channel.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#set-voice-channel-status
+     *
+     * @param string|null $status The status string to set (up to 500 characters). Use null to clear.
+     * @param string|null $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      If the channel is not voice-based.
+     * @throws NoPermissionsException If the bot lacks the required permissions.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.48.0
+     */
+    public function setVoiceChannelStatus(?string $status = null, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot set a voice channel status on a non-voice channel.'));
+        }
+
+        if ($this->guild !== null) {
+            if ($botperms = $this->getBotPermissions()) {
+                // If the bot is not connected to the voice channel, MANAGE_CHANNELS is required.
+                $connected = false;
+                if ($member = $this->guild->members->get('id', $this->discord->id)) {
+                    if ($voiceChannel = $member->getVoiceChannel()) {
+                        if ($voiceChannel->id === $this->id) {
+                            $connected = true;
+                        }
+                    }
+                }
+
+                if (! $connected && ! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to set the voice channel status for the channel {$this->id}."));
+                }
+
+                if (! $botperms->set_voice_channel_status) {
+                    return reject(new NoPermissionsException("You do not have permission to set the voice channel status for the channel {$this->id}."));
+                }
+            }
+        }
+
+        $payload = ['status' => $status];
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_VOICE_STATUS, $this->id), $payload, $headers);
+    }
+
+    /**
      * Follow an Announcement Channel to send messages to a target channel.
      *
      * Requires the MANAGE_WEBHOOKS permission in the target channel.

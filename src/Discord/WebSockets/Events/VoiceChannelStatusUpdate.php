@@ -19,7 +19,7 @@ use Discord\WebSockets\Event;
 
 /**
  * Sent when the voice channel status changes.
- * 
+ *
  * @since 10.48.0
  */
 class VoiceChannelStatusUpdate extends Event

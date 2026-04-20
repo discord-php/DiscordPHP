@@ -19,7 +19,7 @@ use Discord\WebSockets\Event;
 
 /**
  * Includes ephemeral data for channels in a guild. Sent in response to Request Channel Info. Sent in response to Request Channel Info.
- * 
+ *
  * @link https://docs.discord.com/developers/events/gateway-events#channel-info
  *
  * @since 10.48.0
