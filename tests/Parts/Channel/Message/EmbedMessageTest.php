@@ -21,58 +21,37 @@ use Discord\Parts\Embed\Footer;
 
 use function Discord\getColor;
 
-final class EmbedMessageTest extends DiscordTestCase
-{
-    /**
-     * @covers \Discord\Parts\Channel\Channel::sendEmbed
-     */
-    public function testCanSendEmbed()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $embed = new Embed($discord);
-            $embed->setTitle('Testing Embed')
-                ->setAuthor('DiscordPHP Bot')
-                ->setDescription('Embed Description')
-                ->setColor(getColor('lightblue'))
-                ->addField([
-                    'name' => 'Field 1',
-                    'value' => 'Value 1',
-                    'inline' => true,
-                ])
-                ->addField([
-                    'name' => 'Field 2',
-                    'value' => 'Value 2',
-                    'inline' => false,
-                ])
-                ->setFooter('Footer Value');
+it('can send a rich embed', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $embed = new Embed($discord);
+        $embed->setTitle('Testing Embed')
+            ->setAuthor('DiscordPHP Bot')
+            ->setDescription('Embed Description')
+            ->setColor(getColor('lightblue'))
+            ->addField(['name' => 'Field 1', 'value' => 'Value 1', 'inline' => true])
+            ->addField(['name' => 'Field 2', 'value' => 'Value 2', 'inline' => false])
+            ->setFooter('Footer Value');
 
-            $this->channel()->sendMessage(MessageBuilder::new()->addEmbed($embed))
-                ->then(function (Message $message) use ($resolve) {
-                    $this->assertEquals(1, $message->embeds->count());
+        $this->channel()->sendMessage(MessageBuilder::new()->addEmbed($embed))
+            ->then(function (Message $message) use ($resolve) {
+                expect($message->embeds->count())->toBe(1);
 
-                    /** @var Embed */
-                    $embed = $message->embeds->first();
-                    $this->assertEquals('Testing Embed', $embed->title);
-                    $this->assertEquals(Embed::TYPE_RICH, $embed->type);
-                    $this->assertEquals('Embed Description', $embed->description);
-                    $this->assertEquals(getColor('lightblue'), $embed->color);
+                /** @var Embed */
+                $embed = $message->embeds->first();
+                expect($embed->title)->toBe('Testing Embed');
+                expect($embed->type)->toBe(Embed::TYPE_RICH);
+                expect($embed->description)->toBe('Embed Description');
+                expect($embed->color)->toBe(getColor('lightblue'));
+                expect($embed->author)->toBeInstanceOf(Author::class);
+                expect($embed->author->name)->toBe('DiscordPHP Bot');
+                expect($embed->footer)->toBeInstanceOf(Footer::class);
+                expect($embed->footer->text)->toBe('Footer Value');
+                expect($embed->fields->count())->toBe(2);
+                expect($embed->fields->get('name', 'Field 1'))->not->toBeNull();
+                expect($embed->fields->get('name', 'Field 2'))->not->toBeNull();
+                expect((string) $embed->fields->get('name', 'Field 1'))->not->toBe((string) $embed->fields->get('name', 'Field 2'));
+            })
+            ->then($resolve, $resolve);
+    }, 10);
+});
 
-                    $this->assertInstanceOf(Author::class, $embed->author);
-                    $this->assertEquals('DiscordPHP Bot', $embed->author->name);
-
-                    $this->assertInstanceOf(Footer::class, $embed->footer);
-                    $this->assertEquals('Footer Value', $embed->footer->text);
-
-                    $this->assertEquals(2, $embed->fields->count());
-                    $this->assertNotNull($embed->fields->get('name', 'Field 1'));
-                    $this->assertNotNull($embed->fields->get('name', 'Field 2'));
-
-                    $this->assertNotEquals(
-                        (string) $embed->fields->get('name', 'Field 1'),
-                        (string) $embed->fields->get('name', 'Field 2')
-                    );
-                })
-                ->then($resolve, $resolve);
-        }, 10);
-    }
-}

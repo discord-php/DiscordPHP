@@ -284,9 +284,10 @@ When you need an example worth imitating, start here:
 
 ### Tests
 
-- Prefer plain `PHPUnit\Framework\TestCase` when logic is isolated.
-- Use `DiscordTestCase` only when real Discord integration matters.
-- Use `wait()` from `tests/functions.php` to bridge promises into test assertions.
+- Write all tests in **Pest 4** using `it()` or `test()` functions — no class-based test files.
+- Unit tests (no Discord token needed) go in the `unit` testsuite. Integration tests go in the `integration` testsuite; list new files in `phpunit.xml`.
+- Use `uses(DiscordTestCase::class)->in(...)` in `tests/Pest.php` only when a test file needs `$this->channel()` or other integration helpers.
+- Use `wait()` from `tests/functions.php` to bridge ReactPHP promises into test assertions.
 - Keep semantic tests focused on behavior, not on incidental implementation details.
 
 ### Docs
@@ -300,13 +301,16 @@ When you need an example worth imitating, start here:
 
 | Purpose | Command |
 | --- | --- |
-| main PHPUnit suite | `composer unit` |
+| unit test suite (no Discord token needed) | `composer unit` |
+| integration test suite (requires `.env`) | `composer integration` |
 | static analysis | `composer run-script mago-lint` |
 | formatter contributors run | `composer run-script cs` |
 | non-mutating Pint check | `./vendor/bin/pint --test --config ./pint.json ./src` |
 | docs build | `cd docs && yarn install && yarn build` |
 
 Integration tests expect `.env` values for `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME`.
+
+Tests are written in **Pest 4** (`it()` / `test()` functions). Use `uses(SomeClass::class)->in(...)` in `tests/Pest.php` to bind a base class to specific test files.
 
 ## Final rule
 

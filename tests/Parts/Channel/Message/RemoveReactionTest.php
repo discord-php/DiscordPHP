@@ -15,72 +15,46 @@ declare(strict_types=1);
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
 
-final class RemoveReactionTest extends DiscordTestCase
-{
-    /**
-     * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteAllReactions
-     */
-    public function testDeleteAllReactions()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $this
-                ->channel()
-                ->sendMessage('testing delete all reactions')
-                ->then(
-                    fn (Message $message) => \React\Promise\all([$message->react('😝'), $message->react('🤪')])
-                        ->then(fn () => $message)
-                )
-                ->then(fn (Message $message) => $message->deleteAllReactions(Message::REACT_DELETE_ALL))
-                ->then($resolve, $resolve);
-        });
-    }
+it('can delete all reactions from a message', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $this->channel()
+            ->sendMessage('testing delete all reactions')
+            ->then(
+                fn (Message $message) => \React\Promise\all([$message->react('😝'), $message->react('🤪')])
+                    ->then(fn () => $message)
+            )
+            ->then(fn (Message $message) => $message->deleteAllReactions(Message::REACT_DELETE_ALL))
+            ->then($resolve, $resolve);
+    });
+})->doesNotPerformAssertions();
 
-    /**
-     * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteOwnReaction
-     */
-    public function testDeleteSelfReaction()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $this
-                ->channel()
-                ->sendMessage('testing deleting self reaction')
-                ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
-                ->then(fn (Message $message) => $message->deleteOwnReaction('🤪'))
-                ->then($resolve, $resolve);
-        });
-    }
+it('can delete own reaction', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $this->channel()
+            ->sendMessage('testing deleting self reaction')
+            ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
+            ->then(fn (Message $message) => $message->deleteOwnReaction('🤪'))
+            ->then($resolve, $resolve);
+    });
+})->doesNotPerformAssertions();
 
-    /**
-     * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteUserReaction
-     */
-    public function testDeleteReactionOfUser()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $this
-                ->channel()
-                ->sendMessage('testing deleting reaction of user')
-                ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
-                ->then(fn (Message $message) => $message->deleteUserReaction('🤪', $discord->id))
-                ->then($resolve, $resolve);
-        });
-    }
+it('can delete a specific user reaction', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $this->channel()
+            ->sendMessage('testing deleting reaction of user')
+            ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
+            ->then(fn (Message $message) => $message->deleteUserReaction('🤪', $discord->id))
+            ->then($resolve, $resolve);
+    });
+})->doesNotPerformAssertions();
 
-    /**
-     * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteEmojiReactions
-     */
-    public function testDeleteAllReactionsForEmoji()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $this
-                ->channel()
-                ->sendMessage('testing deleting of single reaction')
-                ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
-                ->then(fn (Message $message) => $message->deleteEmojiReactions('🤪'))
-                ->then($resolve, $resolve);
-        });
-    }
-}
+it('can delete all reactions for a specific emoji', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $this->channel()
+            ->sendMessage('testing deleting of single reaction')
+            ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
+            ->then(fn (Message $message) => $message->deleteEmojiReactions('🤪'))
+            ->then($resolve, $resolve);
+    });
+})->doesNotPerformAssertions();
+

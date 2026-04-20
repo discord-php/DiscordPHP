@@ -67,9 +67,13 @@
     "scripts": {
         "pint": ["./vendor/bin/pint --config ./pint.json ./src"],
         "mago-lint": ["./vendor/bin/mago lint src/"],
-        "unit": ["./vendor/bin/phpunit --testdox"],
-        "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"],
-        "pest": "pest --parallel"
+        "unit": ["./vendor/bin/pest --testsuite unit"],
+        "integration": ["./vendor/bin/pest --testsuite integration"],
+        "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/pest --testsuite unit --coverage --coverage-html coverage"],
+        "coverage-full": ["XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --coverage-html coverage"],
+        "coverage-xml": ["XDEBUG_MODE=coverage ./vendor/bin/pest --testsuite unit --coverage --coverage-clover coverage.xml"],
+        "coverage-xml-full": ["XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --coverage-clover coverage.xml"],
+        "pest": ["./vendor/bin/pest --parallel"]
     },
     "config": {
         "allow-plugins": {

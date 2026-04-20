@@ -14,69 +14,45 @@ declare(strict_types=1);
 
 use Discord\Builders\Components\Label;
 use Discord\Builders\ModalBuilder;
-use PHPUnit\Framework\TestCase;
 
-final class ModalBuilderTest extends TestCase
-{
-    public function testNew()
-    {
-        $label = new Label();
+it('new() creates a builder with title, custom_id, and components', function () {
+    $label = new Label();
+    $builder = ModalBuilder::new('title', 'custom_id', [$label]);
 
-        $builder = ModalBuilder::new('title', 'custom_id', [$label]);
+    expect($builder->getTitle())->toBe('title');
+    expect($builder->getCustomId())->toBe('custom_id');
+    expect($builder->getComponents())->toBe([$label]);
+});
 
-        $this->assertSame('title', $builder->getTitle());
-        $this->assertSame('custom_id', $builder->getCustomId());
-        $this->assertSame([$label], $builder->getComponents());
-    }
+it('addComponent appends a component', function () {
+    $label = new Label();
+    $builder = new ModalBuilder();
+    $builder->addComponent($label);
 
-    public function testAddComponent()
-    {
-        $label = new Label();
+    expect($builder->getComponents())->toBe([$label]);
+});
 
-        $builder = new ModalBuilder();
-        $builder->addComponent($label);
+it('setComponents replaces all components', function () {
+    $label = new Label();
+    $builder = new ModalBuilder();
+    $builder->setComponents([$label]);
 
-        $this->assertSame([$label], $builder->getComponents());
-    }
+    expect($builder->getComponents())->toBe([$label]);
+});
 
-    public function testSetComponents()
-    {
-        $label = new Label();
+it('setTitle throws when title exceeds 45 characters', function () {
+    $builder = new ModalBuilder();
+    $builder->setTitle(str_repeat('a', 101));
+})->throws(\LogicException::class, 'Modal title can not be longer than 45 characters');
 
-        $builder = new ModalBuilder();
-        $builder->setComponents([$label]);
+it('setCustomId throws when custom ID exceeds 100 characters', function () {
+    $builder = new ModalBuilder();
+    $builder->setCustomId(str_repeat('a', 101));
+})->throws(\LogicException::class, 'Custom ID must be maximum 100 characters.');
 
-        $this->assertSame([$label], $builder->getComponents());
-    }
+it('addComponent throws when component limit is reached', function () {
+    $builder = new ModalBuilder();
+    $builder->setComponents([new Label(), new Label(), new Label(), new Label(), new Label()]);
+    $builder->addComponent(new Label());
+})->throws(\OverflowException::class, 'You can only have 5 components per modal.');
 
-    public function testSetTooLongTitleThrows()
-    {
-        $builder = new ModalBuilder();
-
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('Modal title can not be longer than 45 characters');
-
-        $builder->setTitle(str_repeat('a', 101));
-    }
-
-    public function testSetTooLongCustomIdThrows()
-    {
-        $builder = new ModalBuilder();
-
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('Custom ID must be maximum 100 characters.');
-
-        $builder->setCustomId(str_repeat('a', 101));
-    }
-
-    public function testAddComponentThrowsAfterReachingLimit()
-    {
-        $builder = new ModalBuilder();
-        $builder->setComponents([new Label(), new Label(), new Label(), new Label(), new Label()]);
-
-        $this->expectException(\OverflowException::class);
-        $this->expectExceptionMessage('You can only have 5 components per modal.');
-
-        $builder->addComponent(new Label());
-    }
-}

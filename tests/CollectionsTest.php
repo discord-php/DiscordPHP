@@ -13,268 +13,6 @@ declare(strict_types=1);
  */
 
 use Discord\Helpers\Collection;
-use PHPUnit\Framework\TestCase;
-
-final class CollectionsTest extends TestCase
-{
-    public function testFrom()
-    {
-        $array = ['one', 'two', 'three'];
-        $collection = Collection::from($array);
-
-        $this->assertEquals($array, $collection->jsonSerialize());
-    }
-
-    public function testPush()
-    {
-        $collection = new Collection([], null);
-
-        $collection->push('test', 'one');
-        $collection->push('two');
-
-        $this->assertEquals(
-            ['test', 'one', 'two'],
-            $collection->jsonSerialize(),
-        );
-    }
-
-    public function testDontAllowValuesOfDifferentType()
-    {
-        $collection = Collection::for(ClassOne::class);
-
-        $obj1 = new ClassOne();
-        $obj1->id = 1;
-
-        $obj2 = new ClassOne();
-        $obj2->id = 2;
-
-        $wrongClassObject = new ClassTwo();
-        $wrongClassObject->id = 3;
-
-        $array = [$obj1, $obj2, $wrongClassObject];
-
-        $collection->push(...$array);
-
-        $this->assertEquals([
-            1 => $obj1,
-            2 => $obj2,
-        ], $collection->jsonSerialize());
-    }
-
-    public function testGet()
-    {
-        $collection = new Collection([
-            [
-                'id' => 12,
-                'test' => 'something',
-            ],
-            [
-                'id' => 13,
-                'test' => 'something else',
-            ],
-            [
-                'id' => 14,
-                'test' => 'something even more different',
-            ],
-        ], 'id');
-
-        $this->assertEquals(
-            [
-                'id' => 13,
-                'test' => 'something else',
-            ],
-            $collection->get('id', 13)
-        );
-
-        $this->assertEquals(
-            [
-                'id' => 12,
-                'test' => 'something',
-            ],
-            $collection->get('test', 'something')
-        );
-    }
-
-    public function testPull()
-    {
-        $array = [1, 2, 3, 4, 5];
-        $collection = new Collection($array, null);
-
-        $this->assertEquals(
-            3,
-            $collection->pull(2)
-        );
-
-        unset($array[2]);
-
-        $this->assertEquals(
-            $array,
-            $collection->jsonSerialize()
-        );
-    }
-
-    public function testPullReturnsDefaultIfKeyNotFound()
-    {
-        $array = [1, 2, 3, 4, 5];
-        $collection = new Collection($array, null);
-
-        $this->assertEquals('default', $collection->pull(10, 'default'));
-    }
-
-    public function testFill()
-    {
-        $collection = new Collection([], null);
-        $collection->fill([1, 2, 3, 4, 5]);
-
-        $this->assertEquals([1, 2, 3, 4, 5], $collection->jsonSerialize());
-    }
-
-    public function testCount()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertEquals(5, $collection->count());
-    }
-
-    public function testFirst()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertEquals(1, $collection->first());
-    }
-
-    public function testLast()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertEquals(5, $collection->last());
-    }
-
-    public function testIsset()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertTrue($collection->isset(0));
-        $this->assertFalse($collection->isset(5));
-    }
-
-    public function testHas()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertTrue($collection->has(1, 2, 3));
-        $this->assertTrue($collection->has(0));
-        $this->assertFalse($collection->has(5, 6, 7));
-        $this->assertFalse($collection->has(0, 5));
-    }
-
-    public function testFilter()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-        $filteredCollection = $collection->filter(fn (int $number) => $number > 2);
-
-        $this->assertEquals([3, 4, 5], $filteredCollection->jsonSerialize());
-    }
-
-    public function testFind()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertEquals(2, $collection->find(fn (int $number) => $number === 2));
-    }
-
-    public function testFindReturnsNullWhenNoResultsFound()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-
-        $this->assertEquals(null, $collection->find(fn (int $number) => false));
-    }
-
-    public function testClear()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-        $collection->clear();
-
-        $this->assertEquals([], $collection->jsonSerialize());
-    }
-
-    public function testMap()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-        $mappedArray = $collection->map(fn (int $number) => $number * 2);
-
-        $this->assertEquals([
-            2, 4, 6, 8, 10,
-        ], $mappedArray->jsonSerialize());
-    }
-
-    public function testMerge()
-    {
-        $collection = new Collection([1, 2, 3, 4, 5], null);
-        $collection2 = new Collection([6, 7, 8], null);
-
-        $collection->merge($collection2);
-
-        $this->assertEquals(
-            range(1, 8),
-            $collection->jsonSerialize()
-        );
-    }
-
-    public function testMergeKeysAreOverwritten()
-    {
-        $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
-        $collection2 = new Collection(['first' => 3, 'second' => 4, 'fourth' => 5], null);
-
-        $collection->merge($collection2);
-
-        $this->assertEquals(
-            [
-                'first' => 3,
-                'second' => 4,
-                'third' => 3,
-                'fourth' => 5,
-            ],
-            $collection->jsonSerialize()
-        );
-    }
-
-    public function testOffsetGet()
-    {
-        $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
-
-        $this->assertEquals(2, $collection->offsetGet('second'));
-    }
-
-    public function testOffsetSet()
-    {
-        $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
-        $collection->offsetSet('second', 4);
-
-        $this->assertEquals(['first' => 1, 'second' => 4, 'third' => 3], $collection->jsonSerialize());
-    }
-
-    public function testOffsetUnset()
-    {
-        $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
-        $collection->offsetUnset('second');
-
-        $this->assertEquals(['first' => 1, 'third' => 3], $collection->jsonSerialize());
-    }
-
-    public function testIsIterable()
-    {
-        $collection = new Collection(range(1, 10), null);
-
-        $collected = [];
-
-        foreach ($collection as $item) {
-            $collected[] = $item;
-        }
-
-        $this->assertEquals(range(1, 10), $collected);
-    }
-}
 
 final class ClassOne
 {
@@ -285,3 +23,188 @@ final class ClassTwo
 {
     public $id;
 }
+
+it('creates a collection from an array', function () {
+    $array = ['one', 'two', 'three'];
+    $collection = Collection::from($array);
+
+    expect($collection->jsonSerialize())->toEqual($array);
+});
+
+it('pushes values onto the collection', function () {
+    $collection = new Collection([], null);
+
+    $collection->push('test', 'one');
+    $collection->push('two');
+
+    expect($collection->jsonSerialize())->toEqual(['test', 'one', 'two']);
+});
+
+it('rejects values of a different type', function () {
+    $collection = Collection::for(ClassOne::class);
+
+    $obj1 = new ClassOne();
+    $obj1->id = 1;
+
+    $obj2 = new ClassOne();
+    $obj2->id = 2;
+
+    $wrongClassObject = new ClassTwo();
+    $wrongClassObject->id = 3;
+
+    $collection->push($obj1, $obj2, $wrongClassObject);
+
+    expect($collection->jsonSerialize())->toEqual([1 => $obj1, 2 => $obj2]);
+});
+
+it('retrieves values by attribute', function () {
+    $collection = new Collection([
+        ['id' => 12, 'test' => 'something'],
+        ['id' => 13, 'test' => 'something else'],
+        ['id' => 14, 'test' => 'something even more different'],
+    ], 'id');
+
+    expect($collection->get('id', 13))->toEqual(['id' => 13, 'test' => 'something else']);
+    expect($collection->get('test', 'something'))->toEqual(['id' => 12, 'test' => 'something']);
+});
+
+it('pulls a value by key and removes it', function () {
+    $array = [1, 2, 3, 4, 5];
+    $collection = new Collection($array, null);
+
+    expect($collection->pull(2))->toBe(3);
+
+    unset($array[2]);
+    expect($collection->jsonSerialize())->toEqual($array);
+});
+
+it('pull returns default value when key not found', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->pull(10, 'default'))->toBe('default');
+});
+
+it('fills the collection from an array', function () {
+    $collection = new Collection([], null);
+    $collection->fill([1, 2, 3, 4, 5]);
+
+    expect($collection->jsonSerialize())->toEqual([1, 2, 3, 4, 5]);
+});
+
+it('counts elements correctly', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->count())->toBe(5);
+});
+
+it('returns the first element', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->first())->toBe(1);
+});
+
+it('returns the last element', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->last())->toBe(5);
+});
+
+it('checks isset correctly', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->isset(0))->toBeTrue();
+    expect($collection->isset(5))->toBeFalse();
+});
+
+it('checks has for multiple keys', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->has(1, 2, 3))->toBeTrue();
+    expect($collection->has(0))->toBeTrue();
+    expect($collection->has(5, 6, 7))->toBeFalse();
+    expect($collection->has(0, 5))->toBeFalse();
+});
+
+it('filters elements by predicate', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+    $filtered = $collection->filter(fn (int $n) => $n > 2);
+
+    expect($filtered->jsonSerialize())->toEqual([3, 4, 5]);
+});
+
+it('finds the first matching element', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->find(fn (int $n) => $n === 2))->toBe(2);
+});
+
+it('find returns null when no element matches', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+
+    expect($collection->find(fn () => false))->toBeNull();
+});
+
+it('clears all elements', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+    $collection->clear();
+
+    expect($collection->jsonSerialize())->toEqual([]);
+});
+
+it('maps elements with a callback', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+    $mapped = $collection->map(fn (int $n) => $n * 2);
+
+    expect($mapped->jsonSerialize())->toEqual([2, 4, 6, 8, 10]);
+});
+
+it('merges another collection appending elements', function () {
+    $collection = new Collection([1, 2, 3, 4, 5], null);
+    $collection->merge(new Collection([6, 7, 8], null));
+
+    expect($collection->jsonSerialize())->toEqual(range(1, 8));
+});
+
+it('merge overwrites duplicate keys', function () {
+    $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
+    $collection->merge(new Collection(['first' => 3, 'second' => 4, 'fourth' => 5], null));
+
+    expect($collection->jsonSerialize())->toEqual([
+        'first' => 3,
+        'second' => 4,
+        'third' => 3,
+        'fourth' => 5,
+    ]);
+});
+
+it('offsetGet returns the value at key', function () {
+    $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
+
+    expect($collection->offsetGet('second'))->toBe(2);
+});
+
+it('offsetSet updates the value at key', function () {
+    $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
+    $collection->offsetSet('second', 4);
+
+    expect($collection->jsonSerialize())->toEqual(['first' => 1, 'second' => 4, 'third' => 3]);
+});
+
+it('offsetUnset removes the key', function () {
+    $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
+    $collection->offsetUnset('second');
+
+    expect($collection->jsonSerialize())->toEqual(['first' => 1, 'third' => 3]);
+});
+
+it('is iterable via foreach', function () {
+    $collection = new Collection(range(1, 10), null);
+
+    $collected = [];
+    foreach ($collection as $item) {
+        $collected[] = $item;
+    }
+
+    expect($collected)->toEqual(range(1, 10));
+});
+
