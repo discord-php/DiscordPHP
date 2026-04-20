@@ -37,7 +37,7 @@ final class ChannelTest extends DiscordTestCase
                         ->then(fn () => $this->channel()->getPinnedMessages())
                         ->then(function (Collection $messages) use ($message) {
                             $this->assertGreaterThan(0, $messages->count());
-                            $this->assertContains($message->id, $messages->map(fn ($message) => $message->id));
+                            $this->assertTrue(in_array($message->id, $messages->map(fn ($message) => $message->id)->toArray()));
                         })
                 )
                 ->then($resolve, $resolve);
@@ -57,7 +57,7 @@ final class ChannelTest extends DiscordTestCase
                     fn (Message $message) => $this->channel()->pinMessage($message)
                         ->then(fn () => $this->channel()->unpinMessage($message))
                         ->then(fn () => $this->channel()->getPinnedMessages())
-                        ->then(fn (Collection $messages) => $this->assertNotContains($message->id, $messages->map(fn ($message) => $message->id)))
+                        ->then(fn (Collection $messages) => $this->assertFalse(in_array($message->id, $messages->map(fn ($message) => $message->id)->toArray())))
                 )
                 ->then($resolve, $resolve);
         });
