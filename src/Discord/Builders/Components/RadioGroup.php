@@ -50,7 +50,7 @@ class RadioGroup extends Group
     {
         $this->setCustomId($custom_id ?? self::generateUuid());
     }
-    
+
     /**
      * Creates a new radio group component.
      *

@@ -56,7 +56,7 @@ class Checkbox extends Interactive
     {
         $this->setCustomId($custom_id ?? self::generateUuid());
     }
-    
+
     /**
      * Creates a new checkbox component.
      *

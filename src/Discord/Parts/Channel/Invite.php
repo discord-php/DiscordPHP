@@ -418,7 +418,7 @@ class Invite extends Part implements Stringable
 
         return $this->http->put(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id), (string) $multipart, $multipart->getHeaders());
     }
-    
+
     /**
      * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
      *
@@ -513,7 +513,7 @@ class Invite extends Part implements Stringable
         if (! $this->guild_id) {
             return parent::save();
         }
-        
+
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);

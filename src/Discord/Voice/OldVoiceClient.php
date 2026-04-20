@@ -466,7 +466,7 @@ class OldVoiceClient extends EventEmitter
         }
         $this->channel_id = $channel->id;
         $this->guild_id = $channel->guild_id;
-        
+
         $this->data = $data;
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
@@ -1381,7 +1381,7 @@ class OldVoiceClient extends EventEmitter
 
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
         //$this->discord->getLogger()->debug('valid packet?' , ['valid' => $packet::validatePacket($packet)]);
-        
+
         $encrypted = $this->crypto->encryptRTPPacket($packet, $this->seq);
         //$this->discord->getLogger()->debug('valid encrypted packet?' , ['valid' => $this->crypto::validateEncryptedRTPPacket($encrypted)]);
 

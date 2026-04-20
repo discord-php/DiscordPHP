@@ -52,7 +52,7 @@ class CheckboxGroup extends Group
     {
         $this->setCustomId($custom_id ?? self::generateUuid());
     }
-    
+
     /**
      * Creates a new checkbox group component.
      *
@@ -139,7 +139,7 @@ class CheckboxGroup extends Group
         if (count($this->options) < 1 || count($this->options) > 10) {
             throw new \DomainException('CheckboxGroup must have between 1 and 10 options.');
         }
-        
+
         if (isset($this->min_values)) {
             $content['min_values'] = $this->min_values;
         }
