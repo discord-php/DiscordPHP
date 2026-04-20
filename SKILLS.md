@@ -42,12 +42,15 @@ Before loading any specific skill, anchor on these rules:
 
 Use root file as quick index. Use standalone files when change is concentrated in one risky layer and you need fuller playbooks, tripwires, and companion-file guidance.
 
-- `skills/part-model-maintainer.md`
-- `skills/repository-cache-keeper.md`
-- `skills/gateway-cache-sync-keeper.md`
-- `skills/builder-payload-smith.md`
-- `skills/interaction-flow-keeper.md`
-- `skills/legacy-command-client-keeper.md`
+- `.agents/skills/part-model-maintainer.md`
+- `.agents/skills/repository-cache-keeper.md`
+- `.agents/skills/gateway-cache-sync-keeper.md`
+- `.agents/skills/builder-payload-smith.md`
+- `.agents/skills/interaction-flow-keeper.md`
+- `.agents/skills/legacy-command-client-keeper.md`
+- `.agents/skills/runtime-bootstrap-keeper.md`
+- `.agents/skills/type-map-keeper.md`
+- `.agents/skills/async-test-and-doc-sync.md`
 
 ---
 
