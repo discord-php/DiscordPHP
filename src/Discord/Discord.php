@@ -117,7 +117,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.47.10';
+    public const VERSION = 'v10.48.0';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -1277,6 +1277,37 @@ class Discord
             [
                 'guild_ids' => $guildIds,
             ],
+        );
+
+        $this->send($payload);
+    }
+
+    /**
+     * Requests ephemeral channel data for channels in a guild. The server will send a Channel Info event in response.
+     *
+     * @see \Discord\WebSockets\Events\ChannelInfo
+     *
+     * @link https://docs.discord.com/developers/events/gateway-events#channel-info
+     *
+     * @param Guild|string $guild  ID of the guild or Guild object.
+     * @param string[]     $fields Array of strings specifying which fields to include in the response.
+     *
+     * @since 10.48.0
+     */
+    public function requestChannelInfo($guild, array $fields)
+    {
+        if (! is_string($guild)) {
+            $guild = $guild->id;
+        }
+
+        $payloadData = [
+            'guild_id' => $guild,
+            'fields' => array_values($fields),
+        ];
+
+        $payload = Payload::new(
+            Op::OP_REQUEST_CHANNEL_INFO,
+            $payloadData,
         );
 
         $this->send($payload);
