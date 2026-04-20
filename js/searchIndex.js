@@ -3016,6 +3016,11 @@ Search.appendIndex(
             "summary": "Used\u0020to\u0020request\u0020soundboard\u0020sounds\u0020for\u0020a\u0020list\u0020of\u0020guilds.\u0020The\u0020server\u0020will\u0020send\u0020Soundboard\u0020Sounds\u0020events\u0020for\u0020each\u0020guild\u0020in\u0020response.",
             "url": "classes/Discord-Discord.html#method_requestSoundboardSounds"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003ArequestChannelInfo\u0028\u0029",
+            "name": "requestChannelInfo",
+            "summary": "Requests\u0020ephemeral\u0020channel\u0020data\u0020for\u0020channels\u0020in\u0020a\u0020guild.\u0020The\u0020server\u0020will\u0020send\u0020a\u0020Channel\u0020Info\u0020event\u0020in\u0020response.",
+            "url": "classes/Discord-Discord.html#method_requestChannelInfo"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AupdateVoiceState\u0028\u0029",
             "name": "updateVoiceState",
             "summary": "Sent\u0020when\u0020a\u0020client\u0020wants\u0020to\u0020join,\u0020move,\u0020or\u0020disconnect\u0020from\u0020a\u0020voice\u0020channel.",
@@ -4185,6 +4190,11 @@ Search.appendIndex(
             "name": "sendSoundboardSound",
             "summary": "Sends\u0020a\u0020soundboard\u0020sound\u0020to\u0020the\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_sendSoundboardSound"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsetVoiceChannelStatus\u0028\u0029",
+            "name": "setVoiceChannelStatus",
+            "summary": "Sets\u0020the\u0020voice\u0020channel\u0020status\u0020string\u0020for\u0020this\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_setVoiceChannelStatus"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003Afollow\u0028\u0029",
             "name": "follow",
@@ -11541,6 +11551,11 @@ Search.appendIndex(
             "summary": "Allows\u0020sending\u0020voice\u0020messages.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SEND_VOICE_MESSAGES"
         },                {
+            "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASET_VOICE_CHANNEL_STATUS",
+            "name": "SET_VOICE_CHANNEL_STATUS",
+            "summary": "Allows\u0020setting\u0020voice\u0020channel\u0020status.",
+            "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SET_VOICE_CHANNEL_STATUS"
+        },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASEND_POLLS",
             "name": "SEND_POLLS",
             "summary": "Allows\u0020sending\u0020polls.",
@@ -12830,6 +12845,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\ChannelInfoChannel",
+            "name": "ChannelInfoChannel",
+            "summary": "Represents\u0020ephemeral\u0020channel\u0020info\u0020returned\u0020by\u0020the\u0020gateway.",
+            "url": "classes/Discord-Parts-WebSockets-ChannelInfoChannel.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\ChannelInfoChannel\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-WebSockets-ChannelInfoChannel.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\MessageInteraction",
             "name": "MessageInteraction",
@@ -15921,6 +15946,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_VOICE_SERVER_UPDATE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ACHANNEL_INFO",
+            "name": "CHANNEL_INFO",
+            "summary": "Sent\u0020in\u0020response\u0020to\u0020Request\u0020Channel\u0020Info\u0020\u0028ephemeral\u0020channel\u0020data\u0029.",
+            "url": "classes/Discord-WebSockets-Event.html#constant_CHANNEL_INFO"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AVOICE_CHANNEL_STATUS_UPDATE",
+            "name": "VOICE_CHANNEL_STATUS_UPDATE",
+            "summary": "Sent\u0020when\u0020the\u0020voice\u0020channel\u0020status\u0020changes.",
+            "url": "classes/Discord-WebSockets-Event.html#constant_VOICE_CHANNEL_STATUS_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AVOICE_CHANNEL_START_TIME_UPDATE",
+            "name": "VOICE_CHANNEL_START_TIME_UPDATE",
+            "summary": "Sent\u0020when\u0020the\u0020voice\u0020channel\u0020start\u0020time\u0020changes.",
+            "url": "classes/Discord-WebSockets-Event.html#constant_VOICE_CHANNEL_START_TIME_UPDATE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ASTAGE_INSTANCE_CREATE",
             "name": "STAGE_INSTANCE_CREATE",
             "summary": "",
@@ -16110,6 +16150,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ChannelDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ChannelInfo",
+            "name": "ChannelInfo",
+            "summary": "Includes\u0020ephemeral\u0020data\u0020for\u0020channels\u0020in\u0020a\u0020guild.\u0020Sent\u0020in\u0020response\u0020to\u0020Request\u0020Channel\u0020Info.\u0020Sent\u0020in\u0020response\u0020to\u0020Request\u0020Channel\u0020Info.",
+            "url": "classes/Discord-WebSockets-Events-ChannelInfo.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ChannelInfo\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-ChannelInfo.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ChannelPinsUpdate",
             "name": "ChannelPinsUpdate",
@@ -16871,6 +16921,26 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-UserUpdate.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelStartTimeUpdate",
+            "name": "VoiceChannelStartTimeUpdate",
+            "summary": "Sent\u0020when\u0020the\u0020voice\u0020channel\u0020start\u0020time\u0020changes.",
+            "url": "classes/Discord-WebSockets-Events-VoiceChannelStartTimeUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelStartTimeUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-VoiceChannelStartTimeUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelStatusUpdate",
+            "name": "VoiceChannelStatusUpdate",
+            "summary": "Sent\u0020when\u0020the\u0020voice\u0020channel\u0020status\u0020changes.",
+            "url": "classes/Discord-WebSockets-Events-VoiceChannelStatusUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelStatusUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-VoiceChannelStatusUpdate.html#method_handle"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\VoiceServerUpdate",
             "name": "VoiceServerUpdate",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
@@ -17170,6 +17240,11 @@ Search.appendIndex(
             "name": "OP_REQUEST_SOUNDBOARD_SOUNDS",
             "summary": "Request\u0020soundboard\u0020sounds.",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_REQUEST_SOUNDBOARD_SOUNDS"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_REQUEST_CHANNEL_INFO",
+            "name": "OP_REQUEST_CHANNEL_INFO",
+            "summary": "Request\u0020ephemeral\u0020channel\u0020data\u0020for\u0020channels\u0020in\u0020a\u0020guild.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_OP_REQUEST_CHANNEL_INFO"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_IDENTIFY",
             "name": "VOICE_IDENTIFY",

@@ -587,7 +587,33 @@ Unlike Message Reaction Remove, this event contains no users or members.</p>
 
 <span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">VOICE_SERVER_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">VoiceServerUpdate</span> <span class="token variable">$guild</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="webhooks">Webhooks</h2><div class="api-module--section--1E1xV"><h3>Webhooks Update</h3>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<hr>
+<h2>Voice Channel Status and Start Time</h2>
+<p>Voice channel status and voice session start time are ephemeral fields that are not present on the channel object. Apps can request these fields from the gateway using the Request Channel Info command and will receive a Channel Info event in response.</p>
+<h3>Request Channel Info</h3>
+<p>Send an opcode <code class="language-text">43</code> payload to request ephemeral channel data for a guild. The server will reply with a <code class="language-text">Channel Info</code> event containing the requested fields for channels in the guild.</p>
+<p>Example payload:</p>
+<div class="gatsby-highlight" data-language="json"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"guild_id"</span><span class="token operator">:</span> <span class="token string">"613425648685547541"</span><span class="token punctuation">,</span>
+    <span class="token property">"fields"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"status"</span><span class="token punctuation">,</span> <span class="token string">"voice_start_time"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>Available fields:</p>
+<ul>
+<li><code class="language-text">status</code> — short status string set for the voice channel.</li>
+<li><code class="language-text">voice_start_time</code> — timestamp for when the voice session started.</li>
+</ul>
+<h3>Events</h3>
+<ul>
+<li><code class="language-text">Voice Channel Status Update</code> — fired when a channel's <code class="language-text">status</code> changes.</li>
+<li><code class="language-text">Voice Channel Start Time Update</code> — fired when a voice session's start time changes.</li>
+</ul>
+<h3>Audit Log</h3>
+<p>Two audit log event types track status changes:</p>
+<ul>
+<li><code class="language-text">VOICE_CHANNEL_STATUS_UPDATE</code> (<code class="language-text">192</code>) — contains <code class="language-text">status</code> in the Optional Audit Entry Info.</li>
+<li><code class="language-text">VOICE_CHANNEL_STATUS_DELETE</code> (<code class="language-text">193</code>).</li>
+</ul></div><h2 id="webhooks">Webhooks</h2><div class="api-module--section--1E1xV"><h3>Webhooks Update</h3>
 <p>Called with a <code class="language-text">Guild</code> and <code class="language-text">Channel</code> object when a guild channel's webhooks are is created, updated, or deleted.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">WEBHOOKS_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token keyword type-hint">object</span> <span class="token variable">$guild</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token operator">?</span><span class="token keyword type-hint">object</span> <span class="token variable">$channel</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$guild</span> <span class="token keyword">instanceof</span> <span class="token class-name">Guild</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">$channel</span> <span class="token keyword">instanceof</span> <span class="token class-name">Channel</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
