@@ -80,6 +80,9 @@ use Discord\WebSockets\Events\TypingStart;
 use Discord\WebSockets\Events\UserUpdate;
 use Discord\WebSockets\Events\VoiceServerUpdate;
 use Discord\WebSockets\Events\VoiceStateUpdate;
+use Discord\WebSockets\Events\ChannelInfo;
+use Discord\WebSockets\Events\VoiceChannelStartTimeUpdate;
+use Discord\WebSockets\Events\VoiceChannelStatusUpdate;
 use Discord\WebSockets\Events\WebhooksUpdate;
 
 /**
@@ -130,6 +133,9 @@ class Handlers
         $this->addHandler(Event::CHANNEL_UPDATE, ChannelUpdate::class);
         $this->addHandler(Event::CHANNEL_DELETE, ChannelDelete::class);
         $this->addHandler(Event::CHANNEL_PINS_UPDATE, ChannelPinsUpdate::class);
+        $this->addHandler(Event::CHANNEL_INFO, ChannelInfo::class);
+        $this->addHandler(Event::VOICE_CHANNEL_STATUS_UPDATE, VoiceChannelStatusUpdate::class);
+        $this->addHandler(Event::VOICE_CHANNEL_START_TIME_UPDATE, VoiceChannelStartTimeUpdate::class);
 
         // Ban Event handlers
         $this->addHandler(Event::GUILD_BAN_ADD, GuildBanAdd::class);

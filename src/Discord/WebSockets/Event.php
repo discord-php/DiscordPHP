@@ -110,6 +110,12 @@ abstract class Event
     // Voice
     public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
     public const VOICE_SERVER_UPDATE = 'VOICE_SERVER_UPDATE';
+    /** Sent in response to Request Channel Info (ephemeral channel data). */
+    public const CHANNEL_INFO = 'CHANNEL_INFO';
+    /** Sent when the voice channel status changes. */
+    public const VOICE_CHANNEL_STATUS_UPDATE = 'VOICE_CHANNEL_STATUS_UPDATE';
+    /** Sent when the voice channel start time changes. */
+    public const VOICE_CHANNEL_START_TIME_UPDATE = 'VOICE_CHANNEL_START_TIME_UPDATE';
 
     // Stage Instance
     public const STAGE_INSTANCE_CREATE = 'STAGE_INSTANCE_CREATE';
