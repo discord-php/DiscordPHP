@@ -1,0 +1,16 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": ["src"]
+    },
+    "timeout": 30,
+    "logs": {
+        "text": ".papline/infection.log",
+        "summary": ".papline/infection-summary.log"
+    },
+    "mutators": {
+        "@default": true
+    },
+    "testFramework": "phpunit",
+    "testFrameworkOptions": "--filter=\"(InviteTest|MemberTest)\""
+}
