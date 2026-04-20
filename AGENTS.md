@@ -45,6 +45,8 @@ Each skill lives in `.agents/skills/<name>/SKILL.md` and is loaded automatically
 | interactions, slash commands, resolved data, autocomplete, modals | `interaction-flow-keeper` |
 | `DiscordCommandClient` or prefix-command behavior | `legacy-command-client-keeper` |
 | tests, guides, docblocks, generated reference expectations | `async-test-and-doc-sync` |
+| `Voice/*`, audio streaming, encryption, voice gateway protocol | `voice-subsystem-keeper` |
+| `Helpers/*`, `Exceptions/*`, cache wrappers, `Endpoint::bind()`, `Collection` | `helpers-and-infra-keeper` |
 
 ## Architecture map
 
@@ -56,8 +58,22 @@ Each skill lives in `.agents/skills/<name>/SKILL.md` and is loaded automatically
 | Repositories | typed collections, cache, REST endpoints, CRUD | `src/Discord/Repository/AbstractRepository.php`, `src/Discord/Repository/**/*` | `$class`, `$endpoints`, `$vars`, cache writes, Promise-based API |
 | Builders | outbound payload construction and validation | `src/Discord/Builders/**/*` | fluent setters, validation, `jsonSerialize()`, `fromPart()` symmetry |
 | Gateway events | payload hydration, cache mutation, emitted return shapes | `src/Discord/WebSockets/Handlers.php`, `src/Discord/WebSockets/Event.php`, `src/Discord/WebSockets/Events/*` | typed part creation, related cache updates, event contract shape |
+| Helpers | cross-cutting utilities: cache wrappers, BigInt math, multipart uploads, property mutator trait, domain exceptions | `src/Discord/Helpers/*`, `src/Discord/Exceptions/*` | no domain logic here; utilities only |
+| Voice | internal voice protocol types and encryption; runtime integration in `Discord.php`; audio client in external `discord-php-helpers/voice` package | `src/Discord/Voice/*` | `Old*` files are legacy — do not extend them; keep protocol and crypto layers separate |
 | Optional command layer | message-prefix command UX | `src/Discord/DiscordCommandClient.php`, `src/Discord/CommandClient/Command.php` | keep it layered on top of core client, not inside it |
 | Tests and docs | behavioral contract | `tests/*`, `guide/*`, `README.md`, `docs/*` | async testing patterns, public guidance, docblock reference surface |
+
+## External packages
+
+Three external packages are tightly coupled to core runtime behavior. Treat them as first-class parts of the architecture:
+
+| Package | Why it matters | Local touchpoints |
+| --- | --- | --- |
+| `discord-php/http` | HTTP client and `Endpoint` URL template binding used in every repository; handles rate-limiting via `Bucket` | `$endpoints` arrays in all repositories; `use Discord\Http\Endpoint` imports |
+| `discord-php-helpers/collection` | `Collection` class is the base for every `AbstractRepository`; discriminator-keyed typed collections | `AbstractRepository extends Collection`; `$discrim` property |
+| `discord-php-helpers/voice` | `Manager` and `VoiceClient` implement the actual audio client; `src/Discord/Voice/*` contains only internal protocol types and encryption | `Discord::joinVoiceChannel()`, voice event handlers in `Discord.php` |
+
+When editing endpoint bindings, REST routes, cache storage, or voice audio, you are necessarily touching these packages' contracts.
 
 ## Repo worldview
 
@@ -184,7 +200,10 @@ Examples:
 - `PartTrait` for universal part mechanics
 - `ChannelTrait` for channel/thread behavior
 - `GuildTrait` for guild asset and feature helpers
-- `DynamicPropertyMutatorTrait` for builder/property mutators
+- `DynamicPropertyMutatorTrait` for builder/property mutators (`src/Discord/Helpers/DynamicPropertyMutatorTrait.php`)
+- `AbstractRepositoryTrait` for repository collection mechanics
+- `ComponentsTrait` for shared component helpers across builders (`src/Discord/Builders/ComponentsTrait.php`)
+- `VoiceGroupCryptoTrait` for voice channel encryption/decryption
 
 Smell: new abstract intermediate base class that only exists to share a few methods between peers that already have a common root.
 
@@ -212,6 +231,8 @@ If you touch one of these, inspect the companions too:
 | `Channel::TYPES`, `Interaction::TYPES`, component/ embed maps | event handlers, typed collection helpers, builder mirrors |
 | `DiscordCommandClient` | `CommandClient/Command.php`, examples/docs |
 | public magic properties | class PHPDoc, guide docs if user-facing behavior changed |
+| `Helpers/CacheWrapper.php` or cache config | `AbstractRepository` cache behavior, `Discord.php` `options['cache']` wiring |
+| `Voice/*` or voice event in `Discord.php` | `VoiceGroupCrypto`, `VoicePacket`, external voice package entry points, voice opcodes |
 
 ## Change playbooks
 
@@ -276,6 +297,8 @@ If you see one of these, slow down:
 - a synchronous wait or loop-stop trick outside tests
 - a new abstraction layer that duplicates what parts, repositories, events, or builders already do
 - web-framework terminology creeping into core runtime code
+- extending `OldVoiceClient` or any `Old*` class in `src/Discord/Voice/` unless deliberately fixing legacy behavior
+- bypassing `Endpoint::bind()` with hand-assembled raw URL strings
 
 ## Preferred reference files
 
@@ -293,6 +316,8 @@ When you need an example worth imitating, start here:
 - Interaction typing: `src/Discord/Parts/Interactions/Interaction.php`
 - Gateway cache mutation: `src/Discord/WebSockets/Events/MessageCreate.php`, `src/Discord/WebSockets/Events/GuildCreate.php`
 - Optional command layer: `src/Discord/DiscordCommandClient.php`, `src/Discord/CommandClient/Command.php`
+- Cache infrastructure: `src/Discord/Helpers/CacheWrapper.php`, `src/Discord/Helpers/CacheConfig.php`
+- Voice protocol and encryption: `src/Discord/Voice/VoiceGroupCrypto.php`, `src/Discord/Voice/VoicePacket.php`
 
 ## Testing and docs workflow
 
@@ -318,6 +343,8 @@ When you need an example worth imitating, start here:
 | static analysis | `composer run-script mago-lint` |
 | formatter contributors run | `composer run-script cs` |
 | non-mutating Pint check | `./vendor/bin/pint --test --config ./pint.json ./src` |
+| Pint formatter (auto-fix) | `composer pint` |
+| test coverage report | `composer coverage` |
 | docs build | `cd docs && yarn install && yarn build` |
 
 Integration tests expect `.env` values for `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME`.
