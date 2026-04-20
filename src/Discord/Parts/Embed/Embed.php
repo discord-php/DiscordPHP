@@ -215,7 +215,7 @@ class Embed extends Part
             throw new \LengthException('Embed description can not be longer than 4096 characters');
         } else {
             if ($this->exceedsOverallLimit(poly_strlen($description))) {
-                throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['description'] = $description;
@@ -256,7 +256,7 @@ class Embed extends Part
         } elseif (poly_strlen($title) > 256) {
             throw new \LengthException('Embed title can not be longer than 256 characters');
         } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         } else {
             $this->attributes['title'] = $title;
         }
@@ -334,7 +334,7 @@ class Embed extends Part
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
-            if (count($this->fields) > 25) {
+            if (count($this->fields) >= 25) {
                 throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
@@ -388,7 +388,7 @@ class Embed extends Part
         } elseif ($length > 256) {
             throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
         if ($iconurl instanceof Attachment) {
@@ -427,7 +427,7 @@ class Embed extends Part
         } elseif ($length > 2048) {
             throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
         if ($iconurl instanceof Attachment) {
