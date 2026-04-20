@@ -1,6 +1,9 @@
 {
     "name": "team-reflex/discord-php",
+    "type": "library",
     "description": "An unofficial API to interact with the voice and text service Discord.",
+    "keywords": ["discord", "bot", "api", "websocket", "reactphp"],
+    "homepage": "https://discord-php.github.io/DiscordPHP/",
     "license": "MIT",
     "authors": [
         {
@@ -48,6 +51,8 @@
         "symfony/var-dumper": "*",
         "wyrihaximus/react-cache-redis": "^4.5"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "files": [
             "src/Discord/functions.php"
@@ -55,6 +60,11 @@
         "psr-4": {
             "Discord\\": "src/Discord"
         }
+    },
+    "autoload-dev": {
+        "files": [
+            "tests/functions.php"
+        ]
     },
     "suggest": {
         "ext-gmp": "For 64 bit calculations on x86 (32 bit) PHP.",
@@ -79,6 +89,8 @@
     },
     "config": {
         "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "carthage-software/mago": true
