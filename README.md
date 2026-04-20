@@ -105,7 +105,7 @@ Documentation for the latest version can be found [here](//discord-php.github.io
 
 ## Contributing
 
-We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). Please run php-cs-fixer before opening a pull request by running `composer run-script cs`.
+We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). Please run Pint before opening a pull request by running `composer run-script pint`.
 
 ## License
 
