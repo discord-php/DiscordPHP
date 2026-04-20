@@ -5,7 +5,7 @@
  *
  * When a User says "ping", the Bot will reply "pong"
  *
- * Getting a User message content requries the Message Content Privileged Intent
+ * Getting a User message content requires the Message Content Privileged Intent
  * @link http://dis.gd/mcfaq
  *
  * Run this example bot from main directory using command:

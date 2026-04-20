@@ -20,24 +20,25 @@ use Discord\Parts\Channel\Message;
 use Psr\Http\Message\ResponseInterface;
 use React\Http\Browser;
 
-use function React\Async\coroutine;
+use function React\Async\async;
+use function React\Async\await;
 
 // Create a $discord BOT
 $discord = new DiscordCommandClient([
     'token' => '', // Put your Bot token here from https://discord.com/developers/applications/
 ]);
 
-// Create a $browser with same loop as $discord
-$browser = new Browser(null, $discord->getLoop());
+// Create a $browser
+$browser = new Browser();
 
 $discord->registerCommand('discordstatus', function (Message $message, $params) use ($discord, $browser) {
-    coroutine(function (Message $message, $params) use ($discord, $browser) {
+    async(function () use ($message, $discord, $browser) {
         // Ignore messages from any Bots
         if ($message->author->bot) return;
 
         try {
             // Make GET request to API of discordstatus.com
-            $response = yield $browser->get('https://discordstatus.com/api/v2/status.json');
+            $response = await($browser->get('https://discordstatus.com/api/v2/status.json'));
 
             assert($response instanceof ResponseInterface); // Check if request succeed
 
@@ -57,9 +58,9 @@ $discord->registerCommand('discordstatus', function (Message $message, $params) 
             $discord->logger->error('Browser request failed', ['exception' => $e->getMessage()]);
 
             // Send reply about the discord status
-            $message->reply('Unable to acesss the Discord status API :(');
+            $message->reply('Unable to access the Discord status API :(');
         }
-    }, $message, $params);
+    })();
 });
 
 // Start the Bot (must be at the bottom)
