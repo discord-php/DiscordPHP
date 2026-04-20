@@ -10,7 +10,7 @@ jobs:
     if: github.event_name == 'release' || contains(github.event.head_commit.message, 'build docs')
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -28,7 +28,7 @@ jobs:
           yarn build
           sudo mv public/* ../build
       - name: Publish docs
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@4.8.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
