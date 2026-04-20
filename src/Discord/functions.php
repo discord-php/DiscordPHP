@@ -90,7 +90,7 @@ function mentioned(Part|string $part, Message $message): bool
 {
     return match (true) {
         $part instanceof User, $part instanceof Member => $message->mentions->has($part->id),
-        $part instanceof Role => $message->mention_roles->has($part->id),
+        $part instanceof Role => array_key_exists($part->id, $message->mention_roles->toArray()),
         $part instanceof Channel || $part instanceof Thread => str_contains($message->content, "<#{$part->id}>"),
         default => false,
     };
