@@ -213,10 +213,10 @@ class Embed extends Part implements ValidatesDiscordLimits
         if (poly_strlen($description) === 0) {
             $this->attributes['description'] = null;
         } elseif (poly_strlen($description) > self::EMBED_DESCRIPTION_MAX) {
-            throw new \LengthException(sprintf('Embed description can not be longer than %d characters', self::EMBED_DESCRIPTION_MAX));
+            throw new \LengthException('Embed description can not be longer than 4096 characters');
         } else {
             if ($this->exceedsOverallLimit(poly_strlen($description))) {
-                throw new \LengthException(sprintf('Embed text values collectively can not exceed %d characters', self::EMBED_TOTAL_CHARS_MAX));
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['description'] = $description;
@@ -255,9 +255,9 @@ class Embed extends Part implements ValidatesDiscordLimits
         if (poly_strlen($title) === 0) {
             $this->attributes['title'] = null;
         } elseif (poly_strlen($title) > self::EMBED_TITLE_MAX) {
-            throw new \LengthException(sprintf('Embed title can not be longer than %d characters', self::EMBED_TITLE_MAX));
+            throw new \LengthException('Embed title can not be longer than 256 characters');
         } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
-            throw new \LengthException(sprintf('Embed text values collectively can not exceed %d characters', self::EMBED_TOTAL_CHARS_MAX));
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         } else {
             $this->attributes['title'] = $title;
         }
@@ -336,7 +336,7 @@ class Embed extends Part implements ValidatesDiscordLimits
     {
         foreach ($fields as $field) {
             if (count($this->fields) >= self::EMBED_FIELDS_MAX) {
-                throw new \OverflowException(sprintf('Embeds can not have more than %d fields.', self::EMBED_FIELDS_MAX));
+                throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
             if ($field instanceof Field) {
@@ -347,15 +347,15 @@ class Embed extends Part implements ValidatesDiscordLimits
             $value = is_string($field['value'] ?? null) ? $field['value'] : '';
 
             if (poly_strlen($name) > self::EMBED_FIELD_NAME_MAX) {
-                throw new \LengthException(sprintf('Embed field name can not be longer than %d characters', self::EMBED_FIELD_NAME_MAX));
+                throw new \LengthException('Embed field name can not be longer than 256 characters');
             }
 
             if (poly_strlen($value) > self::EMBED_FIELD_VALUE_MAX) {
-                throw new \LengthException(sprintf('Embed field value can not be longer than %d characters', self::EMBED_FIELD_VALUE_MAX));
+                throw new \LengthException('Embed field value can not be longer than 1024 characters');
             }
 
             if ($this->exceedsOverallLimit(poly_strlen($name) + poly_strlen($value))) {
-                throw new \LengthException(sprintf('Embed text values collectively can not exceed %d characters', self::EMBED_TOTAL_CHARS_MAX));
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['fields'][] = $field;
@@ -402,9 +402,9 @@ class Embed extends Part implements ValidatesDiscordLimits
         if ($length === 0) {
             $this->author = null;
         } elseif ($length > self::EMBED_AUTHOR_NAME_MAX) {
-            throw new \LengthException(sprintf('Author name can not be longer than %d characters.', self::EMBED_AUTHOR_NAME_MAX));
+            throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException(sprintf('Embed text values collectively can not exceed %d characters', self::EMBED_TOTAL_CHARS_MAX));
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
         if ($iconurl instanceof Attachment) {
@@ -441,9 +441,9 @@ class Embed extends Part implements ValidatesDiscordLimits
         if ($length === 0) {
             $this->footer = null;
         } elseif ($length > self::EMBED_FOOTER_TEXT_MAX) {
-            throw new \LengthException(sprintf('Footer text can not be longer than %d characters.', self::EMBED_FOOTER_TEXT_MAX));
+            throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException(sprintf('Embed text values collectively can not exceed %d characters', self::EMBED_TOTAL_CHARS_MAX));
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
         if ($iconurl instanceof Attachment) {
