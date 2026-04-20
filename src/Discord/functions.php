@@ -111,10 +111,8 @@ function getColor(int|string $color = 0): int
         return $color;
     }
 
-    if (preg_match('/^([a-z]+)$/ui', $color, $match)) {
-        $colorName = strtolower($match[1]);
-
-        return COLORTABLE[$colorName] ?? 0;
+    if (preg_match('/^[a-z]+$/i', $color)) {
+        return COLORTABLE[strtolower($color)] ?? 0;
     }
 
     if (preg_match('/^(#|0x|)([0-9a-f]{6})$/ui', $color, $match)) {
@@ -136,7 +134,13 @@ function getColor(int|string $color = 0): int
  */
 function contains(string $string, array $matches): bool
 {
-    return array_reduce($matches, fn ($carry, $match) => $carry || str_contains($string, $match), false);
+    foreach ($matches as $match) {
+        if (str_contains($string, $match)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -150,7 +154,7 @@ function contains(string $string, array $matches): bool
  */
 function studly(string $string): string
 {
-    return implode('', array_map('ucfirst', array_map('strtolower', preg_split('/[^a-z0-9]+/i', $string))));
+    return implode('', array_map('ucfirst', preg_split('/[^a-z0-9]+/i', strtolower($string))));
 }
 
 /**
@@ -185,10 +189,10 @@ function imageToBase64(string $filepath): string
     }
 
     $mimetype = \mime_content_type($filepath);
-    static $allowed = ['image/jpeg', 'image/png', 'image/gif'];
+    static $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
     if (! in_array($mimetype, $allowed)) {
-        throw new \InvalidArgumentException('The given filepath is not one of jpeg, png or gif.');
+        throw new \InvalidArgumentException('The given filepath is not one of jpeg, png, gif or webp.');
     }
 
     $contents = file_get_contents($filepath);
@@ -205,7 +209,7 @@ function imageToBase64(string $filepath): string
  *
  * @since 5.1.1
  */
-function getSnowflakeTimestamp(string $snowflake)
+function getSnowflakeTimestamp(string $snowflake): ?float
 {
     if (\PHP_INT_SIZE === 4) { //x86
         $binary = \str_pad(\base_convert($snowflake, 10, 2), 64, '0', \STR_PAD_LEFT);
@@ -222,7 +226,7 @@ function getSnowflakeTimestamp(string $snowflake)
         $processID = ($snowflake & 0x1F000) >> 12;
         $increment = ($snowflake & 0xFFF);
     }
-    if ($timestamp < 1420070400 || $workerID < 0 || $workerID >= 32 || $processID < 0 || $processID >= 32 || $increment < 0 || $increment >= 4096) {
+    if ($timestamp < 1420070400 || $workerID >= 32 || $processID >= 32 || $increment >= 4096) {
         return null;
     }
 
@@ -276,7 +280,7 @@ function escapeMarkdown(string $text): string
  * @since 10.0.0 Handle `$canceller` internally, use `cancel()` from the returned promise.
  * @since 7.1.0
  */
-function deferFind($array, callable $callback, $loop = null): PromiseInterface
+function deferFind($array, callable $callback, ?LoopInterface $loop = null): PromiseInterface
 {
     $cancelled = false;
     $deferred = new Deferred(function () use (&$cancelled) {
@@ -327,12 +331,12 @@ function deferFind($array, callable $callback, $loop = null): PromiseInterface
  *
  * @since 10.0.0
  */
-function nowait(PromiseInterface $promiseInterface)
+function nowait(PromiseInterface $promiseInterface): mixed
 {
     $resolved = null;
 
     $promiseInterface->then(static function ($value) use (&$resolved) {
-        return $resolved = $value;
+        $resolved = $value;
     });
 
     return $resolved;
