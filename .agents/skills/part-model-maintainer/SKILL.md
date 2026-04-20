@@ -1,3 +1,11 @@
+---
+name: part-model-maintainer
+description: >-
+  Maintain Part domain models — fillable attributes, mutators, typed nested
+  data, save/fetch behavior, permission checks, PHPDoc, and repository
+  bindings. Use when adding or modifying any Discord Part class.
+---
+
 # Skill: part-model-maintainer
 
 Use this skill when work touches `src/Discord/Parts/**/*`.

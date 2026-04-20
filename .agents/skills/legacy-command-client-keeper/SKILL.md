@@ -1,3 +1,11 @@
+---
+name: legacy-command-client-keeper
+description: >-
+  Maintain the optional prefix-command layer — DiscordCommandClient, Command
+  class, parsing, aliases, cooldowns, and help system. Use when touching
+  message-based command handling.
+---
+
 # Skill: legacy-command-client-keeper
 
 Use this skill when work touches:

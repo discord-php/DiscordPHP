@@ -1,3 +1,12 @@
+---
+name: runtime-bootstrap-keeper
+description: >-
+  Maintain Discord.php runtime bootstrapping, startup options, event loop,
+  gateway connection, reconnection, member chunking, cache configuration,
+  and process lifecycle. Use when touching Discord.php, startup wiring,
+  intents, or root repositories.
+---
+
 # Skill: runtime-bootstrap-keeper
 
 Use this skill when work touches `src/Discord/Discord.php`, startup options, loop setup, cache configuration, gateway connection behavior, readiness, member chunking, reconnect logic, or root repositories.

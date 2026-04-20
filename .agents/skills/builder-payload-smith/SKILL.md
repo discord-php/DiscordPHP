@@ -1,3 +1,11 @@
+---
+name: builder-payload-smith
+description: >-
+  Maintain Builder classes — outbound payload construction, validation,
+  serialization, component handling, and fromPart symmetry. Use when
+  changing Builders or outbound Discord API payloads.
+---
+
 # Skill: builder-payload-smith
 
 Use this skill when work touches:

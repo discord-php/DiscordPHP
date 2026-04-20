@@ -1,3 +1,11 @@
+---
+name: async-test-and-doc-sync
+description: >-
+  Maintain test and documentation alignment — PHPUnit tests, async testing
+  patterns, PHPDoc contracts, guide pages, and documentation workflow. Use
+  when adding tests, updating docs, or changing public behavior.
+---
+
 # Skill: async-test-and-doc-sync
 
 Use this skill when adding or changing public behavior, updating builder validation or part semantics, writing or reviewing tests, updating PHPDoc blocks or guide pages, or touching anything user-facing enough that tests or docs should move with it.

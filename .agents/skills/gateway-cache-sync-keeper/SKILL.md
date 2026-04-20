@@ -1,3 +1,11 @@
+---
+name: gateway-cache-sync-keeper
+description: >-
+  Maintain gateway event handlers — payload hydration, cache mutation, event
+  return shapes, and handler registration. Use when touching
+  WebSockets/Events, Handlers.php, or Event.php.
+---
+
 # Skill: gateway-cache-sync-keeper
 
 Use this skill when work touches:

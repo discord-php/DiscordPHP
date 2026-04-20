@@ -1,3 +1,11 @@
+---
+name: type-map-keeper
+description: >-
+  Maintain TYPES maps and subtype dispatch — Channel::TYPES,
+  Interaction::TYPES, Component types, and related constants. Use when
+  adding subtypes or changing polymorphic dispatch.
+---
+
 # Skill: type-map-keeper
 
 Use this skill when work touches:

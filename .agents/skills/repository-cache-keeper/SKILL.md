@@ -1,3 +1,11 @@
+---
+name: repository-cache-keeper
+description: >-
+  Maintain Repository classes — REST endpoints, route vars, cache coherence,
+  typed collections, and persistence boundaries. Use when changing repository
+  CRUD, cache behavior, or endpoint bindings.
+---
+
 # Skill: repository-cache-keeper
 
 Use this skill when work touches `src/Discord/Repository/**/*`.
