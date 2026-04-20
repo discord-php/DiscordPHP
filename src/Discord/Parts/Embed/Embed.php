@@ -16,6 +16,7 @@ namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Helpers\ValidatesDiscordLimits;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 
@@ -44,7 +45,7 @@ use function Discord\poly_strlen;
  * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
  * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
  */
-class Embed extends Part
+class Embed extends Part implements ValidatesDiscordLimits
 {
     public const TYPES = [
         0 => Embed::class, // Fallback for unknown types
@@ -211,11 +212,11 @@ class Embed extends Part
     {
         if (poly_strlen($description) === 0) {
             $this->attributes['description'] = null;
-        } elseif (poly_strlen($description) > 4096) {
+        } elseif (poly_strlen($description) > self::EMBED_DESCRIPTION_MAX) {
             throw new \LengthException('Embed description can not be longer than 4096 characters');
         } else {
             if ($this->exceedsOverallLimit(poly_strlen($description))) {
-                throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['description'] = $description;
@@ -253,10 +254,10 @@ class Embed extends Part
     {
         if (poly_strlen($title) === 0) {
             $this->attributes['title'] = null;
-        } elseif (poly_strlen($title) > 256) {
+        } elseif (poly_strlen($title) > self::EMBED_TITLE_MAX) {
             throw new \LengthException('Embed title can not be longer than 256 characters');
         } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         } else {
             $this->attributes['title'] = $title;
         }
@@ -334,12 +335,27 @@ class Embed extends Part
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
-            if (count($this->fields) > 25) {
+            if (count($this->fields) >= self::EMBED_FIELDS_MAX) {
                 throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
             if ($field instanceof Field) {
                 $field = $field->getRawAttributes();
+            }
+
+            $name = is_string($field['name'] ?? null) ? $field['name'] : '';
+            $value = is_string($field['value'] ?? null) ? $field['value'] : '';
+
+            if (poly_strlen($name) > self::EMBED_FIELD_NAME_MAX) {
+                throw new \LengthException('Embed field name can not be longer than 256 characters');
+            }
+
+            if (poly_strlen($value) > self::EMBED_FIELD_VALUE_MAX) {
+                throw new \LengthException('Embed field value can not be longer than 1024 characters');
+            }
+
+            if ($this->exceedsOverallLimit(poly_strlen($name) + poly_strlen($value))) {
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['fields'][] = $field;
@@ -385,10 +401,10 @@ class Embed extends Part
         $length = poly_strlen($name);
         if ($length === 0) {
             $this->author = null;
-        } elseif ($length > 256) {
+        } elseif ($length > self::EMBED_AUTHOR_NAME_MAX) {
             throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
         if ($iconurl instanceof Attachment) {
@@ -424,10 +440,10 @@ class Embed extends Part
         $length = poly_strlen($text);
         if ($length === 0) {
             $this->footer = null;
-        } elseif ($length > 2048) {
+        } elseif ($length > self::EMBED_FOOTER_TEXT_MAX) {
             throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
         if ($iconurl instanceof Attachment) {
@@ -556,7 +572,7 @@ class Embed extends Part
             $total += poly_strlen($field['value']);
         }
 
-        return ($total > 6000);
+        return ($total > self::EMBED_TOTAL_CHARS_MAX);
     }
 
     /**
