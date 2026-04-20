@@ -7596,6 +7596,16 @@ Search.appendIndex(
             "summary": "Guild\u0020Server\u0020Guide\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_HOME_SETTINGS_UPDATE"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AVOICE_CHANNEL_STATUS_UPDATE",
+            "name": "VOICE_CHANNEL_STATUS_UPDATE",
+            "summary": "A\u0020voice\u0020channel\u0020status\u0020was\u0020updated\u0020by\u0020a\u0020user.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_VOICE_CHANNEL_STATUS_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AVOICE_CHANNEL_STATUS_DELETE",
+            "name": "VOICE_CHANNEL_STATUS_DELETE",
+            "summary": "A\u0020voice\u0020channel\u0020status\u0020was\u0020deleted\u0020by\u0020a\u0020user.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_VOICE_CHANNEL_STATUS_DELETE"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_CREATE",
             "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE",
             "summary": "Guild\u0020Scheduled\u0020Event\u0020Exception\u0020was\u0020created",
