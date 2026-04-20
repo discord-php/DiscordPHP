@@ -1,3 +1,11 @@
+---
+name: interaction-flow-keeper
+description: >-
+  Maintain interaction flow — Interaction typing, resolved data caching,
+  command routing, autocomplete, modal responses, and interaction builders.
+  Use when touching Interactions or slash command handling.
+---
+
 # Skill: interaction-flow-keeper
 
 Use this skill when work touches:

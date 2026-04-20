@@ -1,9 +1,6 @@
 # DiscordPHP Agent Guide
 
-This file is the repo operating manual for AI agents. Use it together with `SKILLS.md`.
-
-- `SKILLS.md` tells you **which specialist mindset to load** for a task.
-- `AGENTS.md` tells you **how to work inside this repository without breaking its design**.
+This file is the repo operating manual for AI agents. It describes how to work inside this repository without breaking its design. Specialist skills in `.agents/skills/` provide deeper playbooks for specific layers.
 
 If a change crosses layers, load multiple skills and use the playbooks in this file to keep boundaries clean.
 
@@ -31,6 +28,25 @@ In this repo, companion surfaces usually matter as much as the line you edit.
 7. **Docblocks are runtime-adjacent documentation.** They are not optional decoration.
 8. **Traits are preferred over deep inheritance or broad interface hierarchies for shared behavior.**
 9. **Type maps are central dispatch points.** If a Discord payload is polymorphic, there is usually one place that decides the concrete subtype.
+10. **Use current library idioms.** Prefer `Factory::part()` / `Factory::repository()`, prefer `$part->save($reason)` over repository `save($part)` in user-facing paths, and prefer builder `->create($repository)` helpers where they exist.
+
+## Skill map
+
+Each skill lives in `.agents/skills/<name>/SKILL.md` and is loaded automatically when relevant. When a task crosses layers, load multiple skills.
+
+| If task touches... | Skill to load |
+| --- | --- |
+| `Discord.php`, startup, intents, cache, loop, gateway connection | `runtime-bootstrap-keeper` |
+| `Parts/*`, domain modeling, mutators, typed nested data | `part-model-maintainer` |
+| `Repository/*`, endpoint vars, cache, CRUD, fetch/save/delete | `repository-cache-keeper` |
+| `WebSockets/Handlers.php`, `WebSockets/Event.php`, `WebSockets/Events/*` | `gateway-cache-sync-keeper` |
+| `Builders/*`, `Builders/Components/*`, outbound payload rules | `builder-payload-smith` |
+| subtype maps like `Channel::TYPES` or `Interaction::TYPES` | `type-map-keeper` |
+| interactions, slash commands, resolved data, autocomplete, modals | `interaction-flow-keeper` |
+| `DiscordCommandClient` or prefix-command behavior | `legacy-command-client-keeper` |
+| tests, guides, docblocks, generated reference expectations | `async-test-and-doc-sync` |
+| `Voice/*`, audio streaming, encryption, voice gateway protocol | `voice-subsystem-keeper` |
+| `Helpers/*`, `Exceptions/*`, cache wrappers, `Endpoint::bind()`, `Collection` | `helpers-and-infra-keeper` |
 
 ## Architecture map
 
@@ -42,8 +58,22 @@ In this repo, companion surfaces usually matter as much as the line you edit.
 | Repositories | typed collections, cache, REST endpoints, CRUD | `src/Discord/Repository/AbstractRepository.php`, `src/Discord/Repository/**/*` | `$class`, `$endpoints`, `$vars`, cache writes, Promise-based API |
 | Builders | outbound payload construction and validation | `src/Discord/Builders/**/*` | fluent setters, validation, `jsonSerialize()`, `fromPart()` symmetry |
 | Gateway events | payload hydration, cache mutation, emitted return shapes | `src/Discord/WebSockets/Handlers.php`, `src/Discord/WebSockets/Event.php`, `src/Discord/WebSockets/Events/*` | typed part creation, related cache updates, event contract shape |
+| Helpers | cross-cutting utilities: cache wrappers, BigInt math, multipart uploads, property mutator trait, domain exceptions | `src/Discord/Helpers/*`, `src/Discord/Exceptions/*` | no domain logic here; utilities only |
+| Voice | internal voice protocol types and encryption; runtime integration in `Discord.php`; audio client in external `discord-php-helpers/voice` package | `src/Discord/Voice/*` | `Old*` files are legacy — do not extend them; keep protocol and crypto layers separate |
 | Optional command layer | message-prefix command UX | `src/Discord/DiscordCommandClient.php`, `src/Discord/CommandClient/Command.php` | keep it layered on top of core client, not inside it |
 | Tests and docs | behavioral contract | `tests/*`, `guide/*`, `README.md`, `docs/*` | async testing patterns, public guidance, docblock reference surface |
+
+## External packages
+
+Three external packages are tightly coupled to core runtime behavior. Treat them as first-class parts of the architecture:
+
+| Package | Why it matters | Local touchpoints |
+| --- | --- | --- |
+| `discord-php/http` | HTTP client and `Endpoint` URL template binding used in every repository; handles rate-limiting via `Bucket` | `$endpoints` arrays in all repositories; `use Discord\Http\Endpoint` imports |
+| `discord-php-helpers/collection` | `Collection` class is the base for every `AbstractRepository`; discriminator-keyed typed collections | `AbstractRepository extends Collection`; `$discrim` property |
+| `discord-php-helpers/voice` | `Manager` and `VoiceClient` implement the actual audio client; `src/Discord/Voice/*` contains only internal protocol types and encryption | `Discord::joinVoiceChannel()`, voice event handlers in `Discord.php` |
+
+When editing endpoint bindings, REST routes, cache storage, or voice audio, you are necessarily touching these packages' contracts.
 
 ## Repo worldview
 
@@ -170,7 +200,10 @@ Examples:
 - `PartTrait` for universal part mechanics
 - `ChannelTrait` for channel/thread behavior
 - `GuildTrait` for guild asset and feature helpers
-- `DynamicPropertyMutatorTrait` for builder/property mutators
+- `DynamicPropertyMutatorTrait` for builder/property mutators (`src/Discord/Helpers/DynamicPropertyMutatorTrait.php`)
+- `AbstractRepositoryTrait` for repository collection mechanics
+- `ComponentsTrait` for shared component helpers across builders (`src/Discord/Builders/ComponentsTrait.php`)
+- `VoiceGroupCryptoTrait` for voice channel encryption/decryption
 
 Smell: new abstract intermediate base class that only exists to share a few methods between peers that already have a common root.
 
@@ -198,6 +231,8 @@ If you touch one of these, inspect the companions too:
 | `Channel::TYPES`, `Interaction::TYPES`, component/ embed maps | event handlers, typed collection helpers, builder mirrors |
 | `DiscordCommandClient` | `CommandClient/Command.php`, examples/docs |
 | public magic properties | class PHPDoc, guide docs if user-facing behavior changed |
+| `Helpers/CacheWrapper.php` or cache config | `AbstractRepository` cache behavior, `Discord.php` `options['cache']` wiring |
+| `Voice/*` or voice event in `Discord.php` | `VoiceGroupCrypto`, `VoicePacket`, external voice package entry points, voice opcodes |
 
 ## Change playbooks
 
@@ -262,6 +297,8 @@ If you see one of these, slow down:
 - a synchronous wait or loop-stop trick outside tests
 - a new abstraction layer that duplicates what parts, repositories, events, or builders already do
 - web-framework terminology creeping into core runtime code
+- extending `OldVoiceClient` or any `Old*` class in `src/Discord/Voice/` unless deliberately fixing legacy behavior
+- bypassing `Endpoint::bind()` with hand-assembled raw URL strings
 
 ## Preferred reference files
 
@@ -279,6 +316,8 @@ When you need an example worth imitating, start here:
 - Interaction typing: `src/Discord/Parts/Interactions/Interaction.php`
 - Gateway cache mutation: `src/Discord/WebSockets/Events/MessageCreate.php`, `src/Discord/WebSockets/Events/GuildCreate.php`
 - Optional command layer: `src/Discord/DiscordCommandClient.php`, `src/Discord/CommandClient/Command.php`
+- Cache infrastructure: `src/Discord/Helpers/CacheWrapper.php`, `src/Discord/Helpers/CacheConfig.php`
+- Voice protocol and encryption: `src/Discord/Voice/VoiceGroupCrypto.php`, `src/Discord/Voice/VoicePacket.php`
 
 ## Testing and docs workflow
 
@@ -304,6 +343,8 @@ When you need an example worth imitating, start here:
 | static analysis | `composer run-script mago-lint` |
 | formatter contributors run | `composer run-script cs` |
 | non-mutating Pint check | `./vendor/bin/pint --test --config ./pint.json ./src` |
+| Pint formatter (auto-fix) | `composer pint` |
+| test coverage report | `composer coverage` |
 | docs build | `cd docs && yarn install && yarn build` |
 
 Integration tests expect `.env` values for `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME`.
