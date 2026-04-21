@@ -19,7 +19,7 @@ use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
 use Discord\Helpers\Collection;
-use Discord\Helpers\DotEnv;
+use Symfony\Component\Dotenv\Dotenv;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
@@ -407,7 +407,7 @@ class Discord
      * Creates a Discord client from environment variables.
      *
      * Looks for a `.env` file in the current working directory and loads it
-     * automatically via {@see DotEnv}. If no `.env` file is found **and**
+     * automatically via {@see Dotenv}. If no `.env` file is found **and**
      * `DISCORD_TOKEN` is not already set in the environment, a
      * `\RuntimeException` is thrown with instructions on how to proceed.
      *
@@ -424,9 +424,13 @@ class Discord
     public static function fromEnv(array $overrides = []): static
     {
         $envPath = getcwd().'/.env';
-        $loaded = DotEnv::load($envPath);
+        $envFileFound = file_exists($envPath);
 
-        if ($loaded === null && (getenv('DISCORD_TOKEN') === false || getenv('DISCORD_TOKEN') === '') && ! isset($overrides['token'])) {
+        if ($envFileFound) {
+            (new Dotenv())->load($envPath);
+        }
+
+        if (! $envFileFound && (($token = $_ENV['DISCORD_TOKEN'] ?? getenv('DISCORD_TOKEN')) === false || $token === '') && ! isset($overrides['token'])) {
             throw new \RuntimeException(
                 "No .env file found at {$envPath} and DISCORD_TOKEN is not set in the environment.\n\n"
                 ."  To fix this, copy .env.example to .env and fill in your bot token:\n"
@@ -1755,7 +1759,7 @@ class Discord
     protected function applyCaFileOption(?string $cafile): void
     {
         if ($cafile === null || $cafile === '') {
-            $envValue = getenv('DISCORDPHP_CAFILE');
+            $envValue = $_ENV['DISCORDPHP_CAFILE'] ?? getenv('DISCORDPHP_CAFILE');
             if ($envValue === false || $envValue === '') {
                 return;
             }
@@ -1882,7 +1886,7 @@ class Discord
             ->setAllowedTypes('usePayloadCompression', 'bool')
             ->setNormalizer('token', function ($options, $value) {
                 if ($value === null || $value === '') {
-                    $env = getenv('DISCORD_TOKEN');
+                    $env = $_ENV['DISCORD_TOKEN'] ?? getenv('DISCORD_TOKEN');
                     if ($env !== false && $env !== '') {
                         return $env;
                     }
@@ -1898,7 +1902,7 @@ class Discord
                     return $value;
                 }
 
-                $env = getenv('DISCORDPHP_INTENTS');
+                $env = $_ENV['DISCORDPHP_INTENTS'] ?? getenv('DISCORDPHP_INTENTS');
                 if ($env === false || $env === '') {
                     return $value;
                 }

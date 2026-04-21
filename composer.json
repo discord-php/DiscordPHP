@@ -39,6 +39,7 @@
         "react/datagram": "^1.8",
         "react/event-loop": "^1.2",
         "react/promise": "^3.0.0",
+        "symfony/dotenv": "^6 || ^7 || ^8",
         "symfony/options-resolver": "^5.1.11 || ^6.0 || ^7.0 || ^8.0",
         "trafficcophp/bytebuffer": "^0.3"
     },

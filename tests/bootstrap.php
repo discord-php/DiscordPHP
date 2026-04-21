@@ -12,19 +12,23 @@
 
 include __DIR__.'/../vendor/autoload.php';
 
+use function React\Promise\set_rejection_handler;
+
 // Suppress unhandled promise rejections from mock Discord instances used in unit tests.
 // Re-register on each invocation because React/Promise's set_rejection_handler() is
 // consumed (reset to null) every time __destruct() calls set_rejection_handler(null).
 $silenceHandler = null;
 $silenceHandler = function (\Throwable $e) use (&$silenceHandler): void {
-    \React\Promise\set_rejection_handler($silenceHandler);
+    set_rejection_handler($silenceHandler);
 };
-\React\Promise\set_rejection_handler($silenceHandler);
+set_rejection_handler($silenceHandler);
 
 //class RedisPsr16 extends \Symfony\Component\Cache\Psr16Cache {}
 
-// Load local .env into environment if present
-\Discord\Helpers\DotEnv::load(__DIR__.'/../.env');
+// Load local .env into environment if present (does not override existing vars)
+if (file_exists(__DIR__.'/../.env')) {
+    (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env');
+}
 
 require_once __DIR__.'/functions.php';
 require_once __DIR__.'/DiscordSingleton.php';
