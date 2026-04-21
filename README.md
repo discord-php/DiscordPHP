@@ -34,7 +34,7 @@ Before you start using this Library, you **need** to know how PHP, Event Loops, 
 ### Requirements
 
 - [PHP 8.1.2](https://php.net) or higher (latest version recommended)
-	- x86 (32-bit) PHP requires [`ext-gmp`](https://www.php.net/manual/en/book.gmp.php) enabled.
+	- x86 (32-bit) PHP: it is recommended to have [`ext-gmp`](https://www.php.net/manual/en/book.gmp.php) enabled.
 - [`ext-json`](https://www.php.net/manual/en/book.json.php)
 - [`ext-zlib`](https://www.php.net/manual/en/book.zlib.php)
 
@@ -45,16 +45,59 @@ Before you start using this Library, you **need** to know how PHP, Event Loops, 
 
 #### Voice Requirements
 
-- [DiscordPHP-Voice](https://github.com/discord-php/DiscordPHP-Voice)
+Voice support is bundled — no separate package installation is required.
+
+- [`ext-sodium`](https://www.php.net/manual/en/book.sodium.php) for voice encryption.
 
 ### Windows and SSL
 
-Unfortunately PHP on Windows does not have access to the Windows Certificate Store. This is an issue because TLS gets used and as such certificate verification gets applied (turning this off is **not** an option).
+PHP on Windows has no access to the Windows Certificate Store, so TLS connections to Discord fail silently (the script exits after one loop turn with no error) unless you provide a CA certificate bundle.
 
-You will notice this issue by your script exiting immediately after one loop turn without any errors.
+You have two supported options — pick whichever you prefer:
 
-As such users of this library need to download a [Certificate Authority extract](https://curl.haxx.se/docs/caextract.html) from the cURL website.<br>
-The path to the caextract must be set in the [`php.ini`](https://secure.php.net/manual/en/openssl.configuration.php) for `openssl.cafile`.
+#### Option 1: Use WSL (recommended)
+
+Run your bot under [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install). Inside WSL, PHP uses the Linux system CA store automatically and **no SSL setup is needed**.
+
+#### Option 2: Native Windows
+
+Run the helper script shipped in this repo from the project root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/windows-ssl-setup.ps1
+```
+
+It downloads a fresh CA bundle to `~/.ssl/cacert.pem` (i.e. `%USERPROFILE%\.ssl\cacert.pem`) and prints the exact path. Then hook it up in one of two ways:
+
+**a) Let DiscordPHP apply it at runtime** *(no `php.ini` edit needed)*
+
+Pass the path as a constructor option:
+
+```php
+$discord = new Discord([
+    'token'  => 'bot-token',
+    'cafile' => $_SERVER['USERPROFILE'].'\\.ssl\\cacert.pem',
+]);
+```
+
+Or set the `DISCORDPHP_CAFILE` environment variable once (persists for your user):
+
+```powershell
+setx DISCORDPHP_CAFILE "$HOME\.ssl\cacert.pem"
+```
+
+The Discord constructor honours the option first, then falls back to `DISCORDPHP_CAFILE`. It only sets `openssl.cafile` / `curl.cainfo` if they are not already configured, so your existing `php.ini` is never overridden.
+
+**b) Configure PHP globally via `php.ini`**
+
+Find your `php.ini` with `php --ini`, then add:
+
+```ini
+openssl.cafile="C:\Users\<your-user>\.ssl\cacert.pem"
+curl.cainfo="C:\Users\<your-user>\.ssl\cacert.pem"
+```
+
+Restart any running PHP processes.
 
 ### Installing DiscordPHP
 

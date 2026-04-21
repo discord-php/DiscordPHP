@@ -423,6 +423,8 @@ class Discord
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
 
+        $this->applyCaFileOption($options['cafile'] ?? null);
+
         if (! in_array(php_sapi_name(), ['cli', 'micro'])) {
             $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
         }
@@ -1700,6 +1702,45 @@ class Discord
     }
 
     /**
+     * Applies a CA certificate bundle path to PHP's TLS configuration.
+     *
+     * When the `cafile` option is not set, falls back to the
+     * `DISCORDPHP_CAFILE` environment variable. Only applies the path
+     * to `openssl.cafile` / `curl.cainfo` when those ini values are
+     * currently empty, so a user's existing configuration is never
+     * overridden. Silently no-ops when no path is provided or the
+     * file does not exist.
+     *
+     * @param ?string $cafile Path from the constructor option, or null.
+     */
+    protected function applyCaFileOption(?string $cafile): void
+    {
+        if ($cafile === null || $cafile === '') {
+            $envValue = getenv('DISCORDPHP_CAFILE');
+            if ($envValue === false || $envValue === '') {
+                return;
+            }
+            $cafile = $envValue;
+        }
+
+        if (! is_file($cafile)) {
+            $this->logger->warning('Ignoring cafile: path does not exist', ['path' => $cafile]);
+
+            return;
+        }
+
+        if (ini_get('openssl.cafile') === '') {
+            ini_set('openssl.cafile', $cafile);
+        }
+
+        if (ini_get('curl.cainfo') === '') {
+            ini_set('curl.cainfo', $cafile);
+        }
+
+        $this->logger->debug('Applied CA certificate bundle', ['path' => $cafile]);
+    }
+
+    /**
      * Resolves the options.
      *
      * @param array $options Array of options.
@@ -1717,6 +1758,7 @@ class Discord
                 'token',
                 'loop',
                 'logger',
+                'cafile',
                 'loadAllMembers',
                 'disabledEvents',
                 'storeMessages',
@@ -1739,6 +1781,7 @@ class Discord
             ])
             ->setDefaults([
                 'logger' => null,
+                'cafile' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'storeMessages' => false,
@@ -1760,6 +1803,7 @@ class Discord
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
+            ->setAllowedTypes('cafile', ['null', 'string'])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
