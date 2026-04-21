@@ -32,6 +32,67 @@ In this repo, companion surfaces usually matter as much as the line you edit.
 8. **Traits are preferred over deep inheritance or broad interface hierarchies for shared behavior.**
 9. **Type maps are central dispatch points.** If a Discord payload is polymorphic, there is usually one place that decides the concrete subtype.
 
+## Public API policy
+
+DiscordPHP is a **library, not a framework.** User code calls DiscordPHP; DiscordPHP does not call user code beyond the event listeners the user explicitly registers. This posture is deliberate and is the gate against feature creep. If a proposed addition would invert that control flow, it does not belong here — it belongs in a sibling framework package layered on top.
+
+### The dividing rule
+
+A capability belongs **in DiscordPHP (this library)** if **all** of the following are true:
+
+- It lives in exactly one existing layer (Part, Repository, Builder, Event, Voice, or runtime).
+- It wraps a primitive nicer without choosing an app shape.
+- It holds no state the caller would otherwise control.
+- It does not own a lifecycle beyond `__construct` / `run()` / `close()`.
+- It does not assume a config file format, DI container, or plugin model.
+- Its default behavior is correct for the overwhelming majority of callers, and wrong defaults are still overridable.
+
+A capability belongs **outside this library** if **any** of the following are true:
+
+- It imposes app structure (routing, controllers, plugin registry, modules).
+- It owns config resolution beyond `.env` + constructor options.
+- It holds cross-event state on the user's behalf (pagination cursors, wizards, cooldowns, session tracking).
+- It couples subsystems users should be free to swap (e.g. command routing + persistence + permission system together).
+- It wants a DI container, service providers, or its own CLI.
+
+Ambiguous cases default to **outside**. It is far harder to remove a public abstraction than to keep it out.
+
+### Rules (R1–R10)
+
+These are design heuristics, not commandments. They exist to serve the dividing rule above.
+
+- **R1. One obvious entry point per task, progressive disclosure.** `Discord::fromEnv()` is the happy path; the full constructor is still there. Do not ship three ways to do the same thing.
+- **R2. Listeners over lifecycle ceremony for the common path.** Thin aliases like `onReady()`, `onMessage()` keep first-bot code short. Reserve `on(Event::X, ...)` for cases where a constant is actually clearer.
+- **R3. Builders are the single outbound authoring path.** If a payload has meaningful shape or validation, improve the builder. Do not add convenience methods that bypass it.
+- **R4. No raw payloads in userland.** Handlers, events, and repository methods must return typed Parts or typed collections. Array-diving in userland is a library failure.
+- **R5. Fail loudly, fail actionably.** Every thrown exception tells the user what to do next (env var, option key, portal toggle). See `Discord::fromEnv()` for the reference tone.
+- **R6. No hidden singletons.** `Discord` is an instance. Never add global registry lookups — they break multi-bot processes, tests, and DI.
+- **R7. Layered, not monolithic.** Core `Discord` works without `DiscordCommandClient`. Voice works without slash commands. Users opt in.
+- **R8. Async visible, taught once.** Promises are part of the contract. Document the one pattern (`->then()` / `->done()`) in the quickstart and reuse it everywhere.
+- **R9. Every public addition needs docblock + example + test.** If it is not all three, it is not part of the public surface.
+- **R10. Conventions over config, with a real escape hatch.** Good defaults for intents, cache, logger — but every default is overridable via the same options array. No "rebuild to change X" moments.
+
+### Explicit non-goals (belong in a framework package, not here)
+
+Named so that future proposals get a clear, reviewable "out of scope" response. These are not forbidden ideas — they are simply not this library's job:
+
+- **Slash command router.** Attribute- or class-based dispatch to handler methods. Imposes an app shape.
+- **CommandRegistrar / diff-and-apply registration.** Holds desired-state across invocations and owns a lifecycle.
+- **Interaction router.** Pattern-matching `custom_id` → handler; inherently a routing concern.
+- **Menu / pagination / wizard state helpers.** Hold cross-event state on the user's behalf.
+- **Permission / cooldown middleware.** Policy over primitives; middleware implies a pipeline the library does not own.
+
+A starter document for such a framework project lives at `todo.txt` at the repo root as a temporary placeholder; it is intended to be moved into its own repository.
+
+### Decision record hook for reviewers
+
+If a proposed PR fails the dividing rule, the reviewer should either:
+
+1. Ask the author to rewrite it as a single-layer primitive that does pass the rule, **or**
+2. Close the PR with a note suggesting the idea belongs in an external framework package (link `todo.txt` while it still exists, or the future framework repo).
+
+Do not merge "just this one" exceptions. The rule is only useful if it is consistently applied.
+
 ## Architecture map
 
 | Layer | Owns | Primary files | What to preserve |
