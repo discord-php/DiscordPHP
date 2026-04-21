@@ -32,6 +32,7 @@ use Discord\Parts\User\User;
  * @property User                            $user                            User who triggered the interaction.
  * @property array                           $authorizing_integration_owners  IDs for installation context(s) related to the interaction.
  * @property string|null                     $original_response_message_id    ID of the original response message (follow-ups only).
+ * @property string|null                     $name                            Name of the command, including subcommands and subcommand groups, present only on application command interactions. This field is considered unstable and may be removed at any time.
  * @property User|null                       $target_user                     The user the command was run on (user command interactions only).
  * @property string|null                     $target_message_id               The ID of the message the command was run on (message command interactions only).
  * @property string|null                     $interacted_message_id           The ID of the message that contained the interactive component (message component interactions only).
@@ -56,6 +57,7 @@ class MessageInteractionMetadata extends Part
         'user',
         'authorizing_integration_owners',
         'original_response_message_id',
+        'name',
         'target_user',
         'target_message_id',
         'interacted_message_id',
