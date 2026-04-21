@@ -12,6 +12,7 @@
             <file>tests/FunctionsTest.php</file>
             <file>tests/CollectionsTest.php</file>
             <directory suffix="Test.php">tests/Builders</directory>
+            <directory suffix="Test.php">tests/Helpers</directory>
             <file>tests/Parts/Channel/InviteTest.php</file>
             <file>tests/ArchTest.php</file>
         </testsuite>

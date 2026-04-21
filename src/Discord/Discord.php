@@ -19,6 +19,7 @@ use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
 use Discord\Helpers\Collection;
+use Discord\Helpers\DotEnv;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
@@ -401,6 +402,44 @@ class Discord
      * @var ExCollectionInterface<Region>|null
      */
     protected $regions;
+
+    /**
+     * Creates a Discord client from environment variables.
+     *
+     * Looks for a `.env` file in the current working directory and loads it
+     * automatically via {@see DotEnv}. If no `.env` file is found **and**
+     * `DISCORD_TOKEN` is not already set in the environment, a
+     * `\RuntimeException` is thrown with instructions on how to proceed.
+     *
+     * Environment variables already present in the environment (e.g. from
+     * Docker or CI) are never overridden, so `.env` is always optional when
+     * the variables are supplied externally.
+     *
+     * Any key in `$overrides` takes precedence over the environment.
+     *
+     * @param  array             $overrides Option overrides.
+     * @throws IntentException
+     * @throws \RuntimeException
+     */
+    public static function fromEnv(array $overrides = []): static
+    {
+        $envPath = getcwd().'/.env';
+        $loaded = DotEnv::load($envPath);
+
+        if ($loaded === null && (getenv('DISCORD_TOKEN') === false || getenv('DISCORD_TOKEN') === '') && ! isset($overrides['token'])) {
+            throw new \RuntimeException(
+                "No .env file found at {$envPath} and DISCORD_TOKEN is not set in the environment.\n\n"
+                ."  To fix this, copy .env.example to .env and fill in your bot token:\n"
+                ."    cp .env.example .env\n\n"
+                ."  Alternatively, set the environment variable directly:\n"
+                ."    export DISCORD_TOKEN=your_token_here\n\n"
+                ."  Or pass the token as an option:\n"
+                ."    Discord::fromEnv(['token' => 'your_token_here'])"
+            );
+        }
+
+        return new static($overrides);
+    }
 
     /**
      * Creates a Discord client instance.
@@ -1753,7 +1792,6 @@ class Discord
         $resolver = new OptionsResolver();
 
         $resolver
-            ->setRequired('token')
             ->setDefined([
                 'token',
                 'loop',
@@ -1841,7 +1879,52 @@ class Discord
                 return Collection::class;
             })
             ->setAllowedTypes('useTransportCompression', 'bool')
-            ->setAllowedTypes('usePayloadCompression', 'bool');
+            ->setAllowedTypes('usePayloadCompression', 'bool')
+            ->setNormalizer('token', function ($options, $value) {
+                if ($value === null || $value === '') {
+                    $env = getenv('DISCORD_TOKEN');
+                    if ($env !== false && $env !== '') {
+                        return $env;
+                    }
+                    throw new \RuntimeException(
+                        'No Discord bot token provided. Pass \'token\' to new Discord([...]) or set the DISCORD_TOKEN environment variable.'
+                    );
+                }
+
+                return $value;
+            })
+            ->setNormalizer('intents', function ($options, $value) {
+                if (! is_int($value)) {
+                    return $value;
+                }
+
+                $env = getenv('DISCORDPHP_INTENTS');
+                if ($env === false || $env === '') {
+                    return $value;
+                }
+
+                // The explicit option was not passed; only fall back when the value is the default.
+                if ($value !== Intents::getDefaultIntents()) {
+                    return $value;
+                }
+
+                if (is_numeric($env)) {
+                    return (int) $env;
+                }
+
+                // Comma-separated constant names, e.g. "GUILDS,GUILD_MESSAGES,MESSAGE_CONTENT"
+                $reflect = new \ReflectionClass(Intents::class);
+                $constants = $reflect->getConstants();
+                $bitmask = 0;
+
+                foreach (array_map('trim', explode(',', strtoupper($env))) as $name) {
+                    if (isset($constants[$name])) {
+                        $bitmask |= $constants[$name];
+                    }
+                }
+
+                return $bitmask ?: $value;
+            });
 
         $options = $resolver->resolve($options);
 
@@ -1922,6 +2005,31 @@ class Discord
     public function run(): void
     {
         $this->loop->run();
+    }
+
+    /**
+     * Registers a one-time or persistent listener for the `READY` event.
+     *
+     * A convenience alias for `$discord->on(Event::READY, $callback)`.
+     * Called when the bot is fully connected and all guilds are available.
+     *
+     * @param callable $callback Called with `(Discord $discord)`.
+     */
+    public function onReady(callable $callback): void
+    {
+        $this->on(Event::READY, $callback);
+    }
+
+    /**
+     * Registers a listener for every incoming `MESSAGE_CREATE` event.
+     *
+     * A convenience alias for `$discord->on(Event::MESSAGE_CREATE, $callback)`.
+     *
+     * @param callable $callback Called with `(\Discord\Parts\Channel\Message $message, Discord $discord)`.
+     */
+    public function onMessage(callable $callback): void
+    {
+        $this->on(Event::MESSAGE_CREATE, $callback);
     }
 
     /**

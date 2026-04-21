@@ -77,6 +77,8 @@
         "laracord/laracord": "Provides Laracord integration for DiscordPHP."
     },
     "scripts": {
+        "post-install-cmd": ["@php scripts/post-install.php"],
+        "post-update-cmd": ["@php scripts/post-install.php"],
         "pint": ["./vendor/bin/pint --config ./pint.json ./src"],
         "mago-lint": ["./vendor/bin/mago lint src/"],
         "unit": ["./vendor/bin/pest --testsuite unit"],

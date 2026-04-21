@@ -111,28 +111,24 @@ DiscordPHP is installed using [Composer](https://getcomposer.org).
 
 ### Basic Example
 
+After `composer install`, edit the generated `.env` and set `DISCORD_TOKEN`, then:
+
 ```php
 <?php
 
-include __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/vendor/autoload.php';
 
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
-use Discord\WebSockets\Intents;
-use Discord\WebSockets\Event;
 
-$discord = new Discord([
-    'token' => 'bot-token',
-    'intents' => Intents::getDefaultIntents()
-//      | Intents::MESSAGE_CONTENT, // Note: MESSAGE_CONTENT is privileged, see https://dis.gd/mcfaq
-]);
+// fromEnv() loads .env automatically and throws a clear error if it's missing
+$discord = Discord::fromEnv();
 
-$discord->on('ready', function (Discord $discord) {
-    $discord->logger->info("Bot is ready!");
+$discord->onReady(function (Discord $discord) {
+    echo 'Logged in as '.$discord->user->username.'!'.PHP_EOL;
 
-    // Listen for messages.
-    $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-        // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
+    // Listen for messages (requires MESSAGE_CONTENT intent for full content)
+    $discord->onMessage(function (Message $message, Discord $discord) {
         $discord->logger->info("{$message->author->username}: {$message->content}");
     });
 });
@@ -140,7 +136,7 @@ $discord->on('ready', function (Discord $discord) {
 $discord->run();
 ```
 
-See [examples folder](examples) for more.
+See the [quickstart guide](guide/quickstart.rst) and [examples folder](examples) for more.
 
 ## Documentation
 
