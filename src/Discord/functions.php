@@ -342,6 +342,12 @@ function nowait(PromiseInterface $promiseInterface)
 
 /**
  * Converts a generator to a promise, allowing for easier asynchronous code.
+ *
+ * @param \Generator $generator The generator to convert.
+ *
+ * @return PromiseInterface A promise that resolves when the generator is complete.
+ *
+ * @since 10.49.0
  */
 function promiseFromGenerator(\Generator $generator): PromiseInterface
 {
@@ -355,13 +361,8 @@ function promiseFromGenerator(\Generator $generator): PromiseInterface
  *
  * @internal
  */
-function promiseFromGeneratorStep(
-    \Generator $generator,
-    bool $started,
-    $send,
-    $resolve,
-    $reject
-): void {
+function promiseFromGeneratorStep(\Generator $generator, bool $started, $send, $resolve, $reject): void
+{
     try {
         if (! $started) {
             // Only attempt to start the generator once
@@ -372,6 +373,7 @@ function promiseFromGeneratorStep(
         }
     } catch (\Throwable $e) {
         $reject($e);
+
         return;
     }
 
@@ -381,6 +383,7 @@ function promiseFromGeneratorStep(
         } catch (\Throwable $e) {
             $reject($e);
         }
+
         return;
     }
 
@@ -388,6 +391,7 @@ function promiseFromGeneratorStep(
         $yielded = $generator->current();
     } catch (\Throwable $e) {
         $reject($e);
+
         return;
     }
 
