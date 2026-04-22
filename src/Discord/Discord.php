@@ -73,7 +73,6 @@ use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Async\coroutine;
-use function React\Async\await;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;

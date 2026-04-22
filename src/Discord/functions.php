@@ -342,11 +342,11 @@ function nowait(PromiseInterface $promiseInterface)
 
 /**
  * Converts a generator to a promise, allowing for easier asynchronous code.
- * 
+ *
  * @param \Generator $generator The generator to convert.
- * 
+ *
  * @return PromiseInterface A promise that resolves when the generator is complete.
- * 
+ *
  * @since 10.49.0
  */
 function promiseFromGenerator(\Generator $generator): PromiseInterface
@@ -372,11 +372,13 @@ function promiseFromGeneratorStep(\Generator $generator, $send, $resolve, $rejec
         }
     } catch (\Throwable $e) {
         $reject($e);
+
         return;
     }
 
     if (! $generator->valid()) {
         $resolve(method_exists($generator, 'getReturn') ? $generator->getReturn() : null);
+
         return;
     }
 
