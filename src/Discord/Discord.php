@@ -71,7 +71,6 @@ use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use function React\Async\coroutine;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -403,6 +402,20 @@ class Discord
     protected $regions;
 
     /**
+     * Listeners for guild availability during ready sequence.
+     *
+     * @var callable|null
+     */
+    protected $onGuildCreateListener = null;
+
+    /**
+     * Listeners for guild unavailability during ready sequence.
+     *
+     * @var callable|null
+     */
+    protected $onGuildDeleteListener = null;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array             $options Array of options.
@@ -515,7 +528,6 @@ class Discord
 
         $content = $data->d;
 
-        // Check if we received resume_gateway_url
         if (isset($content->resume_gateway_url)) {
             $this->resume_gateway_url = $content->resume_gateway_url;
             $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
@@ -532,7 +544,7 @@ class Discord
             return;
         }
 
-        $this->emit('trace', $data->d->_trace);
+        $this->emit('trace', $content->_trace);
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Set up the user account
@@ -540,71 +552,158 @@ class Discord
         $this->client->created = true;
         $this->sessionId = $content->session_id;
 
-        $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
+        $this->logger->debug('client created and session id stored', [
+            'session_id' => $content->session_id,
+            'user' => $this->client->user->getPublicAttributes(),
+        ]);
 
         // Guilds
         $event = new GuildCreate($this);
-
         $unavailable = [];
+        $guildLoad = new Deferred();
 
         foreach ($content->guilds as $guild) {
-            /** @var PromiseInterface */
-            $promise = coroutine([$event, 'handle'], $guild);
+            $result = $event->handle($guild);
 
-            $promise->then(function ($d) use (&$unavailable) {
+            // Normalize safely (NO coroutine dependency here)
+            if ($result instanceof \Generator) {
+                $result = promiseFromGenerator($result);
+            }
+
+            if (! $result instanceof PromiseInterface) {
+                $result = resolve($result);
+            }
+
+            $result->then(function ($d) use (&$unavailable) {
                 if (! empty($d->unavailable)) {
                     $unavailable[$d->id] = $d->unavailable;
                 }
             });
         }
 
-        $this->logger->info('stored guilds', ['count' => $this->guilds->count(), 'unavailable' => count($unavailable)]);
+        $this->logger->info('stored guilds', [
+            'count' => $this->guilds->count(),
+            'unavailable' => count($unavailable),
+        ]);
 
         if (count($unavailable) < 1) {
             return $this->ready();
         }
 
-        $guildLoad = new Deferred();
+        $this->onGuildCreateListener = function ($guild) use (&$unavailable, $guildLoad) {
+            if ($guild instanceof \Generator) {
+                $p = promiseFromGenerator($guild);
 
-        $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
-            if (empty($guild->unavailable)) {
-                $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
+                $p->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildCreateForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
             }
-            if (count($unavailable) < 1) {
-                $guildLoad->resolve(null);
+
+            if ($guild instanceof PromiseInterface) {
+                $guild->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildCreateForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
             }
+
+            $this->handleGuildCreateForReady($guild, $unavailable, $guildLoad);
         };
-        $this->on(Event::GUILD_CREATE, $onGuildCreate);
 
-        $onGuildDelete = function ($guild) use (&$unavailable, $guildLoad) {
-            if (! isset($guild->unavailable)) {
-                // Rare Undocumented case, $guild->unavailable is missing but actually unavailable (perhaps kicked then unavailable/deleted)
-                $this->logger->debug('guild deleted', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
-            } elseif ($guild->unavailable) {
-                $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
+        $this->onGuildDeleteListener = function ($guild) use (&$unavailable, $guildLoad) {
+            if ($guild instanceof \Generator) {
+                $p = promiseFromGenerator($guild);
+
+                $p->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildDeleteForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
             }
-            if (count($unavailable) < 1) {
-                $guildLoad->resolve(null);
+
+            if ($guild instanceof PromiseInterface) {
+                $guild->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildDeleteForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
             }
+
+            $this->handleGuildDeleteForReady($guild, $unavailable, $guildLoad);
         };
-        $this->on(Event::GUILD_DELETE, $onGuildDelete);
 
-        $guildLoad->promise()->finally(function () use ($onGuildCreate, $onGuildDelete) {
-            $this->removeListener(Event::GUILD_CREATE, $onGuildCreate);
-            $this->removeListener(Event::GUILD_DELETE, $onGuildDelete);
-            $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+        $this->on(Event::GUILD_CREATE, $this->onGuildCreateListener);
+        $this->on(Event::GUILD_DELETE, $this->onGuildDeleteListener);
+
+        $guildLoad->promise()->finally(function () {
+            $this->removeListener(Event::GUILD_CREATE, $this->onGuildCreateListener);
+            $this->removeListener(Event::GUILD_DELETE, $this->onGuildDeleteListener);
+
+            $this->onGuildCreateListener = null;
+            $this->onGuildDeleteListener = null;
+
+            $this->logger->info('all guilds are now available', [
+                'count' => $this->guilds->count(),
+            ]);
 
             $this->setupChunking();
         });
 
-        if (in_array(Event::GUILD_CREATE, $this->options['disabledEvents'])) {
+        // Ready fallback timing
+        if (in_array(Event::GUILD_CREATE, $this->options['disabledEvents'], true)) {
             $this->ready();
         } else {
-            // Emit ready after 60 seconds
             $this->loop->addTimer(60, fn () => $this->ready());
+        }
+    }
+
+    protected function handleGuildCreateForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
+    {
+        // At this point $guild should be a resolved object; callers resolve Generators/Promises.
+        // Keep defensive check for PromiseInterface (resolve synchronously via then)
+        if ($guild instanceof PromiseInterface) {
+            $guild->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                $this->handleGuildCreateForReady($resolved, $unavailable, $guildLoad);
+            });
+
+            return;
+        }
+        if (empty($guild->unavailable)) {
+            $this->logger->debug('guild available', [
+                'guild' => $guild->id,
+                'unavailable' => count($unavailable),
+            ]);
+
+            unset($unavailable[$guild->id]);
+        }
+
+        if (count($unavailable) < 1) {
+            $guildLoad->resolve(null);
+        }
+    }
+
+    protected function handleGuildDeleteForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
+    {
+        if (! isset($guild->unavailable)) {
+            $this->logger->debug('guild deleted', [
+                'guild' => $guild->id,
+                'unavailable' => count($unavailable),
+            ]);
+
+            unset($unavailable[$guild->id]);
+        } elseif ($guild->unavailable) {
+            $this->logger->debug('guild unavailable', [
+                'guild' => $guild->id,
+                'unavailable' => count($unavailable),
+            ]);
+
+            unset($unavailable[$guild->id]);
+        }
+
+        if (count($unavailable) < 1) {
+            $guildLoad->resolve(null);
         }
     }
 
@@ -884,18 +983,8 @@ class Discord
     {
         $hData = $this->handlers->getHandler($data->t);
 
-        if (null === $hData) {
-            static $handlers = [
-                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-                Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-                Event::RESUMED => 'handleResume',
-                Event::READY => 'handleReady',
-                Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-            ];
-
-            if (isset($handlers[$data->t]) && ! in_array($data->t, $this->options['disabledEvents'])) {
-                $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
-            }
+        if ($hData === null) {
+            $this->handleFallbackDispatch($data);
 
             return;
         }
@@ -903,50 +992,136 @@ class Discord
         /** @var Event */
         $handler = new $hData['class']($this);
 
-        $deferred = new Deferred();
-        $deferred->promise()->then(function ($d) use ($data, $hData) {
-            if (is_array($d) && count($d) === 2) {
-                list($new, $old) = $d;
-            } else {
-                $new = $d;
-                $old = null;
-            }
-
-            $this->emit($data->t, [$new, $this, $old]);
-
-            foreach ($hData['alternatives'] as $alternative) {
-                $this->emit($alternative, [$d, $this]);
-            }
-
-            if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
-                $this->emit('mention', [$new, $this, $old]);
-            }
-        }, function ($e) use ($data) {
-            if ($e instanceof \Error) {
-                throw $e;
-            } elseif ($e instanceof \Exception) {
-                $this->logger->error('exception while trying to handle dispatch packet', ['packet' => $data->t, 'exception' => $e]);
-            } else {
-                $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
-            }
-        });
-
         $parse = [
             Event::GUILD_CREATE,
             Event::GUILD_DELETE,
         ];
 
-        if (! $this->emittedInit && (! in_array($data->t, $parse))) {
-            $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                /** @var PromiseInterface */
-                $promise = coroutine([$handler, 'handle'], $data->d);
-                $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
-            };
-        } else {
-            /** @var PromiseInterface */
-            $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
+        if (! $this->emittedInit && ! in_array($data->t, $parse, true)) {
+            $this->unparsedPackets[] = fn () => $this->runDispatchHandler($handler, $data, $hData);
+
+            return;
         }
+
+        $this->runDispatchHandler($handler, $data, $hData);
+    }
+
+    /**
+     * Handle dispatches that are not registered in the dynamic handler
+     * registry by mapping a small set of event names to internal
+     * handler methods.
+     *
+     * @param object $data Raw gateway packet data containing `op`, `d`, `s` and `t`.
+     */
+    protected function handleFallbackDispatch(object $data): void
+    {
+        static $handlers = [
+            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+            Event::RESUMED => 'handleResume',
+            Event::READY => 'handleReady',
+            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+        ];
+
+        if (isset($handlers[$data->t]) && ! in_array($data->t, $this->options['disabledEvents'], true)) {
+            $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
+        }
+    }
+
+    /**
+     * Execute a dispatch handler and attach result/error continuations.
+     *
+     * @param Event  $handler The event handler instance to run.
+     * @param object $data    Raw gateway packet data for this dispatch.
+     * @param array  $hData   Handler metadata (e.g. alternatives) from registry.
+     */
+    protected function runDispatchHandler(Event $handler, object $data, array $hData): void
+    {
+        $this->executeHandler($handler, $data->d)->then(
+            fn ($result) => $this->emitDispatchResult($data, $hData, $result),
+            fn ($error) => $this->handleDispatchError($data, $error)
+        );
+    }
+
+    /**
+     * Execute an event handler and normalize its result to a PromiseInterface.
+     *
+     * @param Event $handler The event handler instance to execute.
+     * @param mixed $payload The payload passed to the handler.
+     *
+     * @return PromiseInterface Promise resolved with the handler result or rejected with the thrown exception.
+     */
+    protected function executeHandler(Event $handler, $payload): PromiseInterface
+    {
+        try {
+            $result = $handler->handle($payload);
+
+            if ($result instanceof \Generator) {
+                return promiseFromGenerator($result);
+            }
+
+            if ($result instanceof PromiseInterface) {
+                return $result;
+            }
+
+            return resolve($result);
+        } catch (\Throwable $e) {
+            return reject($e);
+        }
+    }
+
+    /**
+     * Emits the result of a dispatch handler.
+     *
+     * @param object $data  Packet data.
+     * @param array  $hData Handler data.
+     * @param mixed  $d     The result of the handler.
+     */
+    protected function emitDispatchResult(object $data, array $hData, $d): void
+    {
+        if (is_array($d) && count($d) === 2) {
+            [$new, $old] = $d;
+        } else {
+            $new = $d;
+            $old = null;
+        }
+
+        $this->emit($data->t, [$new, $this, $old]);
+
+        foreach ($hData['alternatives'] as $alternative) {
+            $this->emit($alternative, [$d, $this]);
+        }
+
+        if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
+            $this->emit('mention', [$new, $this, $old]);
+        }
+    }
+
+    /**
+     * Handles errors thrown by dispatch handlers.
+     *
+     * @param object $data Packet data.
+     * @param mixed  $e    The error thrown by the handler.
+     */
+    protected function handleDispatchError(object $data, $e): void
+    {
+        if ($e instanceof \Error) {
+            throw $e;
+        }
+
+        if ($e instanceof \Exception) {
+            $this->logger->error(
+                'exception while trying to handle dispatch packet',
+                ['packet' => $data->t, 'exception' => $e]
+            );
+
+            return;
+        }
+
+        $this->logger->warning(
+            'rejection while trying to handle dispatch packet',
+            ['packet' => $data->t, 'rejection' => $e]
+        );
     }
 
     /**
