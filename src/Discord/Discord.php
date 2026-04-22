@@ -952,7 +952,7 @@ class Discord
      *
      * @return PromiseInterface Promise resolved with the handler result or rejected with the thrown exception.
      */
-    protected function executeHandler(Event $handler, mixed $payload): PromiseInterface
+    protected function executeHandler(Event $handler, $payload): PromiseInterface
     {
         try {
             $result = $handler->handle($payload);
@@ -974,7 +974,7 @@ class Discord
      * @param array  $hData Handler data.
      * @param mixed  $d     The result of the handler.
      */
-    protected function emitDispatchResult(object $data, array $hData, mixed $d): void
+    protected function emitDispatchResult(object $data, array $hData, $d): void
     {
         if (is_array($d) && count($d) === 2) {
             [$new, $old] = $d;
@@ -992,6 +992,33 @@ class Discord
         if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
             $this->emit('mention', [$new, $this, $old]);
         }
+    }
+
+    /**
+     * Handles errors thrown by dispatch handlers.
+     *
+     * @param object $data Packet data.
+     * @param mixed  $e    The error thrown by the handler.
+     */
+    protected function handleDispatchError(object $data, $e): void
+    {
+        if ($e instanceof \Error) {
+            throw $e;
+        }
+
+        if ($e instanceof \Exception) {
+            $this->logger->error(
+                'exception while trying to handle dispatch packet',
+                ['packet' => $data->t, 'exception' => $e]
+            );
+
+            return;
+        }
+
+        $this->logger->warning(
+            'rejection while trying to handle dispatch packet',
+            ['packet' => $data->t, 'rejection' => $e]
+        );
     }
 
     /**
