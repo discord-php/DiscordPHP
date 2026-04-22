@@ -21,7 +21,6 @@ use Discord\Helpers\CacheConfig;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\RegisteredCommand;
-use Discord\Helpers\Coroutine;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
