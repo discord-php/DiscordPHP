@@ -67,12 +67,10 @@ use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
-use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use function React\Async\coroutine;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
