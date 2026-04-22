@@ -104,7 +104,7 @@ class BanRepository extends AbstractRepository
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_BAN_BULK, $this->vars['guild_id']), $content, $headers)
         ->then(function ($response) use ($reason) {
             $response = (array) $response;
-            
+
             $banned_users = [];
             foreach ($response['banned_users'] ?? [] as $user_id) {
                 /** @var Ban */

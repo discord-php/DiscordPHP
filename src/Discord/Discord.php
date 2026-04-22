@@ -19,6 +19,7 @@ use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
 use Discord\Helpers\Collection;
+use Symfony\Component\Dotenv\Dotenv;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
@@ -403,6 +404,48 @@ class Discord
     protected $regions;
 
     /**
+     * Creates a Discord client from environment variables.
+     *
+     * Looks for a `.env` file in the current working directory and loads it
+     * automatically via {@see Dotenv}. If no `.env` file is found **and**
+     * `DISCORD_TOKEN` is not already set in the environment, a
+     * `\RuntimeException` is thrown with instructions on how to proceed.
+     *
+     * Environment variables already present in the environment (e.g. from
+     * Docker or CI) are never overridden, so `.env` is always optional when
+     * the variables are supplied externally.
+     *
+     * Any key in `$overrides` takes precedence over the environment.
+     *
+     * @param  array             $overrides Option overrides.
+     * @throws IntentException
+     * @throws \RuntimeException
+     */
+    public static function fromEnv(array $overrides = []): static
+    {
+        $envPath = getcwd().'/.env';
+        $envFileFound = file_exists($envPath);
+
+        if ($envFileFound) {
+            (new Dotenv())->load($envPath);
+        }
+
+        if (! $envFileFound && (($token = $_ENV['DISCORD_TOKEN'] ?? getenv('DISCORD_TOKEN')) === false || $token === '') && ! isset($overrides['token'])) {
+            throw new \RuntimeException(
+                "No .env file found at {$envPath} and DISCORD_TOKEN is not set in the environment.\n\n"
+                ."  To fix this, copy .env.example to .env and fill in your bot token:\n"
+                ."    cp .env.example .env\n\n"
+                ."  Alternatively, set the environment variable directly:\n"
+                ."    export DISCORD_TOKEN=your_token_here\n\n"
+                ."  Or pass the token as an option:\n"
+                ."    Discord::fromEnv(['token' => 'your_token_here'])"
+            );
+        }
+
+        return new static($overrides);
+    }
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array             $options Array of options.
@@ -422,6 +465,8 @@ class Discord
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
+
+        $this->applyCaFileOption($options['cafile'] ?? null);
 
         if (! in_array(php_sapi_name(), ['cli', 'micro'])) {
             $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
@@ -1700,6 +1745,45 @@ class Discord
     }
 
     /**
+     * Applies a CA certificate bundle path to PHP's TLS configuration.
+     *
+     * When the `cafile` option is not set, falls back to the
+     * `DISCORDPHP_CAFILE` environment variable. Only applies the path
+     * to `openssl.cafile` / `curl.cainfo` when those ini values are
+     * currently empty, so a user's existing configuration is never
+     * overridden. Silently no-ops when no path is provided or the
+     * file does not exist.
+     *
+     * @param ?string $cafile Path from the constructor option, or null.
+     */
+    protected function applyCaFileOption(?string $cafile): void
+    {
+        if ($cafile === null || $cafile === '') {
+            $envValue = $_ENV['DISCORDPHP_CAFILE'] ?? getenv('DISCORDPHP_CAFILE');
+            if ($envValue === false || $envValue === '') {
+                return;
+            }
+            $cafile = $envValue;
+        }
+
+        if (! is_file($cafile)) {
+            $this->logger->warning('Ignoring cafile: path does not exist', ['path' => $cafile]);
+
+            return;
+        }
+
+        if (ini_get('openssl.cafile') === '') {
+            ini_set('openssl.cafile', $cafile);
+        }
+
+        if (ini_get('curl.cainfo') === '') {
+            ini_set('curl.cainfo', $cafile);
+        }
+
+        $this->logger->debug('Applied CA certificate bundle', ['path' => $cafile]);
+    }
+
+    /**
      * Resolves the options.
      *
      * @param array $options Array of options.
@@ -1712,11 +1796,11 @@ class Discord
         $resolver = new OptionsResolver();
 
         $resolver
-            ->setRequired('token')
             ->setDefined([
                 'token',
                 'loop',
                 'logger',
+                'cafile',
                 'loadAllMembers',
                 'disabledEvents',
                 'storeMessages',
@@ -1739,6 +1823,7 @@ class Discord
             ])
             ->setDefaults([
                 'logger' => null,
+                'cafile' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'storeMessages' => false,
@@ -1760,6 +1845,7 @@ class Discord
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
+            ->setAllowedTypes('cafile', ['null', 'string'])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
@@ -1797,7 +1883,52 @@ class Discord
                 return Collection::class;
             })
             ->setAllowedTypes('useTransportCompression', 'bool')
-            ->setAllowedTypes('usePayloadCompression', 'bool');
+            ->setAllowedTypes('usePayloadCompression', 'bool')
+            ->setNormalizer('token', function ($options, $value) {
+                if ($value === null || $value === '') {
+                    $env = $_ENV['DISCORD_TOKEN'] ?? getenv('DISCORD_TOKEN');
+                    if ($env !== false && $env !== '') {
+                        return $env;
+                    }
+                    throw new \RuntimeException(
+                        'No Discord bot token provided. Pass \'token\' to new Discord([...]) or set the DISCORD_TOKEN environment variable.'
+                    );
+                }
+
+                return $value;
+            })
+            ->setNormalizer('intents', function ($options, $value) {
+                if (! is_int($value)) {
+                    return $value;
+                }
+
+                $env = $_ENV['DISCORDPHP_INTENTS'] ?? getenv('DISCORDPHP_INTENTS');
+                if ($env === false || $env === '') {
+                    return $value;
+                }
+
+                // The explicit option was not passed; only fall back when the value is the default.
+                if ($value !== Intents::getDefaultIntents()) {
+                    return $value;
+                }
+
+                if (is_numeric($env)) {
+                    return (int) $env;
+                }
+
+                // Comma-separated constant names, e.g. "GUILDS,GUILD_MESSAGES,MESSAGE_CONTENT"
+                $reflect = new \ReflectionClass(Intents::class);
+                $constants = $reflect->getConstants();
+                $bitmask = 0;
+
+                foreach (array_map('trim', explode(',', strtoupper($env))) as $name) {
+                    if (isset($constants[$name])) {
+                        $bitmask |= $constants[$name];
+                    }
+                }
+
+                return $bitmask ?: $value;
+            });
 
         $options = $resolver->resolve($options);
 
@@ -1878,6 +2009,31 @@ class Discord
     public function run(): void
     {
         $this->loop->run();
+    }
+
+    /**
+     * Registers a one-time or persistent listener for the `READY` event.
+     *
+     * A convenience alias for `$discord->on(Event::READY, $callback)`.
+     * Called when the bot is fully connected and all guilds are available.
+     *
+     * @param callable $callback Called with `(Discord $discord)`.
+     */
+    public function onReady(callable $callback): void
+    {
+        $this->on(Event::READY, $callback);
+    }
+
+    /**
+     * Registers a listener for every incoming `MESSAGE_CREATE` event.
+     *
+     * A convenience alias for `$discord->on(Event::MESSAGE_CREATE, $callback)`.
+     *
+     * @param callable $callback Called with `(\Discord\Parts\Channel\Message $message, Discord $discord)`.
+     */
+    public function onMessage(callable $callback): void
+    {
+        $this->on(Event::MESSAGE_CREATE, $callback);
     }
 
     /**

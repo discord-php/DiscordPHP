@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -19,49 +21,44 @@ use Discord\Parts\Embed\Video;
 
 use function Discord\contains;
 
-final class EmbedTest extends DiscordTestCase
-{
-    public function testCanGetVideoEmbed()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            // kek
-            $url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-            $this->channel()->sendMessage($url)
-                ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
-                ->then(function (Message $message) use ($url) {
-                    $this->assertEquals(1, $message->embeds->count());
-                    /** @var \Discord\Parts\Embed\Embed */
-                    $embed = $message->embeds->first();
+it('can retrieve a video embed', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+        $this->channel()->sendMessage($url)
+            ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id))
+            ->then(function (Message $message) use ($url) {
+                expect($message->embeds->count())->toBe(1);
 
-                    $this->assertInstanceOf(Video::class, $embed->video);
-                    $this->assertInstanceOf(Thumbnail::class, $embed->thumbnail);
-                    $this->assertInstanceOf(Author::class, $embed->author);
+                /** @var Embed */
+                $embed = $message->embeds->first();
 
-                    $this->assertTrue(contains($embed->video->url, ['dQw4w9WgXcQ']));
+                expect($embed->video)->toBeInstanceOf(Video::class);
+                expect($embed->thumbnail)->toBeInstanceOf(Thumbnail::class);
+                expect($embed->author)->toBeInstanceOf(Author::class);
+                expect(contains($embed->video->url, ['dQw4w9WgXcQ']))->toBeTrue();
+                expect($embed->url)->toBe($url);
+                expect($embed->type)->toBe(Embed::TYPE_VIDEO);
+            })
+            ->then($resolve, $resolve);
+    }, 10);
+});
 
-                    $this->assertEquals($url, $embed->url);
-                    $this->assertEquals(Embed::TYPE_VIDEO, $embed->type);
-                })
-                ->then($resolve, $resolve);
-        }, 10);
-    }
+it('can retrieve an image embed', function () {
+    return wait(function (Discord $discord, $resolve) {
+        $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
+        $this->channel()->sendMessage($url)
+            ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id))
+            ->then(function (Message $message) use ($url) {
+                expect($message->embeds->count())->toBe(1);
 
-    public function testCanGetImageEmbed()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
-            $this->channel()->sendMessage($url)
-                ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
-                ->then(function (Message $message) use ($url) {
-                    $this->assertEquals(1, $message->embeds->count());
-                    /** @var \Discord\Parts\Embed\Embed */
-                    $embed = $message->embeds->first();
+                /** @var Embed */
+                $embed = $message->embeds->first();
 
-                    $this->assertEquals($url, $embed->url);
-                    $this->assertEquals(Embed::TYPE_IMAGE, $embed->type);
-                    $this->assertInstanceOf(Thumbnail::class, $embed->thumbnail);
-                })
-                ->then($resolve, $resolve);
-        }, 10);
-    }
-}
+                expect($embed->url)->toBe($url);
+                expect($embed->type)->toBe(Embed::TYPE_IMAGE);
+                expect($embed->thumbnail)->toBeInstanceOf(Thumbnail::class);
+            })
+            ->then($resolve, $resolve);
+    }, 10);
+});
+

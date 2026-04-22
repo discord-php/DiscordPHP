@@ -46,7 +46,7 @@ class GuildScheduledEventExceptionUpdate extends Event
                     $oldScheduledEventException = clone $oldScheduledEventException;
 
                     $scheduledEventExceptionPart->fill((array) $data);
-                    
+
                     $guild->guild_scheduled_event_exceptions->set($scheduledEventExceptionPart->event_exception_id, $scheduledEventExceptionPart);
                 }
             }

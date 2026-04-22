@@ -1427,7 +1427,7 @@ class Message extends Part
 
         if (isset($this->attributes['webhook_id'])) {
             $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id']);
-            
+
             return $webhook->messages;
         }
 

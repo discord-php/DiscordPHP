@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
          bootstrap="tests/bootstrap.php"
-         cacheResultFile=".phpunit.cache/test-results"
+         cacheDirectory=".phpunit.cache"
          executionOrder="depends,defects"
-         forceCoversAnnotation="false"
-         beStrictAboutCoversAnnotation="false"
-         beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
+         requireCoverageMetadata="false"
          failOnRisky="true"
-         failOnWarning="true"
-         verbose="true">
+         failOnWarning="true">
     <testsuites>
-        <testsuite name="default">
-            <directory suffix="Test.php">tests</directory>
-            <!--<file>tests/DiscordTest.php</file>-->
+        <testsuite name="unit">
+            <file>tests/FunctionsTest.php</file>
+            <file>tests/CollectionsTest.php</file>
+            <directory suffix="Test.php">tests/Builders</directory>
+            <file>tests/Parts/Channel/InviteTest.php</file>
+            <file>tests/ArchTest.php</file>
+        </testsuite>
+        <testsuite name="integration">
+            <file>tests/Parts/Channel/ChannelTest.php</file>
+            <file>tests/Parts/Channel/Message/EmbedMessageTest.php</file>
+            <file>tests/Parts/Channel/Message/EmptyMessageTest.php</file>
+            <file>tests/Parts/Channel/Message/MessageTest.php</file>
+            <file>tests/Parts/Channel/Message/RemoveReactionTest.php</file>
+            <file>tests/Parts/Embed/EmbedTest.php</file>
+            <file>tests/DiscordTest.php</file>
         </testsuite>
     </testsuites>
 
-    <coverage cacheDirectory=".phpunit.cache/code-coverage"
-              processUncoveredFiles="true">
+    <coverage/>
+
+    <source>
         <include>
             <directory suffix=".php">src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>

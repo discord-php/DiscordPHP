@@ -27,6 +27,7 @@ composer.lock
 
 # phpunit
 phpunit.log
+coverage.xml
 /.phpunit*
 /coverage
 /.tools

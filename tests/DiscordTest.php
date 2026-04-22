@@ -12,59 +12,9 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-use Discord\Discord;
-use PHPUnit\Framework\TestCase;
+it('has required Discord environment variables', function () {
+    expect(getenv('DISCORD_TOKEN'))->not->toBeFalse('Discord token is missing');
+    expect(getenv('TEST_CHANNEL'))->not->toBeFalse('Test channel ID is missing');
+    expect(getenv('TEST_CHANNEL_NAME'))->not->toBeFalse('Test channel name is missing');
+});
 
-final class DiscordTest extends TestCase
-{
-    public function testCheckEnvVariablesPresent()
-    {
-        if (file_exists(__DIR__.'/../.env')) {
-            $envFile = file_get_contents(__DIR__.'/../.env');
-            $lines = explode("\n", $envFile);
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (empty($line) || strpos($line, '#') === 0) {
-                    continue;
-                }
-                if (strpos($line, '=') === false) {
-                    continue;
-                }
-                [$key, $value] = explode('=', $line, 2);
-                $key = trim($key);
-                $value = trim($value);
-                if (! empty($key)) {
-                    putenv("$key=$value");
-                }
-            }
-        }
-
-        $this->assertNotFalse(getenv('DISCORD_TOKEN'), 'Discord token is missing');
-        $this->assertNotFalse(getenv('TEST_CHANNEL'), 'Test channel ID is missing');
-        $this->assertNotFalse(getenv('TEST_CHANNEL_NAME'), 'Test channel name is missing');
-    }
-
-    /*
-    public function testSetGetCacheAsync()
-    {
-        wait(function (Discord $discord, $resolve) {
-            $cache = $discord->getCacheConfig()->interface;
-            $this->assertIsObject($cache, 'No CacheInterface set');
-            $data = 'DiscordPHP 123';
-
-            $cache->set('DPHP.Test', $data)->then(function ($success) use ($cache, $data) {
-                $this->assertTrue($success, 'Failed to set a cache');
-                if ($success) {
-                    return $cache->get('DPHP.Test')->then(function ($value) use ($data) {
-                        $this->assertEquals($data, $value, 'The stored cache mismatched');
-
-                        return $value ? true : false;
-                    });
-                }
-
-                return $success;
-            })->then($resolve, $resolve);
-        }, 10);
-    }
-    */
-}

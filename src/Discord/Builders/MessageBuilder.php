@@ -522,7 +522,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         $this->components ??= [];
-        
+
         if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
             $this->enforceV2Limits();
         } else {

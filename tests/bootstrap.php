@@ -12,35 +12,24 @@
 
 include __DIR__.'/../vendor/autoload.php';
 
+use function React\Promise\set_rejection_handler;
+
+// Suppress unhandled promise rejections from mock Discord instances used in unit tests.
+// Re-register on each invocation because React/Promise's set_rejection_handler() is
+// consumed (reset to null) every time __destruct() calls set_rejection_handler(null).
+$silenceHandler = null;
+$silenceHandler = function (\Throwable $e) use (&$silenceHandler): void {
+    set_rejection_handler($silenceHandler);
+};
+set_rejection_handler($silenceHandler);
+
 //class RedisPsr16 extends \Symfony\Component\Cache\Psr16Cache {}
 
-// Load local .env into environment if present (simple loader, no extra deps)
-$envPath = __DIR__.'/../.env';
-if (file_exists($envPath)) {
-    $env = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($env as $line) {
-        $line = trim($line);
-        if ($line === '' || $line[0] === '#') {
-            continue;
-        }
-        if (strpos($line, '=') === false) {
-            continue;
-        }
-        [$key, $value] = explode('=', $line, 2);
-        $key = trim($key);
-        $value = trim($value);
-        // strip surrounding quotes
-        if (strlen($value) > 1 && (($value[0] === '"' && substr($value, -1) === '"') || ($value[0] === "'" && substr($value, -1) === "'"))) {
-            $value = substr($value, 1, -1);
-        }
-        if ($key !== '' && getenv($key) === false) {
-            putenv("$key=$value");
-            $_ENV[$key] = $value;
-            $_SERVER[$key] = $value;
-        }
-    }
+// Load local .env into environment if present (does not override existing vars)
+if (file_exists(__DIR__.'/../.env')) {
+    (new \Symfony\Component\Dotenv\Dotenv())->load(__DIR__.'/../.env');
 }
 
-include __DIR__.'/functions.php';
-include __DIR__.'/DiscordSingleton.php';
-include __DIR__.'/DiscordTestCase.php';
+require_once __DIR__.'/functions.php';
+require_once __DIR__.'/DiscordSingleton.php';
+require_once __DIR__.'/DiscordTestCase.php';

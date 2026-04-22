@@ -180,7 +180,7 @@ class Integration extends Part
         if (! isset($this->attributes['guild_id'])) {
             return null;
         }
-        
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
@@ -217,7 +217,7 @@ class Integration extends Part
         if (! isset($this->attributes['guild_id'])) {
             return reject(new \Exception('Integration does not belong to a guild.'));
         }
-            
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 

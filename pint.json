@@ -1,6 +1,50 @@
 {
     "preset": "psr12",
     "rules": {
-        "declare_strict_types": true
+        "array_syntax": {"syntax": "short"},
+        "blank_line_before_statement": {"statements": ["return"]},
+        "cast_spaces": true,
+        "concat_space": {"spacing": "none"},
+        "declare_strict_types": true,
+        "echo_tag_syntax": {"format": "long"},
+        "general_phpdoc_tag_rename": true,
+        "header_comment": {
+            "header": "This file is a part of the DiscordPHP project.\n\nCopyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>\nCopyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>\n\nThis file is subject to the MIT license that is bundled\nwith this source code in the LICENSE.md file.",
+            "comment_type": "comment",
+            "location": "after_declare_strict"
+        },
+        "include": true,
+        "multiline_whitespace_before_semicolons": true,
+        "no_blank_lines_after_phpdoc": true,
+        "no_empty_statement": true,
+        "no_leading_namespace_whitespace": true,
+        "no_multiline_whitespace_around_double_arrow": true,
+        "no_singleline_whitespace_before_semicolons": true,
+        "no_trailing_comma_in_singleline": true,
+        "no_unused_imports": true,
+        "no_useless_else": true,
+        "no_useless_return": true,
+        "not_operator_with_successor_space": true,
+        "object_operator_without_whitespace": true,
+        "phpdoc_align": {
+            "align": "vertical",
+            "tags": ["param", "property", "property-read", "property-write", "return", "throws", "type", "var", "method"]
+        },
+        "phpdoc_indent": true,
+        "phpdoc_inline_tag_normalizer": true,
+        "phpdoc_no_access": true,
+        "phpdoc_no_alias_tag": {"replacements": {"type": "var"}},
+        "phpdoc_no_empty_return": true,
+        "phpdoc_no_package": true,
+        "phpdoc_scalar": true,
+        "phpdoc_summary": true,
+        "phpdoc_tag_type": true,
+        "phpdoc_trim": true,
+        "phpdoc_var_without_name": true,
+        "single_quote": true,
+        "standardize_not_equals": true,
+        "trailing_comma_in_multiline": {"elements": ["arrays"]},
+        "trim_array_spaces": true,
+        "visibility_required": true
     }
 }

@@ -21,11 +21,14 @@ use Discord\Parts\Interactions\Command\Option;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
 use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
+use Discord\WebSockets\Event;
 use Discord\WebSockets\Intents;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
 ini_set('memory_limit', -1);
+
+// fromEnv() below will load .env automatically
 
 /**
  * Class to handle the command callbacks
@@ -179,10 +182,7 @@ class DiceRollHandler
  * 
  * @see https://dis.gd/mcfaq
  */
-$dc = new Discord([
-    // https://discord.com/developers/applications/<APP_ID>>/bot
-    'token' => 'YOUR_DISCORD_BOT_TOKEN',
-    
+$dc = Discord::fromEnv([
     'intents' => (Intents::getDefaultIntents() | Intents::MESSAGE_CONTENT),
 ]);
 
@@ -191,7 +191,7 @@ $dc = new Discord([
  * 
  * IMPORTANT: Avoid calling freshen() multiple times to prevent rate limiting
  */
-$dc->on('init', function (Discord $discord): void
+$dc->on(Event::READY, function (Discord $discord): void
 {
     echo "Bot is ready!\n";
 
