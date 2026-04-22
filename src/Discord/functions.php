@@ -29,6 +29,8 @@ use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\Options;
 
+use function React\Promise\resolve;
+
 /**
  * The HTML Color Table.
  *
@@ -336,6 +338,47 @@ function nowait(PromiseInterface $promiseInterface)
     });
 
     return $resolved;
+}
+
+/**
+ * Converts a generator to a promise, allowing for easier asynchronous code.
+ * 
+ * @param \Generator $generator The generator to convert.
+ * 
+ * @return PromiseInterface A promise that resolves when the generator is complete.
+ * 
+ * @since 10.49.0
+ */
+function promiseFromGenerator(\Generator $generator): PromiseInterface
+{
+    return new Promise(function ($resolve, $reject) use ($generator) {
+        $next = function ($send = null) use (&$next, $generator, $resolve, $reject) {
+            try {
+                if ($send === null) {
+                    $generator->rewind();
+                } else {
+                    $generator->send($send);
+                }
+            } catch (\Throwable $e) {
+                $reject($e);
+                return;
+            }
+
+            if (! $generator->valid()) {
+                $resolve(method_exists($generator, 'getReturn') ? $generator->getReturn() : null);
+                return;
+            }
+
+            $yielded = $generator->current();
+            $promise = $yielded instanceof PromiseInterface ? $yielded : resolve($yielded);
+
+            $promise->then(function ($v) use ($next) {
+                $next($v);
+            }, $reject);
+        };
+
+        $next();
+    });
 }
 
 /**

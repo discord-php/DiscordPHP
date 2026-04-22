@@ -21,6 +21,7 @@ use Discord\Helpers\CacheConfig;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\RegisteredCommand;
+use Discord\Helpers\Coroutine;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
@@ -67,11 +68,13 @@ use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
+use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Async\coroutine;
+use function React\Async\await;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -571,7 +574,7 @@ class Discord
 
             // Normalize safely (NO coroutine dependency here)
             if ($result instanceof \Generator) {
-                throw new \LogicException('Generator detected in handler. Coroutines must be explicitly wrapped.');
+                $result = promiseFromGenerator($result);
             }
 
             if (! $result instanceof PromiseInterface) {
@@ -598,10 +601,46 @@ class Discord
 
         // Register listeners
         $this->onGuildCreateListener = function ($guild) use (&$unavailable, $guildLoad) {
+            if ($guild instanceof \Generator) {
+                $p = promiseFromGenerator($guild);
+
+                $p->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildCreateForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
+            }
+
+            if ($guild instanceof PromiseInterface) {
+                $guild->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildCreateForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
+            }
+
             $this->handleGuildCreateForReady($guild, $unavailable, $guildLoad);
         };
 
         $this->onGuildDeleteListener = function ($guild) use (&$unavailable, $guildLoad) {
+            if ($guild instanceof \Generator) {
+                $p = promiseFromGenerator($guild);
+
+                $p->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildDeleteForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
+            }
+
+            if ($guild instanceof PromiseInterface) {
+                $guild->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                    $this->handleGuildDeleteForReady($resolved, $unavailable, $guildLoad);
+                });
+
+                return;
+            }
+
             $this->handleGuildDeleteForReady($guild, $unavailable, $guildLoad);
         };
 
@@ -633,6 +672,15 @@ class Discord
 
     protected function handleGuildCreateForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
     {
+        // At this point $guild should be a resolved object; callers resolve Generators/Promises.
+        // Keep defensive check for PromiseInterface (resolve synchronously via then)
+        if ($guild instanceof PromiseInterface) {
+            $guild->then(function ($resolved) use (&$unavailable, $guildLoad) {
+                $this->handleGuildCreateForReady($resolved, $unavailable, $guildLoad);
+            });
+
+            return;
+        }
         if (empty($guild->unavailable)) {
             $this->logger->debug('guild available', [
                 'guild' => $guild->id,
@@ -1018,6 +1066,10 @@ class Discord
     {
         try {
             $result = $handler->handle($payload);
+
+            if ($result instanceof \Generator) {
+                return promiseFromGenerator($result);
+            }
 
             if ($result instanceof PromiseInterface) {
                 return $result;
