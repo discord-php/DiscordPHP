@@ -542,7 +542,6 @@ class Discord
         }
 
         $this->emit('trace', $content->_trace);
-
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Client setup
