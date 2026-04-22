@@ -533,6 +533,9 @@ class Discord
             $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
         }
 
+        // If this is a reconnect we don't want to
+        // reparse the READY packet as it would remove
+        // all the data cached.
         if ($this->reconnecting) {
             $this->reconnecting = false;
             $this->logger->debug('websocket reconnected to discord through identify');
@@ -544,7 +547,7 @@ class Discord
         $this->emit('trace', $content->_trace);
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
-        // Client setup
+        // Set up the user account
         $this->client->fill((array) $content->user);
         $this->client->created = true;
         $this->sessionId = $content->session_id;
@@ -554,7 +557,7 @@ class Discord
             'user' => $this->client->user->getPublicAttributes(),
         ]);
 
-        // Guild bootstrapping
+        // Guilds
         $event = new GuildCreate($this);
         $unavailable = [];
         $guildLoad = new Deferred();
@@ -587,7 +590,6 @@ class Discord
             return $this->ready();
         }
 
-        // Register listeners
         $this->onGuildCreateListener = function ($guild) use (&$unavailable, $guildLoad) {
             if ($guild instanceof \Generator) {
                 $p = promiseFromGenerator($guild);
@@ -635,7 +637,6 @@ class Discord
         $this->on(Event::GUILD_CREATE, $this->onGuildCreateListener);
         $this->on(Event::GUILD_DELETE, $this->onGuildDeleteListener);
 
-        // Cleanup when complete
         $guildLoad->promise()->finally(function () {
             $this->removeListener(Event::GUILD_CREATE, $this->onGuildCreateListener);
             $this->removeListener(Event::GUILD_DELETE, $this->onGuildDeleteListener);
