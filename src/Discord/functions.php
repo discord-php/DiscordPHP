@@ -352,33 +352,40 @@ function nowait(PromiseInterface $promiseInterface)
 function promiseFromGenerator(\Generator $generator): PromiseInterface
 {
     return new Promise(function ($resolve, $reject) use ($generator) {
-        $next = function ($send = null) use (&$next, $generator, $resolve, $reject) {
-            try {
-                if ($send === null) {
-                    $generator->rewind();
-                } else {
-                    $generator->send($send);
-                }
-            } catch (\Throwable $e) {
-                $reject($e);
-                return;
-            }
-
-            if (! $generator->valid()) {
-                $resolve(method_exists($generator, 'getReturn') ? $generator->getReturn() : null);
-                return;
-            }
-
-            $yielded = $generator->current();
-            $promise = $yielded instanceof PromiseInterface ? $yielded : resolve($yielded);
-
-            $promise->then(function ($v) use ($next) {
-                $next($v);
-            }, $reject);
-        };
-
-        $next();
+        promiseFromGeneratorStep($generator, null, $resolve, $reject);
     });
+}
+
+/**
+ * Internal step handler for generator -> promise conversion.
+ * Extracted to avoid a self-referencing closure.
+ *
+ * @internal
+ */
+function promiseFromGeneratorStep(\Generator $generator, $send, $resolve, $reject): void
+{
+    try {
+        if ($send === null) {
+            $generator->rewind();
+        } else {
+            $generator->send($send);
+        }
+    } catch (\Throwable $e) {
+        $reject($e);
+        return;
+    }
+
+    if (! $generator->valid()) {
+        $resolve(method_exists($generator, 'getReturn') ? $generator->getReturn() : null);
+        return;
+    }
+
+    $yielded = $generator->current();
+    $promise = $yielded instanceof PromiseInterface ? $yielded : resolve($yielded);
+
+    $promise->then(function ($v) use ($generator, $resolve, $reject) {
+        promiseFromGeneratorStep($generator, $v, $resolve, $reject);
+    }, $reject);
 }
 
 /**
