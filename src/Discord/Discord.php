@@ -404,16 +404,16 @@ class Discord
     /**
      * Listeners for guild availability during ready sequence.
      *
-     * @var callable
+     * @var callable|null
      */
-    protected $onGuildCreateListener;
+    protected $onGuildCreateListener = null;
 
     /**
      * Listeners for guild unavailability during ready sequence.
      *
-     * @var callable
+     * @var callable|null
      */
-    protected $onGuildDeleteListener;
+    protected $onGuildDeleteListener = null;
 
     /**
      * Creates a Discord client instance.
