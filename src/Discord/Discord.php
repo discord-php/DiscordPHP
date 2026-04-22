@@ -403,6 +403,20 @@ class Discord
     protected $regions;
 
     /**
+     * Listeners for guild availability during ready sequence.
+     *
+     * @var callable
+     */
+    protected $onGuildCreateListener;
+
+    /**
+     * Listeners for guild unavailability during ready sequence.
+     *
+     * @var callable
+     */
+    protected $onGuildDeleteListener;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array             $options Array of options.
@@ -515,96 +529,144 @@ class Discord
 
         $content = $data->d;
 
-        // Check if we received resume_gateway_url
         if (isset($content->resume_gateway_url)) {
             $this->resume_gateway_url = $content->resume_gateway_url;
-            $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
+            $this->logger->debug('resume_gateway_url received', [
+                'url' => $content->resume_gateway_url,
+            ]);
         }
 
-        // If this is a reconnect we don't want to
-        // reparse the READY packet as it would remove
-        // all the data cached.
         if ($this->reconnecting) {
             $this->reconnecting = false;
+
             $this->logger->debug('websocket reconnected to discord through identify');
             $this->emit('reconnected', [$this]);
 
             return;
         }
 
-        $this->emit('trace', $data->d->_trace);
-        $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
+        $this->emit('trace', $content->_trace);
 
-        // Set up the user account
+        $this->logger->debug('discord trace received', [
+            'trace' => $content->_trace,
+        ]);
+
+        // Client setup
         $this->client->fill((array) $content->user);
         $this->client->created = true;
         $this->sessionId = $content->session_id;
 
-        $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
+        $this->logger->debug('client created and session id stored', [
+            'session_id' => $content->session_id,
+            'user' => $this->client->user->getPublicAttributes(),
+        ]);
 
-        // Guilds
+        // Guild bootstrapping
         $event = new GuildCreate($this);
-
         $unavailable = [];
+        $guildLoad = new Deferred();
 
         foreach ($content->guilds as $guild) {
-            /** @var PromiseInterface */
-            $promise = coroutine([$event, 'handle'], $guild);
+            $result = $event->handle($guild);
 
-            $promise->then(function ($d) use (&$unavailable) {
+            // Normalize safely (NO coroutine dependency here)
+            if ($result instanceof \Generator) {
+                throw new \LogicException('Generator detected in handler. Coroutines must be explicitly wrapped.');
+            }
+
+            if (! $result instanceof PromiseInterface) {
+                $result = resolve($result);
+            }
+
+            $result->then(function ($d) use (&$unavailable) {
                 if (! empty($d->unavailable)) {
                     $unavailable[$d->id] = $d->unavailable;
                 }
             });
         }
 
-        $this->logger->info('stored guilds', ['count' => $this->guilds->count(), 'unavailable' => count($unavailable)]);
+        $this->logger->info('stored guilds', [
+            'count' => $this->guilds->count(),
+            'unavailable' => count($unavailable),
+        ]);
 
         if (count($unavailable) < 1) {
-            return $this->ready();
+            $this->ready();
+
+            return;
         }
 
-        $guildLoad = new Deferred();
-
-        $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
-            if (empty($guild->unavailable)) {
-                $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
-            }
-            if (count($unavailable) < 1) {
-                $guildLoad->resolve(null);
-            }
+        // Register listeners
+        $this->onGuildCreateListener = function ($guild) use (&$unavailable, $guildLoad) {
+            $this->handleGuildCreateForReady($guild, $unavailable, $guildLoad);
         };
-        $this->on(Event::GUILD_CREATE, $onGuildCreate);
 
-        $onGuildDelete = function ($guild) use (&$unavailable, $guildLoad) {
-            if (! isset($guild->unavailable)) {
-                // Rare Undocumented case, $guild->unavailable is missing but actually unavailable (perhaps kicked then unavailable/deleted)
-                $this->logger->debug('guild deleted', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
-            } elseif ($guild->unavailable) {
-                $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
-            }
-            if (count($unavailable) < 1) {
-                $guildLoad->resolve(null);
-            }
+        $this->onGuildDeleteListener = function ($guild) use (&$unavailable, $guildLoad) {
+            $this->handleGuildDeleteForReady($guild, $unavailable, $guildLoad);
         };
-        $this->on(Event::GUILD_DELETE, $onGuildDelete);
 
-        $guildLoad->promise()->finally(function () use ($onGuildCreate, $onGuildDelete) {
-            $this->removeListener(Event::GUILD_CREATE, $onGuildCreate);
-            $this->removeListener(Event::GUILD_DELETE, $onGuildDelete);
-            $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+        $this->on(Event::GUILD_CREATE, $this->onGuildCreateListener);
+        $this->on(Event::GUILD_DELETE, $this->onGuildDeleteListener);
+
+        // Cleanup when complete
+        $guildLoad->promise()->finally(function () {
+            $this->removeListener(Event::GUILD_CREATE, $this->onGuildCreateListener);
+            $this->removeListener(Event::GUILD_DELETE, $this->onGuildDeleteListener);
+
+            $this->onGuildCreateListener = null;
+            $this->onGuildDeleteListener = null;
+
+            $this->logger->info('all guilds are now available', [
+                'count' => $this->guilds->count(),
+            ]);
 
             $this->setupChunking();
         });
 
-        if (in_array(Event::GUILD_CREATE, $this->options['disabledEvents'])) {
+        // Ready fallback timing
+        if (in_array(Event::GUILD_CREATE, $this->options['disabledEvents'], true)) {
             $this->ready();
         } else {
-            // Emit ready after 60 seconds
             $this->loop->addTimer(60, fn () => $this->ready());
+        }
+    }
+
+    protected function handleGuildCreateForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
+    {
+        if (empty($guild->unavailable)) {
+            $this->logger->debug('guild available', [
+                'guild' => $guild->id,
+                'unavailable' => count($unavailable),
+            ]);
+
+            unset($unavailable[$guild->id]);
+        }
+
+        if (count($unavailable) < 1) {
+            $guildLoad->resolve(null);
+        }
+    }
+
+    protected function handleGuildDeleteForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
+    {
+        if (! isset($guild->unavailable)) {
+            $this->logger->debug('guild deleted', [
+                'guild' => $guild->id,
+                'unavailable' => count($unavailable),
+            ]);
+
+            unset($unavailable[$guild->id]);
+        } elseif ($guild->unavailable) {
+            $this->logger->debug('guild unavailable', [
+                'guild' => $guild->id,
+                'unavailable' => count($unavailable),
+            ]);
+
+            unset($unavailable[$guild->id]);
+        }
+
+        if (count($unavailable) < 1) {
+            $guildLoad->resolve(null);
         }
     }
 
