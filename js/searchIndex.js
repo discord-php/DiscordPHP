@@ -2906,6 +2906,16 @@ Search.appendIndex(
             "summary": "Handles\u0020\u0060READY\u0060\u0020packets.",
             "url": "classes/Discord-Discord.html#method_handleReady"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleGuildCreateForReady\u0028\u0029",
+            "name": "handleGuildCreateForReady",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#method_handleGuildCreateForReady"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleGuildDeleteForReady\u0028\u0029",
+            "name": "handleGuildDeleteForReady",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#method_handleGuildDeleteForReady"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AsetupChunking\u0028\u0029",
             "name": "setupChunking",
             "summary": "Sets\u0020guild\u0020member\u0020chunking\u0020up.",
@@ -2960,6 +2970,31 @@ Search.appendIndex(
             "name": "handleDispatch",
             "summary": "Handles\u0020dispatch\u0020events\u0020received\u0020by\u0020the\u0020WebSocket.",
             "url": "classes/Discord-Discord.html#method_handleDispatch"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleFallbackDispatch\u0028\u0029",
+            "name": "handleFallbackDispatch",
+            "summary": "Handle\u0020dispatches\u0020that\u0020are\u0020not\u0020registered\u0020in\u0020the\u0020dynamic\u0020handler\nregistry\u0020by\u0020mapping\u0020a\u0020small\u0020set\u0020of\u0020event\u0020names\u0020to\u0020internal\nhandler\u0020methods.",
+            "url": "classes/Discord-Discord.html#method_handleFallbackDispatch"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003ArunDispatchHandler\u0028\u0029",
+            "name": "runDispatchHandler",
+            "summary": "Execute\u0020a\u0020dispatch\u0020handler\u0020and\u0020attach\u0020result\/error\u0020continuations.",
+            "url": "classes/Discord-Discord.html#method_runDispatchHandler"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AexecuteHandler\u0028\u0029",
+            "name": "executeHandler",
+            "summary": "Execute\u0020an\u0020event\u0020handler\u0020and\u0020normalize\u0020its\u0020result\u0020to\u0020a\u0020PromiseInterface.",
+            "url": "classes/Discord-Discord.html#method_executeHandler"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AemitDispatchResult\u0028\u0029",
+            "name": "emitDispatchResult",
+            "summary": "Emits\u0020the\u0020result\u0020of\u0020a\u0020dispatch\u0020handler.",
+            "url": "classes/Discord-Discord.html#method_emitDispatchResult"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleDispatchError\u0028\u0029",
+            "name": "handleDispatchError",
+            "summary": "Handles\u0020errors\u0020thrown\u0020by\u0020dispatch\u0020handlers.",
+            "url": "classes/Discord-Discord.html#method_handleDispatchError"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AhandleGuildMembersChunk\u0028\u0029",
             "name": "handleGuildMembersChunk",
@@ -3391,6 +3426,16 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020valid\u0020regions.",
             "url": "classes/Discord-Discord.html#property_regions"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024onGuildCreateListener",
+            "name": "onGuildCreateListener",
+            "summary": "Listeners\u0020for\u0020guild\u0020availability\u0020during\u0020ready\u0020sequence.",
+            "url": "classes/Discord-Discord.html#property_onGuildCreateListener"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024onGuildDeleteListener",
+            "name": "onGuildDeleteListener",
+            "summary": "Listeners\u0020for\u0020guild\u0020unavailability\u0020during\u0020ready\u0020sequence.",
+            "url": "classes/Discord-Discord.html#property_onGuildDeleteListener"
+        },                {
             "fqsen": "\\Discord\\DiscordCommandClient",
             "name": "DiscordCommandClient",
             "summary": "Provides\u0020an\u0020easy\u0020way\u0020to\u0020have\u0020triggerable\u0020message\u0020based\u0020commands.",
@@ -3615,6 +3660,11 @@ Search.appendIndex(
             "name": "nowait",
             "summary": "Attempts\u0020to\u0020return\u0020a\u0020resolved\u0020value\u0020from\u0020a\u0020synchronous\u0020promise.",
             "url": "namespaces/discord.html#function_nowait"
+        },                {
+            "fqsen": "\\Discord\\promiseFromGenerator\u0028\u0029",
+            "name": "promiseFromGenerator",
+            "summary": "Converts\u0020a\u0020generator\u0020to\u0020a\u0020promise,\u0020allowing\u0020for\u0020easier\u0020asynchronous\u0020code.",
+            "url": "namespaces/discord.html#function_promiseFromGenerator"
         },                {
             "fqsen": "\\Discord\\Helpers\\BigInt",
             "name": "BigInt",
