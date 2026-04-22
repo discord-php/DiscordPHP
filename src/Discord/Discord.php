@@ -884,18 +884,8 @@ class Discord
     {
         $hData = $this->handlers->getHandler($data->t);
 
-        if (null === $hData) {
-            static $handlers = [
-                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-                Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-                Event::RESUMED => 'handleResume',
-                Event::READY => 'handleReady',
-                Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-            ];
-
-            if (isset($handlers[$data->t]) && ! in_array($data->t, $this->options['disabledEvents'])) {
-                $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
-            }
+        if ($hData === null) {
+            $this->handleFallbackDispatch($data);
 
             return;
         }
@@ -903,49 +893,104 @@ class Discord
         /** @var Event */
         $handler = new $hData['class']($this);
 
-        $deferred = new Deferred();
-        $deferred->promise()->then(function ($d) use ($data, $hData) {
-            if (is_array($d) && count($d) === 2) {
-                list($new, $old) = $d;
-            } else {
-                $new = $d;
-                $old = null;
-            }
-
-            $this->emit($data->t, [$new, $this, $old]);
-
-            foreach ($hData['alternatives'] as $alternative) {
-                $this->emit($alternative, [$d, $this]);
-            }
-
-            if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
-                $this->emit('mention', [$new, $this, $old]);
-            }
-        }, function ($e) use ($data) {
-            if ($e instanceof \Error) {
-                throw $e;
-            } elseif ($e instanceof \Exception) {
-                $this->logger->error('exception while trying to handle dispatch packet', ['packet' => $data->t, 'exception' => $e]);
-            } else {
-                $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
-            }
-        });
-
         $parse = [
             Event::GUILD_CREATE,
             Event::GUILD_DELETE,
         ];
 
-        if (! $this->emittedInit && (! in_array($data->t, $parse))) {
-            $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                /** @var PromiseInterface */
-                $promise = coroutine([$handler, 'handle'], $data->d);
-                $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
-            };
+        if (! $this->emittedInit && ! in_array($data->t, $parse, true)) {
+            $this->unparsedPackets[] = fn () => $this->runDispatchHandler($handler, $data, $hData);
+
+            return;
+        }
+
+        $this->runDispatchHandler($handler, $data, $hData);
+    }
+
+    /**
+     * Handle dispatches that are not registered in the dynamic handler
+     * registry by mapping a small set of event names to internal
+     * handler methods.
+     *
+     * @param object $data Raw gateway packet data containing `op`, `d`, `s` and `t`.
+     */
+    protected function handleFallbackDispatch(object $data): void
+    {
+        static $handlers = [
+            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+            Event::RESUMED => 'handleResume',
+            Event::READY => 'handleReady',
+            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+        ];
+
+        if (isset($handlers[$data->t]) && ! in_array($data->t, $this->options['disabledEvents'], true)) {
+            $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
+        }
+    }
+
+    /**
+     * Execute a dispatch handler and attach result/error continuations.
+     *
+     * @param Event  $handler The event handler instance to run.
+     * @param object $data    Raw gateway packet data for this dispatch.
+     * @param array  $hData   Handler metadata (e.g. alternatives) from registry.
+     */
+    protected function runDispatchHandler(Event $handler, object $data, array $hData): void
+    {
+        $this->executeHandler($handler, $data->d)->then(
+            fn ($result) => $this->emitDispatchResult($data, $hData, $result),
+            fn ($error) => $this->handleDispatchError($data, $error)
+        );
+    }
+
+    /**
+     * Execute an event handler and normalize its result to a PromiseInterface.
+     *
+     * @param Event $handler The event handler instance to execute.
+     * @param mixed $payload The payload passed to the handler.
+     *
+     * @return PromiseInterface Promise resolved with the handler result or rejected with the thrown exception.
+     */
+    protected function executeHandler(Event $handler, mixed $payload): PromiseInterface
+    {
+        try {
+            $result = $handler->handle($payload);
+
+            if ($result instanceof PromiseInterface) {
+                return $result;
+            }
+
+            return resolve($result);
+        } catch (\Throwable $e) {
+            return reject($e);
+        }
+    }
+
+    /**
+     * Emits the result of a dispatch handler.
+     *
+     * @param object $data  Packet data.
+     * @param array  $hData Handler data.
+     * @param mixed  $d     The result of the handler.
+     */
+    protected function emitDispatchResult(object $data, array $hData, mixed $d): void
+    {
+        if (is_array($d) && count($d) === 2) {
+            [$new, $old] = $d;
         } else {
-            /** @var PromiseInterface */
-            $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
+            $new = $d;
+            $old = null;
+        }
+
+        $this->emit($data->t, [$new, $this, $old]);
+
+        foreach ($hData['alternatives'] as $alternative) {
+            $this->emit($alternative, [$d, $this]);
+        }
+
+        if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
+            $this->emit('mention', [$new, $this, $old]);
         }
     }
 
