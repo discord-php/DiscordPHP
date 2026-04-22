@@ -340,10 +340,6 @@ function nowait(PromiseInterface $promiseInterface)
     return $resolved;
 }
 
-use React\Promise\Promise;
-use React\Promise\PromiseInterface;
-use function React\Promise\resolve;
-
 /**
  * Converts a generator to a promise, allowing for easier asynchronous code.
  */
