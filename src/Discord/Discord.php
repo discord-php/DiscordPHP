@@ -530,14 +530,11 @@ class Discord
 
         if (isset($content->resume_gateway_url)) {
             $this->resume_gateway_url = $content->resume_gateway_url;
-            $this->logger->debug('resume_gateway_url received', [
-                'url' => $content->resume_gateway_url,
-            ]);
+            $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
         }
 
         if ($this->reconnecting) {
             $this->reconnecting = false;
-
             $this->logger->debug('websocket reconnected to discord through identify');
             $this->emit('reconnected', [$this]);
 
@@ -546,9 +543,7 @@ class Discord
 
         $this->emit('trace', $content->_trace);
 
-        $this->logger->debug('discord trace received', [
-            'trace' => $content->_trace,
-        ]);
+        $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Client setup
         $this->client->fill((array) $content->user);
@@ -590,9 +585,7 @@ class Discord
         ]);
 
         if (count($unavailable) < 1) {
-            $this->ready();
-
-            return;
+            return $this->ready();
         }
 
         // Register listeners
