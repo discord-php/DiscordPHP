@@ -780,6 +780,8 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Sets the shared client theme of the message.
+     * 
+     * @since 10.49.0
      *
      * @param SharedClientTheme|null $shared_client_theme
      *
