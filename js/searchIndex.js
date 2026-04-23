@@ -2571,6 +2571,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020poll\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_getPoll"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetSharedClientTheme\u0028\u0029",
+            "name": "setSharedClientTheme",
+            "summary": "Sets\u0020the\u0020shared\u0020client\u0020theme\u0020of\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setSharedClientTheme"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetSharedClientTheme\u0028\u0029",
+            "name": "getSharedClientTheme",
+            "summary": "Returns\u0020the\u0020shared\u0020client\u0020theme\u0020of\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getSharedClientTheme"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetSuppressEmbedsFlag\u0028\u0029",
             "name": "setSuppressEmbedsFlag",
             "summary": "Sets\u0020or\u0020unsets\u0020the\u0020SUPPRESS_EMBEDS\u0020flag\u0020for\u0020the\u0020message.",
@@ -2695,6 +2705,11 @@ Search.appendIndex(
             "name": "poll",
             "summary": "The\u0020poll\u0020for\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_poll"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024shared_client_theme",
+            "name": "shared_client_theme",
+            "summary": "Shared\u0020client\u0020theme\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#property_shared_client_theme"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024flags",
             "name": "flags",
