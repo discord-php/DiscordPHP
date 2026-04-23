@@ -24,6 +24,7 @@ use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Channel\Message\SharedClientTheme;
 use Discord\Parts\Channel\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
@@ -134,6 +135,13 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @var Poll|null
      */
     protected $poll;
+
+    /**
+     * Shared client theme for the message.
+     *
+     * @var SharedClientTheme|null
+     */
+    protected $shared_client_theme;
 
     /**
      * Flags to send with this message.
@@ -771,6 +779,30 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
+     * Sets the shared client theme of the message.
+     *
+     * @param SharedClientTheme|null $shared_client_theme
+     *
+     * @return $this
+     */
+    public function setSharedClientTheme($shared_client_theme = null): self
+    {
+        $this->shared_client_theme = $shared_client_theme;
+
+        return $this;
+    }
+
+    /**
+     * Returns the shared client theme of the message.
+     *
+     * @return SharedClientTheme|null
+     */
+    public function getSharedClientTheme(): ?SharedClientTheme
+    {
+        return $this->shared_client_theme;
+    }
+
+    /**
      * Sets or unsets the SUPPRESS_EMBEDS flag for the message.
      *
      * @since 10.19.0
@@ -837,8 +869,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
      * Once a message has been sent with this flag, it can't be removed from that message.
      *
-     * When the `IS_COMPONENTS_V2` flag is set, any of the used `content`, `embeds`, `sticker_ids`, or `poll` fields must have their values reset to empty.
-     * For `content` and `poll` this is `null`.
+     * When the `IS_COMPONENTS_V2` flag is set, any of the used `content`, `embeds`, `sticker_ids`, `poll`, or `shared_client_theme` fields must have their values reset to empty.
+     * For `content`, `poll`, and `shared_client_theme`, this is `null`.
      * For `embeds` and `sticker_ids` this is `[]`.
      * Failing to do this will result in a 400 BAD REQUEST response.
      *
@@ -1080,6 +1112,13 @@ class MessageBuilder extends Builder implements JsonSerializable
         if (isset($this->poll)) {
             if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
                 $body['poll'] = $this->poll;
+                $empty = false;
+            }
+        }
+
+        if (isset($this->shared_client_theme)) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
+                $body['shared_client_theme'] = $this->shared_client_theme;
                 $empty = false;
             }
         }
