@@ -63,6 +63,7 @@
         "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
         "ext-fileinfo": "For function mime_content_type().",
+        "ext-zstd": "For Zstandard compression support.",
         "laracord/laracord": "Provides Laracord integration for DiscordPHP."
     },
     "scripts": {
