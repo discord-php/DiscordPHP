@@ -61,6 +61,7 @@ use function React\Promise\reject;
  * @property      string                                                   $id                     The unique identifier of the message.
  * @property      string                                                   $channel_id             The unique identifier of the channel that the message was sent in.
  * @property-read Channel|Thread                                           $channel                The channel that the message was sent in.
+ * @property      int|null                                                 $channel_type           The type of channel the message was sent in.
  * @property      User|null                                                $author                 The author of the message. Will be a webhook if sent from one.
  * @property-read string|null                                              $user_id                The user id of the author.
  * @property      string                                                   $content                The content of the message if it is a normal message.
@@ -235,6 +236,7 @@ class Message extends Part
     protected $fillable = [
         'id',
         'channel_id',
+        'channel_type',
         'author',
         'content',
         'timestamp',
