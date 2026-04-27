@@ -104,7 +104,7 @@ class Reaction extends Part
     protected function setIdAttribute(string $value): void
     {
         if ($this->emoji === null) {
-            $this->attributes['emoji'] = new Emoji($this->discord);
+            $this->attributes['emoji'] = $this->factory->part(Emoji::class, [], true);
         }
 
         $colonDelimiter = explode(':', $value);
