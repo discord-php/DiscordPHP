@@ -18,6 +18,8 @@ use function Discord\poly_strlen;
 
 /**
  * List of options to render within a Group.
+ * 
+ * @link https://docs.discord.com/developers/components/reference#radio-group-option-structure
  *
  * @since 10.46.0
  *
