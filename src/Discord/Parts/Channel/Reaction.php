@@ -104,7 +104,7 @@ class Reaction extends Part
     protected function setIdAttribute(string $value): void
     {
         if ($this->emoji === null) {
-            $this->attributes['emoji'] = $this->factory->part(Emoji::class, [], true);
+            $this->attributes['emoji'] = $this->factory->part(Emoji::class, ['guild_id' => $this->guild_id], true);
         }
 
         $colonDelimiter = explode(':', $value);
