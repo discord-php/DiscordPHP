@@ -19,9 +19,9 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 
 /**
- * Sent when a user joins a guild. The inner payload is a guild member object with an extra `guild_id` key.
+ * Sent when a user joins a guild. This event can be sent when the user is already a member of the guild. 
  * 
- * This event can be sent when the user is already a member of the guild.
+ * The inner payload is a guild member object with an extra `guild_id` key.
  * 
  * @link https://docs.discord.com/developers/events/gateway-events#guild-member-add
  *
