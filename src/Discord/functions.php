@@ -400,7 +400,7 @@ function promiseFromGeneratorStep(\Generator $generator, bool $started, $send, $
         : resolve($yielded);
 
     $promise->then(
-        function ($v) use ($generator, $started, $resolve, $reject) {
+        function ($v) use ($generator, $resolve, $reject) {
             promiseFromGeneratorStep($generator, true, $v, $resolve, $reject);
         },
         $reject
