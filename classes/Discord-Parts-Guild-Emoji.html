@@ -312,7 +312,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null                       $name           The name of the emoji (can be null only in reaction emoji objects).</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                       $name           The name of the emoji (can be null only in reaction emoji objects). This field can only be <code class="prettyprint">null</code> in reaction emoji objects.</p>
 </section>
 
                                     </dd>
@@ -1040,7 +1040,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$require_colons</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether the emoji requires colons to be triggered.</p>
+        <section class="phpdocumentor-description"><p>Whether the emoji requires colons to be triggered. The field is only set to <code class="prettyprint">false</code> for synced subscriber emotes when the Twitch Integration is set up.</p>
 </section>
 
     

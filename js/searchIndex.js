@@ -16478,7 +16478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildMemberAdd",
             "name": "GuildMemberAdd",
-            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "summary": "Sent\u0020when\u0020a\u0020user\u0020joins\u0020a\u0020guild.\u0020This\u0020event\u0020can\u0020be\u0020sent\u0020when\u0020the\u0020user\u0020is\u0020already\u0020a\u0020member\u0020of\u0020the\u0020guild.",
             "url": "classes/Discord-WebSockets-Events-GuildMemberAdd.html"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildMemberAdd\u003A\u003Ahandle\u0028\u0029",
