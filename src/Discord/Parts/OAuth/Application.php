@@ -53,7 +53,8 @@ use function React\Promise\reject;
  * @property string|null        $slug                                 If this application is a game sold on Discord, this field will be the URL slug that links to the store page.
  * @property string|null        $cover_image                          The application's default rich presence invite cover image URL.
  * @property string|null        $cover_image_hash                     The application's default rich presence invite cover image hash.
- * @property int                $flags                                The application's public flags.
+ * @property int                $flags                                The application's public flags. The `flags` field is serialized as a number; however, this number will not grow beyond 31 bits.
+ * @property int                $flags_new                            The application's public flags. New flag bits beyond bit 30 will only appear in `flags_new`, a string-serialized integer containing the full set of flag bits.
  * @property int|null           $approximate_guild_count              The application's approximate count of the app's guild membership.
  * @property int|null           $approximate_user_install_count       The approximate count of users that have installed the app.
  * @property int|null           $approximate_user_authorization_count The approximate count of users that have OAuth2 authorizations for the app.
@@ -100,6 +101,7 @@ class Application extends Part
         'slug',
         'cover_image',
         'flags',
+        'flags_new',
         'approximate_guild_count',
         'approximate_user_install_count',
         'approximate_user_authorization_count',
