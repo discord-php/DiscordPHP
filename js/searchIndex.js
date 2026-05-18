@@ -12186,6 +12186,11 @@ Search.appendIndex(
             "summary": "Updates\u0020and\u0020returns\u0020the\u0020application\u0020role\u0020connection\u0020for\u0020the\u0020user.",
             "url": "classes/Discord-Parts-User-Client.html#method_updateCurrentUserApplicationRoleConnection"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AdeleteCurrentApplicationRoleConnection\u0028\u0029",
+            "name": "deleteCurrentApplicationRoleConnection",
+            "summary": "Deletes\u0020the\u0020current\u0020application\u0020role\u0020connection\u0020for\u0020the\u0020user.",
+            "url": "classes/Discord-Parts-User-Client.html#method_deleteCurrentApplicationRoleConnection"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetCurrentApplication\u0028\u0029",
             "name": "getCurrentApplication",
             "summary": "Gets\u0020the\u0020current\u0020application\u0020of\u0020the\u0020client.",

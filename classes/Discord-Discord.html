@@ -6,7 +6,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -278,15 +281,14 @@
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">version</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">version</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
     
     
@@ -311,20 +313,20 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Discord.html#constant_GATEWAY_VERSION">GATEWAY_VERSION</a>
     <span>
-        &nbsp;= 10                            </span>
+        &nbsp;: int&nbsp;= 10                            </span>
 </dt>
 <dd>The gateway version the client uses.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Discord.html#constant_REFERRER">REFERRER</a>
     <span>
-        &nbsp;= &#039;https://github.com/discord-php/DiscordPHP&#039;                            </span>
+        &nbsp;: mixed&nbsp;= &#039;https://github.com/discord-php/DiscordPHP&#039;                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Discord.html#constant_VERSION">VERSION</a>
     <span>
-        &nbsp;= &#039;v10.48.0&#039;                            </span>
+        &nbsp;: string&nbsp;= &#039;v10.48.0&#039;                            </span>
 </dt>
 <dd>The client version.</dd>
 
@@ -3786,29 +3788,24 @@ not received in 5 seconds.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method___construct_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method___construct_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/Discord-Exceptions-IntentException.html"><abbr title="\Discord\Exceptions\IntentException">IntentException</abbr></a></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4146,27 +4143,25 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_factory_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_factory#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_factory_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Factory-Factory.html#method_create"><abbr title="\Discord\Factory\Factory::create()">Factory::create()</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">new $class($discord, ...)</code>.</p>
+                                                                                                            <section class="phpdocumentor-description"><p>Use <code class="prettyprint">new $class($discord, ...)</code>.</p>
 </section>
 
                                     </dd>
@@ -4316,21 +4311,20 @@ object.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getCollectionClass_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_getCollectionClass#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_getCollectionClass_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.43.1</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4900,20 +4894,19 @@ object.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_identify_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_identify#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_identify_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway#identifying"> https://docs.discord.com/developers/events/gateway#identifying </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4979,41 +4972,35 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_joinVoiceChannel_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_joinVoiceChannel#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_joinVoiceChannel_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>If the voice manager is not initialized.</p>
+                                                                                        <section class="phpdocumentor-description"><p>If the voice manager is not initialized.</p>
 </section>
 
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Removed argument $check that has no effect (it is always checked)</p>
+                                                                                                            <section class="phpdocumentor-description"><p>Removed argument $check that has no effect (it is always checked)</p>
 </section>
 
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">4.0.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5077,21 +5064,20 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_listenCommand_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_listenCommand#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_listenCommand_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\LogicException">LogicException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5195,36 +5181,33 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_requestChannelInfo_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_requestChannelInfo#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_requestChannelInfo_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-WebSockets-Events-ChannelInfo.html"><abbr title="\Discord\WebSockets\Events\ChannelInfo">ChannelInfo</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#channel-info"> https://docs.discord.com/developers/events/gateway-events#channel-info </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.48.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5284,46 +5267,42 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_requestGuildMembers_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_requestGuildMembers#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_requestGuildMembers_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\self::handleGuildMembersChunk()">self::handleGuildMembersChunk()</abbr></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#request-guild-members"> https://docs.discord.com/developers/events/gateway-events#request-guild-members </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>Either query or user_ids must be set.</p>
+                                                                                        <section class="phpdocumentor-description"><p>Either query or user_ids must be set.</p>
 </section>
 
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5371,28 +5350,26 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_requestSoundboardSounds_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_requestSoundboardSounds#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_requestSoundboardSounds_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-WebSockets-Events-SoundboardSounds.html"><abbr title="\Discord\WebSockets\Events\SoundboardSounds">SoundboardSounds</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#request-soundboard-sounds"> https://docs.discord.com/developers/events/gateway-events#request-soundboard-sounds </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5452,35 +5429,29 @@ object.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_resume_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_resume#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_resume_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#resume"> https://docs.discord.com/developers/events/gateway-events#resume </a>
-                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway#resuming"> https://docs.discord.com/developers/events/gateway#resuming </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5694,28 +5665,26 @@ online, dnd, idle, invisible, offline</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_updatePresence_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_updatePresence#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_updatePresence_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#update-presence"> https://docs.discord.com/developers/events/gateway-events#update-presence </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\UnexpectedValueException">UnexpectedValueException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5790,28 +5759,26 @@ online, dnd, idle, invisible, offline</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_updateVoiceState_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_updateVoiceState#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_updateVoiceState_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#update-voice-state"> https://docs.discord.com/developers/events/gateway-events#update-voice-state </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6356,21 +6323,20 @@ handler methods.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleGuildMembersChunk_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_handleGuildMembersChunk#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_handleGuildMembersChunk_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6606,21 +6572,20 @@ handler methods.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleReady_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_handleReady#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_handleReady_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6946,21 +6911,20 @@ handler methods.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_resolveOptions_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_resolveOptions#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_resolveOptions_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/Discord-Exceptions-IntentException.html"><abbr title="\Discord\Exceptions\IntentException">IntentException</abbr></a></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7355,22 +7319,21 @@ handler methods.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_voiceStateUpdate_tags">
         Tags
-        <a href="classes/Discord-Discord.html#method_voiceStateUpdate#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Discord.html#method_voiceStateUpdate_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">todo</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Remove this function in v11, as it's no longer needed.</p>
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">todo</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>Remove this function in v11, as it's no longer needed.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7378,100 +7341,7 @@ handler methods.</p>
 </article>
             </section>
 
-        <div class="phpdocumentor-modal" id="source-view">
-    <div class="phpdocumentor-modal-bg" data-exit-button></div>
-    <div class="phpdocumentor-modal-container">
-        <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Discord.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
-        </div>
-        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
-    </div>
-</div>
-
-    <script type="text/javascript">
-        (function () {
-            function loadExternalCodeSnippet(el, url, line) {
-                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
-                    const language = 'php';
-
-                    const code = document.createElement('code');
-                    code.className = 'language-' + language;
-                    pre.textContent = '';
-                    pre.setAttribute('data-line', line)
-                    code.textContent = 'Loading…';
-                    pre.appendChild(code);
-
-                    var xhr = new XMLHttpRequest();
-
-                    xhr.open('GET', src, true);
-
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState !== 4) {
-                            return;
-                        }
-
-                        if (xhr.status < 400 && xhr.responseText) {
-                            code.textContent = xhr.responseText;
-                            Prism.highlightElement(code);
-                            d=document.getElementsByClassName("line-numbers");
-                            d[0].scrollTop = d[0].children[1].offsetTop;
-                            return;
-                        }
-
-                        if (xhr.status === 404) {
-                            code.textContent = '✖ Error: File could not be found';
-                            return;
-                        }
-
-                        if (xhr.status >= 400) {
-                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                            return;
-                        }
-
-                        code.textContent = '✖ Error: An unknown error occurred';
-                    };
-
-                    xhr.send(null);
-                });
-            }
-
-            const modalButtons = document.querySelectorAll("[data-modal]");
-            const openedAsLocalFile = window.location.protocol === 'file:';
-            if (modalButtons.length > 0 && openedAsLocalFile) {
-                console.warn(
-                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
-                    'browsers block XHR requests when a page is opened this way'
-                );
-            }
-
-            modalButtons.forEach(function (trigger) {
-                if (openedAsLocalFile) {
-                    trigger.setAttribute("hidden", "hidden");
-                }
-
-                trigger.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const modal = document.getElementById(trigger.dataset.modal);
-                    if (!modal) {
-                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
-                        return;
-                    }
-                    modal.classList.add("phpdocumentor-modal__open");
-
-                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
-                    const exits = modal.querySelectorAll("[data-exit-button]");
-                    exits.forEach(function (exit) {
-                        exit.addEventListener("click", function (event) {
-                            event.preventDefault();
-                            modal.classList.remove("phpdocumentor-modal__open");
-                        });
-                    });
-                });
-            });
-        })();
-    </script>
-
+        
     </article>
                                 </section>
                 <section class="phpdocumentor-on-this-page__sidebar">

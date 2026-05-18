@@ -7,7 +7,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -505,7 +508,7 @@
     <p>Similar to replying to a message, also takes a <code>delay</code>
  parameter in which the reply will be sent after. Returns the new message in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-5">
             <a id="parameters-1"></a>
 
             <h3>Parameters</h3>
@@ -547,7 +550,7 @@ $message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;then(function (Message $
             
     <p>Adds a reaction to a message. Takes an <a href="#emoji">Emoji</a> object, a custom emoji string or a unicode emoji. Returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-6">
             <a id="parameters-2"></a>
 
             <h3>Parameters</h3>
@@ -595,7 +598,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
             
     <p>Deletes reaction(s) from a message. Has four methods of operation, described below. Returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-7">
             <a id="parameters-3"></a>
 
             <h3>Parameters</h3>
@@ -758,7 +761,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
             
     <p>Adds an embed to a message. Takes an embed object. Will overwrite the old embed (if there is one). Returns the updated message in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-8">
             <a id="parameters-4"></a>
 
             <h3>Parameters</h3>

@@ -7,7 +7,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -472,7 +475,7 @@ $channel-&gt;setPermissions($member, [
     <p>Sets the permissions of a member or role, but takes an <code>Overwrite</code>
  part instead of two arrays. Returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-12">
             <a id="parameters-1"></a>
 
             <h3>Parameters</h3>
@@ -531,7 +534,7 @@ $channel-&gt;setOverwrite($member, $overwrite)-&gt;then(function () {
             
     <p>Moves a member to a voice channel if the member is already in one. Takes a <a href="#member">Member</a> object or member ID and returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-13">
             <a id="parameters-2"></a>
 
             <h3>Parameters</h3>
@@ -575,7 +578,7 @@ $channel-&gt;moveMember(&#039;123213123123213&#039;)-&gt;then(function () {
             
     <p>Mutes or unmutes a member in the voice channel. Takes a <a href="#member">Member</a> object or member ID and returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-14">
             <a id="parameters-3"></a>
 
             <h3>Parameters</h3>
@@ -619,7 +622,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
             
     <p>Creates an invite for a channel. Takes an array of options and returns the new invite in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-15">
             <a id="parameters-4"></a>
 
             <h3>Parameters</h3>
@@ -701,7 +704,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
             
     <p>Deletes many messages at once. Takes an array of messages and/or message IDs and returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-16">
             <a id="parameters-5"></a>
 
             <h3>Parameters</h3>
@@ -751,7 +754,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
             
     <p>Retrieves message history with an array of options. Returns a collection of messages in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-17">
             <a id="parameters-6"></a>
 
             <h3>Parameters</h3>
@@ -805,7 +808,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
             
     <p>Deletes a number of messages, in order from the last one sent. Takes an integer of messages to delete and returns an empty promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-18">
             <a id="parameters-7"></a>
 
             <h3>Parameters</h3>
@@ -850,7 +853,7 @@ $channel-&gt;limitDelete(15)-&gt;then(function () {
             
     <p>Pins or unpins a message from the channel pinboard. Takes a message object and returns the same message in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-19">
             <a id="parameters-8"></a>
 
             <h3>Parameters</h3>
@@ -914,7 +917,7 @@ $channel-&gt;unpinMessage($message)-&gt;then(function (Message $message) {
             
     <p>Sends a message to the channel. Takes a message builder. Returns the message in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-20">
             <a id="parameters-9"></a>
 
             <h3>Parameters</h3>
@@ -957,7 +960,7 @@ $channel-&gt;sendMessage($message)-&gt;then(function (Message $message) {
             
     <p>Sends an embed to the channel. Takes an embed and returns the sent message in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-21">
             <a id="parameters-10"></a>
 
             <h3>Parameters</h3>
@@ -1009,7 +1012,7 @@ $channel-&gt;sendMessage($message)-&gt;then(function (Message $message) {
     <p>Creates a message collector, which calls a filter function on each message received and inserts it into a collection if the function returns <code>true</code>
 . The collector is resolved after a specified time or limit, whichever is given or whichever happens first. Takes a callback, an array of options and returns a collection of messages in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-22">
             <a id="parameters-11"></a>
 
             <h3>Parameters</h3>

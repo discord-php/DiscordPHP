@@ -7,7 +7,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -411,7 +414,7 @@
  permission or <code>CHANGE_NICKNAME</code>
  if changing self nickname. Returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-8">
             <a id="parameters-1"></a>
 
             <h3>Parameters</h3>
@@ -447,7 +450,7 @@
             
     <p>Moves the member to another voice channel. Member must already be in a voice channel. Takes a channel or channel ID and returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-9">
             <a id="parameters-2"></a>
 
             <h3>Parameters</h3>
@@ -488,7 +491,7 @@ $member-&gt;moveMember(&#039;123451231231&#039;)-&gt;then(function () {
             
     <p>Adds the member to a role. Takes a role or role ID and returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-10">
             <a id="parameters-3"></a>
 
             <h3>Parameters</h3>
@@ -530,7 +533,7 @@ $member-&gt;addRole(&#039;1231231231&#039;)-&gt;then(function () {
             
     <p>Removes the member from a role. Takes a role or role ID and returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-11">
             <a id="parameters-4"></a>
 
             <h3>Parameters</h3>
@@ -572,7 +575,7 @@ $member-&gt;removeRole(&#039;1231231231&#039;)-&gt;then(function () {
             
     <p>Times out the member in the server. Takes a carbon or null to remove. Returns nothing in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-12">
             <a id="parameters-5"></a>
 
             <h3>Parameters</h3>
@@ -618,7 +621,7 @@ $member-&gt;timeoutMember()-&gt;then(function () {
             
     <p>Returns a <a href="#permissions">role permission</a> in a promise.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-13">
             <a id="parameters-6"></a>
 
             <h3>Parameters</h3>
@@ -660,7 +663,7 @@ $member-&gt;getPermissions()-&gt;then(function (RolePermission $permission) {
     <p>Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use <code>$member-&gt;avatar</code>
 . Returns a string.</p>
 
-            <section class="section " id="parameters">
+            <section class="section " id="parameters-14">
             <a id="parameters-7"></a>
 
             <h3>Parameters</h3>

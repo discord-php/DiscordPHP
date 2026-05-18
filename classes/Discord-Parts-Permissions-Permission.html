@@ -6,7 +6,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -284,42 +287,32 @@
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/permissions"> https://docs.discord.com/developers/topics/permissions </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Added constants for all permissions.</p>
+                                                                                                            <section class="phpdocumentor-description"><p>Added constants for all permissions.</p>
 </section>
 
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.1.3</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Namespace moved from Guild to Permissions</p>
+                                                                                                            <section class="phpdocumentor-description"><p>Namespace moved from Guild to Permissions</p>
 </section>
 
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">2.0.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
     
     
@@ -344,399 +337,399 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_ADD_REACTIONS">ADD_REACTIONS</a>
     <span>
-        &nbsp;= 6                            </span>
+        &nbsp;: mixed&nbsp;= 6                            </span>
 </dt>
 <dd>Allows for adding new reactions to messages. This permission does not apply to reacting with an existing reaction on a message.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_ADMINISTRATOR">ADMINISTRATOR</a>
     <span>
-        &nbsp;= 3                            </span>
+        &nbsp;: mixed&nbsp;= 3                            </span>
 </dt>
 <dd>Allows all permissions and bypasses channel permission overwrites.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_ALL_PERMISSIONS">ALL_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;create_instant_invite&#039; =&gt; self::CREATE_INSTANT_INVITE, &#039;manage_channels&#039; =&gt; self::MANAGE_CHANNELS, &#039;add_reactions&#039; =&gt; self::ADD_REACTIONS, &#039;view_channel&#039; =&gt; self::VIEW_CHANNEL, &#039;send_messages&#039; =&gt; self::SEND_MESSAGES, &#039;send_tts_messages&#039; =&gt; self::SEND_TTS_MESSAGES, &#039;manage_messages&#039; =&gt; self::MANAGE_MESSAGES, &#039;embed_links&#039; =&gt; self::EMBED_LINKS, &#039;attach_files&#039; =&gt; self::ATTACH_FILES, &#039;read_message_history&#039; =&gt; self::READ_MESSAGE_HISTORY, &#039;mention_everyone&#039; =&gt; self::MENTION_EVERYONE, &#039;use_external_emojis&#039; =&gt; self::USE_EXTERNAL_EMOJIS, &#039;manage_roles&#039; =&gt; self::MANAGE_ROLES, &#039;manage_webhooks&#039; =&gt; self::MANAGE_WEBHOOKS, &#039;use_application_commands&#039; =&gt; self::USE_APPLICATION_COMMANDS, &#039;use_external_stickers&#039; =&gt; self::USE_EXTERNAL_STICKERS, &#039;send_voice_messages&#039; =&gt; self::SEND_VOICE_MESSAGES]                            </span>
+        &nbsp;: array&lt;string|int, mixed&gt;&nbsp;= [&#039;create_instant_invite&#039; =&gt; self::CREATE_INSTAN...                            </span>
 </dt>
 <dd>Array of permissions for all roles.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_ATTACH_FILES">ATTACH_FILES</a>
     <span>
-        &nbsp;= 15                            </span>
+        &nbsp;: mixed&nbsp;= 15                            </span>
 </dt>
 <dd>Allows for uploading images and files.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_BAN_MEMBERS">BAN_MEMBERS</a>
     <span>
-        &nbsp;= 2                            </span>
+        &nbsp;: mixed&nbsp;= 2                            </span>
 </dt>
 <dd>Allows banning members.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_BYPASS_SLOWMODE">BYPASS_SLOWMODE</a>
     <span>
-        &nbsp;= 52                            </span>
+        &nbsp;: mixed&nbsp;= 52                            </span>
 </dt>
 <dd>Allows bypassing slowmode restrictions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CHANGE_NICKNAME">CHANGE_NICKNAME</a>
     <span>
-        &nbsp;= 26                            </span>
+        &nbsp;: mixed&nbsp;= 26                            </span>
 </dt>
 <dd>Allows for modification of own nickname.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CONNECT">CONNECT</a>
     <span>
-        &nbsp;= 20                            </span>
+        &nbsp;: mixed&nbsp;= 20                            </span>
 </dt>
 <dd>Allows for joining of a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_EVENTS">CREATE_EVENTS</a>
     <span>
-        &nbsp;= 44                            </span>
+        &nbsp;: mixed&nbsp;= 44                            </span>
 </dt>
 <dd>Allows for creating scheduled events, and editing and deleting those created by the current user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_GUILD_EXPRESSIONS">CREATE_GUILD_EXPRESSIONS</a>
     <span>
-        &nbsp;= 43                            </span>
+        &nbsp;: mixed&nbsp;= 43                            </span>
 </dt>
 <dd>Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_INSTANT_INVITE">CREATE_INSTANT_INVITE</a>
     <span>
-        &nbsp;= 0                            </span>
+        &nbsp;: mixed&nbsp;= 0                            </span>
 </dt>
 <dd>Allows creation of instant invites.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_PRIVATE_THREADS">CREATE_PRIVATE_THREADS</a>
     <span>
-        &nbsp;= 36                            </span>
+        &nbsp;: mixed&nbsp;= 36                            </span>
 </dt>
 <dd>Allows for creating private threads.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_PUBLIC_THREADS">CREATE_PUBLIC_THREADS</a>
     <span>
-        &nbsp;= 35                            </span>
+        &nbsp;: mixed&nbsp;= 35                            </span>
 </dt>
 <dd>Allows for creating public and announcement threads.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_DEAFEN_MEMBERS">DEAFEN_MEMBERS</a>
     <span>
-        &nbsp;= 23                            </span>
+        &nbsp;: mixed&nbsp;= 23                            </span>
 </dt>
 <dd>Allows for deafening of members in a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_EMBED_LINKS">EMBED_LINKS</a>
     <span>
-        &nbsp;= 14                            </span>
+        &nbsp;: mixed&nbsp;= 14                            </span>
 </dt>
 <dd>Links sent by users with this permission will be auto-embedded.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_KICK_MEMBERS">KICK_MEMBERS</a>
     <span>
-        &nbsp;= 1                            </span>
+        &nbsp;: mixed&nbsp;= 1                            </span>
 </dt>
 <dd>Allows kicking members.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_CHANNELS">MANAGE_CHANNELS</a>
     <span>
-        &nbsp;= 4                            </span>
+        &nbsp;: mixed&nbsp;= 4                            </span>
 </dt>
 <dd>Allows management and editing of channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_EVENTS">MANAGE_EVENTS</a>
     <span>
-        &nbsp;= 33                            </span>
+        &nbsp;: mixed&nbsp;= 33                            </span>
 </dt>
 <dd>Allows for editing and deleting scheduled events created by all users.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_GUILD">MANAGE_GUILD</a>
     <span>
-        &nbsp;= 5                            </span>
+        &nbsp;: mixed&nbsp;= 5                            </span>
 </dt>
 <dd>Allows management and editing of the guild.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_GUILD_EXPRESSIONS">MANAGE_GUILD_EXPRESSIONS</a>
     <span>
-        &nbsp;= 30                            </span>
+        &nbsp;: mixed&nbsp;= 30                            </span>
 </dt>
 <dd>Allows for editing and deleting emojis, stickers, and soundboard sounds created by all users.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_MESSAGES">MANAGE_MESSAGES</a>
     <span>
-        &nbsp;= 13                            </span>
+        &nbsp;: mixed&nbsp;= 13                            </span>
 </dt>
 <dd>Allows for deletion of other users messages.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_NICKNAMES">MANAGE_NICKNAMES</a>
     <span>
-        &nbsp;= 27                            </span>
+        &nbsp;: mixed&nbsp;= 27                            </span>
 </dt>
 <dd>Allows for modification of other users nicknames.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_ROLES">MANAGE_ROLES</a>
     <span>
-        &nbsp;= 28                            </span>
+        &nbsp;: mixed&nbsp;= 28                            </span>
 </dt>
 <dd>Allows management and editing of roles.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_THREADS">MANAGE_THREADS</a>
     <span>
-        &nbsp;= 34                            </span>
+        &nbsp;: mixed&nbsp;= 34                            </span>
 </dt>
 <dd>Allows for deleting and archiving threads, and viewing all private threads.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_WEBHOOKS">MANAGE_WEBHOOKS</a>
     <span>
-        &nbsp;= 29                            </span>
+        &nbsp;: mixed&nbsp;= 29                            </span>
 </dt>
 <dd>Allows management and editing of webhooks.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MENTION_EVERYONE">MENTION_EVERYONE</a>
     <span>
-        &nbsp;= 17                            </span>
+        &nbsp;: mixed&nbsp;= 17                            </span>
 </dt>
 <dd>Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to notify all online users in a channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MODERATE_MEMBERS">MODERATE_MEMBERS</a>
     <span>
-        &nbsp;= 40                            </span>
+        &nbsp;: mixed&nbsp;= 40                            </span>
 </dt>
 <dd>Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MOVE_MEMBERS">MOVE_MEMBERS</a>
     <span>
-        &nbsp;= 24                            </span>
+        &nbsp;: mixed&nbsp;= 24                            </span>
 </dt>
 <dd>Allows for moving of members between voice channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_MUTE_MEMBERS">MUTE_MEMBERS</a>
     <span>
-        &nbsp;= 22                            </span>
+        &nbsp;: mixed&nbsp;= 22                            </span>
 </dt>
 <dd>Allows for muting members in a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_PIN_MESSAGES">PIN_MESSAGES</a>
     <span>
-        &nbsp;= 51                            </span>
+        &nbsp;: mixed&nbsp;= 51                            </span>
 </dt>
 <dd>Allows pinning and unpinning messages.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_PRIORITY_SPEAKER">PRIORITY_SPEAKER</a>
     <span>
-        &nbsp;= 8                            </span>
+        &nbsp;: mixed&nbsp;= 8                            </span>
 </dt>
 <dd>Allows for using priority speaker in a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_READ_MESSAGE_HISTORY">READ_MESSAGE_HISTORY</a>
     <span>
-        &nbsp;= 16                            </span>
+        &nbsp;: mixed&nbsp;= 16                            </span>
 </dt>
 <dd>Allows for reading of message history.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_REQUEST_TO_SPEAK">REQUEST_TO_SPEAK</a>
     <span>
-        &nbsp;= 32                            </span>
+        &nbsp;: mixed&nbsp;= 32                            </span>
 </dt>
 <dd>Allows for requesting to speak in stage channels. (This permission is under active development and may be changed or removed.)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_ROLE_PERMISSIONS">ROLE_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;kick_members&#039; =&gt; self::KICK_MEMBERS, &#039;ban_members&#039; =&gt; self::BAN_MEMBERS, &#039;administrator&#039; =&gt; self::ADMINISTRATOR, &#039;manage_guild&#039; =&gt; self::MANAGE_GUILD, &#039;view_audit_log&#039; =&gt; self::VIEW_AUDIT_LOG, &#039;view_guild_insights&#039; =&gt; self::VIEW_GUILD_INSIGHTS, &#039;change_nickname&#039; =&gt; self::CHANGE_NICKNAME, &#039;manage_nicknames&#039; =&gt; self::MANAGE_NICKNAMES, &#039;manage_guild_expressions&#039; =&gt; self::MANAGE_GUILD_EXPRESSIONS, &#039;moderate_members&#039; =&gt; self::MODERATE_MEMBERS, &#039;view_creator_monetization_analytics&#039; =&gt; self::VIEW_CREATOR_MONETIZATION_ANALYTICS]                            </span>
+        &nbsp;: array&lt;string|int, mixed&gt;&nbsp;= [&#039;kick_members&#039; =&gt; self::KICK_MEMBERS, &#039;ban_mem...                            </span>
 </dt>
 <dd>Array of permissions that can only be applied to roles.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SEND_MESSAGES">SEND_MESSAGES</a>
     <span>
-        &nbsp;= 11                            </span>
+        &nbsp;: mixed&nbsp;= 11                            </span>
 </dt>
 <dd>Allows for sending messages in a channel and creating threads in a forum (does not allow sending messages in threads).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SEND_MESSAGES_IN_THREADS">SEND_MESSAGES_IN_THREADS</a>
     <span>
-        &nbsp;= 38                            </span>
+        &nbsp;: mixed&nbsp;= 38                            </span>
 </dt>
 <dd>Allows for sending messages in threads.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SEND_POLLS">SEND_POLLS</a>
     <span>
-        &nbsp;= 49                            </span>
+        &nbsp;: mixed&nbsp;= 49                            </span>
 </dt>
 <dd>Allows sending polls.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SEND_TTS_MESSAGES">SEND_TTS_MESSAGES</a>
     <span>
-        &nbsp;= 12                            </span>
+        &nbsp;: mixed&nbsp;= 12                            </span>
 </dt>
 <dd>Allows for sending of `/tts` messages.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SEND_VOICE_MESSAGES">SEND_VOICE_MESSAGES</a>
     <span>
-        &nbsp;= 46                            </span>
+        &nbsp;: mixed&nbsp;= 46                            </span>
 </dt>
 <dd>Allows sending voice messages.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SET_VOICE_CHANNEL_STATUS">SET_VOICE_CHANNEL_STATUS</a>
     <span>
-        &nbsp;= 48                            </span>
+        &nbsp;: mixed&nbsp;= 48                            </span>
 </dt>
 <dd>Allows setting voice channel status.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_SPEAK">SPEAK</a>
     <span>
-        &nbsp;= 21                            </span>
+        &nbsp;: mixed&nbsp;= 21                            </span>
 </dt>
 <dd>Allows for speaking in a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_STAGE_PERMISSIONS">STAGE_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;request_to_speak&#039; =&gt; self::REQUEST_TO_SPEAK, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]                            </span>
+        &nbsp;: array&lt;string|int, mixed&gt;&nbsp;= [&#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::C...                            </span>
 </dt>
 <dd>Array of permissions that only apply to stage channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_STREAM">STREAM</a>
     <span>
-        &nbsp;= 9                            </span>
+        &nbsp;: mixed&nbsp;= 9                            </span>
 </dt>
 <dd>Allows the user to go live.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_TEXT_PERMISSIONS">TEXT_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;manage_threads&#039; =&gt; self::MANAGE_THREADS, &#039;create_public_threads&#039; =&gt; self::CREATE_PUBLIC_THREADS, &#039;create_private_threads&#039; =&gt; self::CREATE_PRIVATE_THREADS, &#039;send_messages_in_threads&#039; =&gt; self::SEND_MESSAGES_IN_THREADS, &#039;pin_messages&#039; =&gt; self::PIN_MESSAGES, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]                            </span>
+        &nbsp;: array&lt;string|int, mixed&gt;&nbsp;= [&#039;manage_threads&#039; =&gt; self::MANAGE_THREADS, &#039;cre...                            </span>
 </dt>
 <dd>Array of permissions that only apply to text channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_APPLICATION_COMMANDS">USE_APPLICATION_COMMANDS</a>
     <span>
-        &nbsp;= 31                            </span>
+        &nbsp;: mixed&nbsp;= 31                            </span>
 </dt>
 <dd>Allows members to use application commands, including slash commands and context menu commands.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_EMBEDDED_ACTIVITIES">USE_EMBEDDED_ACTIVITIES</a>
     <span>
-        &nbsp;= 39                            </span>
+        &nbsp;: mixed&nbsp;= 39                            </span>
 </dt>
 <dd>Allows for using Activities (applications with the EMBEDDED flag).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_APPS">USE_EXTERNAL_APPS</a>
     <span>
-        &nbsp;= 50                            </span>
+        &nbsp;: mixed&nbsp;= 50                            </span>
 </dt>
 <dd>Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_EMOJIS">USE_EXTERNAL_EMOJIS</a>
     <span>
-        &nbsp;= 18                            </span>
+        &nbsp;: mixed&nbsp;= 18                            </span>
 </dt>
 <dd>Allows the usage of custom emojis from other servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_SOUNDS">USE_EXTERNAL_SOUNDS</a>
     <span>
-        &nbsp;= 45                            </span>
+        &nbsp;: mixed&nbsp;= 45                            </span>
 </dt>
 <dd>Allows the usage of custom soundboard sounds from other servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_STICKERS">USE_EXTERNAL_STICKERS</a>
     <span>
-        &nbsp;= 37                            </span>
+        &nbsp;: mixed&nbsp;= 37                            </span>
 </dt>
 <dd>Allows the usage of custom stickers from other servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_SOUNDBOARD">USE_SOUNDBOARD</a>
     <span>
-        &nbsp;= 42                            </span>
+        &nbsp;: mixed&nbsp;= 42                            </span>
 </dt>
 <dd>Allows for using soundboard in a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_USE_VAD">USE_VAD</a>
     <span>
-        &nbsp;= 25                            </span>
+        &nbsp;: mixed&nbsp;= 25                            </span>
 </dt>
 <dd>Allows for using voice-activity-detection in a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_AUDIT_LOG">VIEW_AUDIT_LOG</a>
     <span>
-        &nbsp;= 7                            </span>
+        &nbsp;: mixed&nbsp;= 7                            </span>
 </dt>
 <dd>Allows for viewing of audit logs.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_CHANNEL">VIEW_CHANNEL</a>
     <span>
-        &nbsp;= 10                            </span>
+        &nbsp;: mixed&nbsp;= 10                            </span>
 </dt>
 <dd>Allows guild members to view a channel, which includes reading messages in text channels and joining voice channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_CREATOR_MONETIZATION_ANALYTICS">VIEW_CREATOR_MONETIZATION_ANALYTICS</a>
     <span>
-        &nbsp;= 41                            </span>
+        &nbsp;: mixed&nbsp;= 41                            </span>
 </dt>
 <dd>Allows for viewing role subscription insights.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_GUILD_INSIGHTS">VIEW_GUILD_INSIGHTS</a>
     <span>
-        &nbsp;= 19                            </span>
+        &nbsp;: mixed&nbsp;= 19                            </span>
 </dt>
 <dd>Allows for viewing guild insights.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_VOICE_PERMISSIONS">VOICE_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;priority_speaker&#039; =&gt; self::PRIORITY_SPEAKER, &#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;speak&#039; =&gt; self::SPEAK, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;deafen_members&#039; =&gt; self::DEAFEN_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;use_vad&#039; =&gt; self::USE_VAD, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;use_embedded_activities&#039; =&gt; self::USE_EMBEDDED_ACTIVITIES, &#039;use_soundboard&#039; =&gt; self::USE_SOUNDBOARD, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;use_external_sounds&#039; =&gt; self::USE_EXTERNAL_SOUNDS, &#039;send_voice_messages&#039; =&gt; self::SEND_VOICE_MESSAGES, &#039;set_voice_channel_status&#039; =&gt; self::SET_VOICE_CHANNEL_STATUS, &#039;send_polls&#039; =&gt; self::SEND_POLLS, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]                            </span>
+        &nbsp;: array&lt;string|int, mixed&gt;&nbsp;= [&#039;priority_speaker&#039; =&gt; self::PRIORITY_SPEAKER,...                            </span>
 </dt>
 <dd>Array of permissions that only apply to voice channels.</dd>
 
@@ -2509,21 +2502,20 @@ JSON. Used for JsonSerializable.</dd>
 
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_ROLE_PERMISSIONS_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_ROLE_PERMISSIONS#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_ROLE_PERMISSIONS_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -2774,21 +2766,20 @@ JSON. Used for JsonSerializable.</dd>
 
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_STAGE_PERMISSIONS_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_STAGE_PERMISSIONS#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_STAGE_PERMISSIONS_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -2854,21 +2845,20 @@ JSON. Used for JsonSerializable.</dd>
 
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_TEXT_PERMISSIONS_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_TEXT_PERMISSIONS#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_TEXT_PERMISSIONS_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -3274,21 +3264,20 @@ JSON. Used for JsonSerializable.</dd>
 
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_VOICE_PERMISSIONS_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_VOICE_PERMISSIONS#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#constant_VOICE_PERMISSIONS_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -5878,20 +5867,19 @@ JSON. Used for JsonSerializable.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method___construct_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#method___construct_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5977,31 +5965,29 @@ JSON. Used for JsonSerializable.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method___get_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method___get#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method___get_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::getAttribute()">Part::getAttribute()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>This function forwards onto getAttribute.</p>
+                                                                    <section class="phpdocumentor-description"><p>This function forwards onto getAttribute.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6104,23 +6090,22 @@ JSON. Used for JsonSerializable.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method___set_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method___set#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method___set_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::setAttribute()">self::setAttribute()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>This function forwards onto setAttribute.</p>
+                                                                    <section class="phpdocumentor-description"><p>This function forwards onto setAttribute.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6238,23 +6223,22 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fetch_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_fetch#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_fetch_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>The part is not fetchable.</p>
+                                                                                        <section class="phpdocumentor-description"><p>The part is not fetchable.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6306,21 +6290,20 @@ JSON. Used for JsonSerializable.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fill_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_fill#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_fill_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::setAttribute()">self::setAttribute()</abbr></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6356,21 +6339,20 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getConstants_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_getConstants#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_getConstants_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6531,21 +6513,20 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getPublicAttributes_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6632,31 +6613,29 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getRepository_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_getRepository#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_getRepository_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>If the part does not have an originating repository.</p>
+                                                                                        <section class="phpdocumentor-description"><p>If the part does not have an originating repository.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6825,31 +6804,29 @@ JSON. Used for JsonSerializable.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_jsonSerialize_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::getPublicAttributes()">Part::getPublicAttributes()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>This function forwards onto getPublicAttributes.</p>
+                                                                    <section class="phpdocumentor-description"><p>This function forwards onto getPublicAttributes.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6960,36 +6937,34 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_offsetGet_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_offsetGet#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_offsetGet_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::getAttribute()">Part::getAttribute()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>This function forwards onto getAttribute.</p>
+                                                                    <section class="phpdocumentor-description"><p>This function forwards onto getAttribute.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
             <section class="phpdocumentor-attributes">
-            <h5 class="phpdocumentor-elements__header" id="attributes">
-                Attributes <a href="classes/Discord-Parts-PartTrait.html#method_offsetGet#attributes" class="headerlink"><i class="fas fa-link"></i></a>
+            <h5 class="phpdocumentor-elements__header" id="method_offsetGet_attributes">
+                Attributes <a href="classes/Discord-Parts-PartTrait.html#method_offsetGet_attributes" class="headerlink"><i class="fas fa-link"></i></a>
 
             </h5>
                             <dl class="phpdocumentor-argument-list">
@@ -7052,23 +7027,22 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_offsetSet_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_offsetSet#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_offsetSet_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::setAttribute()">Part::setAttribute()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>This function forwards onto setAttribute.</p>
+                                                                    <section class="phpdocumentor-description"><p>This function forwards onto setAttribute.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7163,33 +7137,28 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_save_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_save#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_save_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>If the part does not support saving.</p>
+                                                                                        <section class="phpdocumentor-description"><p>If the part does not support saving.</p>
 </section>
 
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\NoPermissionsException">NoPermissionsException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>Missing permission.</p>
+                                                                                        <section class="phpdocumentor-description"><p>Missing permission.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7288,23 +7257,22 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_unserialize_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_unserialize#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_unserialize_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::setAttribute()">Part::setAttribute()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>The unserialized data is stored with setAttribute.</p>
+                                                                    <section class="phpdocumentor-description"><p>The unserialized data is stored with setAttribute.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7387,29 +7355,27 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_attributeCarbonHelper_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7486,29 +7452,27 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_attributeCollectionHelper_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7578,29 +7542,27 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_attributePartHelper_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_attributePartHelper#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributePartHelper_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7712,23 +7674,22 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_checkForGetMutator_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'get')</p>
+                                                                                                            <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'get')</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7784,23 +7745,22 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_checkForSetMutator_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'set')</p>
+                                                                                                            <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'set')</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7856,21 +7816,20 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getAttribute_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7914,20 +7873,19 @@ JSON. Used for JsonSerializable.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getBitwiseAttribute_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#method_getBitwiseAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#method_getBitwiseAttribute_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags"> https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -8127,20 +8085,19 @@ JSON. Used for JsonSerializable.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setBitwiseAttribute_tags">
         Tags
-        <a href="classes/Discord-Parts-Permissions-Permission.html#method_setBitwiseAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Permissions-Permission.html#method_setBitwiseAttribute_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags"> https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -8244,21 +8201,20 @@ static as we may move it outside this class in future.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_studly_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_studly#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_studly_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -8270,100 +8226,7 @@ static as we may move it outside this class in future.</p>
 </article>
             </section>
 
-        <div class="phpdocumentor-modal" id="source-view">
-    <div class="phpdocumentor-modal-bg" data-exit-button></div>
-    <div class="phpdocumentor-modal-container">
-        <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Permissions/Permission.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
-        </div>
-        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
-    </div>
-</div>
-
-    <script type="text/javascript">
-        (function () {
-            function loadExternalCodeSnippet(el, url, line) {
-                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
-                    const language = 'php';
-
-                    const code = document.createElement('code');
-                    code.className = 'language-' + language;
-                    pre.textContent = '';
-                    pre.setAttribute('data-line', line)
-                    code.textContent = 'Loading…';
-                    pre.appendChild(code);
-
-                    var xhr = new XMLHttpRequest();
-
-                    xhr.open('GET', src, true);
-
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState !== 4) {
-                            return;
-                        }
-
-                        if (xhr.status < 400 && xhr.responseText) {
-                            code.textContent = xhr.responseText;
-                            Prism.highlightElement(code);
-                            d=document.getElementsByClassName("line-numbers");
-                            d[0].scrollTop = d[0].children[1].offsetTop;
-                            return;
-                        }
-
-                        if (xhr.status === 404) {
-                            code.textContent = '✖ Error: File could not be found';
-                            return;
-                        }
-
-                        if (xhr.status >= 400) {
-                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                            return;
-                        }
-
-                        code.textContent = '✖ Error: An unknown error occurred';
-                    };
-
-                    xhr.send(null);
-                });
-            }
-
-            const modalButtons = document.querySelectorAll("[data-modal]");
-            const openedAsLocalFile = window.location.protocol === 'file:';
-            if (modalButtons.length > 0 && openedAsLocalFile) {
-                console.warn(
-                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
-                    'browsers block XHR requests when a page is opened this way'
-                );
-            }
-
-            modalButtons.forEach(function (trigger) {
-                if (openedAsLocalFile) {
-                    trigger.setAttribute("hidden", "hidden");
-                }
-
-                trigger.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const modal = document.getElementById(trigger.dataset.modal);
-                    if (!modal) {
-                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
-                        return;
-                    }
-                    modal.classList.add("phpdocumentor-modal__open");
-
-                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
-                    const exits = modal.querySelectorAll("[data-exit-button]");
-                    exits.forEach(function (exit) {
-                        exit.addEventListener("click", function (event) {
-                            event.preventDefault();
-                            modal.classList.remove("phpdocumentor-modal__open");
-                        });
-                    });
-                });
-            });
-        })();
-    </script>
-
+        
     </article>
                                 </section>
                 <section class="phpdocumentor-on-this-page__sidebar">

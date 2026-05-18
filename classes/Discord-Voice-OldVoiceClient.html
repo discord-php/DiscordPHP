@@ -6,7 +6,10 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"/>
     <link rel="icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -279,22 +282,20 @@
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections"> https://docs.discord.com/developers/topics/voice-connections </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">3.2.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
     
     
@@ -319,56 +320,56 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_MAX_DAVE_PROTOCOL_VERSION">MAX_DAVE_PROTOCOL_VERSION</a>
     <span>
-        &nbsp;= 0                            </span>
+        &nbsp;: int&nbsp;= 0                            </span>
 </dt>
 <dd>Maximum DAVE protocol version supported.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_MICROPHONE">MICROPHONE</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 0                            </span>
+        &nbsp;: mixed&nbsp;= 1 &lt;&lt; 0                            </span>
 </dt>
 <dd>Normal transmission of voice audio.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_NOT_SPEAKING">NOT_SPEAKING</a>
     <span>
-        &nbsp;= 0                            </span>
+        &nbsp;: mixed&nbsp;= 0                            </span>
 </dt>
 <dd>Not speaking.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_PRIORITY_SPEAKER">PRIORITY_SPEAKER</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 2                            </span>
+        &nbsp;: mixed&nbsp;= 1 &lt;&lt; 2                            </span>
 </dt>
 <dd>Priority speaker, lowering audio of other speakers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_SILENCE_FRAME">SILENCE_FRAME</a>
     <span>
-        &nbsp;= &quot;\xf8\xff\xfe&quot;                            </span>
+        &nbsp;: string&nbsp;= &quot;\xf8\xff\xfe&quot;                            </span>
 </dt>
 <dd>The Opus Silence Frame.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_SOUNDSHARE">SOUNDSHARE</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 1                            </span>
+        &nbsp;: mixed&nbsp;= 1 &lt;&lt; 1                            </span>
 </dt>
 <dd>Transmission of context audio for video, no speaking indicator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_SUPPORTED_MODES">SUPPORTED_MODES</a>
     <span>
-        &nbsp;= [&#039;aead_aes256_gcm_rtpsize&#039;, &#039;aead_xchacha20_poly1305_rtpsize&#039;]                            </span>
+        &nbsp;: array&lt;string|int, string&gt;&nbsp;= [&#039;aead_aes256_gcm_rtpsize&#039;, &#039;aead_xchacha20_pol...                            </span>
 </dt>
 <dd>Supported encryption modes for voice connections.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-OldVoiceClient.html#constant_VOICE_OP_HANDLERS">VOICE_OP_HANDLERS</a>
     <span>
-        &nbsp;= [\Discord\WebSockets\Op::VOICE_READY =&gt; &#039;handleReady&#039;, \Discord\WebSockets\Op::VOICE_SESSION_DESCRIPTION =&gt; &#039;handleSessionDescription&#039;, \Discord\WebSockets\Op::VOICE_SPEAKING =&gt; &#039;handleSpeaking&#039;, \Discord\WebSockets\Op::VOICE_HEARTBEAT_ACK =&gt; &#039;heartbeatAck&#039;, \Discord\WebSockets\Op::VOICE_HELLO =&gt; &#039;handleHello&#039;, \Discord\WebSockets\Op::VOICE_RESUMED =&gt; &#039;handleResumed&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_CONNECT =&gt; &#039;handleClientConnect&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_DISCONNECT =&gt; &#039;handleClientDisconnect&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_UNKNOWN_15 =&gt; &#039;handleAny&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_UNKNOWN_18 =&gt; &#039;handleFlags&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_PLATFORM =&gt; &#039;handlePlatform&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_TRANSITION =&gt; &#039;handleDavePrepareTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_EXECUTE_TRANSITION =&gt; &#039;handleDaveExecuteTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_TRANSITION_READY =&gt; &#039;handleDaveTransitionReady&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_EPOCH =&gt; &#039;handleDavePrepareEpoch&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_EXTERNAL_SENDER =&gt; &#039;handleDaveMlsExternalSender&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_KEY_PACKAGE =&gt; &#039;handleDaveMlsKeyPackage&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_PROPOSALS =&gt; &#039;handleDaveMlsProposals&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_COMMIT_WELCOME =&gt; &#039;handleDaveMlsCommitWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION =&gt; &#039;handleDaveMlsAnnounceCommitTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_WELCOME =&gt; &#039;handleDaveMlsWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME =&gt; &#039;handleDaveMlsInvalidCommitWelcome&#039;, \Discord\WebSockets\Op::CLOSE_VOICE_DISCONNECTED =&gt; &#039;handleCloseVoiceDisconnected&#039;]                            </span>
+        &nbsp;: array&lt;int, string&gt;&nbsp;= [\Discord\WebSockets\Op::VOICE_READY =&gt; &#039;handle...                            </span>
 </dt>
 <dd>Dispatch table mapping Discord Voice Gateway opcodes to handler methods.</dd>
 
@@ -1270,20 +1271,19 @@ Opus format.</dd>
 </section>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_MAX_DAVE_PROTOCOL_VERSION_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#constant_MAX_DAVE_PROTOCOL_VERSION#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#constant_MAX_DAVE_PROTOCOL_VERSION_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#endtoend-encryption-dave-protocol"> https://docs.discord.com/developers/topics/voice-connections#endtoend-encryption-dave-protocol </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -1410,20 +1410,19 @@ Opus format.</dd>
 </section>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_SILENCE_FRAME_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#constant_SILENCE_FRAME#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#constant_SILENCE_FRAME_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation"> https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -1488,20 +1487,19 @@ Opus format.</dd>
 </section>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_SUPPORTED_MODES_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#constant_SUPPORTED_MODES#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#constant_SUPPORTED_MODES_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#transport-encryption-modes"> https://docs.discord.com/developers/topics/voice-connections#transport-encryption-modes </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     </article>
@@ -3431,23 +3429,22 @@ Opus format.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method___construct_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method___construct#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method___construct_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>If connecting to a voice channel that could not be found, or if that channel is not in a guild.</p>
+                                                                                        <section class="phpdocumentor-description"><p>If connecting to a voice channel that could not be found, or if that channel is not in a guild.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -3518,21 +3515,20 @@ Opus format.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_close_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_close#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_close_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -3664,20 +3660,19 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_ffmpegEncode_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_ffmpegEncode#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_ffmpegEncode_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#transport-encryption-and-sending-voice"> https://docs.discord.com/developers/topics/voice-connections#transport-encryption-and-sending-voice </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -3764,21 +3759,20 @@ input filename.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getGuild_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_getGuild#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_getGuild_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.41.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -3941,21 +3935,20 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleAny_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleAny#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleAny_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.40.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4052,21 +4045,20 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleVoiceStateUpdate_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleVoiceStateUpdate#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleVoiceStateUpdate_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a></span>
-                                        
-                                             
+                                                                
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4424,21 +4416,20 @@ input filename.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_pause_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_pause#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_pause_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4499,29 +4490,24 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_playFile_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_playFile#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_playFile_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/Discord-Exceptions-FileNotFoundException.html"><abbr title="\Discord\Exceptions\FileNotFoundException">FileNotFoundException</abbr></a></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4573,29 +4559,24 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_playOggStream_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_playOggStream#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_playOggStream_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4665,31 +4646,26 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_playRawStream_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_playRawStream#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_playRawStream_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>Thrown when the stream passed to playRawStream is not a valid resource.</p>
+                                                                                        <section class="phpdocumentor-description"><p>Thrown when the stream passed to playRawStream is not a valid resource.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4759,23 +4735,22 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_readOpus_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_readOpus#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_readOpus_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>If packet retrieval fails.</p>
+                                                                                        <section class="phpdocumentor-description"><p>If packet retrieval fails.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4823,29 +4798,24 @@ input filename.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setAudioApplication_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setAudioApplication#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setAudioApplication_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4906,29 +4876,24 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setBitrate_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setBitrate#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setBitrate_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -4976,23 +4941,22 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setMode_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setMode#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setMode_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"><p>If the provided mode is not supported.</p>
+                                                                                        <section class="phpdocumentor-description"><p>If the provided mode is not supported.</p>
 </section>
 
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5049,21 +5013,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setMuteDeaf_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setMuteDeaf#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setMuteDeaf_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5111,28 +5074,26 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setSpeaking_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setSpeaking#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setSpeaking_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#speaking"> https://docs.discord.com/developers/topics/voice-connections#speaking </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5180,29 +5141,24 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setVolume_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setVolume#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_setVolume_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5277,21 +5233,20 @@ For stage channels, bitrate can be set up to 64000.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_stop_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_stop#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_stop_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5343,21 +5298,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_switchChannel_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_switchChannel#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_switchChannel_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5393,21 +5347,20 @@ For stage channels, bitrate can be set up to 64000.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_unpause_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_unpause#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_unpause_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                            
-                                             
+                                                                                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5886,21 +5839,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleClientConnect_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleClientConnect#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleClientConnect_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -5946,21 +5898,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleClientDisconnect_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleClientDisconnect#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleClientDisconnect_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6524,21 +6475,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleFlags_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleFlags#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleFlags_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.40.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6584,21 +6534,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleHello_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleHello#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleHello_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6644,21 +6593,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handlePlatform_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handlePlatform#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handlePlatform_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.40.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6712,21 +6660,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleReady_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleReady#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleReady_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6819,21 +6766,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleSessionDescription_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleSessionDescription#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleSessionDescription_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6926,21 +6872,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_handleUndocumented_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleUndocumented#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_handleUndocumented_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.39.2</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -6976,26 +6921,24 @@ For stage channels, bitrate can be set up to 64000.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_heartbeat_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_heartbeat#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_heartbeat_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#heartbeating"> https://docs.discord.com/developers/topics/voice-connections#heartbeating </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
                         </dl>
 
@@ -7043,21 +6986,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_heartbeatAck_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_heartbeatAck#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_heartbeatAck_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7093,28 +7035,26 @@ For stage channels, bitrate can be set up to 64000.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_identify_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_identify#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_identify_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload"> https://docs.discord.com/developers/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload </a>
-                    
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7150,20 +7090,19 @@ For stage channels, bitrate can be set up to 64000.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_insertSilence_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_insertSilence#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_insertSilence_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                                         <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation"> https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation </a>
-                    
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7334,21 +7273,20 @@ For stage channels, bitrate can be set up to 64000.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_resume_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_resume#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_resume_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7405,21 +7343,20 @@ For stage channels, bitrate can be set up to 64000.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_selectProtocol_tags">
         Tags
-        <a href="classes/Discord-Voice-OldVoiceClient.html#method_selectProtocol#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-OldVoiceClient.html#method_selectProtocol_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
-                                                                                
-                                             
+                                                                                                        
                                     </dd>
-                                            </dl>
+                        </dl>
 
         
     
@@ -7521,100 +7458,7 @@ For stage channels, bitrate can be set up to 64000.</p>
 </article>
             </section>
 
-        <div class="phpdocumentor-modal" id="source-view">
-    <div class="phpdocumentor-modal-bg" data-exit-button></div>
-    <div class="phpdocumentor-modal-container">
-        <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Voice/OldVoiceClient.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
-        </div>
-        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
-    </div>
-</div>
-
-    <script type="text/javascript">
-        (function () {
-            function loadExternalCodeSnippet(el, url, line) {
-                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
-                    const language = 'php';
-
-                    const code = document.createElement('code');
-                    code.className = 'language-' + language;
-                    pre.textContent = '';
-                    pre.setAttribute('data-line', line)
-                    code.textContent = 'Loading…';
-                    pre.appendChild(code);
-
-                    var xhr = new XMLHttpRequest();
-
-                    xhr.open('GET', src, true);
-
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState !== 4) {
-                            return;
-                        }
-
-                        if (xhr.status < 400 && xhr.responseText) {
-                            code.textContent = xhr.responseText;
-                            Prism.highlightElement(code);
-                            d=document.getElementsByClassName("line-numbers");
-                            d[0].scrollTop = d[0].children[1].offsetTop;
-                            return;
-                        }
-
-                        if (xhr.status === 404) {
-                            code.textContent = '✖ Error: File could not be found';
-                            return;
-                        }
-
-                        if (xhr.status >= 400) {
-                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                            return;
-                        }
-
-                        code.textContent = '✖ Error: An unknown error occurred';
-                    };
-
-                    xhr.send(null);
-                });
-            }
-
-            const modalButtons = document.querySelectorAll("[data-modal]");
-            const openedAsLocalFile = window.location.protocol === 'file:';
-            if (modalButtons.length > 0 && openedAsLocalFile) {
-                console.warn(
-                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
-                    'browsers block XHR requests when a page is opened this way'
-                );
-            }
-
-            modalButtons.forEach(function (trigger) {
-                if (openedAsLocalFile) {
-                    trigger.setAttribute("hidden", "hidden");
-                }
-
-                trigger.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const modal = document.getElementById(trigger.dataset.modal);
-                    if (!modal) {
-                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
-                        return;
-                    }
-                    modal.classList.add("phpdocumentor-modal__open");
-
-                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
-                    const exits = modal.querySelectorAll("[data-exit-button]");
-                    exits.forEach(function (exit) {
-                        exit.addEventListener("click", function (event) {
-                            event.preventDefault();
-                            modal.classList.remove("phpdocumentor-modal__open");
-                        });
-                    });
-                });
-            });
-        })();
-    </script>
-
+        
     </article>
                                 </section>
                 <section class="phpdocumentor-on-this-page__sidebar">
