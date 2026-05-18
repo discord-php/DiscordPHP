@@ -223,6 +223,20 @@ class Client extends Part
     }
 
     /**
+     * Deletes the current application role connection for the user.
+     * Requires an OAuth2 access token with role_connections.write scope for the application specified in the path.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.49.0
+     */
+    public function deleteCurrentApplicationRoleConnection(): PromiseInterface
+    {
+        return $this->http->delete(Endpoint::USER_CURRENT_APPLICATION_ROLE_CONNECTION)
+            ->then(fn () => $this->role_connection = null);
+    }
+
+    /**
      * Gets the current application of the client.
      *
      * @return PromiseInterface<Application>
