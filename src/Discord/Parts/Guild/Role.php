@@ -307,7 +307,7 @@ class Role extends Part implements Stringable
             return $guild->roles->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

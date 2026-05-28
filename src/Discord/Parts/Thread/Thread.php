@@ -542,7 +542,7 @@ class Thread extends Part implements Stringable
             return $channel->threads->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

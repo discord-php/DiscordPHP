@@ -440,7 +440,7 @@ class ScheduledEvent extends Part
             return $guild->guild_scheduled_events->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

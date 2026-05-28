@@ -163,7 +163,7 @@ class StageInstance extends Part
             return $channel->stage_instances->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

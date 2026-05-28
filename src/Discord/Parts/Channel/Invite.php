@@ -511,7 +511,7 @@ class Invite extends Part implements Stringable
     public function save(?string $reason = null): PromiseInterface
     {
         if (! $this->guild_id) {
-            return parent::save();
+            return parent::save($reason);
         }
         
         if (isset($this->attributes['channel_id'])) {
@@ -526,7 +526,7 @@ class Invite extends Part implements Stringable
             return $channel->invites->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

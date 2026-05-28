@@ -222,7 +222,7 @@ class Sticker extends Part implements Stringable
             return $guild->stickers->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

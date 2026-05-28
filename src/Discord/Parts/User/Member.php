@@ -1040,7 +1040,7 @@ class Member extends Part implements Stringable
     public function save(?string $reason = null): PromiseInterface
     {
         if (! isset($this->attributes['guild_id'])) {
-            return parent::save();
+            return parent::save($reason);
         }
 
         /** @var Guild */

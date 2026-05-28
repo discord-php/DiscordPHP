@@ -1466,7 +1466,7 @@ class Message extends Part
             return $this->getRepository()->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**
