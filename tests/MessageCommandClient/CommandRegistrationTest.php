@@ -2,9 +2,21 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is a part of the DiscordPHP project.
+ *
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 use Discord\MessageCommandClient as MessageCommandClientClass;
 use Discord\MessageCommandClient\Command;
 use PHPUnit\Framework\TestCase;
+
+use Discord\MessageCommandClient\BuiltCommand;
 
 final class CommandRegistrationTest extends TestCase
 {
@@ -15,12 +27,16 @@ final class CommandRegistrationTest extends TestCase
         $client = $this->getMockBuilder(MessageCommandClientClass::class)
             ->disableOriginalConstructor()
             ->getMock();
-
         $client->method('getCommandClientOptions')->willReturn(['caseInsensitiveCommands' => true]);
+        $client->method('normalizeCommandName')->willReturnCallback(function ($name) use ($client) {
+            $ci = $client->getCommandClientOptions()['caseInsensitiveCommands'];
+
+            return $ci ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name)) : $name;
+        });
         $client->method('buildCommand')->willReturnCallback(function ($name, $callable, $options) use ($client) {
             $cmd = new Command($client, $name, $callable, '', '', '', 0, '', true);
-            $resolved = array_merge(['aliases' => []], is_array($options) ? $options : []);
-            return ['command' => $cmd, 'options' => $resolved];
+
+            return new BuiltCommand($cmd, is_array($options) ? array_merge(['aliases' => []], $options) : ['aliases' => []]);
         });
 
         $parent = new Command($client, 'parent', fn () => null, '', '', '', 0, '', true);
@@ -38,12 +54,16 @@ final class CommandRegistrationTest extends TestCase
         $client = $this->getMockBuilder(MessageCommandClientClass::class)
             ->disableOriginalConstructor()
             ->getMock();
-
         $client->method('getCommandClientOptions')->willReturn(['caseInsensitiveCommands' => true]);
+        $client->method('normalizeCommandName')->willReturnCallback(function ($name) use ($client) {
+            $ci = $client->getCommandClientOptions()['caseInsensitiveCommands'];
+
+            return $ci ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name)) : $name;
+        });
         $client->method('buildCommand')->willReturnCallback(function ($name, $callable, $options) use ($client) {
             $cmd = new Command($client, $name, $callable, '', '', '', 0, '', true);
-            $resolved = array_merge(['aliases' => []], is_array($options) ? $options : []);
-            return ['command' => $cmd, 'options' => $resolved];
+
+            return new BuiltCommand($cmd, is_array($options) ? array_merge(['aliases' => []], $options) : ['aliases' => []]);
         });
 
         $parent = new Command($client, 'parent', fn () => null, '', '', '', 0, '', true);
@@ -60,12 +80,16 @@ final class CommandRegistrationTest extends TestCase
         $client = $this->getMockBuilder(MessageCommandClientClass::class)
             ->disableOriginalConstructor()
             ->getMock();
-
         $client->method('getCommandClientOptions')->willReturn(['caseInsensitiveCommands' => false]);
+        $client->method('normalizeCommandName')->willReturnCallback(function ($name) use ($client) {
+            $ci = $client->getCommandClientOptions()['caseInsensitiveCommands'];
+
+            return $ci ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name)) : $name;
+        });
         $client->method('buildCommand')->willReturnCallback(function ($name, $callable, $options) use ($client) {
             $cmd = new Command($client, $name, $callable, '', '', '', 0, '', true);
-            $resolved = array_merge(['aliases' => []], is_array($options) ? $options : []);
-            return ['command' => $cmd, 'options' => $resolved];
+
+            return new BuiltCommand($cmd, is_array($options) ? array_merge(['aliases' => []], $options) : ['aliases' => []]);
         });
 
         $parent = new Command($client, 'parent', fn () => null, '', '', '', 0, '', true);
@@ -77,6 +101,3 @@ final class CommandRegistrationTest extends TestCase
         $this->assertInstanceOf(Command::class, $parent->getCommand('FOO'));
     }
 }
-
-
-

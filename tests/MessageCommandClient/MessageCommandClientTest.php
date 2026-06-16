@@ -2,6 +2,16 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is a part of the DiscordPHP project.
+ *
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 use Discord\Discord;
 use Discord\MessageCommandClient as MessageCommandClientClass;
 use Discord\MessageCommandClient\Command;
@@ -33,11 +43,10 @@ final class MessageCommandClientTest extends \DiscordTestCase
                 'token' => getenv('DISCORD_TOKEN'),
             ]);
 
-            $result = $client->buildCommand('foo', fn () => 'bar', []);
+            $builtCommand = $client->buildCommand('foo', fn () => 'bar', []);
 
-            $this->assertArrayHasKey('command', $result);
-            $this->assertInstanceOf(Command::class, $result['command']);
-            $this->assertSame('foo', $result['command']->command);
+            $this->assertInstanceOf(Command::class, $builtCommand->command);
+            $this->assertSame('foo', $builtCommand->command->command);
 
             $resolve(null);
         });

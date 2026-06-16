@@ -148,6 +148,11 @@ class Command
      */
     protected function normalizeName(string $name): string
     {
+        if (method_exists($this->client, 'normalizeCommandName')) {
+            return $this->client->normalizeCommandName($name);
+        }
+
+        // Fallback: mirror previous behavior if client does not provide helper.
         if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
             return function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name);
         }
@@ -199,7 +204,14 @@ class Command
     {
         $command = $this->normalizeName($command);
 
-        ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
+        $built = $this->client->buildCommand($command, $callable, $options);
+        if ($built instanceof \Discord\MessageCommandClient\BuiltCommand) {
+            $commandInstance = $built->command;
+            $resolvedOptions = $built->options;
+        } else {
+            // Backwards compatibility: accept old array shape
+            ['command' => $commandInstance, 'options' => $resolvedOptions] = $built;
+        }
 
         $key = $this->normalizeName($commandInstance->command);
         if (array_key_exists($key, $this->subCommandAliases)) {
@@ -213,6 +225,11 @@ class Command
 
         foreach ($resolvedOptions['aliases'] as $alias) {
             $this->registerSubCommandAlias($alias, $key);
+        }
+
+        // Emit a lifecycle event so extensions/plugins can react.
+        if (method_exists($this->client, 'emit')) {
+            $this->client->emit('messagecommandclient.subcommand.registered', [$this->command, $key, $commandInstance, $resolvedOptions]);
         }
 
         return $commandInstance;

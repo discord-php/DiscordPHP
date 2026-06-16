@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord;
 
+use Discord\MessageCommandClient\BuiltCommand;
 use Discord\MessageCommandClient\CommandRegistry;
 use Discord\MessageCommandClient\Command;
 use Discord\Parts\Channel\Message;
@@ -39,7 +40,7 @@ class MessageCommandClient extends Discord
      *
      * @param array $options Client options (see resolveOptions()).
      */
-    public function __construct(array $options = [])
+    public function __construct(array $options = [], ?CommandRegistry $registry = null)
     {
         $this->options = $this->resolveOptions($options);
 
@@ -47,7 +48,7 @@ class MessageCommandClient extends Discord
 
         parent::__construct($discordOptions);
 
-        $this->registry = new CommandRegistry((bool) ($this->options['caseInsensitiveCommands'] ?? false));
+        $this->registry = $registry ?? new CommandRegistry((bool) ($this->options['caseInsensitiveCommands'] ?? false));
 
         $this->on('init', function () {
             $this->preparePrefixes();
@@ -65,6 +66,18 @@ class MessageCommandClient extends Discord
                 'usage' => '[command]',
             ]);
         }
+    }
+
+    /**
+     * Normalize a command or alias according to client options.
+     */
+    public function normalizeCommandName(string $name): string
+    {
+        if ($this->options['caseInsensitiveCommands']) {
+            return function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name);
+        }
+
+        return $name;
     }
 
     /**
@@ -107,11 +120,7 @@ class MessageCommandClient extends Discord
             return;
         }
 
-        if ($this->options['caseInsensitiveCommands']) {
-            $commandName = function_exists('mb_strtolower')
-                ? mb_strtolower($commandName)
-                : strtolower($commandName);
-        }
+        $commandName = $this->normalizeCommandName($commandName);
 
         $command = $this->registry->get($commandName);
         if ($command === null) {
@@ -184,23 +193,38 @@ class MessageCommandClient extends Discord
      */
     public function registerCommand(string $name, $callable, array $options = []): Command
     {
-        if ($this->options['caseInsensitiveCommands']) {
-            $name = function_exists('mb_strtolower')
-                ? mb_strtolower($name)
-                : strtolower($name);
+        $name = $this->normalizeCommandName($name);
+
+        $built = $this->buildCommand($name, $callable, $options);
+        if ($built instanceof BuiltCommand) {
+            $commandInstance = $built->command;
+            $resolvedOptions = $built->options;
+        } else {
+            ['command' => $commandInstance, 'options' => $resolvedOptions] = $built;
         }
 
-        ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->buildCommand($name, $callable, $options);
+        // Ensure no collision with existing command or alias names.
+        if ($this->registry->has($name)) {
+            throw new \RuntimeException("A command with the name {$name} already exists.");
+        }
 
         $this->registry->add($name, $commandInstance);
 
         foreach ($resolvedOptions['aliases'] as $alias) {
-            if ($this->options['caseInsensitiveCommands'] && $alias !== null) {
-                $alias = function_exists('mb_strtolower')
-                    ? mb_strtolower($alias)
-                    : strtolower($alias);
+            if ($alias === null) {
+                continue;
             }
-            $this->registry->addAlias((string) $alias, $name);
+
+            $aliasNormalized = $this->normalizeCommandName($alias);
+            if ($this->registry->has($aliasNormalized)) {
+                throw new \RuntimeException("An alias with the name {$aliasNormalized} already exists.");
+            }
+
+            $this->registry->addAlias((string) $aliasNormalized, $name);
+        }
+
+        if (method_exists($this, 'emit')) {
+            $this->emit('messagecommandclient.command.registered', [$name, $commandInstance, $resolvedOptions]);
         }
 
         return $commandInstance;
@@ -262,11 +286,11 @@ class MessageCommandClient extends Discord
      * @param callable|string|array $callable Callable, string or array.
      * @param array                 $options  Command options.
      *
-     * @return array{command: Command, options: array} Tuple of Command instance and resolved options.
+     * @return BuiltCommand DTO of Command instance and resolved options.
      *
      * @throws \InvalidArgumentException When callable is not valid.
      */
-    public function buildCommand(string $name, $callable, array $options = []): array
+    public function buildCommand(string $name, $callable, array $options = []): BuiltCommand
     {
         if (is_string($callable)) {
             $callable = fn ($message, array $args = []) => $callable;
@@ -292,10 +316,7 @@ class MessageCommandClient extends Discord
             $options['showHelp']
         );
 
-        return [
-            'command' => $commandInstance,
-            'options' => $options,
-        ];
+        return new BuiltCommand($commandInstance, $options);
     }
 
     /**
