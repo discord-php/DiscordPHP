@@ -202,6 +202,9 @@ class Command
         ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
 
         $key = $this->normalizeName($commandInstance->command);
+        if (array_key_exists($key, $this->subCommandAliases)) {
+            throw new \RuntimeException("A sub-command with the name {$key} already exists as an alias for another sub-command.");
+        }
         if (array_key_exists($key, $this->subCommands)) {
             throw new \RuntimeException("A sub-command with the name {$key} already exists.");
         }
