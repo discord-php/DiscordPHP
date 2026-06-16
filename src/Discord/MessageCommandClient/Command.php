@@ -18,6 +18,7 @@ use Discord\MessageCommandClient;
 use Discord\Parts\Channel\Message;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
+use Discord\MessageCommandClient\BuiltCommand;
 
 /**
  * A message-based command that the MessageCommandClient will listen for.
@@ -105,7 +106,7 @@ class Command
      *
      * @var callable
      */
-    protected callable $callable;
+    protected $callable;
 
     /**
      * An array of options passed to the command.
@@ -249,7 +250,7 @@ class Command
     public function registerSubCommand(string $command, $callable, array $options = []): Command
     {
         $built = $this->client->buildCommand($command, $callable, $options);
-        if ($built instanceof \Discord\MessageCommandClient\BuiltCommand) {
+        if ($built instanceof BuiltCommand) {
             $commandInstance = $built->command;
             $resolvedOptions = $built->options;
         } else {
@@ -269,6 +270,7 @@ class Command
      * Unregister a sub-command.
      *
      * @param string $command Sub-command name.
+     * @throws \RuntimeException If the sub-command does not exist.
      */
     public function unregisterSubCommand(string $command): void
     {
