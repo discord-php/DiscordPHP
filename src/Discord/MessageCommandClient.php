@@ -28,13 +28,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MessageCommandClient extends Discord
 {
     /**
-     * Options passed to the command client.
-     *
-     * @var array<string,mixed>
-     */
-    protected array $options;
-
-    /**
      * Command registry storing commands and aliases.
      *
      * @var CommandRegistry
