@@ -401,16 +401,31 @@ class MessageCommandClient extends Discord
         $prefix = str_replace((string) $this->user, '@'.$this->username, $this->options['prefix']);
 
         if (count($args) > 0) {
-            $command = $this;
+            $command = null;
+            $commandParts = [];
+            $fullCommandString = implode(' ', $args);
+
             while (count($args) > 0) {
                 $commandString = array_shift($args);
-                $newCommand = $this->getCommand($commandString);
 
-                if (null === $newCommand) {
+                if ($this->options['caseInsensitiveCommands']) {
+                    $commandString = function_exists('mb_strtolower')
+                        ? mb_strtolower($commandString)
+                        : strtolower($commandString);
+                }
+
+                if ($command === null) {
+                    $newCommand = $this->getCommand($commandString);
+                } else {
+                    $newCommand = $command->getCommand($commandString);
+                }
+
+                if ($newCommand === null) {
                     return "The command {$commandString} does not exist.";
                 }
 
                 $command = $newCommand;
+                $commandParts[] = $commandString;
             }
 
             $help = $command->getHelp($prefix);
@@ -420,7 +435,7 @@ class MessageCommandClient extends Discord
 
             $embed = new Embed($this);
             $embed->setAuthor($this->options['name'], $this->client->user->avatar)
-                ->setTitle($prefix.implode(' ', $args).'\'s Help')
+                ->setTitle($prefix.$fullCommandString.'\'s Help')
                 ->setDescription(! empty($help['longDescription']) ? $help['longDescription'] : $help['description'])
                 ->setFooter($this->options['name']);
 
@@ -436,7 +451,6 @@ class MessageCommandClient extends Discord
         $embed = new Embed($this);
         $embed->setAuthor($this->options['name'], $this->client->avatar)
             ->setTitle($this->options['name'])
-            ->setType(Embed::TYPE_RICH)
             ->setFooter($this->options['name']);
 
         $commandsDescription = '';
