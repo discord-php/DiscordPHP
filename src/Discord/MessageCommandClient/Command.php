@@ -16,6 +16,8 @@ namespace Discord\MessageCommandClient;
 
 use Discord\MessageCommandClient;
 use Discord\Parts\Channel\Message;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * A message-based command that the MessageCommandClient will listen for.
@@ -138,13 +140,72 @@ class Command
         $this->client = $client;
         $this->command = $command;
         $this->callable = $callable;
+        
+        $options = $this->resolveOptions($options);
+
         $this->options = $options;
-        $this->description = $options['description'] ?? '';
-        $this->longDescription = $options['longDescription'] ?? '';
-        $this->usage = $options['usage'] ?? '';
-        $this->cooldown = $options['cooldown'] ?? 0;
-        $this->cooldownMessage = $options['cooldownMessage'] ?? '';
-        $this->showHelp = $options['showHelp'] ?? true;
+        $this->description = $this->options['description'];
+        $this->longDescription = $this->options['longDescription'];
+        $this->usage = $this->options['usage'];
+        $this->cooldown = $this->options['cooldown'];
+        $this->cooldownMessage = $this->options['cooldownMessage'];
+        $this->showHelp = $this->options['showHelp'];
+    }
+
+    /**
+     * Resolve and normalize command options.
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function resolveOptions(array $options = []): array
+    {
+        $resolver = new OptionsResolver();
+
+        $resolver
+            ->setDefined([
+                'description',
+                'longDescription',
+                'usage',
+                'aliases',
+                'cooldown',
+                'cooldownMessage',
+                'showHelp',
+            ])
+            ->setDefaults([
+                'description' => 'No description provided.',
+                'longDescription' => '',
+                'usage' => '',
+                'aliases' => [],
+                'cooldown' => 0,
+                'cooldownMessage' => 'please wait %d second(s) to use this command again.',
+                'showHelp' => true,
+            ])
+            ->setAllowedTypes('aliases', ['array', 'string', 'null'])
+            ->setNormalizer('aliases', function (Options $options, $value) {
+                if ($value === null) {
+                    return [];
+                }
+
+                if (! is_array($value)) {
+                    $value = [$value];
+                }
+
+                $sanitized = [];
+                foreach ($value as $alias) {
+                    if (is_scalar($alias) || (is_object($alias) && method_exists($alias, '__toString'))) {
+                        $aliasStr = trim((string) $alias);
+                        if ($aliasStr !== '') {
+                            $sanitized[] = $aliasStr;
+                        }
+                    }
+                }
+
+                return array_values(array_unique($sanitized));
+            });
+
+        return $resolver->resolve($options);
     }
 
     /**
