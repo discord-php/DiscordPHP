@@ -334,7 +334,7 @@ class Command
 
         $currentTime = (int) round(microtime(true) * 1000);
 
-        if ($cooldownResult = $this->enforceCooldown($message, $currentTime)) {
+        if (($cooldownResult = $this->enforceCooldown($message, $currentTime)) !== null) {
             return $cooldownResult;
         }
 
