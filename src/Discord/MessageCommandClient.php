@@ -20,7 +20,6 @@ use Discord\MessageCommandClient\CommandRegistry;
 use Discord\MessageCommandClient\Command;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
-use Monolog\Level;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 
