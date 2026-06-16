@@ -143,7 +143,7 @@ class Discord
 
     /**
      * An array of defined options for validation and resolution.
-     * 
+     *
      * @var string[] Defined options.
      */
     protected $definedOptions = [

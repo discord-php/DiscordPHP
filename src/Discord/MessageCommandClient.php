@@ -20,6 +20,7 @@ use Discord\MessageCommandClient\CommandRegistry;
 use Discord\MessageCommandClient\Command;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
+use Monolog\Level;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -79,13 +80,14 @@ class MessageCommandClient extends Discord
      */
     protected function resolveOptions(array $options = []): array
     {
+        $options = parent::resolveOptions($options);
+
         $resolver = new OptionsResolver();
 
         $resolver
             ->setRequired('token')
             ->setAllowedTypes('token', 'string')
-            ->setDefined([
-                'token',
+            ->setDefined(array_merge($this->definedOptions, [
                 'prefix',
                 'prefixes',
                 'name',
@@ -94,7 +96,7 @@ class MessageCommandClient extends Discord
                 'discordOptions',
                 'caseInsensitiveCommands',
                 'internalRejectedPromiseHandler',
-            ])
+            ]))
             ->setAllowedTypes('internalRejectedPromiseHandler', ['null', 'callable'])
             ->setDefaults([
                 'prefix' => '@mention ',
@@ -113,10 +115,11 @@ class MessageCommandClient extends Discord
                 },
             ]);
 
-        $resolved = $resolver->resolve($options);
-        $resolved['prefixes'][] = $resolved['prefix'];
+        $options = $resolver->resolve($options);
 
-        return $resolved;
+        $options['prefixes'][] = $options['prefix'];
+
+        return $options;
     }
 
     /**
