@@ -395,7 +395,6 @@ class MessageCommandClient extends Discord
 
         if (count($args) > 0) {
             $command = null;
-            $commandParts = [];
             $fullCommandString = implode(' ', $args);
 
             while (count($args) > 0) {
@@ -418,7 +417,6 @@ class MessageCommandClient extends Discord
                 }
 
                 $command = $newCommand;
-                $commandParts[] = $commandString;
             }
 
             $help = $command->getHelp($prefix);
