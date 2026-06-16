@@ -183,10 +183,10 @@ class Command
             $command = mb_strtolower($command);
         }
 
-        list($commandInstance, $options) = $this->client->buildCommand($command, $callable, $options);
+        ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
         $this->subCommands[$command] = $commandInstance;
 
-        foreach ($options['aliases'] as $alias) {
+        foreach ($resolvedOptions['aliases'] as $alias) {
             $this->registerSubCommandAlias($alias, $command);
         }
 

@@ -164,11 +164,11 @@ class MessageCommandClient extends Discord
             $name = mb_strtolower($name);
         }
 
-        list($commandInstance, $resolved) = $this->buildCommand($name, $callable, $options);
+        ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->buildCommand($name, $callable, $options);
 
         $this->registry->add($name, $commandInstance);
 
-        foreach ($resolved['aliases'] as $alias) {
+        foreach ($resolvedOptions['aliases'] as $alias) {
             if ($this->options['caseInsensitiveCommands'] && $alias !== null) {
                 $alias = mb_strtolower($alias);
             }
@@ -234,20 +234,16 @@ class MessageCommandClient extends Discord
      * @param callable|string|array $callable Callable, string or array.
      * @param array                 $options  Command options.
      *
-     * @return array{0:Command,1:array} Tuple of Command instance and resolved options.
+     * @return array{command: Command, options: array} Tuple of Command instance and resolved options.
      *
      * @throws \InvalidArgumentException When callable is not valid.
      */
     public function buildCommand(string $name, $callable, array $options = []): array
     {
         if (is_string($callable)) {
-            $callable = function ($message) use ($callable) {
-                return $callable;
-            };
+            $callable = fn ($message, array $args = []) => $callable;
         } elseif (is_array($callable) && ! is_callable($callable)) {
-            $callable = function ($message) use ($callable) {
-                return $callable[array_rand($callable)];
-            };
+            $callable = fn ($message, array $args = []) => $callable[array_rand($callable)];
         }
 
         if (! is_callable($callable)) {
@@ -268,7 +264,10 @@ class MessageCommandClient extends Discord
             $options['showHelp']
         );
 
-        return [$commandInstance, $options];
+        return [
+            'command' => $commandInstance,
+            'options' => $options
+        ];
     }
 
     /**
