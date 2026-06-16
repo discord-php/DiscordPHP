@@ -142,6 +142,36 @@ class Discord
     protected $options = [];
 
     /**
+     * An array of defined options for validation and resolution.
+     * 
+     * @var string[] Defined options.
+     */
+    protected $definedOptions = [
+        'token',
+        'loop',
+        'logger',
+        'loadAllMembers',
+        'disabledEvents',
+        'storeMessages',
+        'retrieveBans',
+        'large_threshold',
+        'shard',
+        'shard_id',
+        'num_shards',
+        'shardId',
+        'shardCount',
+        'presence',
+        'intents',
+        'capabilities',
+        'socket_options',
+        'dnsConfig',
+        'cache',
+        'collection',
+        'useTransportCompression',
+        'usePayloadCompression',
+    ];
+
+    /**
      * The authentication token.
      *
      * @var string Token.
@@ -1888,30 +1918,7 @@ class Discord
 
         $resolver
             ->setRequired('token')
-            ->setDefined([
-                'token',
-                'loop',
-                'logger',
-                'loadAllMembers',
-                'disabledEvents',
-                'storeMessages',
-                'retrieveBans',
-                'large_threshold',
-                'shard',
-                'shard_id',
-                'num_shards',
-                'shardId',
-                'shardCount',
-                'presence',
-                'intents',
-                'capabilities',
-                'socket_options',
-                'dnsConfig',
-                'cache',
-                'collection',
-                'useTransportCompression',
-                'usePayloadCompression',
-            ])
+            ->setDefined($this->definedOptions)
             ->setDefaults([
                 'logger' => null,
                 'loadAllMembers' => false,
