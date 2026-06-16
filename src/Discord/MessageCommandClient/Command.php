@@ -105,7 +105,7 @@ class Command
      *
      * @var callable
      */
-    protected $callable;
+    protected callable $callable;
 
     /**
      * An array of options passed to the command.
