@@ -364,7 +364,12 @@ class DiscordCommandClient extends Discord
             $this,
             $command,
             $callable,
-            $options
+            $options['description'],
+            $options['longDescription'],
+            $options['usage'],
+            $options['cooldown'],
+            $options['cooldownMessage'],
+            $options['showHelp']
         );
 
         return [$commandInstance, $options];
