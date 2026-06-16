@@ -392,7 +392,7 @@ class User extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return UserRepositor The repository.
+     * @return UserRepository The repository.
      */
     public function getRepository(): UserRepository
     {
