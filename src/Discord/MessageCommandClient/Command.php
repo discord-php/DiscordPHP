@@ -262,6 +262,27 @@ class Command
         $alias = $this->normalizeName($alias);
         $command = $this->normalizeName($command);
 
+        // Ensure the target sub-command exists.
+        if (! array_key_exists($command, $this->subCommands)) {
+            throw new \RuntimeException("Cannot create alias {$alias} for non-existent sub-command {$command}.");
+        }
+
+        // Alias must not collide with an existing sub-command name.
+        if (array_key_exists($alias, $this->subCommands)) {
+            throw new \RuntimeException("Cannot create alias {$alias} because a sub-command with that name already exists.");
+        }
+
+        // If alias already exists, ensure it's not being remapped to a different target.
+        if (array_key_exists($alias, $this->subCommandAliases)) {
+            $existing = $this->subCommandAliases[$alias];
+            if ($existing === $command) {
+                // Already mapped to the same target — no-op.
+                return;
+            }
+
+            throw new \RuntimeException("Cannot remap alias {$alias} from {$existing} to {$command}.");
+        }
+
         $this->subCommandAliases[$alias] = $command;
     }
 
