@@ -316,6 +316,12 @@ class MessageCommandClient extends Discord
             throw new \InvalidArgumentException('The callable parameter must be a string, array or callable.');
         }
 
+        // Wrap user-provided callable so it can be safely invoked with
+        // 0/1/2 parameters depending on its declared arity. This prevents
+        // ArgumentCountError when users register callables that accept
+        // fewer parameters than the invocation site provides.
+        $callable = $this->wrapRegisteredCallable($callable);
+
         $options = $this->resolveCommandOptions($options);
 
         $commandInstance = new Command(
@@ -331,6 +337,59 @@ class MessageCommandClient extends Discord
         );
 
         return new BuiltCommand($commandInstance, $options);
+    }
+
+    /**
+     * Wrap a registered callable to adapt invocation based on its declared arity.
+     *
+     * The wrapper will call the original callable with 0, 1 or 2 arguments
+     * depending on how many required parameters the callable declares. This
+     * avoids runtime ArgumentCountError when users register callables that
+     * accept fewer parameters than the command invocation provides.
+     *
+     * @param callable $callable
+     *
+     * @return callable
+     */
+    protected function wrapRegisteredCallable(callable $callable): callable
+    {
+        try {
+            if (is_array($callable)) {
+                $ref = new \ReflectionMethod($callable[0], $callable[1]);
+            } elseif (is_string($callable) && strpos($callable, '::') !== false) {
+                [$class, $method] = explode('::', $callable, 2);
+                $ref = new \ReflectionMethod($class, $method);
+            } else {
+                $ref = new \ReflectionFunction($callable);
+            }
+
+            $required = $ref->getNumberOfRequiredParameters();
+            $isVariadic = $ref->isVariadic();
+        } catch (\ReflectionException $e) {
+            // If reflection fails for any reason, fall back to a safe default
+            // that calls the callable with message and args to preserve
+            // previous behavior.
+            $required = 2;
+            $isVariadic = false;
+        }
+
+        return function ($message, array $args = []) use ($callable, $required, $isVariadic) {
+            if ($isVariadic) {
+                // If callable is variadic, prefer to expand $args after the
+                // message so the handler can accept multiple individual args.
+                return call_user_func_array($callable, array_merge([$message], $args));
+            }
+
+            if ($required === 0) {
+                return call_user_func($callable);
+            }
+
+            if ($required === 1) {
+                return call_user_func($callable, $message);
+            }
+
+            return call_user_func($callable, $message, $args);
+        };
     }
 
     /**
