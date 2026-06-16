@@ -20,6 +20,7 @@ use Discord\MessageCommandClient\Command;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * Modern, modular replacement for the legacy DiscordCommandClient.
@@ -361,7 +362,29 @@ class MessageCommandClient extends Discord
                 'cooldown' => 0,
                 'cooldownMessage' => 'please wait %d second(s) to use this command again.',
                 'showHelp' => true,
-            ]);
+            ])
+            ->setAllowedTypes('aliases', ['array', 'string', 'null'])
+            ->setNormalizer('aliases', function (Options $options, $value) {
+                if ($value === null) {
+                    return [];
+                }
+
+                if (! is_array($value)) {
+                    $value = [$value];
+                }
+
+                $sanitized = [];
+                foreach ($value as $alias) {
+                    if (is_scalar($alias) || (is_object($alias) && method_exists($alias, '__toString'))) {
+                        $aliasStr = trim((string) $alias);
+                        if ($aliasStr !== '') {
+                            $sanitized[] = $aliasStr;
+                        }
+                    }
+                }
+
+                return array_values(array_unique($sanitized));
+            });
 
         return $resolver->resolve($options);
     }
