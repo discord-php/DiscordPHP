@@ -78,23 +78,20 @@ class Command
     /**
      * Cooldowns map: user ID => timestamp when cooldown expires.
      *
-     * @var array<string,int>
+     * Managed by CooldownManager.
+     *
+     * @var CooldownManager
      */
-    protected array $cooldowns = [];
+    protected CooldownManager $cooldownManager;
 
     /**
      * Sub-commands map: name => Command.
      *
-     * @var array<string, Command>
-     */
-    protected array $subCommands = [];
-
-    /**
-     * Sub-command aliases: alias => sub-command name.
+     * Managed by SubCommandRegistry.
      *
-     * @var array<string, string>
+     * @var SubCommandRegistry
      */
-    protected array $subCommandAliases = [];
+    protected SubCommandRegistry $subCommandRegistry;
 
     /**
      * Owning MessageCommandClient instance.
@@ -150,6 +147,8 @@ class Command
         $this->cooldown = $options['cooldown'];
         $this->cooldownMessage = $options['cooldownMessage'];
         $this->showHelp = $options['showHelp'];
+        $this->subCommandRegistry = new SubCommandRegistry(fn (string $name) => $this->normalizeName($name));
+        $this->cooldownManager = new CooldownManager();
     }
 
     /**
@@ -235,25 +234,7 @@ class Command
      */
     public function getCommand(string $command, bool $aliases = true): ?Command
     {
-        if ($command !== null) {
-            $command = $this->normalizeName($command);
-        }
-
-        if (array_key_exists($command, $this->subCommands)) {
-            return $this->subCommands[$command];
-        }
-
-        if ($aliases) {
-            if (array_key_exists($command, $this->subCommandAliases)) {
-                $target = $this->subCommandAliases[$command];
-
-                if (array_key_exists($target, $this->subCommands)) {
-                    return $this->subCommands[$target];
-                }
-            }
-        }
-
-        return null;
+        return $this->subCommandRegistry->get($command, $aliases);
     }
 
     /**
@@ -267,32 +248,16 @@ class Command
      */
     public function registerSubCommand(string $command, $callable, array $options = []): Command
     {
-        $command = $this->normalizeName($command);
-
         $built = $this->client->buildCommand($command, $callable, $options);
         if ($built instanceof \Discord\MessageCommandClient\BuiltCommand) {
             $commandInstance = $built->command;
             $resolvedOptions = $built->options;
         } else {
-            // Backwards compatibility: accept old array shape
             ['command' => $commandInstance, 'options' => $resolvedOptions] = $built;
         }
 
-        $key = $this->normalizeName($commandInstance->command);
-        if (array_key_exists($key, $this->subCommandAliases)) {
-            throw new \RuntimeException('A sub-command with the same name already exists as an alias for another sub-command.');
-        }
-        if (array_key_exists($key, $this->subCommands)) {
-            throw new \RuntimeException('A sub-command with the same name already exists.');
-        }
+        $key = $this->subCommandRegistry->register($commandInstance, $resolvedOptions['aliases']);
 
-        $this->subCommands[$key] = $commandInstance;
-
-        foreach ($resolvedOptions['aliases'] as $alias) {
-            $this->registerSubCommandAlias($alias, $key);
-        }
-
-        // Emit a lifecycle event so extensions/plugins can react.
         if (method_exists($this->client, 'emit')) {
             $this->client->emit('messagecommandclient.subcommand.registered', [$this->command, $key, $commandInstance, $resolvedOptions]);
         }
@@ -307,13 +272,7 @@ class Command
      */
     public function unregisterSubCommand(string $command): void
     {
-        $command = $this->normalizeName($command);
-
-        if (! array_key_exists($command, $this->subCommands)) {
-            throw new \RuntimeException('The sub-command does not exist.');
-        }
-
-        unset($this->subCommands[$command]);
+        $this->subCommandRegistry->unregister($command);
     }
 
     /**
@@ -324,31 +283,7 @@ class Command
      */
     public function registerSubCommandAlias(string $alias, string $command): void
     {
-        $alias = $this->normalizeName($alias);
-        $command = $this->normalizeName($command);
-
-        // Ensure the target sub-command exists.
-        if (! array_key_exists($command, $this->subCommands)) {
-            throw new \RuntimeException('The target sub-command does not exist.');
-        }
-
-        // Alias must not collide with an existing sub-command name.
-        if (array_key_exists($alias, $this->subCommands)) {
-            throw new \RuntimeException('Cannot create alias because a sub-command with that name already exists.');
-        }
-
-        // If alias already exists, ensure it's not being remapped to a different target.
-        if (array_key_exists($alias, $this->subCommandAliases)) {
-            $existing = $this->subCommandAliases[$alias];
-            if ($existing === $command) {
-                // Already mapped to the same target — no-op.
-                return;
-            }
-
-            throw new \RuntimeException('Cannot remap alias because it is already mapped to a different sub-command.');
-        }
-
-        $this->subCommandAliases[$alias] = $command;
+        $this->subCommandRegistry->registerAlias($alias, $command);
     }
 
     /**
@@ -358,13 +293,7 @@ class Command
      */
     public function unregisterSubCommandAlias(string $alias): void
     {
-        $alias = $this->normalizeName($alias);
-
-        if (! array_key_exists($alias, $this->subCommandAliases)) {
-            throw new \RuntimeException('The sub-command alias does not exist.');
-        }
-
-        unset($this->subCommandAliases[$alias]);
+        $this->subCommandRegistry->unregisterAlias($alias);
     }
 
     /**
@@ -383,13 +312,9 @@ class Command
             $subCommand = $this->normalizeName($subCommand);
         }
 
-        if (array_key_exists($subCommand, $this->subCommands)) {
-            return $this->subCommands[$subCommand]->handle($message, $args);
-        } elseif (array_key_exists($subCommand, $this->subCommandAliases)) {
-            $target = $this->subCommandAliases[$subCommand];
-            if (array_key_exists($target, $this->subCommands)) {
-                return $this->subCommands[$target]->handle($message, $args);
-            }
+        $found = $this->subCommandRegistry->get($subCommand, true);
+        if ($found instanceof Command) {
+            return $found->handle($message, $args);
         }
 
         if (null !== $subCommand) {
@@ -398,7 +323,7 @@ class Command
 
         $currentTime = (int) round(microtime(true) * 1000);
 
-        if (($cooldownResult = $this->enforceCooldown($message, $currentTime)) !== null) {
+        if (($cooldownResult = $this->cooldownManager->enforce($message, $currentTime, $this->cooldown, $this->cooldownMessage)) !== null) {
             return $cooldownResult;
         }
 
@@ -419,21 +344,8 @@ class Command
             return null;
         }
 
-        $userId = $message->author->id;
-
-        if (isset($this->cooldowns[$userId])) {
-            if ($this->cooldowns[$userId] < $currentTime) {
-                $this->cooldowns[$userId] = $currentTime + $this->cooldown;
-
-                return null;
-            }
-
-            return sprintf($this->cooldownMessage, (($this->cooldowns[$userId] - $currentTime) / 1000));
-        }
-
-        $this->cooldowns[$userId] = $currentTime + $this->cooldown;
-
-        return null;
+        // Deprecated: functionality moved to CooldownManager.
+        return $this->cooldownManager->enforce($message, $currentTime, $this->cooldown, $this->cooldownMessage);
     }
 
     /**
@@ -451,7 +363,7 @@ class Command
 
         $subCommandsHelp = [];
 
-        foreach ($this->subCommands as $command) {
+        foreach ($this->subCommandRegistry->all() as $command) {
             if ($command->showHelp) {
                 $subCommandsHelp[] = $command->getHelp($prefix.$this->command.' ');
             }
