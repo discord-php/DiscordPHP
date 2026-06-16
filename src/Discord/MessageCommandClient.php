@@ -344,9 +344,7 @@ class MessageCommandClient extends Discord
             $this->registry->addAlias((string) $aliasNormalized, $name);
         }
 
-        if (method_exists($this, 'emit')) {
-            $this->emit('command-registered', [$name, $commandInstance, $resolvedOptions]);
-        }
+        $this->emit('command-registered', [$name, $commandInstance, $resolvedOptions]);
 
         return $commandInstance;
     }
