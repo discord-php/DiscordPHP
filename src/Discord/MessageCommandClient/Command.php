@@ -144,12 +144,12 @@ class Command
         $options = $this->resolveOptions($options);
 
         $this->options = $options;
-        $this->description = $this->options['description'];
-        $this->longDescription = $this->options['longDescription'];
-        $this->usage = $this->options['usage'];
-        $this->cooldown = $this->options['cooldown'];
-        $this->cooldownMessage = $this->options['cooldownMessage'];
-        $this->showHelp = $this->options['showHelp'];
+        $this->description = $options['description'];
+        $this->longDescription = $options['longDescription'];
+        $this->usage = $options['usage'];
+        $this->cooldown = $options['cooldown'];
+        $this->cooldownMessage = $options['cooldownMessage'];
+        $this->showHelp = $options['showHelp'];
     }
 
     /**
