@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord;
 
+use Discord\Builders\MessageBuilder;
 use Discord\MessageCommandClient\BuiltCommand;
 use Discord\MessageCommandClient\CommandRegistry;
 use Discord\MessageCommandClient\Command;
@@ -67,6 +68,123 @@ class MessageCommandClient extends Discord
                 'usage' => '[command]',
             ]);
         }
+    }
+
+    /**
+     * Resolve client-level options.
+     *
+     * @param array $options Input options.
+     *
+     * @return array Resolved options used by the client.
+     */
+    protected function resolveOptions(array $options = []): array
+    {
+        $resolver = new OptionsResolver();
+
+        $resolver
+            ->setRequired('token')
+            ->setAllowedTypes('token', 'string')
+            ->setDefined([
+                'token',
+                'prefix',
+                'prefixes',
+                'name',
+                'description',
+                'defaultHelpCommand',
+                'discordOptions',
+                'caseInsensitiveCommands',
+                'internalRejectedPromiseHandler',
+            ])
+            ->setAllowedTypes('internalRejectedPromiseHandler', ['null', 'callable'])
+            ->setDefaults([
+                'prefix' => '@mention ',
+                'prefixes' => [],
+                'name' => '<UsernamePlaceholder>',
+                'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
+                'defaultHelpCommand' => true,
+                'discordOptions' => [],
+                'caseInsensitiveCommands' => false,
+                'internalRejectedPromiseHandler' => function ($reason): void {
+                    if (is_string($reason) || $reason instanceof \Stringable) {
+                        $this->getLogger()->error($reason);
+                    } else {
+                        $this->getLogger()->warning('Unhandled internal rejected promise, $reason is not a Throwable, '.gettype($reason).' given.');
+                    }
+                },
+            ]);
+
+        $resolved = $resolver->resolve($options);
+        $resolved['prefixes'][] = $resolved['prefix'];
+
+        return $resolved;
+    }
+
+    /**
+     * Resolve options for a single command.
+     *
+     * @param array $options Input options.
+     *
+     * @return array Resolved options.
+     */
+    protected function resolveCommandOptions(array $options): array
+    {
+        $resolver = new OptionsResolver();
+
+        $resolver
+            ->setDefined([
+                'description',
+                'longDescription',
+                'usage',
+                'aliases',
+                'cooldown',
+                'cooldownMessage',
+                'showHelp',
+            ])
+            ->setDefaults([
+                'description' => 'No description provided.',
+                'longDescription' => '',
+                'usage' => '',
+                'aliases' => [],
+                'cooldown' => 0,
+                'cooldownMessage' => 'please wait %d second(s) to use this command again.',
+                'showHelp' => true,
+            ])
+            ->setAllowedTypes('aliases', ['array', 'string', 'null'])
+            ->setNormalizer('aliases', function (Options $options, $value) {
+                if ($value === null) {
+                    return [];
+                }
+
+                if (! is_array($value)) {
+                    $value = [$value];
+                }
+
+                $sanitized = [];
+                foreach ($value as $alias) {
+                    if (is_scalar($alias) || (is_object($alias) && method_exists($alias, '__toString'))) {
+                        $aliasStr = trim((string) $alias);
+                        if ($aliasStr !== '') {
+                            $sanitized[] = $aliasStr;
+                        }
+                    }
+                }
+
+                return array_values(array_unique($sanitized));
+            });
+
+        return $resolver->resolve($options);
+    }
+
+    /**
+     * Creates a message builder instance.
+     *
+     * Override this method during construction to provide a custom message builder.
+     *
+     * @return MessageBuilder
+     */
+    public function createMessageBuilder(): MessageBuilder
+    {
+        return MessageBuilder::new();
     }
 
     /**
@@ -206,7 +324,7 @@ class MessageCommandClient extends Discord
 
         // Ensure no collision with existing command or alias names.
         if ($this->registry->has($name)) {
-            throw new \RuntimeException("A command with the same name already exists.");
+            throw new \RuntimeException('A command with the same name already exists.');
         }
 
         $this->registry->add($name, $commandInstance);
@@ -218,7 +336,7 @@ class MessageCommandClient extends Discord
 
             $aliasNormalized = $this->normalizeCommandName($alias);
             if ($this->registry->has($aliasNormalized)) {
-                throw new \RuntimeException("An alias with the same name already exists.");
+                throw new \RuntimeException('An alias with the same name already exists.');
             }
 
             $this->registry->addAlias((string) $aliasNormalized, $name);
@@ -241,7 +359,7 @@ class MessageCommandClient extends Discord
     public function unregisterCommand(string $name): void
     {
         if (! $this->registry->hasCommand($name)) {
-            throw new \RuntimeException("A command with the same name does not exist.");
+            throw new \RuntimeException('A command with the same name does not exist.');
         }
 
         $this->registry->remove($name);
@@ -261,11 +379,11 @@ class MessageCommandClient extends Discord
         $commandNormalized = $this->normalizeCommandName($command);
 
         if ($this->registry->has($aliasNormalized)) {
-            throw new \RuntimeException("An alias with the same name already exists.");
+            throw new \RuntimeException('An alias with the same name already exists.');
         }
 
         if (! $this->registry->hasCommand($commandNormalized)) {
-            throw new \RuntimeException("A command with the same name does not exist.");
+            throw new \RuntimeException('A command with the same name does not exist.');
         }
 
         $this->registry->addAlias($aliasNormalized, $commandNormalized);
@@ -384,111 +502,6 @@ class MessageCommandClient extends Discord
     }
 
     /**
-     * Resolve options for a single command.
-     *
-     * @param array $options Input options.
-     *
-     * @return array Resolved options.
-     */
-    protected function resolveCommandOptions(array $options): array
-    {
-        $resolver = new OptionsResolver();
-
-        $resolver
-            ->setDefined([
-                'description',
-                'longDescription',
-                'usage',
-                'aliases',
-                'cooldown',
-                'cooldownMessage',
-                'showHelp',
-            ])
-            ->setDefaults([
-                'description' => 'No description provided.',
-                'longDescription' => '',
-                'usage' => '',
-                'aliases' => [],
-                'cooldown' => 0,
-                'cooldownMessage' => 'please wait %d second(s) to use this command again.',
-                'showHelp' => true,
-            ])
-            ->setAllowedTypes('aliases', ['array', 'string', 'null'])
-            ->setNormalizer('aliases', function (Options $options, $value) {
-                if ($value === null) {
-                    return [];
-                }
-
-                if (! is_array($value)) {
-                    $value = [$value];
-                }
-
-                $sanitized = [];
-                foreach ($value as $alias) {
-                    if (is_scalar($alias) || (is_object($alias) && method_exists($alias, '__toString'))) {
-                        $aliasStr = trim((string) $alias);
-                        if ($aliasStr !== '') {
-                            $sanitized[] = $aliasStr;
-                        }
-                    }
-                }
-
-                return array_values(array_unique($sanitized));
-            });
-
-        return $resolver->resolve($options);
-    }
-
-    /**
-     * Resolve client-level options.
-     *
-     * @param array $options Input options.
-     *
-     * @return array Resolved options used by the client.
-     */
-    protected function resolveOptions(array $options = []): array
-    {
-        $resolver = new OptionsResolver();
-
-        $resolver
-            ->setRequired('token')
-            ->setAllowedTypes('token', 'string')
-            ->setDefined([
-                'token',
-                'prefix',
-                'prefixes',
-                'name',
-                'description',
-                'defaultHelpCommand',
-                'discordOptions',
-                'caseInsensitiveCommands',
-                'internalRejectedPromiseHandler',
-            ])
-            ->setAllowedTypes('internalRejectedPromiseHandler', ['null', 'callable'])
-            ->setDefaults([
-                'prefix' => '@mention ',
-                'prefixes' => [],
-                'name' => '<UsernamePlaceholder>',
-                'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
-                'defaultHelpCommand' => true,
-                'discordOptions' => [],
-                'caseInsensitiveCommands' => false,
-                'internalRejectedPromiseHandler' => function ($reason): void {
-                    if (is_string($reason) || $reason instanceof \Stringable) {
-                        $this->getLogger()->error($reason);
-                    } else {
-                        $this->getLogger()->warning('Unhandled internal rejected promise, $reason is not a Throwable, '.gettype($reason).' given.');
-                    }
-                },
-            ]);
-
-        $resolved = $resolver->resolve($options);
-        $resolved['prefixes'][] = $resolved['prefix'];
-
-        return $resolved;
-    }
-
-    /**
      * Default help command handler.
      *
      * @param Message $message Message instance.
@@ -501,51 +514,87 @@ class MessageCommandClient extends Discord
         $prefix = str_replace((string) $this->user, '@'.$this->username, $this->options['prefix']);
 
         if (count($args) > 0) {
-            $command = null;
-            $fullCommandString = implode(' ', $args);
-
-            while (count($args) > 0) {
-                $commandString = array_shift($args);
-
-                if ($this->options['caseInsensitiveCommands']) {
-                    $commandString = function_exists('mb_strtolower')
-                        ? mb_strtolower($commandString)
-                        : strtolower($commandString);
-                }
-
-                if ($command === null) {
-                    $newCommand = $this->getCommand($commandString);
-                } else {
-                    $newCommand = $command->getCommand($commandString);
-                }
-
-                if ($newCommand === null) {
-                    return "The command {$commandString} does not exist.";
-                }
-
-                $command = $newCommand;
+            $result = $this->findCommandForHelp($args);
+            if (isset($result['missing'])) {
+                return "The command {$result['missing']} does not exist.";
             }
+
+            $command = $result['command'];
+            $fullCommandString = $result['full'];
 
             $help = $command->getHelp($prefix);
             if (empty($help)) {
                 return;
             }
 
-            $embed = new Embed($this);
-            $embed->setAuthor($this->options['name'], $this->client->user->avatar)
-                ->setTitle($prefix.$fullCommandString.'\'s Help')
-                ->setDescription(! empty($help['longDescription']) ? $help['longDescription'] : $help['description'])
-                ->setFooter($this->options['name']);
-
-            if (! empty($help['usage'])) {
-                $embed->addFieldValues('Usage', '``'.$help['usage'].'``', true);
-            }
-
-            $message->channel->sendEmbed($embed)->then(null, $this->options['internalRejectedPromiseHandler']);
+            $embed = $this->buildHelpEmbedForCommand($command, $prefix, $fullCommandString, $help);
+            $message->channel->sendMessage($this->createMessageBuilder()->addEmbed($embed))->then(null, $this->options['internalRejectedPromiseHandler']);
 
             return;
         }
 
+        $embed = $this->buildCommandsListEmbed($prefix);
+        $message->channel->sendMessage($this->createMessageBuilder()->addEmbed($embed))->then(null, $this->options['internalRejectedPromiseHandler']);
+    }
+
+    /**
+     * Find a command instance based on a path of command parts for help lookup.
+     *
+     * @param array $parts
+     *
+     * @return array{command?: \Discord\MessageCommandClient\Command, full?: string, missing?: string}
+     */
+    protected function findCommandForHelp(array $parts): array
+    {
+        $command = null;
+        $fullCommandString = implode(' ', $parts);
+
+        while (count($parts) > 0) {
+            $commandString = array_shift($parts);
+
+            if ($this->options['caseInsensitiveCommands']) {
+                $commandString = function_exists('mb_strtolower') ? mb_strtolower($commandString) : strtolower($commandString);
+            }
+
+            if ($command === null) {
+                $newCommand = $this->getCommand($commandString);
+            } else {
+                $newCommand = $command->getCommand($commandString);
+            }
+
+            if ($newCommand === null) {
+                return ['missing' => $commandString];
+            }
+
+            $command = $newCommand;
+        }
+
+        return ['command' => $command, 'full' => $fullCommandString];
+    }
+
+    /**
+     * Build an embed for a specific command help view.
+     */
+    protected function buildHelpEmbedForCommand($command, string $prefix, string $fullCommandString, array $help): Embed
+    {
+        $embed = new Embed($this);
+        $embed->setAuthor($this->options['name'], $this->client->user->avatar)
+            ->setTitle($prefix.$fullCommandString.'\'s Help')
+            ->setDescription(! empty($help['longDescription']) ? $help['longDescription'] : $help['description'])
+            ->setFooter($this->options['name']);
+
+        if (! empty($help['usage'])) {
+            $embed->addFieldValues('Usage', '``'.$help['usage'].'``', true);
+        }
+
+        return $embed;
+    }
+
+    /**
+     * Build an embed listing all commands for the help command root.
+     */
+    protected function buildCommandsListEmbed(string $prefix): Embed
+    {
         $embed = new Embed($this);
         $embed->setAuthor($this->options['name'], $this->client->avatar)
             ->setTitle($this->options['name'])
@@ -589,7 +638,7 @@ class MessageCommandClient extends Discord
                 : substr($this->options['description'].$commandsDescription, 0, 2048)
         );
 
-        $message->channel->sendEmbed($embed)->then(null, $this->options['internalRejectedPromiseHandler']);
+        return $embed;
     }
 
     /**

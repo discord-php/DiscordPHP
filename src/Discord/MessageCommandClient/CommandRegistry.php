@@ -74,7 +74,7 @@ final class CommandRegistry
     {
         $name = $this->normalize($name);
         if (isset($this->commands[$name])) {
-            throw new \RuntimeException("A command with the same name already exists.");
+            throw new \RuntimeException('A command with the same name already exists.');
         }
 
         $this->commands[$name] = $command;

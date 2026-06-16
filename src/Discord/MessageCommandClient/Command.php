@@ -280,10 +280,10 @@ class Command
 
         $key = $this->normalizeName($commandInstance->command);
         if (array_key_exists($key, $this->subCommandAliases)) {
-            throw new \RuntimeException("A sub-command with the same name already exists as an alias for another sub-command.");
+            throw new \RuntimeException('A sub-command with the same name already exists as an alias for another sub-command.');
         }
         if (array_key_exists($key, $this->subCommands)) {
-            throw new \RuntimeException("A sub-command with the same name already exists.");
+            throw new \RuntimeException('A sub-command with the same name already exists.');
         }
 
         $this->subCommands[$key] = $commandInstance;
@@ -310,7 +310,7 @@ class Command
         $command = $this->normalizeName($command);
 
         if (! array_key_exists($command, $this->subCommands)) {
-            throw new \RuntimeException("The sub-command does not exist.");
+            throw new \RuntimeException('The sub-command does not exist.');
         }
 
         unset($this->subCommands[$command]);
@@ -329,12 +329,12 @@ class Command
 
         // Ensure the target sub-command exists.
         if (! array_key_exists($command, $this->subCommands)) {
-            throw new \RuntimeException("The target sub-command does not exist.");
+            throw new \RuntimeException('The target sub-command does not exist.');
         }
 
         // Alias must not collide with an existing sub-command name.
         if (array_key_exists($alias, $this->subCommands)) {
-            throw new \RuntimeException("Cannot create alias because a sub-command with that name already exists.");
+            throw new \RuntimeException('Cannot create alias because a sub-command with that name already exists.');
         }
 
         // If alias already exists, ensure it's not being remapped to a different target.
@@ -345,7 +345,7 @@ class Command
                 return;
             }
 
-            throw new \RuntimeException("Cannot remap alias because it is already mapped to a different sub-command.");
+            throw new \RuntimeException('Cannot remap alias because it is already mapped to a different sub-command.');
         }
 
         $this->subCommandAliases[$alias] = $command;
@@ -362,7 +362,7 @@ class Command
         $alias = $this->normalizeName($alias);
 
         if (! array_key_exists($alias, $this->subCommandAliases)) {
-            throw new \RuntimeException("The sub-command alias does not exist.");
+            throw new \RuntimeException('The sub-command alias does not exist.');
         }
 
         unset($this->subCommandAliases[$alias]);
