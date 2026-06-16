@@ -345,7 +345,7 @@ class MessageCommandClient extends Discord
         }
 
         if (method_exists($this, 'emit')) {
-            $this->emit('messagecommandclient.command.registered', [$name, $commandInstance, $resolvedOptions]);
+            $this->emit('command-registered', [$name, $commandInstance, $resolvedOptions]);
         }
 
         return $commandInstance;

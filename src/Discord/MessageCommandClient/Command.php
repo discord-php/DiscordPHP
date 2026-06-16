@@ -260,7 +260,7 @@ class Command
         $key = $this->subCommandRegistry->register($commandInstance, $resolvedOptions['aliases']);
 
         if (method_exists($this->client, 'emit')) {
-            $this->client->emit('messagecommandclient.subcommand.registered', [$this->command, $key, $commandInstance, $resolvedOptions]);
+            $this->client->emit('subcommand-registered', [$this->command, $key, $commandInstance, $resolvedOptions]);
         }
 
         return $commandInstance;
