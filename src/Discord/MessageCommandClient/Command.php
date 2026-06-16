@@ -153,12 +153,24 @@ class Command
      */
     public function getCommand(string $command, bool $aliases = true): ?Command
     {
+        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+            $command = function_exists('mb_strtolower')
+                ? mb_strtolower($command)
+                : strtolower($command);
+        }
+
         if (array_key_exists($command, $this->subCommands)) {
             return $this->subCommands[$command];
         }
 
-        if ($aliases && array_key_exists($command, $this->subCommandAliases)) {
-            return $this->subCommands[$this->subCommandAliases[$command]];
+        if ($aliases) {
+            if (array_key_exists($command, $this->subCommandAliases)) {
+                $target = $this->subCommandAliases[$command];
+
+                if (array_key_exists($target, $this->subCommands)) {
+                    return $this->subCommands[$target];
+                }
+            }
         }
 
         return null;
