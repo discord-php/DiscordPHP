@@ -10651,15 +10651,15 @@ Search.appendIndex(
             "summary": "Subscription\u0020is\u0020active\u0020and\u0020scheduled\u0020to\u0020renew.",
             "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ACTIVE"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_ENDING",
-            "name": "STATUS_ENDING",
-            "summary": "Subscription\u0020is\u0020active\u0020but\u0020will\u0020not\u0020renew.",
-            "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ENDING"
-        },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_INACTIVE",
             "name": "STATUS_INACTIVE",
-            "summary": "Subscription\u0020is\u0020inactive\u0020and\u0020not\u0020being\u0020charged.",
+            "summary": "Subscription\u0020is\u0020active\u0020but\u0020will\u0020not\u0020renew.",
             "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_INACTIVE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_ENDING",
+            "name": "STATUS_ENDING",
+            "summary": "Subscription\u0020is\u0020inactive\u0020and\u0020not\u0020being\u0020charged.",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ENDING"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003A\u0024fillable",
             "name": "fillable",

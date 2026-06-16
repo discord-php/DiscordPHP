@@ -350,16 +350,16 @@ If the user cancels the subscription, the subscription will enter the ENDING sta
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ENDING">STATUS_ENDING</a>
     <span>
-        &nbsp;: mixed&nbsp;= 1                            </span>
+        &nbsp;: mixed&nbsp;= 2                            </span>
 </dt>
-<dd>Subscription is active but will not renew.</dd>
+<dd>Subscription is inactive and not being charged.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_INACTIVE">STATUS_INACTIVE</a>
     <span>
-        &nbsp;: mixed&nbsp;= 2                            </span>
+        &nbsp;: mixed&nbsp;= 1                            </span>
 </dt>
-<dd>Subscription is inactive and not being charged.</dd>
+<dd>Subscription is active but will not renew.</dd>
 
     </dl>
 
@@ -834,18 +834,18 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Subscription is active but will not renew.</p>
+        <p class="phpdocumentor-summary">Subscription is inactive and not being charged.</p>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">STATUS_ENDING</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
 </code>
 
 
@@ -865,18 +865,18 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Subscription is inactive and not being charged.</p>
+        <p class="phpdocumentor-summary">Subscription is active but will not renew.</p>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">STATUS_INACTIVE</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
+    = <span class="phpdocumentor-signature__default-value">1</span>
 </code>
 
 
