@@ -199,15 +199,17 @@ class Command
     {
         $command = $this->normalizeName($command);
 
-        if (array_key_exists($command, $this->subCommands)) {
-            throw new \RuntimeException("A sub-command with the name {$command} already exists.");
+        ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
+
+        $key = $this->normalizeName($commandInstance->command);
+        if (array_key_exists($key, $this->subCommands)) {
+            throw new \RuntimeException("A sub-command with the name {$key} already exists.");
         }
 
-        ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
-        $this->subCommands[$command] = $commandInstance;
+        $this->subCommands[$key] = $commandInstance;
 
         foreach ($resolvedOptions['aliases'] as $alias) {
-            $this->registerSubCommandAlias($alias, $command);
+            $this->registerSubCommandAlias($alias, $key);
         }
 
         return $commandInstance;
