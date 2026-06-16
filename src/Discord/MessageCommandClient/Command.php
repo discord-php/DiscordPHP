@@ -273,17 +273,43 @@ class Command
         }
 
         $currentTime = (int) round(microtime(true) * 1000);
-        if (isset($this->cooldowns[$message->author->id])) {
-            if ($this->cooldowns[$message->author->id] < $currentTime) {
-                $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
-            } else {
-                return sprintf($this->cooldownMessage, (($this->cooldowns[$message->author->id] - $currentTime) / 1000));
-            }
-        } else {
-            $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+
+        if ($cooldownResult = $this->enforceCooldown($message, $currentTime)) {
+            return $cooldownResult;
         }
 
         return call_user_func_array($this->callable, [$message, $args]);
+    }
+
+    /**
+     * Enforce and update cooldowns for a message author.
+     *
+     * @param Message $message     The message that triggered the command.
+     * @param int     $currentTime Current time in milliseconds.
+     *
+     * @return string|null Returns a formatted cooldown message when the author is on cooldown, or null when allowed.
+     */
+    protected function enforceCooldown(Message $message, int $currentTime): ?string
+    {
+        if ($this->cooldown <= 0) {
+            return null;
+        }
+
+        $userId = $message->author->id;
+
+        if (isset($this->cooldowns[$userId])) {
+            if ($this->cooldowns[$userId] < $currentTime) {
+                $this->cooldowns[$userId] = $currentTime + $this->cooldown;
+
+                return null;
+            }
+
+            return sprintf($this->cooldownMessage, (($this->cooldowns[$userId] - $currentTime) / 1000));
+        }
+
+        $this->cooldowns[$userId] = $currentTime + $this->cooldown;
+
+        return null;
     }
 
     /**
