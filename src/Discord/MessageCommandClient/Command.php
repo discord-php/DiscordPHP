@@ -270,6 +270,7 @@ class Command
      * Unregister a sub-command.
      *
      * @param string $command Sub-command name.
+     * 
      * @throws \RuntimeException If the sub-command does not exist.
      */
     public function unregisterSubCommand(string $command): void
@@ -282,6 +283,8 @@ class Command
      *
      * @param string $alias   Alias name.
      * @param string $command Target sub-command name.
+     * 
+     * @throws \RuntimeException If the alias or target command name conflicts with existing sub-commands or aliases.
      */
     public function registerSubCommandAlias(string $alias, string $command): void
     {
