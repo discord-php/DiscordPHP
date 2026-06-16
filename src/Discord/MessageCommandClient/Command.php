@@ -213,16 +213,7 @@ class Command
      */
     protected function normalizeName(string $name): string
     {
-        if (method_exists($this->client, 'normalizeCommandName')) {
-            return $this->client->normalizeCommandName($name);
-        }
-
-        // Fallback: mirror previous behavior if client does not provide helper.
-        if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            return function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name);
-        }
-
-        return $name;
+        return $this->client->normalizeCommandName($name);
     }
 
     /**
