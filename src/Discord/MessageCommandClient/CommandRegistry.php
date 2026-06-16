@@ -57,7 +57,9 @@ final class CommandRegistry
      */
     protected function normalize(string $name): string
     {
-        return $this->caseInsensitive ? mb_strtolower($name) : $name;
+        return $this->caseInsensitive
+            ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name))
+            : $name;
     }
 
     /**

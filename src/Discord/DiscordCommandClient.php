@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Provides an easy way to have triggerable message based commands.
  *
  * @since 4.0.0
- * 
+ *
  * @deprecated 10.49.0 Use 'MessageCommandClient'
  */
 class DiscordCommandClient extends Discord

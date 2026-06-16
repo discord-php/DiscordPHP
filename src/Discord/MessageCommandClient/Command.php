@@ -180,7 +180,9 @@ class Command
         }
 
         if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $command = mb_strtolower($command);
+            $command = function_exists('mb_strtolower')
+                ? mb_strtolower($command)
+                : strtolower($command);
         }
 
         ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
@@ -216,7 +218,9 @@ class Command
     public function registerSubCommandAlias(string $alias, string $command): void
     {
         if ($alias !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $alias = mb_strtolower($alias);
+            $alias = function_exists('mb_strtolower')
+                ? mb_strtolower($alias)
+                : strtolower($alias);
         }
 
         $this->subCommandAliases[$alias] = $command;
@@ -249,7 +253,9 @@ class Command
         $subCommand = $originalSubCommand = array_shift($args);
 
         if ($subCommand !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $subCommand = mb_strtolower($subCommand);
+            $subCommand = function_exists('mb_strtolower')
+                ? mb_strtolower($subCommand)
+                : strtolower($subCommand);
         }
 
         if (array_key_exists($subCommand, $this->subCommands)) {

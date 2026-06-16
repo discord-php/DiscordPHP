@@ -115,7 +115,9 @@ class MessageCommandClient extends Discord
         }
 
         if ($this->options['caseInsensitiveCommands']) {
-            $commandName = mb_strtolower($commandName);
+            $commandName = function_exists('mb_strtolower')
+                ? mb_strtolower($commandName)
+                : strtolower($commandName);
         }
 
         $command = $this->registry->get($commandName);
@@ -140,10 +142,39 @@ class MessageCommandClient extends Discord
     protected function checkForPrefix(string $content): ?string
     {
         foreach ($this->options['prefixes'] as $prefix) {
+            $matchedContent = $this->removePrefixFromContent($content, (string) $prefix);
+            if ($matchedContent !== null) {
+                return $matchedContent;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Remove a prefix from content when it matches.
+     *
+     * @param string $content Message content.
+     * @param string $prefix  Prefix to match.
+     *
+     * @return string|null Content without prefix, or null when no match.
+     */
+    protected function removePrefixFromContent(string $content, string $prefix): ?string
+    {
+        static $hasMbString = function_exists('mb_strlen') && function_exists('mb_substr');
+
+        if ($hasMbString) {
             $len = mb_strlen($prefix);
             if (mb_substr($content, 0, $len) === $prefix) {
                 return mb_substr($content, $len);
             }
+
+            return null;
+        }
+
+        $len = strlen($prefix);
+        if (substr($content, 0, $len) === $prefix) {
+            return substr($content, $len);
         }
 
         return null;
@@ -266,7 +297,7 @@ class MessageCommandClient extends Discord
 
         return [
             'command' => $commandInstance,
-            'options' => $options
+            'options' => $options,
         ];
     }
 
