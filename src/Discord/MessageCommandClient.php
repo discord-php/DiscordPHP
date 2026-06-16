@@ -251,10 +251,23 @@ class MessageCommandClient extends Discord
      *
      * @param string $alias   Alias to register.
      * @param string $command Target command name.
+     *
+     * @throws \RuntimeException If the target command does not exist or alias is already taken.
      */
     public function registerAlias(string $alias, string $command): void
     {
-        $this->registry->addAlias($alias, $command);
+        $aliasNormalized = $this->normalizeCommandName($alias);
+        $commandNormalized = $this->normalizeCommandName($command);
+
+        if ($this->registry->has($aliasNormalized)) {
+            throw new \RuntimeException("An alias with the name {$aliasNormalized} already exists.");
+        }
+
+        if (! $this->registry->hasCommand($commandNormalized)) {
+            throw new \RuntimeException("A command with the name {$commandNormalized} does not exist.");
+        }
+
+        $this->registry->addAlias($aliasNormalized, $commandNormalized);
     }
 
     /**
