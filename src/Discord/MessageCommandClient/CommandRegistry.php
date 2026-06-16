@@ -82,6 +82,8 @@ final class CommandRegistry
 
     /**
      * Remove a command from the registry.
+     * 
+     * This does not remove any aliases pointing to this command, so they will become invalid until removed or updated.
      *
      * @param string $name Command trigger name.
      */
