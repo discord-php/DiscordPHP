@@ -192,7 +192,9 @@ class MessageCommandClient extends Discord
     public function registerCommand(string $name, $callable, array $options = []): Command
     {
         if ($this->options['caseInsensitiveCommands']) {
-            $name = mb_strtolower($name);
+            $name = function_exists('mb_strtolower')
+                ? mb_strtolower($name)
+                : strtolower($name);
         }
 
         ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->buildCommand($name, $callable, $options);
@@ -201,7 +203,9 @@ class MessageCommandClient extends Discord
 
         foreach ($resolvedOptions['aliases'] as $alias) {
             if ($this->options['caseInsensitiveCommands'] && $alias !== null) {
-                $alias = mb_strtolower($alias);
+                $alias = function_exists('mb_strtolower')
+                    ? mb_strtolower($alias)
+                    : strtolower($alias);
             }
             $this->registry->addAlias((string) $alias, $name);
         }
@@ -218,7 +222,7 @@ class MessageCommandClient extends Discord
      */
     public function unregisterCommand(string $name): void
     {
-        if (! $this->registry->has($name)) {
+        if (! $this->registry->hasCommand($name)) {
             throw new \RuntimeException("A command with the name {$name} does not exist.");
         }
 
@@ -467,7 +471,11 @@ class MessageCommandClient extends Discord
             $commandsDescription = '';
         }
 
-        $embed->setDescription(mb_substr($this->options['description'].$commandsDescription, 0, 2048));
+        $embed->setDescription(
+            function_exists('mb_substr')
+                ? mb_substr($this->options['description'].$commandsDescription, 0, 2048)
+                : substr($this->options['description'].$commandsDescription, 0, 2048)
+        );
 
         $message->channel->sendEmbed($embed)->then(null, $this->options['internalRejectedPromiseHandler']);
     }

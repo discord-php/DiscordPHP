@@ -82,7 +82,7 @@ final class CommandRegistry
 
     /**
      * Remove a command from the registry.
-     * 
+     *
      * This does not remove any aliases pointing to this command, so they will become invalid until removed or updated.
      *
      * @param string $name Command trigger name.
@@ -103,6 +103,30 @@ final class CommandRegistry
         $name = $this->normalize($name);
 
         return isset($this->commands[$name]) || isset($this->aliases[$name]);
+    }
+
+    /**
+     * Check whether a command exists.
+     *
+     * @param string $name Command name to check.
+     */
+    public function hasCommand(string $name): bool
+    {
+        $name = $this->normalize($name);
+
+        return isset($this->commands[$name]);
+    }
+
+    /**
+     * Check whether an alias exists.
+     *
+     * @param string $alias Alias to check.
+     */
+    public function hasAlias(string $alias): bool
+    {
+        $alias = $this->normalize($alias);
+
+        return isset($this->aliases[$alias]);
     }
 
     /**
