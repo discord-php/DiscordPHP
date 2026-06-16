@@ -205,7 +205,11 @@ class Command
         if (! array_key_exists($command, $this->subCommands)) {
             throw new \RuntimeException("A sub-command with the name {$command} does not exist.");
         }
-
+        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+            $command = function_exists('mb_strtolower')
+                ? mb_strtolower($command)
+                : strtolower($command);
+        }
         unset($this->subCommands[$command]);
     }
 
