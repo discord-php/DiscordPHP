@@ -354,21 +354,17 @@ class MessageCommandClient extends Discord
     protected function wrapRegisteredCallable(callable $callable): callable
     {
         try {
-            if (is_array($callable)) {
-                $ref = new \ReflectionMethod($callable[0], $callable[1]);
-            } elseif (is_string($callable) && strpos($callable, '::') !== false) {
-                [$class, $method] = explode('::', $callable, 2);
-                $ref = new \ReflectionMethod($class, $method);
-            } else {
-                $ref = new \ReflectionFunction($callable);
-            }
+            // Normalize any callable to a Closure first so invokable objects,
+            // callable strings and arrays are all handled uniformly.
+            $closure = \Closure::fromCallable($callable);
+            $ref = new \ReflectionFunction($closure);
 
             $required = $ref->getNumberOfRequiredParameters();
             $isVariadic = $ref->isVariadic();
-        } catch (\ReflectionException $e) {
-            // If reflection fails for any reason, fall back to a safe default
-            // that calls the callable with message and args to preserve
-            // previous behavior.
+        } catch (\Throwable $e) {
+            // If reflection fails for any reason (including TypeError for
+            // invokable objects on older reflection paths), fall back to a
+            // safe default that preserves previous behavior.
             $required = 2;
             $isVariadic = false;
         }
