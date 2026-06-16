@@ -358,7 +358,6 @@ class Command
      */
     public function unregisterSubCommandAlias(string $alias): void
     {
-        $originalAlias = $alias;
         $alias = $this->normalizeName($alias);
 
         if (! array_key_exists($alias, $this->subCommandAliases)) {
