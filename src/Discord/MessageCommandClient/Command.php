@@ -239,6 +239,12 @@ class Command
                 : strtolower($alias);
         }
 
+        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+            $command = function_exists('mb_strtolower')
+                ? mb_strtolower($command)
+                : strtolower($command);
+        }
+
         $this->subCommandAliases[$alias] = $command;
     }
 
@@ -249,6 +255,12 @@ class Command
      */
     public function unregisterSubCommandAlias(string $alias): void
     {
+        if ($alias !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+            $alias = function_exists('mb_strtolower')
+                ? mb_strtolower($alias)
+                : strtolower($alias);
+        }
+
         if (! array_key_exists($alias, $this->subCommandAliases)) {
             throw new \RuntimeException("A sub-command alias with the name {$alias} does not exist.");
         }
