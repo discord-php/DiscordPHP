@@ -21,9 +21,7 @@ final class MessageCommandClientTest extends \DiscordTestCase
     public function testCanRegisterAndRetrieveCommand()
     {
         return wait(function (Discord $discord, $resolve) {
-            $client = new MessageCommandClientClass([
-                'token' => getenv('DISCORD_TOKEN'),
-            ]);
+            $client = getMockMessageCommandClient();
 
             $client->registerCommand('hello', fn () => 'world', ['description' => 'desc']);
 
@@ -39,9 +37,7 @@ final class MessageCommandClientTest extends \DiscordTestCase
     public function testBuildCommandCreatesCommandInstance()
     {
         return wait(function (Discord $discord, $resolve) {
-            $client = new MessageCommandClientClass([
-                'token' => getenv('DISCORD_TOKEN'),
-            ]);
+            $client = getMockMessageCommandClient();
 
             $builtCommand = $client->buildCommand('foo', fn () => 'bar', []);
 
