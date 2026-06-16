@@ -328,12 +328,7 @@ class MessageCommandClient extends Discord
             $this,
             $name,
             $callable,
-            $options['description'],
-            $options['longDescription'],
-            $options['usage'],
-            $options['cooldown'],
-            $options['cooldownMessage'],
-            $options['showHelp']
+            $options
         );
 
         return new BuiltCommand($commandInstance, $options);

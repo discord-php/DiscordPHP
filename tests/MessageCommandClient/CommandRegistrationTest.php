@@ -34,12 +34,26 @@ final class CommandRegistrationTest extends TestCase
             return $ci ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name)) : $name;
         });
         $client->method('buildCommand')->willReturnCallback(function ($name, $callable, $options) use ($client) {
-            $cmd = new Command($client, $name, $callable, '', '', '', 0, '', true);
+            $cmd = new Command($client, $name, $callable, [
+                'description' => '',
+                'longDescription' => '',
+                'usage' => '',
+                'cooldown' => 0,
+                'cooldownMessage' => '',
+                'showHelp' => true,
+            ]);
 
             return new BuiltCommand($cmd, is_array($options) ? array_merge(['aliases' => []], $options) : ['aliases' => []]);
         });
 
-        $parent = new Command($client, 'parent', fn () => null, '', '', '', 0, '', true);
+        $parent = new Command($client, 'parent', fn () => null, [
+            'description' => '',
+            'longDescription' => '',
+            'usage' => '',
+            'cooldown' => 0,
+            'cooldownMessage' => '',
+            'showHelp' => true,
+        ]);
 
         $parent->registerSubCommand('foo', fn () => null, []);
 
@@ -61,12 +75,26 @@ final class CommandRegistrationTest extends TestCase
             return $ci ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name)) : $name;
         });
         $client->method('buildCommand')->willReturnCallback(function ($name, $callable, $options) use ($client) {
-            $cmd = new Command($client, $name, $callable, '', '', '', 0, '', true);
+            $cmd = new Command($client, $name, $callable, [
+                'description' => '',
+                'longDescription' => '',
+                'usage' => '',
+                'cooldown' => 0,
+                'cooldownMessage' => '',
+                'showHelp' => true,
+            ]);
 
             return new BuiltCommand($cmd, is_array($options) ? array_merge(['aliases' => []], $options) : ['aliases' => []]);
         });
 
-        $parent = new Command($client, 'parent', fn () => null, '', '', '', 0, '', true);
+        $parent = new Command($client, 'parent', fn () => null, [
+            'description' => '',
+            'longDescription' => '',
+            'usage' => '',
+            'cooldown' => 0,
+            'cooldownMessage' => '',
+            'showHelp' => true,
+        ]);
 
         // Register a subcommand with an alias 'bar'
         $parent->registerSubCommand('foo', fn () => null, ['aliases' => ['bar']]);
@@ -87,12 +115,26 @@ final class CommandRegistrationTest extends TestCase
             return $ci ? (function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name)) : $name;
         });
         $client->method('buildCommand')->willReturnCallback(function ($name, $callable, $options) use ($client) {
-            $cmd = new Command($client, $name, $callable, '', '', '', 0, '', true);
+            $cmd = new Command($client, $name, $callable, [
+                'description' => '',
+                'longDescription' => '',
+                'usage' => '',
+                'cooldown' => 0,
+                'cooldownMessage' => '',
+                'showHelp' => true,
+            ]);
 
             return new BuiltCommand($cmd, is_array($options) ? array_merge(['aliases' => []], $options) : ['aliases' => []]);
         });
 
-        $parent = new Command($client, 'parent', fn () => null, '', '', '', 0, '', true);
+        $parent = new Command($client, 'parent', fn () => null, [
+            'description' => '',
+            'longDescription' => '',
+            'usage' => '',
+            'cooldown' => 0,
+            'cooldownMessage' => '',
+            'showHelp' => true,
+        ]);
 
         $parent->registerSubCommand('foo', fn () => null, []);
         $parent->registerSubCommand('FOO', fn () => null, []);

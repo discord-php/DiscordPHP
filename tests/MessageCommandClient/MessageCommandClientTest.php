@@ -13,7 +13,6 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
-use Discord\MessageCommandClient as MessageCommandClientClass;
 use Discord\MessageCommandClient\Command;
 
 final class MessageCommandClientTest extends \DiscordTestCase

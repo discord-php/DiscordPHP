@@ -109,38 +109,42 @@ class Command
     protected $callable;
 
     /**
+     * An array of options passed to the command.
+     *
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Creates a command instance.
      *
-     * @param MessageCommandClient $client          The message command client.
-     * @param string               $command         Command trigger.
-     * @param callable             $callable        Callable to execute.
-     * @param string               $description     Short description.
-     * @param string               $longDescription Long description.
-     * @param string               $usage           Usage string.
-     * @param int                  $cooldown        Cooldown in milliseconds.
-     * @param string               $cooldownMessage Cooldown message.
-     * @param bool                 $showHelp        Whether to show in help.
+     * @param MessageCommandClient $client                     The message command client.
+     * @param string               $command                    Command trigger.
+     * @param callable             $callable                   Callable to execute.
+     * @param array                $options                    Command options:
+     * @param string               $options['description']     Short description.
+     * @param string               $options['longDescription'] Long description.
+     * @param string               $options['usage']           Usage string.
+     * @param int                  $options['cooldown']        Cooldown in milliseconds.
+     * @param string               $options['cooldownMessage'] Cooldown message.
+     * @param bool                 $options['showHelp']        Whether to show in help.
      */
     public function __construct(
         MessageCommandClient $client,
         string $command,
         callable $callable,
-        string $description,
-        string $longDescription,
-        string $usage,
-        int $cooldown,
-        string $cooldownMessage,
-        bool $showHelp = true
+        array $options = []
     ) {
         $this->client = $client;
         $this->command = $command;
         $this->callable = $callable;
-        $this->description = $description;
-        $this->longDescription = $longDescription;
-        $this->usage = $usage;
-        $this->cooldown = $cooldown;
-        $this->cooldownMessage = $cooldownMessage;
-        $this->showHelp = $showHelp;
+        $this->options = $options;
+        $this->description = $options['description'] ?? '';
+        $this->longDescription = $options['longDescription'] ?? '';
+        $this->usage = $options['usage'] ?? '';
+        $this->cooldown = $options['cooldown'] ?? 0;
+        $this->cooldownMessage = $options['cooldownMessage'] ?? '';
+        $this->showHelp = $options['showHelp'] ?? true;
     }
 
     /**
