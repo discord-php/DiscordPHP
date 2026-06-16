@@ -68,7 +68,7 @@ function wait(callable $callback, float $timeout = TIMEOUT, ?callable $timeoutFn
 
 function getMockDiscord(): Discord
 {
-    return new Discord(['token' => '', 'logger' => new NullLogger()]);
+    return new MessageCommandClient(['token' => '', 'logger' => new NullLogger()]);
 }
 
 function getMockMessageCommandClient(): MessageCommandClient

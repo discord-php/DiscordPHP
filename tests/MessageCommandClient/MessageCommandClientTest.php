@@ -20,11 +20,9 @@ final class MessageCommandClientTest extends \DiscordTestCase
     public function testCanRegisterAndRetrieveCommand()
     {
         return wait(function (Discord $discord, $resolve) {
-            $client = getMockMessageCommandClient();
+            $discord->registerCommand('hello', fn () => 'world', ['description' => 'desc']);
 
-            $client->registerCommand('hello', fn () => 'world', ['description' => 'desc']);
-
-            $command = $client->getCommand('hello');
+            $command = $discord->getCommand('hello');
 
             $this->assertInstanceOf(Command::class, $command);
             $this->assertSame('hello', $command->command);
@@ -36,9 +34,7 @@ final class MessageCommandClientTest extends \DiscordTestCase
     public function testBuildCommandCreatesCommandInstance()
     {
         return wait(function (Discord $discord, $resolve) {
-            $client = getMockMessageCommandClient();
-
-            $builtCommand = $client->buildCommand('foo', fn () => 'bar', []);
+            $builtCommand = $discord->buildCommand('foo', fn () => 'bar', []);
 
             $this->assertInstanceOf(Command::class, $builtCommand->command);
             $this->assertSame('foo', $builtCommand->command->command);
