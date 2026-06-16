@@ -206,7 +206,7 @@ class MessageCommandClient extends Discord
 
         // Ensure no collision with existing command or alias names.
         if ($this->registry->has($name)) {
-            throw new \RuntimeException("A command with the name {$name} already exists.");
+            throw new \RuntimeException("A command with the same name already exists.");
         }
 
         $this->registry->add($name, $commandInstance);
@@ -218,7 +218,7 @@ class MessageCommandClient extends Discord
 
             $aliasNormalized = $this->normalizeCommandName($alias);
             if ($this->registry->has($aliasNormalized)) {
-                throw new \RuntimeException("An alias with the name {$aliasNormalized} already exists.");
+                throw new \RuntimeException("An alias with the same name already exists.");
             }
 
             $this->registry->addAlias((string) $aliasNormalized, $name);
@@ -241,7 +241,7 @@ class MessageCommandClient extends Discord
     public function unregisterCommand(string $name): void
     {
         if (! $this->registry->hasCommand($name)) {
-            throw new \RuntimeException("A command with the name {$name} does not exist.");
+            throw new \RuntimeException("A command with the same name does not exist.");
         }
 
         $this->registry->remove($name);
@@ -261,11 +261,11 @@ class MessageCommandClient extends Discord
         $commandNormalized = $this->normalizeCommandName($command);
 
         if ($this->registry->has($aliasNormalized)) {
-            throw new \RuntimeException("An alias with the name {$aliasNormalized} already exists.");
+            throw new \RuntimeException("An alias with the same name already exists.");
         }
 
         if (! $this->registry->hasCommand($commandNormalized)) {
-            throw new \RuntimeException("A command with the name {$commandNormalized} does not exist.");
+            throw new \RuntimeException("A command with the same name does not exist.");
         }
 
         $this->registry->addAlias($aliasNormalized, $commandNormalized);
