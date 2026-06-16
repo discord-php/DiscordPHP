@@ -144,6 +144,18 @@ class Command
     }
 
     /**
+     * Normalize a command or alias according to the client's case sensitivity setting.
+     */
+    protected function normalizeName(string $name): string
+    {
+        if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+            return function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name);
+        }
+
+        return $name;
+    }
+
+    /**
      * Attempts to get a sub command.
      *
      * @param string $command The sub-command to get.
@@ -153,10 +165,8 @@ class Command
      */
     public function getCommand(string $command, bool $aliases = true): ?Command
     {
-        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $command = function_exists('mb_strtolower')
-                ? mb_strtolower($command)
-                : strtolower($command);
+        if ($command !== null) {
+            $command = $this->normalizeName($command);
         }
 
         if (array_key_exists($command, $this->subCommands)) {
@@ -187,14 +197,10 @@ class Command
      */
     public function registerSubCommand(string $command, $callable, array $options = []): Command
     {
+        $command = $this->normalizeName($command);
+
         if (array_key_exists($command, $this->subCommands)) {
             throw new \RuntimeException("A sub-command with the name {$command} already exists.");
-        }
-
-        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $command = function_exists('mb_strtolower')
-                ? mb_strtolower($command)
-                : strtolower($command);
         }
 
         ['command' => $commandInstance, 'options' => $resolvedOptions] = $this->client->buildCommand($command, $callable, $options);
@@ -214,14 +220,12 @@ class Command
      */
     public function unregisterSubCommand(string $command): void
     {
+        $command = $this->normalizeName($command);
+
         if (! array_key_exists($command, $this->subCommands)) {
             throw new \RuntimeException("A sub-command with the name {$command} does not exist.");
         }
-        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $command = function_exists('mb_strtolower')
-                ? mb_strtolower($command)
-                : strtolower($command);
-        }
+
         unset($this->subCommands[$command]);
     }
 
@@ -233,17 +237,8 @@ class Command
      */
     public function registerSubCommandAlias(string $alias, string $command): void
     {
-        if ($alias !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $alias = function_exists('mb_strtolower')
-                ? mb_strtolower($alias)
-                : strtolower($alias);
-        }
-
-        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $command = function_exists('mb_strtolower')
-                ? mb_strtolower($command)
-                : strtolower($command);
-        }
+        $alias = $this->normalizeName($alias);
+        $command = $this->normalizeName($command);
 
         $this->subCommandAliases[$alias] = $command;
     }
@@ -255,14 +250,11 @@ class Command
      */
     public function unregisterSubCommandAlias(string $alias): void
     {
-        if ($alias !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $alias = function_exists('mb_strtolower')
-                ? mb_strtolower($alias)
-                : strtolower($alias);
-        }
+        $originalAlias = $alias;
+        $alias = $this->normalizeName($alias);
 
         if (! array_key_exists($alias, $this->subCommandAliases)) {
-            throw new \RuntimeException("A sub-command alias with the name {$alias} does not exist.");
+            throw new \RuntimeException("A sub-command alias with the name {$originalAlias} does not exist.");
         }
 
         unset($this->subCommandAliases[$alias]);
@@ -280,10 +272,8 @@ class Command
     {
         $subCommand = $originalSubCommand = array_shift($args);
 
-        if ($subCommand !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
-            $subCommand = function_exists('mb_strtolower')
-                ? mb_strtolower($subCommand)
-                : strtolower($subCommand);
+        if ($subCommand !== null) {
+            $subCommand = $this->normalizeName($subCommand);
         }
 
         if (array_key_exists($subCommand, $this->subCommands)) {
