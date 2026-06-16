@@ -301,7 +301,10 @@ class Command
         if (array_key_exists($subCommand, $this->subCommands)) {
             return $this->subCommands[$subCommand]->handle($message, $args);
         } elseif (array_key_exists($subCommand, $this->subCommandAliases)) {
-            return $this->subCommands[$this->subCommandAliases[$subCommand]]->handle($message, $args);
+            $target = $this->subCommandAliases[$subCommand];
+            if (array_key_exists($target, $this->subCommands)) {
+                return $this->subCommands[$target]->handle($message, $args);
+            }
         }
 
         if (null !== $subCommand) {
