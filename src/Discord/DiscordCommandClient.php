@@ -22,6 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Provides an easy way to have triggerable message based commands.
  *
  * @since 4.0.0
+ *
+ * @deprecated 10.49.0 Use 'MessageCommandClient'
  */
 class DiscordCommandClient extends Discord
 {
@@ -118,7 +120,7 @@ class DiscordCommandClient extends Discord
                         $commandString = array_shift($args);
                         $newCommand = $command->getCommand($commandString);
 
-                        if (null === $newCommand) {
+                        if ($newCommand === null) {
                             return "The command {$commandString} does not exist.";
                         }
 

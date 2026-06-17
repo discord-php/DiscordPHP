@@ -328,6 +328,8 @@ When you need an example worth imitating, start here:
 - Use `wait()` from `tests/functions.php` to bridge promises into test assertions.
 - Keep semantic tests focused on behavior, not on incidental implementation details.
 
+- When a test requires a live `Discord` or `MessageCommandClient` instance (for example, to exercise registration, event handling, or runtime integration), obtain the client via the `wait(function (Discord $discord, $resolve) { ... })` pattern (and extend `DiscordTestCase`) rather than attempting to mock `Discord`/`MessageCommandClient`. Use mocks or `PHPUnit\Framework\TestCase` only for isolated logic that does not need a runtime client.
+
 ### Docs
 
 - Public magic properties, repositories, and helpers should be reflected in PHPDoc.

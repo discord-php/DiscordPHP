@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
+use Discord\MessageCommandClient;
 use Psr\Log\NullLogger;
 
 const TIMEOUT = 10;
@@ -67,5 +68,10 @@ function wait(callable $callback, float $timeout = TIMEOUT, ?callable $timeoutFn
 
 function getMockDiscord(): Discord
 {
-    return new Discord(['token' => '', 'logger' => new NullLogger()]);
+    return new MessageCommandClient(['token' => '', 'logger' => new NullLogger()]);
+}
+
+function getMockMessageCommandClient(): MessageCommandClient
+{
+    return new MessageCommandClient(['token' => '', 'logger' => new NullLogger()]);
 }
