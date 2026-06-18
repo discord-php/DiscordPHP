@@ -57,6 +57,8 @@
         }
     },
     "suggest": {
+        "ext-ffi": "ForRequired for voice support.",
+        "discord-php-helpers/voice": "Required for voice support.",
         "ext-gmp": "For 64 bit calculations on x86 (32 bit) PHP.",
         "ext-uv": "For a faster, and more performant loop. Preferred.",
         "ext-ev": "For a faster, and more performant loop.",
