@@ -14,9 +14,12 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Carbon\Carbon;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\PromiseInterface;
@@ -63,7 +66,7 @@ class VoiceStateRepository extends AbstractRepository
      *
      * @link https://docs.discord.com/developers/resources/voice#list-voice-regions
      *
-     * @return PromiseInterface<Collection>
+     * @return PromiseInterface<ExCollectionInterface>
      *
      * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
