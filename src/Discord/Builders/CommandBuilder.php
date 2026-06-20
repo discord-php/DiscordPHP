@@ -94,7 +94,7 @@ class CommandBuilder extends Builder implements JsonSerializable
      *
      * @return static
      */
-    public static function new(): self
+    public static function new(): static
     {
         return new static();
     }

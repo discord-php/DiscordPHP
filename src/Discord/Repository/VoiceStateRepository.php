@@ -127,7 +127,7 @@ class VoiceStateRepository extends AbstractRepository
 
     /**
      * Returns the specified user's voice state in the guild.
-     * 
+     *
      * If the specified user is connected to a voice channel, the current user must have permission to connect to the channel.
      *
      * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state

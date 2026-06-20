@@ -819,7 +819,7 @@ class Guild extends Part
 
     /**
      * Returns the specified user's voice state in the guild.
-     * 
+     *
      * If the specified user is connected to a voice channel, the current user must have permission to connect to the channel.
      *
      * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state
@@ -845,9 +845,10 @@ class Guild extends Part
      *
      * @link https://docs.discord.com/developers/resources/voice#modify-user-voice-state
      *
-     * @param array        $data
-     * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
-     * @param ?bool|null   $data['suppress']   Toggles the user's suppress state.
+     * @param Member|User|string $user               The user ID.
+     * @param array              $data
+     * @param ?string|null       $data['channel_id'] The ID of the channel the user is currently in.
+     * @param ?bool|null         $data['suppress']   Toggles the user's suppress state.
      *
      * @return PromiseInterface
      */
