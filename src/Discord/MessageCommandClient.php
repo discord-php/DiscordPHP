@@ -46,9 +46,7 @@ class MessageCommandClient extends Discord
     {
         $this->options = $this->resolveOptions($options);
 
-        $discordOptions = array_merge($this->options['discordOptions'] ?? [], ['token' => $this->options['token']]);
-
-        parent::__construct($discordOptions);
+        parent::__construct($options);
 
         $this->registry = $registry ?? new CommandRegistry((bool) ($this->options['caseInsensitiveCommands'] ?? false));
 
@@ -92,7 +90,6 @@ class MessageCommandClient extends Discord
                 'name',
                 'description',
                 'defaultHelpCommand',
-                'discordOptions',
                 'caseInsensitiveCommands',
                 'internalRejectedPromiseHandler',
             ]))
@@ -103,7 +100,6 @@ class MessageCommandClient extends Discord
                 'name' => '<UsernamePlaceholder>',
                 'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
                 'defaultHelpCommand' => true,
-                'discordOptions' => [],
                 'caseInsensitiveCommands' => false,
                 'internalRejectedPromiseHandler' => function ($reason): void {
                     if (is_string($reason) || $reason instanceof \Stringable) {
