@@ -26,6 +26,7 @@ namespace Discord\Builders\Components;
  * @property ?int|null  $min_values Minimum number of files that must be uploaded (defaults to 1); min 0, max 10.
  * @property ?int|null  $max_values Maximum number of files that can be uploaded (defaults to 1); max 10.
  * @property ?bool|null $required   Whether the file upload is required to be filled in a modal (defaults to `true`).
+ * @property ?string[]  $file_types Supported file types for uploaded files.
  */
 class FileUpload extends Interactive
 {
@@ -60,6 +61,13 @@ class FileUpload extends Interactive
      * @var bool|null
      */
     protected $required;
+
+    /**
+     * Supported file types for uploaded files.
+     *
+     * @var ?string[]
+     */
+    protected $file_types;
 
     /**
      * Creates a new file upload.
@@ -140,6 +148,26 @@ class FileUpload extends Interactive
     }
 
     /**
+     * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
+     *
+     * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
+     *
+     * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
+     *
+     * @param ?string[] $file_types
+     *
+     * @return self
+     * 
+     * @since 10.49.0
+     */
+    public function setFileTypes(?array $file_types = null): self
+    {
+        $this->file_types = $file_types;
+
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      */
     public function jsonSerialize(): array
@@ -159,6 +187,10 @@ class FileUpload extends Interactive
 
         if (isset($this->required)) {
             $content['required'] = $this->required;
+        }
+
+        if (isset($this->file_types)) {
+            $content['file_types'] = $this->file_types;
         }
 
         if (isset($this->id)) {

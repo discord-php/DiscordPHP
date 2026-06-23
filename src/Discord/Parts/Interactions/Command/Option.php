@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Channel\Message\FileUpload;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -40,6 +41,7 @@ use function Discord\poly_strlen;
  * @property int|null                               $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
  * @property int|null                               $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
  * @property bool|null                              $autocomplete              Enable autocomplete interactions for this option.
+ * @property string[]|null                          $file_types                If the option is an ATTACHMENT type, the attachment types shown will be restricted to these types.
  */
 class Option extends Part
 {
@@ -60,6 +62,15 @@ class Option extends Part
     /** Attachment object. */
     public const ATTACHMENT = 11;
 
+    /** Supported file types. */
+    public const SUPPORTED_FILE_TYPES = FileUpload::SUPPORTED_FILE_TYPES;
+    /** Natively supported image file extensions. Subject to change. */
+    public const SUPPORTED_IMAGE_EXTENSIONS = FileUpload::SUPPORTED_IMAGE_EXTENSIONS;
+    /** Natively supported video file extensions. Subject to change. */
+    public const SUPPORTED_VIDEO_EXTENSIONS = FileUpload::SUPPORTED_VIDEO_EXTENSIONS;
+    /** Natively supported audio file extensions. Subject to change. */
+    public const SUPPORTED_AUDIO_EXTENSIONS = FileUpload::SUPPORTED_AUDIO_EXTENSIONS;
+
     /**
      * @inheritDoc
      */
@@ -78,6 +89,7 @@ class Option extends Part
         'min_length',
         'max_length',
         'autocomplete',
+        'file_types',
     ];
 
     /**
@@ -239,13 +251,13 @@ class Option extends Part
     /**
      * Sets multiple options to the option.
      *
-     * @since 10.42.0
-     *
      * @param Option[] $options The options.
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
      * @return self
+     *
+     * @since 10.42.0
      */
     public function setOptions($options = []): self
     {
@@ -257,13 +269,13 @@ class Option extends Part
     /**
      * Adds multiple options to the option.
      *
-     * @since 10.42.0
-     *
      * @param Option[] $options The options.
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
      * @return self
+     *
+     * @since 10.42.0
      */
     public function addOptions($options): self
     {
@@ -297,13 +309,13 @@ class Option extends Part
     /**
      * Sets multiple choices to the option (Only for slash commands).
      *
-     * @since 10.42.0
-     *
      * @param Choice[] $choices The choices.
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
      * @return self
+     *
+     * @since 10.42.0
      */
     public function setChoices($choices = []): self
     {
@@ -315,13 +327,13 @@ class Option extends Part
     /**
      * Adds multiple choices to the option (Only for slash commands).
      *
-     * @since 10.42.0
-     *
      * @param Choice[] $choices The choices.
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
      * @return self
+     *
+     * @since 10.42.0
      */
     public function addChoices($choices): self
     {
@@ -498,6 +510,26 @@ class Option extends Part
         }
 
         $this->autocomplete = $autocomplete;
+
+        return $this;
+    }
+
+    /**
+     * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
+     *
+     * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
+     *
+     * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
+     *
+     * @param string[]|null $file_types Supported file types for uploaded files.
+     *
+     * @return self
+     *
+     * @since 10.49.0
+     */
+    public function setFileTypes(?array $file_types = null): self
+    {
+        $this->file_types = $file_types;
 
         return $this;
     }
