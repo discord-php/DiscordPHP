@@ -273,7 +273,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -402,6 +402,34 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_AUDIO_EXTENSIONS">SUPPORTED_AUDIO_EXTENSIONS</a>
+    <span>
+        &nbsp;: mixed&nbsp;= \Discord\Parts\Channel\Message\FileUpload::SUPP...                            </span>
+</dt>
+<dd>Natively supported audio file extensions. Subject to change.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_FILE_TYPES">SUPPORTED_FILE_TYPES</a>
+    <span>
+        &nbsp;: mixed&nbsp;= \Discord\Parts\Channel\Message\FileUpload::SUPP...                            </span>
+</dt>
+<dd>Supported file types.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_IMAGE_EXTENSIONS">SUPPORTED_IMAGE_EXTENSIONS</a>
+    <span>
+        &nbsp;: mixed&nbsp;= \Discord\Parts\Channel\Message\FileUpload::SUPP...                            </span>
+</dt>
+<dd>Natively supported image file extensions. Subject to change.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_VIDEO_EXTENSIONS">SUPPORTED_VIDEO_EXTENSIONS</a>
+    <span>
+        &nbsp;: mixed&nbsp;= \Discord\Parts\Channel\Message\FileUpload::SUPP...                            </span>
+</dt>
+<dd>Natively supported video file extensions. Subject to change.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#constant_USER">USER</a>
     <span>
         &nbsp;: mixed&nbsp;= 6                            </span>
@@ -445,6 +473,12 @@
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#property_description">$description</a>
     <span>
                         &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#property_file_types">$file_types</a>
+    <span>
+                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -622,28 +656,28 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_addChoice">addChoice()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Adds a choice to the option (Only for slash commands).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_addChoices">addChoices()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Adds multiple choices to the option (Only for slash commands).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_addOption">addOption()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Adds an option to the option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_addOptions">addOptions()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Adds multiple options to the option.</dd>
 
@@ -762,14 +796,14 @@ be fetched from Discord.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_removeChoice">removeChoice()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Removes a choice (Only for slash commands).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_removeOption">removeOption()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Removes an option.</dd>
 
@@ -790,98 +824,105 @@ be fetched from Discord.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setAutoComplete">setAutoComplete()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the autocomplete interactions for this option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setChannelTypes">setChannelTypes()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the channel types of the option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setChoices">setChoices()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets multiple choices to the option (Only for slash commands).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setDescription">setDescription()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the description of the option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setDescriptionLocalization">setDescriptionLocalization()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the description of the option in another language.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setFileTypes">setFileTypes()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxLength">setMaxLength()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the maximum length permitted.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxValue">setMaxValue()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the maximum value permitted.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMinLength">setMinLength()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the minimum length permitted.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMinValue">setMinValue()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the minimum value permitted.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setName">setName()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the name of the option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setNameLocalization">setNameLocalization()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the name of the option in another language.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setOptions">setOptions()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets multiple options to the option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setRequired">setRequired()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the requirement of the option.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Option.html#method_setType">setType()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the type of the option.</dd>
 
@@ -1004,7 +1045,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -1035,7 +1076,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -1065,7 +1106,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1096,7 +1137,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -1127,7 +1168,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -1158,7 +1199,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -1189,7 +1230,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1219,7 +1260,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -1249,7 +1290,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1279,7 +1320,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -1300,6 +1341,130 @@ be fetched from Discord.</dd>
         
     </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SUPPORTED_AUDIO_EXTENSIONS">
+        SUPPORTED_AUDIO_EXTENSIONS
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_AUDIO_EXTENSIONS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Natively supported audio file extensions. Subject to change.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SUPPORTED_AUDIO_EXTENSIONS</span>
+    = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\Message\FileUpload::SUPPORTED_AUDIO_EXTENSIONS</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SUPPORTED_FILE_TYPES">
+        SUPPORTED_FILE_TYPES
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_FILE_TYPES" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">66</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Supported file types.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SUPPORTED_FILE_TYPES</span>
+    = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\Message\FileUpload::SUPPORTED_FILE_TYPES</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SUPPORTED_IMAGE_EXTENSIONS">
+        SUPPORTED_IMAGE_EXTENSIONS
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_IMAGE_EXTENSIONS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Natively supported image file extensions. Subject to change.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SUPPORTED_IMAGE_EXTENSIONS</span>
+    = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\Message\FileUpload::SUPPORTED_IMAGE_EXTENSIONS</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SUPPORTED_VIDEO_EXTENSIONS">
+        SUPPORTED_VIDEO_EXTENSIONS
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_VIDEO_EXTENSIONS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">70</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Natively supported video file extensions. Subject to change.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SUPPORTED_VIDEO_EXTENSIONS</span>
+    = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\Message\FileUpload::SUPPORTED_VIDEO_EXTENSIONS</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_USER">
         USER
         <a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_USER" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1309,7 +1474,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -1525,6 +1690,45 @@ be fetched from Discord.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>1-100 character description.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_file_types">
+        $file_types
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_file_types" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$file_types</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>If the option is an ATTACHMENT type, the attachment types shown will be restricted to these types.</p>
 </section>
 
     
@@ -2030,7 +2234,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -2041,7 +2245,7 @@ be fetched from Discord.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;name&#039;, &#039;name_localizations&#039;, &#039;description&#039;, &#039;description_localizations&#039;, &#039;required&#039;, &#039;choices&#039;, &#039;options&#039;, &#039;channel_types&#039;, &#039;min_value&#039;, &#039;max_value&#039;, &#039;min_length&#039;, &#039;max_length&#039;, &#039;autocomplete&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;name&#039;, &#039;name_localizations&#039;, &#039;description&#039;, &#039;description_localizations&#039;, &#039;required&#039;, &#039;choices&#039;, &#039;options&#039;, &#039;channel_types&#039;, &#039;min_value&#039;, &#039;max_value&#039;, &#039;min_length&#039;, &#039;max_length&#039;, &#039;autocomplete&#039;, &#039;file_types&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2685,7 +2889,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">344</span>
+    <span class="phpdocumentor-element-found-in__line">356</span>
 
     </aside>
 
@@ -2693,7 +2897,7 @@ be fetched from Discord.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addChoice</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choice</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">addChoice</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choice</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2734,7 +2938,7 @@ be fetched from Discord.</dd>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -2752,7 +2956,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">326</span>
+    <span class="phpdocumentor-element-found-in__line">338</span>
 
     </aside>
 
@@ -2760,7 +2964,7 @@ be fetched from Discord.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addChoices</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choices</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">addChoices</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choices</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2787,13 +2991,6 @@ be fetched from Discord.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">throws</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
@@ -2802,13 +2999,20 @@ be fetched from Discord.</dd>
 </section>
 
                                     </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.42.0</span>
+                                                                                                        
+                                    </dd>
                         </dl>
 
         
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -2826,7 +3030,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -2834,7 +3038,7 @@ be fetched from Discord.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">addOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2875,7 +3079,7 @@ be fetched from Discord.</dd>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -2893,7 +3097,7 @@ be fetched from Discord.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">268</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
@@ -2901,7 +3105,7 @@ be fetched from Discord.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">addOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2928,13 +3132,6 @@ be fetched from Discord.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">throws</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
@@ -2943,13 +3140,20 @@ be fetched from Discord.</dd>
 </section>
 
                                     </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.42.0</span>
+                                                                                                        
+                                    </dd>
                         </dl>
 
         
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -3508,7 +3712,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">508</span>
+    <span class="phpdocumentor-element-found-in__line">540</span>
 
     </aside>
 
@@ -3814,7 +4018,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">385</span>
+    <span class="phpdocumentor-element-found-in__line">397</span>
 
     </aside>
 
@@ -3822,7 +4026,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">removeChoice</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string|<a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choice</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">removeChoice</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string|<a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choice</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3847,7 +4051,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -3865,7 +4069,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">362</span>
+    <span class="phpdocumentor-element-found-in__line">374</span>
 
     </aside>
 
@@ -3873,7 +4077,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">removeOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string|<a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">removeOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string|<a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3898,7 +4102,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4036,7 +4240,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">488</span>
+    <span class="phpdocumentor-element-found-in__line">500</span>
 
     </aside>
 
@@ -4044,7 +4248,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAutoComplete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$autocomplete</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setAutoComplete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$autocomplete</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4085,7 +4289,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4103,7 +4307,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
@@ -4111,7 +4315,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setChannelTypes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$types</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setChannelTypes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$types</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4136,7 +4340,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4154,7 +4358,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">320</span>
 
     </aside>
 
@@ -4162,7 +4366,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setChoices</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choices</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setChoices</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$choices</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4189,13 +4393,6 @@ be fetched from Discord.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">throws</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
@@ -4204,13 +4401,20 @@ be fetched from Discord.</p>
 </section>
 
                                     </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.42.0</span>
+                                                                                                        
+                                    </dd>
                         </dl>
 
         
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4228,7 +4432,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -4236,7 +4440,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setDescription</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4277,7 +4481,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4295,7 +4499,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
@@ -4303,7 +4507,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDescriptionLocalization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setDescriptionLocalization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4353,7 +4557,75 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setFileTypes">
+        setFileTypes()
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setFileTypes" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">530</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setFileTypes</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, string&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$file_types</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.</p>
+<p>No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$file_types</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, string&gt;|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Supported file types for uploaded files.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setFileTypes_tags">
+        Tags
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setFileTypes_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.49.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4371,7 +4643,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">464</span>
+    <span class="phpdocumentor-element-found-in__line">476</span>
 
     </aside>
 
@@ -4379,7 +4651,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMaxLength</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setMaxLength</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4422,7 +4694,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4440,7 +4712,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">422</span>
+    <span class="phpdocumentor-element-found-in__line">434</span>
 
     </aside>
 
@@ -4448,7 +4720,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMaxValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|float|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setMaxValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|float|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4473,7 +4745,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4491,7 +4763,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">439</span>
+    <span class="phpdocumentor-element-found-in__line">451</span>
 
     </aside>
 
@@ -4499,7 +4771,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMinLength</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setMinLength</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4542,7 +4814,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4560,7 +4832,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">408</span>
+    <span class="phpdocumentor-element-found-in__line">420</span>
 
     </aside>
 
@@ -4568,7 +4840,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMinValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|float|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setMinValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int|float|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4593,7 +4865,7 @@ be fetched from Discord.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4611,7 +4883,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
@@ -4619,7 +4891,7 @@ be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setName</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4664,7 +4936,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4682,7 +4954,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -4690,7 +4962,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setNameLocalization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setNameLocalization</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$locale</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4744,7 +5016,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4762,7 +5034,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">250</span>
+    <span class="phpdocumentor-element-found-in__line">262</span>
 
     </aside>
 
@@ -4770,7 +5042,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setOptions</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4797,13 +5069,6 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">throws</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
@@ -4812,13 +5077,20 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
 </section>
 
                                     </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.42.0</span>
+                                                                                                        
+                                    </dd>
                         </dl>
 
         
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4836,7 +5108,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
@@ -4844,7 +5116,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setRequired</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$required</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setRequired</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$required</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4869,7 +5141,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -4887,7 +5159,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -4895,7 +5167,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4936,7 +5208,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -5582,7 +5854,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -5625,7 +5897,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -5865,6 +6137,10 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_STRING">STRING</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUB_COMMAND">SUB_COMMAND</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUB_COMMAND_GROUP">SUB_COMMAND_GROUP</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_AUDIO_EXTENSIONS">SUPPORTED_AUDIO_EXTENSIONS</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_FILE_TYPES">SUPPORTED_FILE_TYPES</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_IMAGE_EXTENSIONS">SUPPORTED_IMAGE_EXTENSIONS</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_VIDEO_EXTENSIONS">SUPPORTED_VIDEO_EXTENSIONS</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#constant_USER">USER</a></li>
                                             </ul>
                 </li>
@@ -5877,6 +6153,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#property_choices">$choices</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#property_description">$description</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#property_file_types">$file_types</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#property_max_length">$max_length</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#property_max_value">$max_value</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#property_min_length">$min_length</a></li>
@@ -5937,6 +6214,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setChoices">setChoices()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setDescription">setDescription()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setDescriptionLocalization">setDescriptionLocalization()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setFileTypes">setFileTypes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxLength">setMaxLength()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxValue">setMaxValue()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMinLength">setMinLength()</a></li>

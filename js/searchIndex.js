@@ -1211,6 +1211,11 @@ Search.appendIndex(
             "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
             "url": "classes/Discord-Builders-Components-FileUpload.html#method_setRequired"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetFileTypes\u0028\u0029",
+            "name": "setFileTypes",
+            "summary": "Sets\u0020the\u0020supported\u0020file\u0020types\u0020for\u0020uploaded\u0020files.\u0020Use\u0020image,\u0020video,\u0020audio,\u0020or\u0020dot\u002Dprefixed\u0020extensions\u0020like\u0020.pdf.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method_setFileTypes"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
             "summary": "",
@@ -1240,6 +1245,11 @@ Search.appendIndex(
             "name": "required",
             "summary": "Whether\u0020the\u0020file\u0020upload\u0020is\u0020required\u0020to\u0020be\u0020filled\u0020in\u0020a\u0020modal\u0020\u0028defaults\u0020to\u0020\u0060true\u0060\u0029.",
             "url": "classes/Discord-Builders-Components-FileUpload.html#property_required"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A\u0024file_types",
+            "name": "file_types",
+            "summary": "Supported\u0020file\u0020types\u0020for\u0020uploaded\u0020files.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#property_file_types"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Group",
             "name": "Group",
@@ -5630,6 +5640,26 @@ Search.appendIndex(
             "name": "FileUpload",
             "summary": "A\u0020File\u0020Upload\u0020is\u0020an\u0020interactive\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020upload\u0020files\u0020in\u0020modals.",
             "url": "classes/Discord-Parts-Channel-Message-FileUpload.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003ASUPPORTED_FILE_TYPES",
+            "name": "SUPPORTED_FILE_TYPES",
+            "summary": "Supported\u0020file\u0020types.",
+            "url": "classes/Discord-Parts-Channel-Message-FileUpload.html#constant_SUPPORTED_FILE_TYPES"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003ASUPPORTED_IMAGE_EXTENSIONS",
+            "name": "SUPPORTED_IMAGE_EXTENSIONS",
+            "summary": "Natively\u0020supported\u0020image\u0020file\u0020extensions.\u0020Subject\u0020to\u0020change.",
+            "url": "classes/Discord-Parts-Channel-Message-FileUpload.html#constant_SUPPORTED_IMAGE_EXTENSIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003ASUPPORTED_VIDEO_EXTENSIONS",
+            "name": "SUPPORTED_VIDEO_EXTENSIONS",
+            "summary": "Natively\u0020supported\u0020video\u0020file\u0020extensions.\u0020Subject\u0020to\u0020change.",
+            "url": "classes/Discord-Parts-Channel-Message-FileUpload.html#constant_SUPPORTED_VIDEO_EXTENSIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003ASUPPORTED_AUDIO_EXTENSIONS",
+            "name": "SUPPORTED_AUDIO_EXTENSIONS",
+            "summary": "Natively\u0020supported\u0020audio\u0020file\u0020extensions.\u0020Subject\u0020to\u0020change.",
+            "url": "classes/Discord-Parts-Channel-Message-FileUpload.html#constant_SUPPORTED_AUDIO_EXTENSIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -10361,6 +10391,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020autocomplete\u0020interactions\u0020for\u0020this\u0020option.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setAutoComplete"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AsetFileTypes\u0028\u0029",
+            "name": "setFileTypes",
+            "summary": "Sets\u0020the\u0020supported\u0020file\u0020types\u0020for\u0020uploaded\u0020files.\u0020Use\u0020image,\u0020video,\u0020audio,\u0020or\u0020dot\u002Dprefixed\u0020extensions\u0020like\u0020.pdf.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setFileTypes"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
             "summary": "",
@@ -10420,6 +10455,26 @@ Search.appendIndex(
             "name": "ATTACHMENT",
             "summary": "Attachment\u0020object.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_ATTACHMENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ASUPPORTED_FILE_TYPES",
+            "name": "SUPPORTED_FILE_TYPES",
+            "summary": "Supported\u0020file\u0020types.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_FILE_TYPES"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ASUPPORTED_IMAGE_EXTENSIONS",
+            "name": "SUPPORTED_IMAGE_EXTENSIONS",
+            "summary": "Natively\u0020supported\u0020image\u0020file\u0020extensions.\u0020Subject\u0020to\u0020change.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_IMAGE_EXTENSIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ASUPPORTED_VIDEO_EXTENSIONS",
+            "name": "SUPPORTED_VIDEO_EXTENSIONS",
+            "summary": "Natively\u0020supported\u0020video\u0020file\u0020extensions.\u0020Subject\u0020to\u0020change.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_VIDEO_EXTENSIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ASUPPORTED_AUDIO_EXTENSIONS",
+            "name": "SUPPORTED_AUDIO_EXTENSIONS",
+            "summary": "Natively\u0020supported\u0020audio\u0020file\u0020extensions.\u0020Subject\u0020to\u0020change.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_SUPPORTED_AUDIO_EXTENSIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003A\u0024fillable",
             "name": "fillable",
