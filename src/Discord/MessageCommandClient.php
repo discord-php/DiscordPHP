@@ -538,7 +538,7 @@ class MessageCommandClient extends Discord
      *
      * @param array $parts
      *
-     * @return array{command?: \Discord\MessageCommandClient\Command, full?: string, missing?: string}
+     * @return array{command?: Command, full?: string, missing?: string}
      */
     protected function findCommandForHelp(array $parts): array
     {
