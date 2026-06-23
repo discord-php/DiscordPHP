@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Channel\Message\FileUpload;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -40,6 +41,7 @@ use function Discord\poly_strlen;
  * @property int|null                               $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
  * @property int|null                               $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
  * @property bool|null                              $autocomplete              Enable autocomplete interactions for this option.
+ * @property string[]|null                          $file_types                If the option is an ATTACHMENT type, the attachment types shown will be restricted to these types. 
  */
 class Option extends Part
 {
@@ -60,6 +62,15 @@ class Option extends Part
     /** Attachment object. */
     public const ATTACHMENT = 11;
 
+    /** Supported file types. */
+    public const SUPPORTED_FILE_TYPES = FileUpload::SUPPORTED_FILE_TYPES;
+    /** Natively supported image file extensions. Subject to change. */
+    public const SUPPORTED_IMAGE_EXTENSIONS = FileUpload::SUPPORTED_IMAGE_EXTENSIONS;
+    /** Natively supported video file extensions. Subject to change. */
+    public const SUPPORTED_VIDEO_EXTENSIONS = FileUpload::SUPPORTED_VIDEO_EXTENSIONS;
+    /** Natively supported audio file extensions. Subject to change. */
+    public const SUPPORTED_AUDIO_EXTENSIONS = FileUpload::SUPPORTED_AUDIO_EXTENSIONS;
+
     /**
      * @inheritDoc
      */
@@ -78,6 +89,7 @@ class Option extends Part
         'min_length',
         'max_length',
         'autocomplete',
+        'file_types',
     ];
 
     /**
@@ -107,7 +119,7 @@ class Option extends Part
      *
      * @throws \InvalidArgumentException `$type` is not 1-11.
      *
-     * @return $this
+     * @return self
      */
     public function setType(int $type): self
     {
@@ -130,7 +142,7 @@ class Option extends Part
      *
      * @throws \LengthException `$name` is more than 32 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -154,7 +166,7 @@ class Option extends Part
      *
      * @throws \LengthException `$name` is more than 32 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setNameLocalization(string $locale, ?string $name): self
     {
@@ -174,7 +186,7 @@ class Option extends Part
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(string $description): self
     {
@@ -195,7 +207,7 @@ class Option extends Part
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
@@ -213,7 +225,7 @@ class Option extends Part
      *
      * @param bool $required requirement of the option (default false)
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(bool $required = false): self
     {
@@ -227,7 +239,7 @@ class Option extends Part
      *
      * @param array|null $types types of the channel.
      *
-     * @return $this
+     * @return self
      */
     public function setChannelTypes(?array $types): self
     {
@@ -245,7 +257,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
-     * @return $this
+     * @return self
      */
     public function setOptions($options = []): self
     {
@@ -263,7 +275,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
-     * @return $this
+     * @return self
      */
     public function addOptions($options): self
     {
@@ -281,7 +293,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
-     * @return $this
+     * @return self
      */
     public function addOption(Option $option): self
     {
@@ -303,7 +315,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
-     * @return $this
+     * @return self
      */
     public function setChoices($choices = []): self
     {
@@ -321,7 +333,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
-     * @return $this
+     * @return self
      */
     public function addChoices($choices): self
     {
@@ -339,7 +351,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
-     * @return $this
+     * @return self
      */
     public function addChoice(Choice $choice): self
     {
@@ -357,7 +369,7 @@ class Option extends Part
      *
      * @param string|Option $option Option object or name to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeOption($option): self
     {
@@ -380,7 +392,7 @@ class Option extends Part
      *
      * @param string|Choice $choice Choice object or name to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeChoice($choice): self
     {
@@ -403,7 +415,7 @@ class Option extends Part
      *
      * @param int|float|null $min_value integer for INTEGER options, double for NUMBER options.
      *
-     * @return $this
+     * @return self
      */
     public function setMinValue($min_value): self
     {
@@ -417,7 +429,7 @@ class Option extends Part
      *
      * @param int|float|null $max_value integer for INTEGER options, double for NUMBER options
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValue($max_value): self
     {
@@ -434,7 +446,7 @@ class Option extends Part
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinLength(?int $min_length): self
     {
@@ -459,7 +471,7 @@ class Option extends Part
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -483,7 +495,7 @@ class Option extends Part
      *
      * @throws \DomainException Command option type is not string/integer/number.
      *
-     * @return $this
+     * @return self
      */
     public function setAutoComplete(?bool $autocomplete): self
     {
@@ -498,6 +510,24 @@ class Option extends Part
         }
 
         $this->autocomplete = $autocomplete;
+
+        return $this;
+    }
+
+    /**
+     * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
+     * 
+     * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
+     * 
+     * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
+     * 
+     * @param string[]|null $file_types Supported file types for uploaded files.
+     * 
+     * @return self
+     */
+    public function setFileTypes(?array $file_types = null): self
+    {
+        $this->file_types = $file_types;
 
         return $this;
     }
