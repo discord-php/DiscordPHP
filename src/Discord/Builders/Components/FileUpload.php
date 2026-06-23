@@ -149,14 +149,16 @@ class FileUpload extends Interactive
 
     /**
      * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
-     * 
+     *
      * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
-     * 
+     *
      * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
      *
      * @param ?string[] $file_types
      *
      * @return self
+     * 
+     * @since 10.49.0
      */
     public function setFileTypes(?array $file_types = null): self
     {
