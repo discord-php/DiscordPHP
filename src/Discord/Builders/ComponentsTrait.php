@@ -40,7 +40,7 @@ trait ComponentsTrait
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @return $this
+     * @return self
      */
     public function setComponents($components = null)
     {
@@ -59,7 +59,7 @@ trait ComponentsTrait
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @return $this
+     * @return self
      */
     public function addComponents($components)
     {
@@ -80,7 +80,7 @@ trait ComponentsTrait
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @return $this
+     * @return self
      */
     abstract public function addComponent($component);
 }

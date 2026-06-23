@@ -276,7 +276,7 @@ class VoicePacket
      *
      * @param Buffer $buffer The buffer to set.
      *
-     * @return $this
+     * @return self
      */
     public function setBuffer(Buffer $buffer): self
     {

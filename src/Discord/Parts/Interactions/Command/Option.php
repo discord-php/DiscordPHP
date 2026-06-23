@@ -327,7 +327,6 @@ class Option extends Part
     /**
      * Adds multiple choices to the option (Only for slash commands).
      *
-     *
      * @param Choice[] $choices The choices.
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.

@@ -57,7 +57,7 @@ class PollCreateRequest extends Part
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setQuestion(PollMedia|string $question): self
     {
@@ -81,7 +81,7 @@ class PollCreateRequest extends Part
      *
      * @param PollAnswer[] $answers Each of the answers available in the poll.
      *
-     * @return $this
+     * @return self
      */
     public function setAnswers(array $answers): self
     {
@@ -100,7 +100,7 @@ class PollCreateRequest extends Part
      * @throws \OutOfRangeException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function addAnswer(PollAnswer|PollMedia|array|string $answer): self
     {
@@ -144,7 +144,7 @@ class PollCreateRequest extends Part
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setDuration(?int $duration = null): self
     {
@@ -164,7 +164,7 @@ class PollCreateRequest extends Part
      *
      * @param bool|null $multiselect Whether a user can select multiple answers. Defaults to false.
      *
-     * @return $this
+     * @return self
      */
     public function setAllowMultiselect(?bool $multiselect = null): self
     {
@@ -178,7 +178,7 @@ class PollCreateRequest extends Part
      *
      * @param int|null $type The layout type of the poll.
      *
-     * @return $this
+     * @return self
      */
     protected function setLayoutType(?int $type = null): self
     {

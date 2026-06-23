@@ -73,7 +73,7 @@ class Separator extends Layout implements Contracts\ComponentV2
      *
      * @param bool|null $divider Whether the separator is a divider.
      *
-     * @return $this
+     * @return self
      */
     public function setDivider(?bool $divider = true): self
     {
@@ -89,7 +89,7 @@ class Separator extends Layout implements Contracts\ComponentV2
      *
      * @throws \InvalidArgumentException Invalid spacing size.
      *
-     * @return $this
+     * @return self
      */
     public function setSpacing(?int $spacing = null): self
     {

@@ -76,7 +76,7 @@ class File extends Content implements Contracts\ComponentV2
      *
      * @param Attachment|string $filename The filename or attachment to reference.
      *
-     * @return $this
+     * @return self
      */
     public function setFile(Attachment|string $filename): self
     {
@@ -94,7 +94,7 @@ class File extends Content implements Contracts\ComponentV2
      *
      * @param bool|null $spoiler Whether the file is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(?bool $spoiler = true): self
     {

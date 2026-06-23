@@ -72,7 +72,7 @@ class UnfurledMediaItem implements JsonSerializable
      *
      * @param string $url URL or attachment reference of the media item.
      *
-     * @return $this
+     * @return self
      */
     public function setUrl(string $url): self
     {

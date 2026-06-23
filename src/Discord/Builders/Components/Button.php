@@ -281,7 +281,7 @@ class Button extends Interactive
      *
      * @throws \InvalidArgumentException
      *
-     * @return $this
+     * @return self
      */
     public function setStyle(int $style): self
     {
@@ -314,7 +314,7 @@ class Button extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setLabel(?string $label): self
     {
@@ -332,7 +332,7 @@ class Button extends Interactive
      *
      * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {
@@ -379,7 +379,7 @@ class Button extends Interactive
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId(?string $custom_id): self
     {
@@ -403,7 +403,7 @@ class Button extends Interactive
      *
      * @throws \LogicException
      *
-     * @return $this
+     * @return self
      */
     public function setSkuId(?string $sku_id): self
     {
@@ -424,7 +424,7 @@ class Button extends Interactive
      * @throws \LogicException
      * @throws \LengthException URL exceeds 512 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setUrl(?string $url): self
     {
@@ -446,7 +446,7 @@ class Button extends Interactive
      *
      * @param bool|null $disabled
      *
-     * @return $this
+     * @return self
      */
     public function setDisabled(?bool $disabled): self
     {
@@ -476,7 +476,7 @@ class Button extends Interactive
      *
      * @throws \LogicException
      *
-     * @return $this
+     * @return self
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
@@ -551,7 +551,7 @@ class Button extends Interactive
     /**
      * Removes the listener from the button.
      *
-     * @return $this
+     * @return self
      */
     public function removeListener(): self
     {

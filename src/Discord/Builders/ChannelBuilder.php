@@ -83,7 +83,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param string $name The channel name (1-100 characters).
      *
-     * @return $this
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -100,7 +100,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int $type The channel type. Must be one of the TYPE_* constants on the Channel class.
      *
-     * @return $this
+     * @return self
      */
     public function setType(int $type): self
     {
@@ -134,7 +134,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param string|null $topic The channel topic (0-1024 characters).
      *
-     * @return $this
+     * @return self
      */
     public function setTopic(?string $topic = null): self
     {
@@ -152,7 +152,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $bitrate The bitrate in bits (minimum 8000).
      *
-     * @return $this
+     * @return self
      */
     public function setBitrate(?int $bitrate = null): self
     {
@@ -170,7 +170,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $user_limit The user limit (0-99 for Voice, 0-10,000 for Stage). 0 is unlimited.
      *
-     * @return $this
+     * @return self
      */
     public function setUserLimit(?int $user_limit = null): self
     {
@@ -184,7 +184,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $rate_limit The rate limit per user in seconds (0-21600).
      *
-     * @return $this
+     * @return self
      */
     public function setRateLimitPerUser(?int $rate_limit = null): self
     {
@@ -198,7 +198,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $position The position of the channel.
      *
-     * @return $this
+     * @return self
      */
     public function setPosition(?int $position = null): self
     {
@@ -212,7 +212,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Overwrite[]|null $overwrites An array of permission overwrite arrays.
      *
-     * @return $this
+     * @return self
      */
     public function setPermissionOverwrites(?array $overwrites = null): self
     {
@@ -226,7 +226,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Channel|string|null $parent_id The parent category ID.
      *
-     * @return $this
+     * @return self
      */
     public function setParentId(Channel|string|null $parent_id = null): self
     {
@@ -244,7 +244,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param bool|null $nsfw Whether the channel is NSFW.
      *
-     * @return $this
+     * @return self
      */
     public function setNsfw(?bool $nsfw = null): self
     {
@@ -258,7 +258,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Region|string|null $rtc_region The RTC region ID, or null for automatic.
      *
-     * @return $this
+     * @return self
      */
     public function setRtcRegion(Region|string|null $rtc_region = null): self
     {
@@ -276,7 +276,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $mode The video quality mode. 1 for Discord chooses the quality for optimal performance, 2 for full 720p.
      *
-     * @return $this
+     * @return self
      */
     public function setVideoQualityMode(?int $mode = null): self
     {
@@ -294,7 +294,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $duration The default auto archive duration in minutes. Can be 60, 1440, 4320, or 10080.
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultAutoArchiveDuration(?int $duration = null): self
     {
@@ -308,7 +308,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Emoji|array|null $emoji
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultReactionEmoji(Emoji|array|null $emoji = null): self
     {
@@ -329,7 +329,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Tag[]|null $tags
      *
-     * @return $this
+     * @return self
      */
     public function setAvailableTags(?array $tags = null): self
     {
@@ -343,7 +343,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $order The default sort order. 0 for Latest Activity, 1 for Creation Date.
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultSortOrder(?int $order = null): self
     {
@@ -369,7 +369,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $rate_limit The default thread rate limit per user in seconds (0-21600).
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultThreadRateLimitPerUser(?int $rate_limit = null): self
     {
