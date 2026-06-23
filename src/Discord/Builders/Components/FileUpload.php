@@ -26,6 +26,7 @@ namespace Discord\Builders\Components;
  * @property ?int|null  $min_values Minimum number of files that must be uploaded (defaults to 1); min 0, max 10.
  * @property ?int|null  $max_values Maximum number of files that can be uploaded (defaults to 1); max 10.
  * @property ?bool|null $required   Whether the file upload is required to be filled in a modal (defaults to `true`).
+ * @property ?string[]  $file_types Supported file types for uploaded files.
  */
 class FileUpload extends Interactive
 {
@@ -62,6 +63,13 @@ class FileUpload extends Interactive
     protected $required;
 
     /**
+     * Supported file types for uploaded files.
+     *
+     * @var ?string[]
+     */
+    protected $file_types;
+
+    /**
      * Creates a new file upload.
      *
      * @param string|null $custom_id custom ID of the file upload. If not given, a UUID will be used
@@ -92,7 +100,7 @@ class FileUpload extends Interactive
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setMinValues(?int $min_values = null): self
     {
@@ -112,7 +120,7 @@ class FileUpload extends Interactive
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValues(?int $max_values = null): self
     {
@@ -130,11 +138,27 @@ class FileUpload extends Interactive
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {
         $this->required = $required;
+
+        return $this;
+    }
+
+    /**
+     * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
+     * 
+     * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
+     *
+     * @param ?string[] $file_types
+     *
+     * @return self
+     */
+    public function setFileTypes(?array $file_types = null): self
+    {
+        $this->file_types = $file_types;
 
         return $this;
     }
@@ -159,6 +183,10 @@ class FileUpload extends Interactive
 
         if (isset($this->required)) {
             $content['required'] = $this->required;
+        }
+
+        if (isset($this->file_types)) {
+            $content['file_types'] = $this->file_types;
         }
 
         if (isset($this->id)) {
