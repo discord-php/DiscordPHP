@@ -46,7 +46,7 @@ abstract class Interactive extends ComponentObject
      *
      * @throws \LengthException If the custom ID is longer than 100 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId(?string $custom_id): self
     {

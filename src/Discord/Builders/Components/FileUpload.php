@@ -92,7 +92,7 @@ class FileUpload extends Interactive
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setMinValues(?int $min_values = null): self
     {
@@ -112,7 +112,7 @@ class FileUpload extends Interactive
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValues(?int $max_values = null): self
     {
@@ -130,7 +130,7 @@ class FileUpload extends Interactive
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {

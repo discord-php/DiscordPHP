@@ -176,7 +176,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \InvalidArgumentException If the select menu type is not `TYPE_STRING_SELECT`.
      *
-     * @return $this
+     * @return self
      */
     public function setOptions(array $options): self
     {
@@ -199,7 +199,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \InvalidArgumentException If the select menu type is not `TYPE_CHANNEL_SELECT`.
      *
-     * @return $this
+     * @return self
      */
     public function setChannelTypes(array $channel_types): self
     {
@@ -219,7 +219,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -250,7 +250,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinValues(?int $min_values): self
     {
@@ -270,7 +270,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValues(?int $max_values): self
     {
@@ -288,7 +288,7 @@ abstract class SelectMenu extends Interactive
      *
      * @param bool|null $disabled
      *
-     * @return $this
+     * @return self
      */
     public function setDisabled(?bool $disabled = true): self
     {
@@ -322,7 +322,7 @@ abstract class SelectMenu extends Interactive
      * @param Discord  $discord  Discord client.
      * @param bool     $oneOff   Whether the listener should be removed after the selection is changed for the first time.
      *
-     * @return $this
+     * @return self
      *
      * @todo setListener callback return for each type.
      */
@@ -406,7 +406,7 @@ abstract class SelectMenu extends Interactive
     /**
      * Removes the listener from the button.
      *
-     * @return $this
+     * @return self
      */
     public function removeListener(): self
     {

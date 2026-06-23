@@ -76,7 +76,7 @@ class Multipart implements Stringable
      *
      * @param array ...$fields
      *
-     * @return $this
+     * @return self
      */
     public function add(...$fields): self
     {

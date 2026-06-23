@@ -83,7 +83,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId(string $custom_id): self
     {
@@ -113,7 +113,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @throws \LengthException Modal title too long.
      *
-     * @return $this
+     * @return self
      */
     public function setTitle(string $title): self
     {
@@ -148,7 +148,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        If the modal has more than 5 components.
      *
-     * @return $this
+     * @return self
      */
     public function addComponent($component): self
     {
@@ -176,7 +176,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @param ComponentObject $component Component to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeComponent($component): self
     {

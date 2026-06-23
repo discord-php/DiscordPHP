@@ -44,7 +44,7 @@ class MentionableSelect extends SelectMenu
      *
      * @param bool $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {

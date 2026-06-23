@@ -104,7 +104,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      *
-     * @return $this
+     * @return self
      */
     public function addComponent($component): self
     {
@@ -126,7 +126,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @param mixed $color Color code for the container.
      *
-     * @return $this
+     * @return self
      */
     public function setAccentColor($color = null): self
     {
@@ -144,7 +144,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @param bool|null $spoiler Whether the container is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(?bool $spoiler = true): self
     {

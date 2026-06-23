@@ -157,7 +157,7 @@ class GroupOption extends Component
      *
      * @param bool|null $default
      *
-     * @return $this
+     * @return self
      */
     public function setDefault(?bool $default = true): self
     {

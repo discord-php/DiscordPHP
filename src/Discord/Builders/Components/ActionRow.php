@@ -62,7 +62,7 @@ class ActionRow extends Layout
      *
      * @since 10.19.0
      *
-     * @return $this
+     * @return self
      */
     public function addComponent($component): self
     {
@@ -92,7 +92,7 @@ class ActionRow extends Layout
      *
      * @param ComponentObject $component Component to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeComponent(ComponentObject $component): self
     {
@@ -106,7 +106,7 @@ class ActionRow extends Layout
     /**
      * Removes all components from the action row.
      *
-     * @return $this
+     * @return self
      */
     public function clearComponents(): self
     {

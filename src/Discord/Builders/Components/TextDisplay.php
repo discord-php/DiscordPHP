@@ -63,7 +63,7 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      *
      * @param string $content Content of the text display.
      *
-     * @return $this
+     * @return self
      */
     public function setContent(string $content): self
     {
