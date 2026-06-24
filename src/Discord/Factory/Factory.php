@@ -60,16 +60,19 @@ class Factory
             $data = (array) $data;
         }
 
-        if (is_subclass_of($class, Part::class)) {
-            $object = $this->part($class, $data, $created);
-        } elseif (is_subclass_of($class, AbstractRepository::class)) {
-            $object = $this->repository($class, $data);
-        } elseif (strpos($class, 'Discord\\Parts') !== false) {
-            $object = $this->part($class, $data, $created);
-        } elseif (strpos($class, 'Discord\\Repository') !== false) {
-            $object = $this->repository($class, $data);
-        } else {
-            throw new \Exception('The class '.$class.' is not a Part or a Repository.');
+        switch (true) {
+            case is_subclass_of($class, Part::class):
+            case strpos($class, 'Discord\\Parts') !== false:
+                $object = $this->part($class, $data, $created);
+                break;
+
+            case is_subclass_of($class, AbstractRepository::class):
+            case strpos($class, 'Discord\\Repository') !== false:
+                $object = $this->repository($class, $data);
+                break;
+
+            default:
+                throw new \Exception('The class '.$class.' is not a Part or a Repository.');
         }
 
         return $object;
