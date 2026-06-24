@@ -157,7 +157,7 @@ class FileUpload extends Interactive
      * @param ?string[] $file_types
      *
      * @return self
-     * 
+     *
      * @since 10.49.0
      */
     public function setFileTypes(?array $file_types = null): self
