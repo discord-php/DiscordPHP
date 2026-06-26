@@ -434,12 +434,21 @@ class MessageBuilder extends Builder implements JsonSerializable
                     $attr['guild_id'] = $message_reference->guild_id;
                 }
 
+                /** @var MessageReference|null $message_reference */
                 $message_reference = $message_reference->getDiscord()->getFactory()->part(MessageReference::class, $attr);
             }
 
             if ($type === MessageReference::TYPE_FORWARD) {
                 if ($message_reference->channel_id === null) {
                     throw new \InvalidArgumentException('Cannot set a forward message reference without a channel_id.');
+                }
+
+                if ($channel = $message_reference->getDiscord()->getChannel($message_reference->channel_id)) {
+                    if ($botperms = $channel->getBotPermissions()) {
+                        if (! $botperms->view_channel) {
+                            throw new \InvalidArgumentException('Cannot set a forward message reference for a channel the bot cannot view.');
+                        }
+                    }
                 }
             }
         }
@@ -1264,6 +1273,19 @@ class MessageBuilder extends Builder implements JsonSerializable
 
         if (isset($this->enforce_nonce)) {
             $body['enforce_nonce'] = $this->enforce_nonce;
+        }
+
+        // Cannot have additional content when forwarding messages
+        if (isset($this->forward)) {
+            $body = [
+                'message_reference' => [
+                    'type' => Message::REFERENCE_FORWARD,
+                    'message_id' => $this->forward->id,
+                    'channel_id' => $this->forward->channel_id,
+                ],
+            ];
+        } elseif (isset($this->message_reference) && $this->message_reference->type === Message::REFERENCE_FORWARD) {
+            $body = ['message_reference' => $this->message_reference];
         }
 
         return $body;
