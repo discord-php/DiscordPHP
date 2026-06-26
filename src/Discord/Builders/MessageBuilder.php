@@ -123,9 +123,9 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Attachments to send with this message.
      *
-     * @var Attachment[]|null
+     * @var Attachment[]
      */
-    protected $attachments;
+    protected $attachments = [];
 
     /**
      * Flags to send with this message.
@@ -753,7 +753,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function setAttachments(?array $attachments = null): self
     {
-        $this->attachments = null;
+        $this->attachments = [];
 
         foreach ($attachments ?? [] as $attachment) {
             $this->addAttachment($attachment);
@@ -791,7 +791,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function getAttachments(): array
     {
-        return $this->attachments ?? [];
+        return $this->attachments;
     }
 
     /**
@@ -1216,7 +1216,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             }
         }
 
-        if (isset($this->attachments)) {
+        if ($this->attachments) {
             $body['attachments'] = $this->attachments;
             $empty = false;
         }
