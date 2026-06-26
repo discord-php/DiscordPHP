@@ -89,24 +89,6 @@ class MessageBuilder extends Builder implements JsonSerializable
     protected $message_reference;
 
     /**
-     * Message to reply to with this message.
-     *
-     * @var Message|null
-     *
-     * @deprecated 10.50.0 Use `message_reference`
-     */
-    protected $replyTo;
-
-    /**
-     * Message to forward with this message.
-     *
-     * @var Message|null
-     *
-     * @deprecated 10.50.0 Use `message_reference`
-     */
-    protected $forward;
-
-    /**
      * IDs of up to 3 stickers in the server to send in the message.
      *
      * @var string[]
@@ -352,14 +334,13 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Sets this message as a reply to another message. Only used for sending message.
      *
      * @param Message|null $message
+     * @param bool         $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
-     *
-     * @deprecated 10.50.0 Use `setMessageReference()` instead.
      */
-    public function setReplyTo(?Message $message = null): self
+    public function setReplyTo(?Message $message = null, ?bool $fail_if_not_exists = null): self
     {
-        $this->replyTo = $message;
+        $this->setMessageReference($message, MessageReference::TYPE_DEFAULT, $fail_if_not_exists);
 
         return $this;
     }
@@ -371,21 +352,26 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function getReplyTo(): ?Message
     {
-        return $this->replyTo ?? null;
+        if (isset($this->message_reference) && $this->message_reference->type === MessageReference::TYPE_DEFAULT) {
+            if ($message = $this->message_reference->message) {
+                return $message;
+            }
+        }
+
+        return null;
     }
 
     /**
      * Sets this message as a forward of another message. Only used for sending message.
      *
      * @param Message|null $message
+     * @param bool         $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
-     *
-     * @deprecated 10.50.0 Use `setMessageReference()` instead.
      */
-    public function setForward(?Message $message = null): self
+    public function setForward(?Message $message = null, ?bool $fail_if_not_exists = null): self
     {
-        $this->forward = $message;
+        $this->setMessageReference($message, MessageReference::TYPE_FORWARD, $fail_if_not_exists);
 
         return $this;
     }
@@ -397,7 +383,13 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function getForward(): ?Message
     {
-        return $this->forward ?? null;
+        if (isset($this->message_reference) && $this->message_reference->type === MessageReference::TYPE_FORWARD) {
+            if ($message = $this->message_reference->message) {
+                return $message;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -413,14 +405,11 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @since 10.50.0
      */
-    public function setMessageReference(MessageReference|Message|null $message_reference = null, int $type = MessageReference::TYPE_DEFAULT, bool $fail_if_not_exists = true): self
+    public function setMessageReference(MessageReference|Message|null $message_reference = null, int $type = MessageReference::TYPE_DEFAULT, ?bool $fail_if_not_exists = null): self
     {
         if ($message_reference !== null) {
             if ($message_reference instanceof Message) {
-                $attr = [
-                    'type' => $type,
-                    'fail_if_not_exists' => $fail_if_not_exists,
-                ];
+                $attr = ['type' => $type];
 
                 if ($message_reference->id !== null) {
                     $attr['message_id'] = $message_reference->id;
@@ -432,6 +421,10 @@ class MessageBuilder extends Builder implements JsonSerializable
 
                 if ($message_reference->guild_id !== null) {
                     $attr['guild_id'] = $message_reference->guild_id;
+                }
+
+                if ($fail_if_not_exists !== null) {
+                    $attr['fail_if_not_exists'] = $fail_if_not_exists;
                 }
 
                 /** @var MessageReference|null $message_reference */
@@ -1162,7 +1155,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritDoc 
      */
     public function jsonSerialize(): array
     {
@@ -1203,27 +1196,11 @@ class MessageBuilder extends Builder implements JsonSerializable
             $body['allowed_mentions'] = $this->allowed_mentions;
         }
 
-        if (isset($this->message_reference)) {
+        if ($this->message_reference !== null) {
             $body['message_reference'] = $this->message_reference;
 
+            // If this is a forward type, treat as non-empty (and will later drop other fields)
             if ($this->message_reference->type === Message::REFERENCE_FORWARD) {
-                $empty = false;
-            }
-        } else {
-            if (isset($this->replyTo)) {
-                $body['message_reference'] = [
-                    'message_id' => $this->replyTo->id,
-                    'channel_id' => $this->replyTo->channel_id,
-                ];
-            }
-
-            if (isset($this->forward)) {
-                $body['message_reference'] = [
-                    'type' => Message::REFERENCE_FORWARD,
-                    'message_id' => $this->forward->id,
-                    'channel_id' => $this->forward->channel_id,
-                ];
-
                 $empty = false;
             }
         }
@@ -1275,17 +1252,11 @@ class MessageBuilder extends Builder implements JsonSerializable
             $body['enforce_nonce'] = $this->enforce_nonce;
         }
 
-        // Cannot have additional content when forwarding messages
-        if (isset($this->forward)) {
-            $body = [
-                'message_reference' => [
-                    'type' => Message::REFERENCE_FORWARD,
-                    'message_id' => $this->forward->id,
-                    'channel_id' => $this->forward->channel_id,
-                ],
-            ];
-        } elseif (isset($this->message_reference) && $this->message_reference->type === Message::REFERENCE_FORWARD) {
-            $body = ['message_reference' => $this->message_reference];
+        // Cannot have additional content when forwarding messages: keep only the message_reference
+        if ($this->message_reference !== null) {
+            if ($this->message_reference->type === Message::REFERENCE_FORWARD) {
+                $body = ['message_reference' => $this->message_reference];
+            }
         }
 
         return $body;
