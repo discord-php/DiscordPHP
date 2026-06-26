@@ -27,25 +27,25 @@ use Discord\Parts\User\User;
  *
  * @since 7.0.0
  *
- * @property string            $id                Attachment ID.
- * @property string            $filename          Name of file attached.
- * @property string|null       $title             The title of the file
- * @property string|null       $description       Description for the file.
- * @property string|null       $content_type      The attachment's media type.
- * @property int               $size              Size of file in bytes.
- * @property string            $url               Source url of file.
- * @property string            $proxy_url         A proxied url of file.
- * @property ?int|null         $height            Height of file (if image).
- * @property ?int|null         $width             Width of file (if image).
- * @property ?string|null      $placeholder       Thumbhash placeholder (if image or video).
+ * @property string            $id                  Attachment ID.
+ * @property string            $filename            Name of file attached.
+ * @property string|null       $title               The title of the file
+ * @property string|null       $description         Description for the file.
+ * @property string|null       $content_type        The attachment's media type.
+ * @property int               $size                Size of file in bytes.
+ * @property string            $url                 Source url of file.
+ * @property string            $proxy_url           A proxied url of file.
+ * @property ?int|null         $height              Height of file (if image).
+ * @property ?int|null         $width               Width of file (if image).
+ * @property ?string|null      $placeholder         Thumbhash placeholder (if image or video).
  * @property ?int|null         $placeholder_version Version of the placeholder (if image or video)
- * @property bool|null         $ephemeral         Whether this attachment is ephemeral.
- * @property float|null        $duration_secs     The duration of the audio file (currently for voice messages).
- * @property string|null       $waveform          Base64 encoded bytearray representing a sampled waveform (currently for voice messages).
- * @property int|null          $flags             Attachment flags combined as a bitfield.
- * @property ?User[]|null      $clip_participants Array of user objects. For Clips, array of users who were in the stream.
- * @property ?Carbon|null      $clip_created_at   For Clips, when the clip was created.
- * @property ?Application|null $application       For Clips, the application in the stream, if recognized.
+ * @property bool|null         $ephemeral           Whether this attachment is ephemeral.
+ * @property float|null        $duration_secs       The duration of the audio file (currently for voice messages).
+ * @property string|null       $waveform            Base64 encoded bytearray representing a sampled waveform (currently for voice messages).
+ * @property int|null          $flags               Attachment flags combined as a bitfield.
+ * @property ?User[]|null      $clip_participants   Array of user objects. For Clips, array of users who were in the stream.
+ * @property ?Carbon|null      $clip_created_at     For Clips, when the clip was created.
+ * @property ?Application|null $application         For Clips, the application in the stream, if recognized.
  */
 class Attachment extends Part
 {

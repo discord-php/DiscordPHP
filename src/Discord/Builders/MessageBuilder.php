@@ -82,8 +82,8 @@ class MessageBuilder extends Builder implements JsonSerializable
     protected $allowed_mentions;
 
     /**
-     * Include to make your message a reply or a forward
-     * 
+     * Include to make your message a reply or a forward.
+     *
      * @var MessageReference|null
      */
     protected $message_reference;
@@ -92,7 +92,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Message to reply to with this message.
      *
      * @var Message|null
-     * 
+     *
      * @deprecated v10.50.0 Use `message_reference`
      */
     protected $replyTo;
@@ -101,7 +101,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Message to forward with this message.
      *
      * @var Message|null
-     * 
+     *
      * @deprecated v10.50.0 Use `message_reference`
      */
     protected $forward;
@@ -291,7 +291,6 @@ class MessageBuilder extends Builder implements JsonSerializable
         return $this->addEmbed(...$embeds);
     }
 
-
     /**
      * Adds an embed to the builder.
      *
@@ -355,7 +354,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param Message|null $message
      *
      * @return self
-     * 
+     *
      * @deprecated v10.50.0 Use `setMessageReference()` instead.
      */
     public function setReplyTo(?Message $message = null): self
@@ -381,7 +380,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param Message|null $message
      *
      * @return self
-     * 
+     *
      * @deprecated v10.50.0 Use `setMessageReference()` instead.
      */
     public function setForward(?Message $message = null): self
@@ -403,15 +402,25 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Include to make your message a reply or a forward.
-     * 
-     * @param MessageReference|null $message_reference
-     * 
+     *
+     * @param MessageReference|Message|null $message_reference
+     * @param bool                          $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
+     *
      * @return self
-     * 
+     *
      * @since 10.50.0
      */
-    public function setMessageReference(?MessageReference $message_reference = null): self
+    public function setMessageReference(MessageReference|Message|null $message_reference = null, bool $fail_if_not_exists = true): self
     {
+        if ($message_reference instanceof Message) {
+            $message_reference = $this->factory->part(MessageReference::class, [
+                'message_id' => $message_reference->id,
+                'channel_id' => $message_reference->channel_id,
+                'guild_id' => $message_reference->guild_id,
+                'fail_if_not_exists' => $fail_if_not_exists,
+            ]);
+        }
+
         $this->message_reference = $message_reference;
 
         return $this;
@@ -419,7 +428,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Retrieves the message reference from the builder.
-     * 
+     *
      * @since 10.50.0
      */
     public function getMessageReference(): ?MessageReference
@@ -617,9 +626,9 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Removes all stickers from the builder.
-     * 
+     *
      * @return self
-     * 
+     *
      * @since 10.50.0
      */
     public function clearStickers(): self
@@ -717,11 +726,11 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * JSON-encoded body of non-file params, only for multipart/form-data requests.
-     * 
+     *
      * @throws \RuntimeException If encoding the message to JSON fails.
-     * 
+     *
      * @return string
-     * 
+     *
      * @since 10.50.0
      */
     public function getPayloadJson(): string
