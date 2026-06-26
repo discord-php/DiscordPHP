@@ -181,7 +181,7 @@ class RegisteredCommand
      *
      * @return static
      */
-    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): static
     {
         if (! is_array($names)) {
             $names = [$names];

@@ -142,7 +142,7 @@ abstract class SelectMenu extends Interactive
      *
      * @return static
      */
-    public static function new(?string $custom_id = null): self
+    public static function new(?string $custom_id = null): static
     {
         return new static($custom_id);
     }

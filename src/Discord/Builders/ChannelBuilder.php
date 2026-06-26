@@ -59,7 +59,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return static
      */
-    public static function new(string $name): self
+    public static function new(string $name): static
     {
         return (new static())->setName($name);
     }

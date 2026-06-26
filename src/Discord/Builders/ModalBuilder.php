@@ -65,7 +65,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @return static
      */
-    public static function new($title, $custom_id, $components): self
+    public static function new($title, $custom_id, $components): static
     {
         $modal = new self();
 
