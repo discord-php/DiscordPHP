@@ -521,13 +521,15 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return int
      */
-    public function countTotalComponents(): int
+    public function countTotalComponents(?array $components = null): int
     {
+        $components = $components ?? $this->components ?? [];
+
         return (int) array_sum(array_map(
-            fn ($component) => (is_array($component) && isset($component['components']) && is_array($component['components']))
+            fn ($component) => is_array($component) && isset($component['components']) && is_array($component['components'])
                 ? 1 + $this->countTotalComponents($component['components'])
                 : 1,
-            $this->components ?? []
+            $components
         ));
     }
 
