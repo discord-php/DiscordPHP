@@ -337,6 +337,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param bool         $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
+     *
+     * @since 10.50.0 Added `fail_if_not_exists` parameter
      */
     public function setReplyTo(?Message $message = null, ?bool $fail_if_not_exists = null): self
     {
@@ -368,6 +370,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param bool         $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
+     *
+     * @since 10.50.0 Added `fail_if_not_exists` parameter
      */
     public function setForward(?Message $message = null, ?bool $fail_if_not_exists = null): self
     {
@@ -1155,7 +1159,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * @inheritDoc 
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
