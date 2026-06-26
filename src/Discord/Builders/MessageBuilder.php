@@ -588,7 +588,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return self
      */
-    public function setStickers(?array $stickers = []): self
+    public function setStickers(?array $stickers = null): self
     {
         $this->sticker_ids = [];
 
