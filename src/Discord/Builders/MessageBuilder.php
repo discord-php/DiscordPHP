@@ -280,7 +280,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the embeds for the message. Clears the existing embeds in the process.
      *
-     * @param Embed[]|array ...$embeds
+     * @param Embed[]|array $embeds
      *
      * @return self
      */
@@ -643,7 +643,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the files to be attached to the message.
      *
-     * @param array $files An array of files to attach.
+     * @param array|null $files An array of files to attach.
      *
      * @return self
      */
