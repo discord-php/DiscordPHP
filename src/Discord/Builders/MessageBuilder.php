@@ -400,8 +400,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Include to make your message a reply or a forward.
      *
      * @param MessageReference|Message|null $message_reference
-     * @param int                           $type               The type of message reference (0 = DEFAULT/REPLY, 1 = FORWARD).
-     * @param bool                          $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
+     * @param int                           $type               If passing a Message, the type of message reference (0 = DEFAULT/REPLY, 1 = FORWARD).
+     * @param ?bool|null                    $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @throw InvalidArgumentException If the message reference is a forward and the channel_id is null.
      *
