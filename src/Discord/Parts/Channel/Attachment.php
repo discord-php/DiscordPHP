@@ -37,6 +37,8 @@ use Discord\Parts\User\User;
  * @property string            $proxy_url         A proxied url of file.
  * @property ?int|null         $height            Height of file (if image).
  * @property ?int|null         $width             Width of file (if image).
+ * @property ?string|null      $placeholder       Thumbhash placeholder (if image or video).
+ * @property ?int|null         $placeholder_version Version of the placeholder (if image or video)
  * @property bool|null         $ephemeral         Whether this attachment is ephemeral.
  * @property float|null        $duration_secs     The duration of the audio file (currently for voice messages).
  * @property string|null       $waveform          Base64 encoded bytearray representing a sampled waveform (currently for voice messages).
@@ -72,6 +74,8 @@ class Attachment extends Part
         'proxy_url',
         'height',
         'width',
+        'placeholder',
+        'placeholder_version',
         'ephemeral',
         'duration_secs',
         'waveform',
