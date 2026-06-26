@@ -654,20 +654,6 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Removes all stickers from the builder.
-     *
-     * @return self
-     *
-     * @since 10.50.0
-     */
-    public function clearStickers(): self
-    {
-        $this->sticker_ids = [];
-
-        return $this;
-    }
-
-    /**
      * Sets the files to be attached to the message.
      *
      * @param array|null $files An array of files to attach.
