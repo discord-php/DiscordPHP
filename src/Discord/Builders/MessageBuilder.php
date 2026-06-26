@@ -565,7 +565,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         $this->sticker_ids = [];
 
-        foreach ($stickers as $sticker) {
+        foreach ($stickers ?? [] as $sticker) {
             $this->addSticker($sticker);
         }
 
