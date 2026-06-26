@@ -107,7 +107,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @var array[]
      */
-    protected $attachments = [];
+    protected $attachments;
 
     /**
      * Flags to send with this message.
@@ -770,13 +770,13 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the attachments of the builder. Removes the existing attachments in the process.
      *
-     * @param array|null $attachments An array of attachments to set.
+     * @param array|null $attachments An array of attachments to set, or null to clear the attachments.
      *
      * @return self
      */
     public function setAttachments(?array $attachments = null): self
     {
-        $this->attachments = [];
+        $this->attachments = $attachments;
 
         foreach ($attachments ?? [] as $attachment) {
             $this->addAttachment($attachment);
@@ -816,7 +816,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function getAttachments(): array
     {
-        return $this->attachments;
+        return $this->attachments ?? [];
     }
 
     /**
@@ -826,7 +826,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function clearAttachments(): self
     {
-        $this->attachments = [];
+        $this->attachments = null;
 
         return $this;
     }
@@ -1225,7 +1225,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             }
         }
 
-        if (! empty($this->attachments)) {
+        if (isset($this->attachments)) {
             $body['attachments'] = $this->attachments;
             $empty = false;
         }
