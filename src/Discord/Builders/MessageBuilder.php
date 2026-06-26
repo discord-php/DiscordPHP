@@ -403,7 +403,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param int                           $type               If passing a Message, the type of message reference (0 = DEFAULT/REPLY, 1 = FORWARD).
      * @param ?bool|null                    $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
-     * @throws \InvalidArgumentException If the message reference is a forward and the channel_id is null.
+     * @throws \InvalidArgumentException If the message reference is a forward and the channel_id is null, or the bot cannot view the referenced channel.
      *
      * @return self
      *
