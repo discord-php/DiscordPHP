@@ -1223,7 +1223,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             }
         }
 
-        if ($this->attachments) {
+        if (! empty($this->attachments)) {
             $body['attachments'] = $this->attachments;
             $empty = false;
         }
