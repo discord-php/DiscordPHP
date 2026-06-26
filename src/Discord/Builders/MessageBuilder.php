@@ -355,7 +355,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return self
      *
-     * @deprecated v10.50.0 Use `setMessageReference()` instead.
+     * @deprecated 10.50.0 Use `setMessageReference()` instead.
      */
     public function setReplyTo(?Message $message = null): self
     {
