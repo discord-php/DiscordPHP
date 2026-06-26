@@ -799,7 +799,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Returns all the attachments in the builder.
-     * 
+     *
      * The array consists of only the raw attributes of the attachments if they were added as Attachment objects.
      *
      * @return array[]
@@ -1105,7 +1105,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return ! empty($this->files);
+        return isset($this->files);
     }
 
     /**
