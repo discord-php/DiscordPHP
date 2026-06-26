@@ -20,7 +20,6 @@ use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 
-
 /**
  * RegisteredCommand represents a command that has been registered with the
  * Discord servers and has a handler to handle when the command is triggered.

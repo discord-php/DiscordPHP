@@ -98,9 +98,9 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Files to send with this message.
      *
-     * @var array[]|null
+     * @var array[]
      */
-    protected $files;
+    protected $files = [];
 
     /**
      * Attachments to send with this message.
@@ -676,7 +676,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function setFiles(?array $files = null): self
     {
-        $this->files = $files;
+        $this->files = $files ?? [];
 
         return $this;
     }
@@ -709,10 +709,6 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function numFiles(): int
     {
-        if (! isset($this->files)) {
-            return 0;
-        }
-
         return count($this->files);
     }
 
@@ -723,7 +719,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function getFiles(): array
     {
-        return $this->files ?? [];
+        return $this->files;
     }
 
     /**
@@ -1117,7 +1113,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return isset($this->files);
+        return ! empty($this->files);
     }
 
     /**
