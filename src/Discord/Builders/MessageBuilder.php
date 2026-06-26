@@ -407,20 +407,41 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param int                           $type               The type of message reference (0 = DEFAULT/REPLY, 1 = FORWARD).
      * @param bool                          $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
+     * @throw InvalidArgumentException If the message reference is a forward and the channel_id is null.
+     *
      * @return self
      *
      * @since 10.50.0
      */
     public function setMessageReference(MessageReference|Message|null $message_reference = null, int $type = MessageReference::TYPE_DEFAULT, bool $fail_if_not_exists = true): self
     {
-        if ($message_reference instanceof Message) {
-            $message_reference = $this->factory->part(MessageReference::class, [
-                'type' => $type,
-                'message_id' => $message_reference->id,
-                'channel_id' => $message_reference->channel_id,
-                'guild_id' => $message_reference->guild_id,
-                'fail_if_not_exists' => $fail_if_not_exists,
-            ]);
+        if ($message_reference !== null) {
+            if ($message_reference instanceof Message) {
+                $attr = [
+                    'type' => $type,
+                    'fail_if_not_exists' => $fail_if_not_exists,
+                ];
+
+                if ($message_reference->id !== null) {
+                    $attr['message_id'] = $message_reference->id;
+                }
+
+                if ($message_reference->channel_id !== null) {
+                    $attr['channel_id'] = $message_reference->channel_id;
+                }
+
+                if ($message_reference->guild_id !== null) {
+                    $attr['guild_id'] = $message_reference->guild_id;
+                }
+
+                $message_reference = $this->factory->part(MessageReference::class, $attr);
+            }
+
+            if ($type === MessageReference::TYPE_FORWARD) {
+                if ($message_reference->channel_id === null) {
+                    throw new \InvalidArgumentException('Cannot set a forward message reference without a channel_id.');
+                }
+            }
         }
 
         $this->message_reference = $message_reference;
