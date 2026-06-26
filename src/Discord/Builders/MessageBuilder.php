@@ -434,7 +434,7 @@ class MessageBuilder extends Builder implements JsonSerializable
                     $attr['guild_id'] = $message_reference->guild_id;
                 }
 
-                $message_reference = $this->factory->part(MessageReference::class, $attr);
+                $message_reference = $message_reference->getDiscord()->getFactory()->part(MessageReference::class, $attr);
             }
 
             if ($type === MessageReference::TYPE_FORWARD) {
