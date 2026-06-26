@@ -404,16 +404,18 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Include to make your message a reply or a forward.
      *
      * @param MessageReference|Message|null $message_reference
+     * @param int                           $type               The type of message reference (0 = DEFAULT, 1 = FORWARD).
      * @param bool                          $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
      *
      * @since 10.50.0
      */
-    public function setMessageReference(MessageReference|Message|null $message_reference = null, bool $fail_if_not_exists = true): self
+    public function setMessageReference(MessageReference|Message|null $message_reference = null, int $type = MessageReference::TYPE_DEFAULT, bool $fail_if_not_exists = true): self
     {
         if ($message_reference instanceof Message) {
             $message_reference = $this->factory->part(MessageReference::class, [
+                'type' => $type,
                 'message_id' => $message_reference->id,
                 'channel_id' => $message_reference->channel_id,
                 'guild_id' => $message_reference->guild_id,
