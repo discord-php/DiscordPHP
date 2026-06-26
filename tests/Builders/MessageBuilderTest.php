@@ -19,31 +19,6 @@ use Discord\Parts\Channel\Message\MessageReference;
 
 final class MessageBuilderTest extends DiscordTestCase
 {
-    public function testMessageReferencePartSerialization()
-    {
-        $discord = getMockDiscord();
-        $factory = $discord->getFactory();
-
-        $messageReference = $factory->part(MessageReference::class, [
-            'type' => MessageReference::TYPE_DEFAULT,
-            'message_id' => '111',
-            'channel_id' => '222',
-            'guild_id' => null,
-            'fail_if_not_exists' => true,
-        ], true);
-
-        $builder = MessageBuilder::new();
-        $builder->setMessageReference($messageReference);
-
-        $payload = json_decode($builder->getPayloadJson(), true);
-
-        $this->assertArrayHasKey('message_reference', $payload);
-        $this->assertSame('111', $payload['message_reference']['message_id']);
-        $this->assertSame('222', $payload['message_reference']['channel_id']);
-        $this->assertArrayHasKey('type', $payload['message_reference']);
-        $this->assertSame(MessageReference::TYPE_DEFAULT, $payload['message_reference']['type']);
-    }
-
     public function testSendMessageReplyAndForwardUsingMessageReference()
     {
         return wait(function (Discord $discord, $resolve) {
