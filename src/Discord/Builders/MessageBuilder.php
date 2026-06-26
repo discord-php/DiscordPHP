@@ -105,7 +105,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Attachments to send with this message.
      *
-     * @var Attachment[]
+     * @var array[]
      */
     protected $attachments = [];
 
