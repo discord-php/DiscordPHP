@@ -334,7 +334,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Sets this message as a reply to another message. Only used for sending message.
      *
      * @param Message|null $message
-     * @param bool         $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
+     * @param ?bool|null   $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
      *
@@ -367,7 +367,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Sets this message as a forward of another message. Only used for sending message.
      *
      * @param Message|null $message
-     * @param bool         $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
+     * @param ?bool|null   $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
      *
      * @return self
      *
