@@ -16,6 +16,7 @@ namespace Discord\Builders;
 
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Forum\Tag;
 use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Emoji;
 use Discord\Repository\Guild\ChannelRepository;

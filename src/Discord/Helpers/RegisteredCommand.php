@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Discord\Helpers;
 
 use Discord\Discord;
+use Discord\Parts\Interactions\ApplicationCommand;
+use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 

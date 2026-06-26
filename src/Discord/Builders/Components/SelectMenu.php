@@ -155,7 +155,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \InvalidArgumentException
      *
-     * @return string
+     * @return self
      */
     public function setType(int $type): self
     {
