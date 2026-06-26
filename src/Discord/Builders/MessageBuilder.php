@@ -509,7 +509,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Enforces the component limits and structure for v2 messages.
+     * Enforces the component limits and structure for v1 messages.
      *
      * @param ComponentObject $component
      *
