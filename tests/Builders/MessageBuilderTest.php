@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 /*
  * This file is a part of the DiscordPHP project.
+ *
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
  */
 
 use Discord\Builders\MessageBuilder;
+use Discord\Discord;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\MessageReference;
-use PHPUnit\Framework\TestCase;
 
-final class MessageBuilderTest extends TestCase
+final class MessageBuilderTest extends DiscordTestCase
 {
     public function testMessageReferencePartSerialization()
     {
@@ -38,34 +44,45 @@ final class MessageBuilderTest extends TestCase
         $this->assertSame(MessageReference::TYPE_DEFAULT, $payload['message_reference']['type']);
     }
 
-    public function testReplyAndForwardLegacyPaths()
+    public function testSendMessageReplyAndForwardUsingMessageReference()
     {
-        $discord = getMockDiscord();
-        $factory = $discord->getFactory();
+        return wait(function (Discord $discord, $resolve) {
+            // Send an initial message
+            $this->channel()->sendMessage(MessageBuilder::new()->setContent('MessageBuilder integration test'))
+                ->then(function (Message $original) use ($resolve) {
+                    $this->assertInstanceOf(Message::class, $original);
 
-        $message = $factory->part(Message::class, [
-            'id' => '333',
-            'channel_id' => '444',
-        ], true);
+                    $original->getDiscord()->getLogger()->debug('Send a reply using setMessageReference with default type');
 
-        // Reply (legacy setReplyTo) should produce message_reference without a type key
-        $builder = MessageBuilder::new();
-        $builder->setReplyTo($message);
-        $payload = json_decode($builder->getPayloadJson(), true);
+                    $replyBuilder = MessageBuilder::new()
+                        ->setContent('Reply to message')
+                        ->setMessageReference($original, MessageReference::TYPE_DEFAULT, false);
 
-        $this->assertArrayHasKey('message_reference', $payload);
-        $this->assertSame('333', $payload['message_reference']['message_id']);
-        $this->assertSame('444', $payload['message_reference']['channel_id']);
-        $this->assertArrayNotHasKey('type', $payload['message_reference']);
+                    $original->getDiscord()->getLogger()->debug('Reply: '.json_encode($replyBuilder));
 
-        // Forward (legacy setForward) should include the forward type
-        $builder2 = MessageBuilder::new();
-        $builder2->setForward($message);
-        $payload2 = json_decode($builder2->getPayloadJson(), true);
+                    $this->channel()->sendMessage($replyBuilder)
+                        ->then(function (Message $reply) use ($original, $resolve) {
+                            $this->assertNotNull($reply->message_reference);
+                            $this->assertSame($original->id, $reply->message_reference->message_id);
+                            $this->assertSame(MessageReference::TYPE_DEFAULT, $reply->message_reference->type);
 
-        $this->assertArrayHasKey('message_reference', $payload2);
-        $this->assertSame(Message::REFERENCE_FORWARD, $payload2['message_reference']['type']);
-        $this->assertSame('333', $payload2['message_reference']['message_id']);
-        $this->assertSame('444', $payload2['message_reference']['channel_id']);
+                            $original->getDiscord()->getLogger()->debug('Send a forward using setMessageReference with forward type');
+                            $forwardBuilder = MessageBuilder::new()
+                                ->setContent('Forward of message') // Should be dropped
+                                ->setMessageReference($original, MessageReference::TYPE_FORWARD, false);
+
+                            $original->getDiscord()->getLogger()->debug('Forward: '.json_encode($forwardBuilder));
+
+                            $this->channel()->sendMessage($forwardBuilder)
+                                ->then(function (Message $forward) use ($original, $resolve) {
+                                    $this->assertNotNull($forward->message_reference);
+                                    $this->assertSame($original->id, $forward->message_reference->message_id);
+                                    $this->assertSame(MessageReference::TYPE_FORWARD, $forward->message_reference->type);
+
+                                    $resolve(true);
+                                }, $resolve);
+                        }, $resolve);
+                }, $resolve);
+        }, 15);
     }
 }
