@@ -755,10 +755,8 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         $this->attachments = null;
 
-        if ($attachments !== null) {
-            foreach ($attachments as $attachment) {
-                $this->addAttachment($attachment);
-            }
+        foreach ($attachments ?? [] as $attachment) {
+            $this->addAttachment($attachment);
         }
 
         return $this;
