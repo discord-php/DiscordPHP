@@ -435,7 +435,7 @@ class MessageBuilder extends Builder implements JsonSerializable
                 $message_reference = $message_reference->getDiscord()->getFactory()->part(MessageReference::class, $attr);
             }
 
-            if ($type === MessageReference::TYPE_FORWARD) {
+            if ($message_reference->type === MessageReference::TYPE_FORWARD) {
                 if ($message_reference->channel_id === null) {
                     throw new \InvalidArgumentException('Cannot set a forward message reference without a channel_id.');
                 }
