@@ -93,7 +93,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @var Message|null
      *
-     * @deprecated v10.50.0 Use `message_reference`
+     * @deprecated 10.50.0 Use `message_reference`
      */
     protected $replyTo;
 
@@ -102,7 +102,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @var Message|null
      *
-     * @deprecated v10.50.0 Use `message_reference`
+     * @deprecated 10.50.0 Use `message_reference`
      */
     protected $forward;
 
@@ -381,7 +381,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return self
      *
-     * @deprecated v10.50.0 Use `setMessageReference()` instead.
+     * @deprecated 10.50.0 Use `setMessageReference()` instead.
      */
     public function setForward(?Message $message = null): self
     {
