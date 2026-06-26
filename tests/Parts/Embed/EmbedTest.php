@@ -53,7 +53,7 @@ final class EmbedTest extends DiscordTestCase
             $this->channel()->sendMessage($url)
                 ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
                 ->then(function (Message $message) use ($url) {
-                    $this->assertEquals(1, $message->embeds->count());
+                    $this->assertEquals(1, $message->embeds->count()); // @todo fix this, sometimes the embed is not present, maybe a discord bug?
                     /** @var \Discord\Parts\Embed\Embed */
                     $embed = $message->embeds->first();
 
