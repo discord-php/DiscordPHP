@@ -778,7 +778,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Adds attachment(s) to the builder.
      *
-     * @param Attachment|string|int ...$attachments Attachment objects or IDs to add
+     * @param AttachmentRequestBuilder|Attachment|string|int ...$attachments Attachment objects or IDs to add
      *
      * @return self
      */

@@ -171,7 +171,7 @@ class AttachmentRequestBuilder extends Builder implements JsonSerializable
      * Set the description (alt text) for the file.
      *
      * @param string|null $description Description for the file (max 1024 characters).
-     * 
+     *
      * @throws \LengthException Description exceeds 1024 characters.
      *
      * @return self
