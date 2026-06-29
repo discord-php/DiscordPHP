@@ -786,7 +786,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         foreach ($attachments as $attachment) {
             if ($attachment instanceof Attachment) {
-                $attachment = AttachmentRequestBuilder::new((string) $attachment->id)
+                $attachment = AttachmentRequestBuilder::new($attachment->id)
                     ->setFilename($attachment->filename)
                     ->setTitle($attachment->title)
                     ->setDescription($attachment->description)
