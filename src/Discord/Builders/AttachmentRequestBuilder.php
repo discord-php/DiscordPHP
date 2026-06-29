@@ -32,7 +32,7 @@ class AttachmentRequestBuilder extends Builder implements JsonSerializable
      *
      * For new attachments this must match the n in files[n].
      *
-     * @var int
+     * @var string
      */
     protected $id;
 
@@ -83,11 +83,11 @@ class AttachmentRequestBuilder extends Builder implements JsonSerializable
      *
      * For new attachments this must match the n in files[n].
      *
-     * @param int $id Attachment id (or files index for new files).
+     * @param string $id Attachment id (or files index for new files).
      *
      * @return static
      */
-    public static function new(int $id): static
+    public static function new(string $id): static
     {
         $instance = new static();
         $instance->setId($id);
@@ -100,11 +100,11 @@ class AttachmentRequestBuilder extends Builder implements JsonSerializable
      *
      * For new attachments this must match the n in files[n].
      *
-     * @param int $id Attachment id (or files index for new files).
+     * @param string $id Attachment id (or files index for new files).
      *
      * @return self
      */
-    public function setId(int $id): self
+    public function setId(string $id): self
     {
         $this->id = $id;
 
@@ -114,9 +114,9 @@ class AttachmentRequestBuilder extends Builder implements JsonSerializable
     /**
      * Returns the attachment id.
      *
-     * @return int $id Attachment id (or files index for new files).
+     * @return string $id Attachment id (or files index for new files).
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
