@@ -16,6 +16,8 @@ namespace Discord\Builders;
 
 use JsonSerializable;
 
+use function Discord\poly_strlen;
+
 /**
  * Helper class used to build attachment request payloads.
  *
@@ -178,7 +180,7 @@ class AttachmentRequestBuilder extends Builder implements JsonSerializable
      */
     public function setDescription(?string $description = null): self
     {
-        if ($description !== null && strlen($description) > 1024) {
+        if ($description !== null && poly_strlen($description) > 1024) {
             throw new \LengthException('Description cannot exceed 1024 characters.');
         }
 
