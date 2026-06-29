@@ -787,7 +787,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         foreach ($attachments as $attachment) {
             if ($attachment instanceof Attachment) {
                 $attachment = $attachment->getRawAttributes();
-            } else {
+            } elseif (! $attachment instanceof AttachmentRequestBuilder) {
                 $attachment = ['id' => $attachment];
             }
 
