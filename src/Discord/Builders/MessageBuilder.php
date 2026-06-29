@@ -105,7 +105,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Attachments to send with this message.
      *
-     * @var array[]
+     * @var AttachmentRequestBuilder[]
      */
     protected $attachments;
 
@@ -786,9 +786,15 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         foreach ($attachments as $attachment) {
             if ($attachment instanceof Attachment) {
-                $attachment = $attachment->getRawAttributes();
+                AttachmentRequestBuilder::new((string) $attachment->id)
+                    ->setFilename($attachment->filename)
+                    ->setTitle($attachment->title)
+                    ->setDescription($attachment->description)
+                    ->setDurationSecs($attachment->duration_secs)
+                    ->setWaveform($attachment->waveform)
+                    ->setIsSpoiler($attachment->is_spoiler);
             } elseif (! $attachment instanceof AttachmentRequestBuilder) {
-                $attachment = ['id' => $attachment];
+                $attachment = AttachmentRequestBuilder::new((string) $attachment);
             }
 
             $this->attachments[] = $attachment;
@@ -802,7 +808,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * The array consists of only the raw attributes of the attachments if they were added as Attachment objects.
      *
-     * @return array[]
+     * @return AttachmentRequestBuilder[]
      */
     public function getAttachments(): array
     {
