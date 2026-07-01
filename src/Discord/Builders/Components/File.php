@@ -57,11 +57,11 @@ class File extends Content implements Contracts\ComponentV2
     /**
      * Creates a new file component.
      *
-     * @param string|Attachment|null $filename The filename or attachment to reference.
+     * @param string|AttachmentRequestBuilder|Attachment|null $filename The filename or attachment to reference.
      *
      * @return self
      */
-    public static function new(string|Attachment|null $filename = null): self
+    public static function new(string|AttachmentRequestBuilder|Attachment|null $filename = null): self
     {
         $component = new self();
 
