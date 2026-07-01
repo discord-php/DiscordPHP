@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Parts\Channel\Attachment;
 
 /**
@@ -74,13 +75,13 @@ class File extends Content implements Contracts\ComponentV2
     /**
      * Sets the file to be displayed.
      *
-     * @param Attachment|string $filename The filename or attachment to reference.
+     * @param AttachmentRequestBuilder|Attachment|string $filename The filename or attachment to reference.
      *
      * @return self
      */
-    public function setFile(Attachment|string $filename): self
+    public function setFile(AttachmentRequestBuilder|Attachment|string $filename): self
     {
-        if ($filename instanceof Attachment) {
+        if ($filename instanceof Attachment || $filename instanceof AttachmentRequestBuilder) {
             $filename = $filename->filename;
         }
 
