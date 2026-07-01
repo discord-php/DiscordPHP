@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
+use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
@@ -371,9 +372,9 @@ class Embed extends Part
     /**
      * Set the author of this embed.
      *
-     * @param string                 $name    Maximum length is 256 characters.
-     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
-     * @param string|null            $url     The URL to the author, only http(s) URLs are allowed.
+     * @param string                                          $name    Maximum length is 256 characters.
+     * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string|null                                     $url     The URL to the author, only http(s) URLs are allowed.
      *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
@@ -391,7 +392,7 @@ class Embed extends Part
             throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
-        if ($iconurl instanceof Attachment) {
+        if ($iconurl instanceof Attachment || $iconurl instanceof AttachmentRequestBuilder) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
 
