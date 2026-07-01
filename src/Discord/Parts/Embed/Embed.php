@@ -413,7 +413,7 @@ class Embed extends Part
      * Set the footer of this embed.
      *
      * @param string                 $text    Maximum length is 2048 characters.
-     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
      *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
@@ -431,7 +431,7 @@ class Embed extends Part
             throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
-        if ($iconurl instanceof Attachment) {
+        if ($iconurl instanceof Attachment || $iconurl instanceof AttachmentRequestBuilder) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
 
@@ -448,7 +448,7 @@ class Embed extends Part
     /**
      * Set the image of this embed.
      *
-     * @param string|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
+     * @param string|AttachmentRequestBuilder|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
@@ -456,7 +456,7 @@ class Embed extends Part
      */
     public function setImage($url): self
     {
-        if ($url instanceof Attachment) {
+        if ($url instanceof Attachment || $url instanceof AttachmentRequestBuilder) {
             $url = 'attachment://'.$url->filename;
         }
 
@@ -470,7 +470,7 @@ class Embed extends Part
     /**
      * Set the thumbnail of this embed.
      *
-     * @param string|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
+     * @param string|AttachmentRequestBuilder|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
@@ -478,7 +478,7 @@ class Embed extends Part
      */
     public function setThumbnail($url): self
     {
-        if ($url instanceof Attachment) {
+        if ($url instanceof Attachment || $url instanceof AttachmentRequestBuilder) {
             $url = 'attachment://'.$url->filename;
         }
 
