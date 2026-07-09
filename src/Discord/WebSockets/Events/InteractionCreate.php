@@ -88,7 +88,7 @@ class InteractionCreate extends Event
             if (isset($this->discord->application_commands[$command->name])) {
                 $interaction instanceof ApplicationCommand
                     ? $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction)
-                    : $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
+                    : $this->checkCommand($this->discord->application_commands[$command->name], $command->options ?? [], $interaction);
             }
         }
 
@@ -104,19 +104,19 @@ class InteractionCreate extends Event
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */
-    protected function checkCommand(RegisteredCommand $command, $options, Interaction $interaction): bool
+    protected function checkCommand(RegisteredCommand $command, iterable $options, Interaction $interaction): bool
     {
         foreach ($options as $option) {
             /** @var ?RegisteredCommand $subCommand */
             if ($subCommand = $command->getSubCommand($option->name)) {
                 if ($option->focused) {
-                    return $subCommand->suggest($interaction);
+                    return $subCommand->suggest($interaction, $option);
                 }
-                if ($option->options) {
+                if (is_iterable($option->options)) {
                     return $this->checkCommand($subCommand, $option->options, $interaction);
                 }
             } elseif ($option->focused) {
-                return $command->suggest($interaction);
+                return $command->suggest($interaction, $option);
             }
         }
 
