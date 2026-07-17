@@ -1317,6 +1317,7 @@ class Channel extends Part implements Stringable
                 break;
 
             case self::TYPE_GUILD_FORUM:
+            case self::TYPE_GUILD_MEDIA:
                 $attr['topic'] = $this->topic;
                 $attr['nsfw'] = $this->nsfw;
                 $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
