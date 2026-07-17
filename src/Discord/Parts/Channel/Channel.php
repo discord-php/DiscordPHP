@@ -1278,6 +1278,7 @@ class Channel extends Part implements Stringable
                 $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
                 $attr += $this->makeOptionalAttributes([
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1289,6 +1290,9 @@ class Channel extends Part implements Stringable
                 $attr['parent_id'] = $this->parent_id;
                 $attr['rtc_region'] = $this->rtc_region;
                 $attr['video_quality_mode'] = $this->video_quality_mode;
+                $attr += $this->makeOptionalAttributes([
+                    'flags' => $this->flags,
+                ]);
                 break;
 
             case self::TYPE_GUILD_ANNOUNCEMENT:
@@ -1297,6 +1301,9 @@ class Channel extends Part implements Stringable
                 $attr['nsfw'] = $this->nsfw;
                 $attr['parent_id'] = $this->parent_id;
                 $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+                $attr += $this->makeOptionalAttributes([
+                    'flags' => $this->flags,
+                ]);
                 break;
 
             case self::TYPE_GUILD_STAGE_VOICE:
