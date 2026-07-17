@@ -101,6 +101,7 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_VOICE = 2;
     /** A direct message between multiple users. */
     public const TYPE_GROUP_DM = 3;
+
     /** An organizational category that contains up to 50 channels. */
     public const TYPE_GUILD_CATEGORY = 4;
     /** A channel that users can follow and crosspost into their own server (formerly news channels). */
@@ -1172,6 +1173,7 @@ class Channel extends Part implements Stringable
                     'nsfw' => $this->nsfw,
                     'default_auto_archive_duration' => $this->default_auto_archive_duration,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1184,6 +1186,7 @@ class Channel extends Part implements Stringable
                     'nsfw' => $this->nsfw,
                     'rtc_region' => $this->rtc_region,
                     'video_quality_mode' => $this->video_quality_mode,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1193,6 +1196,7 @@ class Channel extends Part implements Stringable
                     'parent_id' => $this->parent_id,
                     'nsfw' => $this->nsfw,
                     'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1220,6 +1224,21 @@ class Channel extends Part implements Stringable
                     'default_sort_order' => $this->default_sort_order,
                     'default_forum_layout' => $this->default_forum_layout,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
+                    'flags' => $this->flags,
+                ]);
+                break;
+
+            case self::TYPE_GUILD_MEDIA:
+                $attr += $this->makeOptionalAttributes([
+                    'topic' => $this->topic,
+                    'rate_limit_per_user' => $this->rate_limit_per_user,
+                    'parent_id' => $this->parent_id,
+                    'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                    'default_reaction_emoji' => $this->attributes['default_reaction_emoji'] ?? null,
+                    'available_tags',
+                    'default_sort_order' => $this->default_sort_order,
+                    'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
+                    'flags' => $this->flags,
                 ]);
                 break;
         }
@@ -1246,6 +1265,7 @@ class Channel extends Part implements Stringable
             'name' => $this->name,
             'position' => $this->position,
             'permission_overwrites' => $this->getPermissionOverwritesAttribute(),
+            'flags' => $this->flags,
         ];
 
         switch ($this->type) {
@@ -1304,6 +1324,9 @@ class Channel extends Part implements Stringable
                     'default_forum_layout' => $this->default_forum_layout,
                 ]);
                 break;
+
+            // @todo Add case self::TYPE_GUILD_MEDIA
+
         }
 
         return $attr;
