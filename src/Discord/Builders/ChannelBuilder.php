@@ -54,6 +54,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
     protected ?int $default_sort_order; // Forum, Media
     protected ?int $default_forum_layout; // Forum
     protected ?int $default_thread_rate_limit_per_user; // Text, Announcement, Forum, Media
+    protected ?int $flags; // Text, Voice, Announcement, Forum, Media
 
     /**
      * Creates a new channel builder.
@@ -380,6 +381,22 @@ class ChannelBuilder extends Builder implements JsonSerializable
     }
 
     /**
+     * Sets the channel flags for Text, Voice, Announcement, Forum, and Media channels.
+     * 
+     * @param int|null $flags The channel flags combined as a bitfield.
+     * 
+     * @return self
+     * 
+     * @since 10.52.0
+     */
+    public function setFlags(?int $flags = null): self
+    {
+        $this->flags = $flags;
+
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function jsonSerialize(): array
@@ -442,6 +459,9 @@ class ChannelBuilder extends Builder implements JsonSerializable
         }
         if (isset($this->default_thread_rate_limit_per_user)) {
             $body['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+        }
+        if (isset($this->flags)) {
+            $body['flags'] = $this->flags;
         }
 
         return $body;
