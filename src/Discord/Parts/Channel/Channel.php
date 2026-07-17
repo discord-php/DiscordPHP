@@ -166,8 +166,12 @@ class Channel extends Part implements Stringable
     public const FLAG_PINNED = (1 << 1);
     /** Whether a tag is required to be specified when creating a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Tags are specified in the `applied_tags` field. */
     public const FLAG_REQUIRE_TAG = (1 << 4);
+    /** @deprecated 10.51.1 Use `Channel::FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS` */
+    public const HIDE_MEDIA_DOWNLOAD_OPTIONS = self::FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS;
     /** When set hides the embedded media download options. Available only for media channels. */
-    public const HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
+    public const FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
+    /** This channel is a Spoiler Channel i.e. users must opt in to view its contents. Can be set on all textual guild channels and voice channels (not `GUILD_STAGE`). Can only be set if channel's `nsfw` is false. */
+    public const FLAG_IS_SPOILER_CHANNEL = (1 << 21);
 
     /** Sort forum posts by activity. */
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
