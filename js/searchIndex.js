@@ -236,6 +236,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020default\u0020thread\u0020rate\u0020limit\u0020per\u0020user\u0020for\u0020Text,\u0020Announcement,\u0020Forum,\u0020and\u0020Media\u0020channels.",
             "url": "classes/Discord-Builders-ChannelBuilder.html#method_setDefaultThreadRateLimitPerUser"
         },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetFlags\u0028\u0029",
+            "name": "setFlags",
+            "summary": "Sets\u0020the\u0020channel\u0020flags\u0020for\u0020Text,\u0020Voice,\u0020Announcement,\u0020Forum,\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setFlags"
+        },                {
             "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
             "summary": "",
@@ -335,6 +340,11 @@ Search.appendIndex(
             "name": "default_thread_rate_limit_per_user",
             "summary": "",
             "url": "classes/Discord-Builders-ChannelBuilder.html#property_default_thread_rate_limit_per_user"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024flags",
+            "name": "flags",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_flags"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes",
             "name": "CommandAttributes",
@@ -5053,8 +5063,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AHIDE_MEDIA_DOWNLOAD_OPTIONS",
             "name": "HIDE_MEDIA_DOWNLOAD_OPTIONS",
-            "summary": "When\u0020set\u0020hides\u0020the\u0020embedded\u0020media\u0020download\u0020options.\u0020Available\u0020only\u0020for\u0020media\u0020channels.",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_HIDE_MEDIA_DOWNLOAD_OPTIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS",
+            "name": "FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS",
+            "summary": "When\u0020set\u0020hides\u0020the\u0020embedded\u0020media\u0020download\u0020options.\u0020Available\u0020only\u0020for\u0020media\u0020channels.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_IS_SPOILER_CHANNEL",
+            "name": "FLAG_IS_SPOILER_CHANNEL",
+            "summary": "This\u0020channel\u0020is\u0020a\u0020Spoiler\u0020Channel\u0020i.e.\u0020users\u0020must\u0020opt\u0020in\u0020to\u0020view\u0020its\u0020contents.\u0020Can\u0020be\u0020set\u0020on\u0020all\u0020textual\u0020guild\u0020channels\u0020and\u0020voice\u0020channels\u0020\u0028not\u0020\u0060GUILD_STAGE\u0060\u0029.\u0020Can\u0020only\u0020be\u0020set\u0020if\u0020channel\u0027s\u0020\u0060nsfw\u0060\u0020is\u0020false.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FLAG_IS_SPOILER_CHANNEL"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ASORT_ORDER_LATEST_ACTIVITY",
             "name": "SORT_ORDER_LATEST_ACTIVITY",
