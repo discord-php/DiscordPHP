@@ -134,14 +134,20 @@ class ChannelBuilder extends Builder implements JsonSerializable
     /**
      * Sets the channel topic for Text, Announcement, Forum, and Media channels.
      *
-     * @param string|null $topic The channel topic (0-1024 characters).
+     * @param string|null $topic The channel topic (0-1024 characters, or 0-4096 characters for Forum and Media channels).
      *
      * @return self
      */
     public function setTopic(?string $topic = null): self
     {
-        if ($topic !== null && poly_strlen($topic) > 1024) {
-            throw new \LengthException('Channel topic must be 0-1024 characters.');
+        if ($topic !== null) {
+            if ($this->type === Channel::TYPE_GUILD_FORUM || $this->type === Channel::TYPE_GUILD_MEDIA) {
+                if (poly_strlen($topic) > 4096) {
+                    throw new \LengthException('Channel topic must be 0-4096 characters for Forum and Media channels.');
+                }
+            } elseif (poly_strlen($topic) > 1024) {
+                throw new \LengthException('Channel topic must be 0-1024 characters.');
+            }
         }
 
         $this->topic = $topic;
