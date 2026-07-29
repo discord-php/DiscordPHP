@@ -3256,6 +3256,11 @@ Search.appendIndex(
             "summary": "Emits\u0020init\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
             "url": "classes/Discord-Discord.html#method_ready"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AinitializeVoiceManager\u0028\u0029",
+            "name": "initializeVoiceManager",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#method_initializeVoiceManager"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AlistVoiceRegions\u0028\u0029",
             "name": "listVoiceRegions",
             "summary": "Lists\u0020voice\u0020regions.",
