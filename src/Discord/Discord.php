@@ -1690,6 +1690,11 @@ class Discord
         }
     }
 
+    /**
+     * Initializes the voice manager.
+     * 
+     * @since 10.53.0
+     */
     protected function initializeVoiceManager(): void
     {
         if (class_exists(Manager::class)) {
