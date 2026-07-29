@@ -1675,14 +1675,7 @@ class Discord
         }
         $this->emittedInit = true;
 
-        if (class_exists(Manager::class)) {
-            try {
-                $this->voice = new Manager($this);
-                $this->logger->info('voice class initialized');
-            } catch (\Throwable $e) {
-                $this->logger->error('failed to initialize voice class', ['exception' => $e]);
-            }
-        }
+        $this->initializeVoiceManager();
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
@@ -1694,6 +1687,18 @@ class Discord
 
         foreach ($this->unparsedPackets as $parser) {
             $parser();
+        }
+    }
+
+    protected function initializeVoiceManager(): void
+    {
+        if (class_exists(Manager::class)) {
+            try {
+                $this->voice = new Manager($this);
+                $this->logger->info('voice class initialized');
+            } catch (\Throwable $e) {
+                $this->logger->error('failed to initialize voice class', ['exception' => $e]);
+            }
         }
     }
 
