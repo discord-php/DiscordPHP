@@ -150,6 +150,7 @@ class Discord
         'token',
         'loop',
         'logger',
+        'disableVoiceClient',
         'loadAllMembers',
         'disabledEvents',
         'storeMessages',
@@ -1675,7 +1676,10 @@ class Discord
         }
         $this->emittedInit = true;
 
-        $this->initializeVoiceManager();
+        
+        if (! $this->options['disableVoiceClient']) {
+            $this->initializeVoiceManager();
+        }
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
@@ -1693,10 +1697,14 @@ class Discord
     /**
      * Initializes the voice manager.
      * 
-     * @since 10.53.0
+     * @since 10.53.1
      */
-    protected function initializeVoiceManager(): void
+    public function initializeVoiceManager(): void
     {
+        if (isset ($this->voice)) {
+            return;
+        }
+
         if (class_exists(Manager::class)) {
             try {
                 $this->voice = new Manager($this);
@@ -1933,6 +1941,7 @@ class Discord
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
+                'disableVoiceClient' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
                 'large_threshold' => null,
@@ -1955,6 +1964,7 @@ class Discord
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
+            ->setAllowedTypes('disableVoiceClient', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', ['bool', 'array'])
             ->setAllowedTypes('large_threshold', ['null', 'int'])
