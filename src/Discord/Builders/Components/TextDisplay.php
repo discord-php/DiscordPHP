@@ -15,7 +15,10 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 /**
- * Text display components allow you to send text.
+ * A Text Display is a top-level content component that allows you to add markdown formatted text, including mentions (users, roles, etc) and emojis.
+ * 
+ * The behavior of this component is extremely similar to the content field of a message, but allows you to add multiple text components, controlling the layout of your message.
+ * When sent in a message, pingable mentions (@user, @role, etc) present in this component will ping and send notifications based on the value of the allowed mention object set in message.allowed_mentions.
  *
  * @link https://docs.discord.com/developers/components/reference#text-display
  *
