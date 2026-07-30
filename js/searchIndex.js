@@ -2178,7 +2178,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextDisplay",
             "name": "TextDisplay",
-            "summary": "Text\u0020display\u0020components\u0020allow\u0020you\u0020to\u0020send\u0020text.",
+            "summary": "A\u0020Text\u0020Display\u0020is\u0020a\u0020top\u002Dlevel\u0020content\u0020component\u0020that\u0020allows\u0020you\u0020to\u0020add\u0020markdown\u0020formatted\u0020text,\u0020including\u0020mentions\u0020\u0028users,\u0020roles,\u0020etc\u0029\u0020and\u0020emojis.",
             "url": "classes/Discord-Builders-Components-TextDisplay.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003Anew\u0028\u0029",
@@ -3258,7 +3258,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AinitializeVoiceManager\u0028\u0029",
             "name": "initializeVoiceManager",
-            "summary": "",
+            "summary": "Initializes\u0020the\u0020voice\u0020manager.",
             "url": "classes/Discord-Discord.html#method_initializeVoiceManager"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AlistVoiceRegions\u0028\u0029",
