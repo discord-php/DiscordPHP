@@ -70,7 +70,7 @@ use function React\Promise\resolve;
  * @property-read User|null                          $recipient                          The first recipient of the DM (DM/group).
  * @property-read string|null                        $recipient_id                       The ID of the recipient (DM).
  * @property      ?string|null                       $icon                               Icon hash of the group DM.
- * @property      string|null                        $application_id                     Application id of the group DM creator if bot-created.
+ * @property      string|null                        $application_id                     Application id associated with the channel. For group DMs, this is the application that created the group.
  * @property      bool|null                          $managed                            For group DM channels: whether the channel is managed by an application via the `gdm.join` OAuth2 scope.
  * @property      ?string|null                       $rtc_region                         Voice region id for the voice channel, automatic when set to null.
  * @property      int|null                           $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
