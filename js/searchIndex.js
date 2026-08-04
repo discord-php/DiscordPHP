@@ -5541,6 +5541,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Activity.html#constant_TYPE_JOIN_REQUEST"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003ATYPE_STREAM_REQUEST",
+            "name": "TYPE_STREAM_REQUEST",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html#constant_TYPE_STREAM_REQUEST"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -13710,6 +13715,11 @@ Search.appendIndex(
             "name": "getWebStatusAttribute",
             "summary": "Gets\u0020the\u0020status\u0020of\u0020the\u0020user\u0020on\u0020their\u0020web\u0020client.",
             "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getWebStatusAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetVrStatusAttribute\u0028\u0029",
+            "name": "getVrStatusAttribute",
+            "summary": "Gets\u0020the\u0020status\u0020of\u0020the\u0020user\u0020on\u0020their\u0020VR\u0020client.",
+            "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getVrStatusAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetIdAttribute\u0028\u0029",
             "name": "getIdAttribute",
