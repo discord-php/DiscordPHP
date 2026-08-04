@@ -1495,8 +1495,8 @@ class Discord
      *
      * @link https://docs.discord.com/developers/events/gateway-events#channel-info
      *
-     * @param Guild|string $guild  ID of the guild or Guild object.
-     * @param string[]     $fields Array of strings specifying which fields to include in the response. The current available fields are `status` and `voice_start_time`.
+     * @param Guild|string $guild  The guild id to request channel info for.
+     * @param string[]     $fields The fields to request. The current available fields are status and voice_start_time.
      *
      * @since 10.48.0
      */
