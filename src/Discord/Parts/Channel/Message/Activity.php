@@ -32,7 +32,7 @@ class Activity extends Part
     public const TYPE_SPECTATE = 2;
     public const TYPE_LISTEN = 3;
     public const TYPE_JOIN_REQUEST = 5;
-
+    public const TYPE_STREAM_REQUEST = 6;
     /**
      * @inheritDoc
      */
