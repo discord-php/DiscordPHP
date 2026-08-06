@@ -46,7 +46,8 @@ class MessageCommandClient extends Discord
     {
         $this->options = $this->resolveOptions($options);
 
-        parent::__construct($options);
+        // Pass resolved options to parent so it doesn't receive unknown keys
+        parent::__construct($this->options);
 
         $this->registry = $registry ?? new CommandRegistry((bool) ($this->options['caseInsensitiveCommands'] ?? false));
 
@@ -77,22 +78,26 @@ class MessageCommandClient extends Discord
      */
     protected function resolveOptions(array $options = []): array
     {
-        $options = parent::resolveOptions($options);
+        $messageDefined = [
+            'prefix',
+            'prefixes',
+            'name',
+            'description',
+            'defaultHelpCommand',
+            'caseInsensitiveCommands',
+            'internalRejectedPromiseHandler',
+        ];
+
+        // Resolve base options using parent but only pass the keys the parent expects.
+        $base_options = array_intersect_key($options, array_flip($this->definedOptions));
+        $baseResolved = parent::resolveOptions($base_options);
+
+        // Resolve message-client specific options separately.
+        $mcc_options = array_intersect_key($options, array_flip($messageDefined));
 
         $resolver = new OptionsResolver();
-
         $resolver
-            ->setRequired('token')
-            ->setAllowedTypes('token', 'string')
-            ->setDefined(array_merge($this->definedOptions, [
-                'prefix',
-                'prefixes',
-                'name',
-                'description',
-                'defaultHelpCommand',
-                'caseInsensitiveCommands',
-                'internalRejectedPromiseHandler',
-            ]))
+            ->setDefined($messageDefined)
             ->setAllowedTypes('internalRejectedPromiseHandler', ['null', 'callable'])
             ->setDefaults([
                 'prefix' => '@mention ',
@@ -110,7 +115,9 @@ class MessageCommandClient extends Discord
                 },
             ]);
 
-        $options = $resolver->resolve($options);
+        $messageResolved = $resolver->resolve($mcc_options);
+
+        $options = array_merge($baseResolved, $messageResolved);
 
         $options['prefixes'][] = $options['prefix'];
 
