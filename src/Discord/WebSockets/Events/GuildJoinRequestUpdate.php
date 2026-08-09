@@ -17,7 +17,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\GuildJoinRequestUpdateData;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\JoinRequest;
+use Discord\Parts\Guild\GuildJoinRequest;
 
 /**
  * @link https://docs.discord.com/developers/events/gateway-events#guild-join-request-update
@@ -32,7 +32,7 @@ class GuildJoinRequestUpdate extends Event
         /** @var GuildJoinRequestUpdateData */
         $data = $this->factory->part(GuildJoinRequestUpdateData::class, (array) $data, true);
 
-        /** @var JoinRequest */
+        /** @var GuildJoinRequest */
         $request = $data->request;
 
         /** @var Guild $guild */

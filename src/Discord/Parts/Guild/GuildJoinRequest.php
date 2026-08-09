@@ -19,7 +19,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use Discord\Repository\Guild\JoinRequestRepository;
+use Discord\Repository\Guild\GuildJoinRequestRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -42,7 +42,7 @@ use function React\Promise\reject;
  * @property ExCollectionInterface<FormFieldResponse>|FormFieldResponse[] $form_responses     Applicant's responses to the guild's verification form.
  * @property ?User|null                                                   $actioned_by_user   User who approved or rejected the join request.
  */
-class JoinRequest extends Part
+class GuildJoinRequest extends Part
 {
     /**
      * @inheritDoc
@@ -66,7 +66,7 @@ class JoinRequest extends Part
      * @param bool|string $action          Either 'APPROVED' or 'REJECTED'.
      * @param string|null $rejectionReason Optional rejection reason.
      *
-     * @return PromiseInterface<JoinRequest>
+     * @return PromiseInterface<GuildJoinRequest>
      */
     public function action(bool|string $action, ?string $rejectionReason = null): PromiseInterface
     {
@@ -81,7 +81,7 @@ class JoinRequest extends Part
             }
         }
 
-        return $guild->join_requests->action($this, $action, $rejectionReason)->then(function (JoinRequest $new) {
+        return $guild->join_requests->action($this, $action, $rejectionReason)->then(function (GuildJoinRequest $new) {
             $this->fill((array) $new);
 
             return $this;
@@ -91,7 +91,7 @@ class JoinRequest extends Part
     /**
      * Approve the join request.
      *
-     * @return PromiseInterface<JoinRequest>
+     * @return PromiseInterface<GuildJoinRequest>
      */
     public function approve(): PromiseInterface
     {
@@ -103,7 +103,7 @@ class JoinRequest extends Part
      *
      * @param string|null $reason Reason for rejection.
      *
-     * @return PromiseInterface<JoinRequest>
+     * @return PromiseInterface<GuildJoinRequest>
      */
     public function reject(?string $reason = null): PromiseInterface
     {
@@ -152,9 +152,9 @@ class JoinRequest extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return JoinRequestRepository|null The repository, or null if required part data is missing.
+     * @return GuildJoinRequestRepository|null The repository, or null if required part data is missing.
      */
-    public function getRepository(): JoinRequestRepository|null
+    public function getRepository(): GuildJoinRequestRepository|null
     {
         if (! isset($this->attributes['guild_id'])) {
             return null;

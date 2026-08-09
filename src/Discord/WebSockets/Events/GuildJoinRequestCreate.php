@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Parts\Guild\JoinRequest;
+use Discord\Parts\Guild\GuildJoinRequest;
 use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Events\Data\GuildJoinRequestCreateData;
 
@@ -32,7 +32,7 @@ class GuildJoinRequestCreate extends Event
         /** @var GuildJoinRequestCreateData $data */
         $data = $this->factory->part(GuildJoinRequestCreateData::class, (array) $data, true);
 
-        /** @var JoinRequest */
+        /** @var GuildJoinRequest */
         $request = $data->request;
 
         if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

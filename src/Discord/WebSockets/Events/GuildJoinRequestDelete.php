@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\JoinRequest;
+use Discord\Parts\Guild\GuildJoinRequest;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\GuildJoinRequestDeleteData;
 
@@ -34,12 +34,12 @@ class GuildJoinRequestDelete extends Event
 
         /** @var Guild $guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            /** @var JoinRequest */
+            /** @var GuildJoinRequest */
             if ($request = $guild->join_requests->pull($data->id)) {
                 return $request;
             }
         }
 
-        return $this->factory->part(JoinRequest::class, ['id' => $data->id, 'guild_id' => $data->guild_id, 'user_id' => $data->user_id], true);
+        return $this->factory->part(GuildJoinRequest::class, ['id' => $data->id, 'guild_id' => $data->guild_id, 'user_id' => $data->user_id], true);
     }
 }

@@ -22,8 +22,8 @@ use Discord\Parts\Part;
  *
  * @since 10.55.0
  *
- * @property int                                              $total               Number of join requests with the given status (when returned).
- * @property ExCollectionInterface<JoinRequest>|JoinRequest[] $guild_join_requests Array of join request objects.
+ * @property int                                                        $total               Number of join requests with the given status (when returned).
+ * @property ExCollectionInterface<GuildJoinRequest>|GuildJoinRequest[] $guild_join_requests Array of join request objects.
  */
 class GuildJoinRequests extends Part
 {
@@ -34,12 +34,12 @@ class GuildJoinRequests extends Part
     ];
 
     /**
-     * Returns a collection of `JoinRequest` parts.
+     * Returns a collection of `GuildJoinRequest` parts.
      *
-     * @return ExCollectionInterface<JoinRequest>
+     * @return ExCollectionInterface<GuildJoinRequest>
      */
     protected function getGuildJoinRequestsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('guild_join_requests', JoinRequest::class);
+        return $this->attributeCollectionHelper('guild_join_requests', GuildJoinRequest::class);
     }
 }

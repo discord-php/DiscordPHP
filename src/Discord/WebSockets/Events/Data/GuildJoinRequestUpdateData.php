@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events\Data;
 
-use Discord\Parts\Guild\JoinRequest;
+use Discord\Parts\Guild\GuildJoinRequest;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
@@ -25,9 +25,9 @@ use Discord\Parts\Part;
  *
  * @since 10.55.0
  *
- * @property string      $guild_id ID of the guild
- * @property string      $status   Application status of the join request
- * @property JoinRequest $request  The join request that was updated
+ * @property string           $guild_id ID of the guild
+ * @property string           $status   Application status of the join request
+ * @property GuildJoinRequest $request  The join request that was updated
  */
 class GuildJoinRequestUpdateData extends Part
 {
@@ -41,11 +41,11 @@ class GuildJoinRequestUpdateData extends Part
     /**
      * Gets the request attribute.
      *
-     * @return JoinRequest|null
+     * @return GuildJoinRequest|null
      */
-    protected function getRequestAttribute(): ?JoinRequest
+    protected function getRequestAttribute(): ?GuildJoinRequest
     {
-        return $this->attributePartHelper('request', JoinRequest::class);
+        return $this->attributePartHelper('request', GuildJoinRequest::class);
     }
 
     /**
