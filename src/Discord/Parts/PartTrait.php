@@ -370,7 +370,7 @@ trait PartTrait
 
     /**
      * Returns the updatable attributes.
-     * 
+     *
      * To be used with fields that can be changed after a part has already been created.
      *
      * @return array

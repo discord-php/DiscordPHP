@@ -412,7 +412,7 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string                 $text    Maximum length is 2048 characters.
+     * @param string                                          $text    Maximum length is 2048 characters.
      * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
      *
      * @throws \LengthException          Embed text too long.

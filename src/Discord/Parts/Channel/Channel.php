@@ -1333,8 +1333,7 @@ class Channel extends Part implements Stringable
                 ]);
                 break;
 
-            // @todo Add case self::TYPE_GUILD_MEDIA
-
+                // @todo Add case self::TYPE_GUILD_MEDIA
         }
 
         return $attr;
