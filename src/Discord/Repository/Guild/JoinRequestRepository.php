@@ -15,8 +15,12 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\GuildJoinRequests;
 use Discord\Parts\Guild\JoinRequest;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\resolve;
 
 /**
  * Contains join requests for a guild.
@@ -46,4 +50,26 @@ class JoinRequestRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = JoinRequest::class;
+
+    /**
+     * @inheritDoc
+     */
+    protected function cacheFreshen($response): PromiseInterface
+    {
+        /** @var GuildJoinRequests $response */
+        $response = $this->factory->part(GuildJoinRequests::class, (array) $response, true);
+        $items = [];
+
+        foreach ($response->guild_join_requests as $value) {
+            $value = array_merge($this->vars, (array) $value);
+            $part = $this->factory->part($this->class, $value, true);
+            $items[$part->{$this->discrim}] = $part;
+        }
+
+        if (empty($items)) {
+            return resolve($this);
+        }
+
+        return $this->cache->setMultiple($items)->then(fn ($success) => $this);
+    }
 }
