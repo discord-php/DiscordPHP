@@ -35,9 +35,9 @@ class GuildJoinRequestDelete extends Event
         /** @var Guild $guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var JoinRequest */
-            $request = $guild->join_requests->pull($data->id);
-
-            return $request;
+            if ($request = $guild->join_requests->pull($data->id)) {
+                return $request;
+            }
         }
 
         return $this->factory->part(JoinRequest::class, ['id' => $data->id, 'guild_id' => $data->guild_id, 'user_id' => $data->user_id], true);
