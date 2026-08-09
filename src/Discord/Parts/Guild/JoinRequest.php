@@ -16,8 +16,13 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\JoinRequestRepository;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Represents a guild join request.
@@ -55,6 +60,56 @@ class JoinRequest extends Part
         'actioned_by_user',
     ];
 
+    /**
+     * Approve or reject this join request.
+     *
+     * @param bool|string $action          Either 'APPROVED' or 'REJECTED'.
+     * @param string|null $rejectionReason Optional rejection reason.
+     *
+     * @return PromiseInterface<JoinRequest>
+     */
+    public function action(bool|string $action, ?string $rejectionReason = null): PromiseInterface
+    {
+        $action = is_bool($action) ? ($action ? 'APPROVED' : 'REJECTED') : $action;
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        if ($botperms = $guild->getBotPermissions()) {
+            if (! $botperms->kick_members) {
+                return reject(new NoPermissionsException("You do not have permission to action join requests in the guild {$this->guild_id}."));
+            }
+        }
+
+        return $guild->join_requests->action($this, $action, $rejectionReason)->then(function (JoinRequest $new) {
+            $this->fill((array) $new);
+
+            return $this;
+        });
+    }
+
+    /**
+     * Approve the join request.
+     *
+     * @return PromiseInterface<JoinRequest>
+     */
+    public function approve(): PromiseInterface
+    {
+        return $this->action('APPROVED');
+    }
+
+    /**
+     * Reject the join request.
+     *
+     * @param string|null $reason Reason for rejection.
+     *
+     * @return PromiseInterface<JoinRequest>
+     */
+    public function reject(?string $reason = null): PromiseInterface
+    {
+        return $this->action('REJECTED', $reason);
+    }
+
     protected function getCreatedAtAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('created_at');
@@ -88,5 +143,37 @@ class JoinRequest extends Part
     protected function getActionedByUserAttribute(): ?User
     {
         return $this->attributePartHelper('actioned_by_user', User::class);
+    }
+
+    /**
+     * Returns the originating repository of the part.
+     *
+     * @since 10.55.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return JoinRequestRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): JoinRequestRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->join_requests;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'join_request_id' => $this->id,
+            'id' => $this->id,
+        ];
     }
 }

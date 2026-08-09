@@ -21,6 +21,7 @@ use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\resolve;
+use function React\Promise\reject;
 
 /**
  * Contains join requests for a guild.
@@ -71,5 +72,37 @@ class JoinRequestRepository extends AbstractRepository
         }
 
         return $this->cache->setMultiple($items)->then(fn ($success) => $this);
+    }
+
+    /**
+     * Approve or reject a join request.
+     *
+     * @param JoinRequest|string $joinRequestId   The join request id or part.
+     * @param string             $action          Either 'APPROVED' or 'REJECTED'.
+     * @param string|null        $rejectionReason Optional rejection reason (max 160 chars).
+     *
+     * @return PromiseInterface<JoinRequest>
+     */
+    public function action($joinRequestId, string $action, ?string $rejectionReason = null): PromiseInterface
+    {
+        if ($joinRequestId instanceof JoinRequest) {
+            $part = $joinRequestId;
+        } else {
+            $part = $this->factory->part($this->class, [$this->discrim => (string) $joinRequestId] + $this->vars, true);
+        }
+
+        $endpoint = new Endpoint($this->endpoints['update']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+
+        $payload = ['action' => $action];
+        if ($rejectionReason !== null) {
+            $payload['rejection_reason'] = $rejectionReason;
+        }
+
+        return $this->http->patch($endpoint, $payload)->then(function ($response) {
+            $newPart = $this->factory->part($this->class, (array) $response, true);
+
+            return $this->cache->set($newPart->{$this->discrim}, $newPart)->then(fn ($success) => $newPart);
+        });
     }
 }
