@@ -35,6 +35,7 @@ use Discord\Repository\Guild\EmojiRepository;
 use Discord\Repository\Guild\InviteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
+use Discord\Repository\Guild\JoinRequestRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Parts\Permissions\RolePermission;
@@ -164,6 +165,7 @@ use function React\Promise\resolve;
  * @property EmojiRepository              $emojis
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property JoinRequestRepository        $join_requests
  * @property MessageRepository            $messages
  * @property RoleRepository               $roles
  * @property SoundRepository              $sounds
@@ -364,6 +366,7 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'join_requests' => JoinRequestRepository::class,
         'messages' => MessageRepository::class,
         'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
