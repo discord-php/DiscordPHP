@@ -44,13 +44,12 @@ class FormFieldResponse extends Part
     /** Field where the applicant selects one of many options. */
     public const TYPE_MULTIPLE_CHOICE = 'MULTIPLE_CHOICE';
 
-    /** @todo Add classes for each field type */
     public const TYPES = [
         0 => FormFieldResponse::class, // Fallback for unknown types
-        FormFieldResponse::TYPE_TERMS => FormFieldResponse::class,
-        FormFieldResponse::TYPE_TEXT_INPUT => FormFieldResponse::class,
-        FormFieldResponse::TYPE_PARAGRAPH => FormFieldResponse::class,
-        FormFieldResponse::TYPE_MULTIPLE_CHOICE => FormFieldResponse::class,
+        FormFieldResponse::TYPE_TERMS => TermsFormFieldResponse::class,
+        FormFieldResponse::TYPE_TEXT_INPUT => TextInputFormFieldResponse::class,
+        FormFieldResponse::TYPE_PARAGRAPH => ParagraphFormFieldResponse::class,
+        FormFieldResponse::TYPE_MULTIPLE_CHOICE => MultipleChoiceFormFieldResponse::class,
     ];
 
     /** @inheritDoc */
