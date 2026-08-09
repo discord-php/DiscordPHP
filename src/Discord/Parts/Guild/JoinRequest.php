@@ -21,7 +21,7 @@ use Discord\Parts\User\User;
 
 /**
  * Represents a guild join request.
- * 
+ *
  * @link TODO
  *
  * @since 10.55.0

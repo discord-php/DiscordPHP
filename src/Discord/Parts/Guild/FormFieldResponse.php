@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 
 /**
  * Represents a single form field response in a guild join request.
- * 
+ *
  * @link TODO
  *
  * @since 10.55.0
