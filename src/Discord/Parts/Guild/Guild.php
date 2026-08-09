@@ -130,6 +130,7 @@ use function React\Promise\resolve;
  * @property-read bool $feature_invites_disabled                          Guild has paused invites, preventing new users from joining.
  * @property-read bool $feature_invite_splash                             Guild has access to set an invite splash background.
  * @property-read bool $feature_member_verification_gate_enabled          Guild has enabled membership screening.
+ * @property-read bool $feature_member_verification_manual_approval       guild requires manual approval of join requests to join.
  * @property-read bool $feature_monetization_enabled                      Guild has enabled monetization.
  * @property-read bool $feature_more_soundboard                           Guild has increased custom soundboard sound slots.
  * @property-read bool $feature_more_stickers                             Guild has increased custom sticker slots.
@@ -328,6 +329,7 @@ class Guild extends Part
         'feature_invites_disabled',
         'feature_invite_splash',
         'feature_member_verification_gate_enabled',
+        'feature_member_verification_manual_approval',
         'feature_more_soundboard',
         'feature_more_stickers',
         'feature_news',
