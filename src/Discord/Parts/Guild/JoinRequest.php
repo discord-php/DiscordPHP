@@ -26,16 +26,16 @@ use Discord\Parts\User\User;
  *
  * @since 10.55.0
  *
- * @property string                    $id                 ID of the join request.
- * @property Carbon|null               $created_at         When the applicant started the join request.
- * @property Carbon|null               $reviewed_at        When the join request was approved or rejected.
- * @property string|null               $application_status Application status (STARTED, SUBMITTED, APPROVED, REJECTED).
- * @property string|null               $rejection_reason   Reason the join request was rejected (only set when REJECTED).
- * @property string                    $guild_id           ID of the guild the applicant is applying to.
- * @property string                    $user_id            ID of the applicant.
- * @property ?User|null                $user               The applicant user object.
- * @property ?FormFieldResponse[]|null $form_responses     Applicant's responses to the guild's verification form.
- * @property ?User|null                $actioned_by_user   User who approved or rejected the join request.
+ * @property string                                                       $id                 ID of the join request.
+ * @property Carbon|null                                                  $created_at         When the applicant started the join request.
+ * @property Carbon|null                                                  $reviewed_at        When the join request was approved or rejected.
+ * @property string|null                                                  $application_status Application status (STARTED, SUBMITTED, APPROVED, REJECTED).
+ * @property string|null                                                  $rejection_reason   Reason the join request was rejected (only set when REJECTED).
+ * @property string                                                       $guild_id           ID of the guild the applicant is applying to.
+ * @property string                                                       $user_id            ID of the applicant.
+ * @property ?User|null                                                   $user               The applicant user object.
+ * @property ExCollectionInterface<FormFieldResponse>|FormFieldResponse[] $form_responses     Applicant's responses to the guild's verification form.
+ * @property ?User|null                                                   $actioned_by_user   User who approved or rejected the join request.
  */
 class JoinRequest extends Part
 {
@@ -78,9 +78,9 @@ class JoinRequest extends Part
     /**
      * Returns form responses as an array of FormFieldResponse parts.
      *
-     * @return ExCollectionInterface<FormFieldResponse>|null
+     * @return ExCollectionInterface<FormFieldResponse>
      */
-    protected function getFormResponsesAttribute(): ?ExCollectionInterface
+    protected function getFormResponsesAttribute(): ExCollectionInterface
     {
         return $this->attributeTypedCollectionHelper(FormFieldResponse::class, 'form_responses');
     }
