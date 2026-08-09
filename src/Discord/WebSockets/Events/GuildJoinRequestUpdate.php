@@ -33,7 +33,7 @@ class GuildJoinRequestUpdate extends Event
         $data = $this->factory->part(GuildJoinRequestUpdateData::class, (array) $data, true);
 
         /** @var JoinRequest */
-        $request = $this->factory->part(JoinRequest::class, (array) $data->request, true);
+        $request = $data->request;
 
         /** @var Guild $guild */
         if ($guild = yield $this->discord->guilds->cacheGet($request->guild_id)) {
