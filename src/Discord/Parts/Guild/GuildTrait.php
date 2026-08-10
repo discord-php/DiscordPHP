@@ -168,6 +168,11 @@ trait GuildTrait
         return in_array('MEMBER_VERIFICATION_GATE_ENABLED', $this->features);
     }
 
+    protected function getFeatureMemberVerificationManualApprovalAttribute(): bool
+    {
+        return in_array('MEMBER_VERIFICATION_MANUAL_APPROVAL', $this->features);
+    }
+
     protected function getFeatureMoreSoundboardAttribute(): bool
     {
         return in_array('MORE_SOUNDBOARD', $this->features);

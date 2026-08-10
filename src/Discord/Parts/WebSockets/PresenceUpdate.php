@@ -161,7 +161,7 @@ class PresenceUpdate extends Part
      * Gets the status of the user on their VR client.
      *
      * @return string|null
-     * 
+     *
      * @since 10.54.0
      */
     protected function getVrStatusAttribute(): ?string

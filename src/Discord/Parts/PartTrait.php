@@ -370,7 +370,7 @@ trait PartTrait
 
     /**
      * Returns the updatable attributes.
-     * 
+     *
      * To be used with fields that can be changed after a part has already been created.
      *
      * @return array
@@ -540,7 +540,7 @@ trait PartTrait
 
         foreach ($this->attributes[$key] as &$part) {
             if (! $part instanceof $class) {
-                $part = $this->createOf($class::TYPES[$part->type ?? $part->component_type ?? 0], $part);
+                $part = $this->createOf($class::TYPES[$part->type ?? $part->component_type ?? $part->field_type ?? 0], $part);
             }
             $collection->pushItem($part);
         }

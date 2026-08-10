@@ -35,6 +35,7 @@ use Discord\Repository\Guild\EmojiRepository;
 use Discord\Repository\Guild\InviteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
+use Discord\Repository\Guild\GuildJoinRequestRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Parts\Permissions\RolePermission;
@@ -129,6 +130,7 @@ use function React\Promise\resolve;
  * @property-read bool $feature_invites_disabled                          Guild has paused invites, preventing new users from joining.
  * @property-read bool $feature_invite_splash                             Guild has access to set an invite splash background.
  * @property-read bool $feature_member_verification_gate_enabled          Guild has enabled membership screening.
+ * @property-read bool $feature_member_verification_manual_approval       guild requires manual approval of join requests to join.
  * @property-read bool $feature_monetization_enabled                      Guild has enabled monetization.
  * @property-read bool $feature_more_soundboard                           Guild has increased custom soundboard sound slots.
  * @property-read bool $feature_more_stickers                             Guild has increased custom sticker slots.
@@ -164,6 +166,7 @@ use function React\Promise\resolve;
  * @property EmojiRepository              $emojis
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property GuildJoinRequestRepository   $join_requests
  * @property MessageRepository            $messages
  * @property RoleRepository               $roles
  * @property SoundRepository              $sounds
@@ -326,6 +329,7 @@ class Guild extends Part
         'feature_invites_disabled',
         'feature_invite_splash',
         'feature_member_verification_gate_enabled',
+        'feature_member_verification_manual_approval',
         'feature_more_soundboard',
         'feature_more_stickers',
         'feature_news',
@@ -364,6 +368,7 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'join_requests' => GuildJoinRequestRepository::class,
         'messages' => MessageRepository::class,
         'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,

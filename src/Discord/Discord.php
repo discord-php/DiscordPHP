@@ -1676,7 +1676,6 @@ class Discord
         }
         $this->emittedInit = true;
 
-        
         if (! $this->options['disableVoiceClient']) {
             $this->initializeVoiceManager();
         }
@@ -1696,12 +1695,12 @@ class Discord
 
     /**
      * Initializes the voice manager.
-     * 
+     *
      * @since 10.53.1
      */
     public function initializeVoiceManager(): void
     {
-        if (isset ($this->voice)) {
+        if (isset($this->voice)) {
             return;
         }
 

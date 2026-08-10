@@ -388,11 +388,11 @@ class ChannelBuilder extends Builder implements JsonSerializable
 
     /**
      * Sets the channel flags for Text, Voice, Announcement, Forum, and Media channels.
-     * 
+     *
      * @param int|null $flags The channel flags combined as a bitfield.
-     * 
+     *
      * @return self
-     * 
+     *
      * @since 10.52.0
      */
     public function setFlags(?int $flags = null): self

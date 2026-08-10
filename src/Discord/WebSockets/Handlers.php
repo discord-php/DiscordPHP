@@ -49,6 +49,9 @@ use Discord\WebSockets\Events\GuildSoundboardSoundDelete;
 use Discord\WebSockets\Events\GuildSoundboardSoundUpdate;
 use Discord\WebSockets\Events\GuildStickersUpdate;
 use Discord\WebSockets\Events\GuildUpdate;
+use Discord\WebSockets\Events\GuildJoinRequestCreate;
+use Discord\WebSockets\Events\GuildJoinRequestUpdate;
+use Discord\WebSockets\Events\GuildJoinRequestDelete;
 use Discord\WebSockets\Events\IntegrationCreate;
 use Discord\WebSockets\Events\IntegrationDelete;
 use Discord\WebSockets\Events\IntegrationUpdate;
@@ -123,6 +126,11 @@ class Handlers
         $this->addHandler(Event::WEBHOOKS_UPDATE, WebhooksUpdate::class);
         $this->addHandler(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, ApplicationCommandPermissionsUpdate::class);
         $this->addHandler(Event::GUILD_AUDIT_LOG_ENTRY_CREATE, GuildAuditLogEntryCreate::class);
+
+        // Guild join request handlers
+        $this->addHandler(Event::GUILD_JOIN_REQUEST_CREATE, GuildJoinRequestCreate::class);
+        $this->addHandler(Event::GUILD_JOIN_REQUEST_UPDATE, GuildJoinRequestUpdate::class);
+        $this->addHandler(Event::GUILD_JOIN_REQUEST_DELETE, GuildJoinRequestDelete::class);
 
         // Invite handlers
         $this->addHandler(Event::INVITE_CREATE, InviteCreate::class);
