@@ -8666,6 +8666,41 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-EntityMetadata.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse",
+            "name": "FormFieldResponse",
+            "summary": "Represents\u0020a\u0020single\u0020form\u0020field\u0020response\u0020in\u0020a\u0020guild\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse\u003A\u003ATYPE_TERMS",
+            "name": "TYPE_TERMS",
+            "summary": "Field\u0020requiring\u0020the\u0020applicant\u0020to\u0020acknowledge\u0020a\u0020list\u0020of\u0020terms.",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html#constant_TYPE_TERMS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse\u003A\u003ATYPE_TEXT_INPUT",
+            "name": "TYPE_TEXT_INPUT",
+            "summary": "Short\u0020text\u0020input\u0020field.",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html#constant_TYPE_TEXT_INPUT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse\u003A\u003ATYPE_PARAGRAPH",
+            "name": "TYPE_PARAGRAPH",
+            "summary": "Long\u002Dform\u0020text\u0020input\u0020field.",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html#constant_TYPE_PARAGRAPH"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse\u003A\u003ATYPE_MULTIPLE_CHOICE",
+            "name": "TYPE_MULTIPLE_CHOICE",
+            "summary": "Field\u0020where\u0020the\u0020applicant\u0020selects\u0020one\u0020of\u0020many\u0020options.",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html#constant_TYPE_MULTIPLE_CHOICE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse\u003A\u003ATYPES",
+            "name": "TYPES",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html#constant_TYPES"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\FormFieldResponse\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-FormFieldResponse.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild",
             "name": "Guild",
             "summary": "A\u0020Guild\u0020is\u0020Discord\u0027s\u0020equivalent\u0020of\u0020a\u0020server.\u0020It\u0020contains\u0020all\u0020the\u0020Members,\nChannels,\u0020Roles,\u0020Bans\u0020etc.",
@@ -9101,6 +9136,86 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-Guild-Guild.html#property_repositories"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest",
+            "name": "GuildJoinRequest",
+            "summary": "Represents\u0020a\u0020guild\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003Aaction\u0028\u0029",
+            "name": "action",
+            "summary": "Approve\u0020or\u0020reject\u0020this\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_action"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003Aapprove\u0028\u0029",
+            "name": "approve",
+            "summary": "Approve\u0020the\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_approve"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003Areject\u0028\u0029",
+            "name": "reject",
+            "summary": "Reject\u0020the\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_reject"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetCreatedAtAttribute\u0028\u0029",
+            "name": "getCreatedAtAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getCreatedAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetReviewedAtAttribute\u0028\u0029",
+            "name": "getReviewedAtAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getReviewedAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetFormResponsesAttribute\u0028\u0029",
+            "name": "getFormResponsesAttribute",
+            "summary": "Returns\u0020form\u0020responses\u0020as\u0020an\u0020array\u0020of\u0020FormFieldResponse\u0020parts.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getFormResponsesAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetActionedByUserAttribute\u0028\u0029",
+            "name": "getActionedByUserAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getActionedByUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetRepository\u0028\u0029",
+            "name": "getRepository",
+            "summary": "Returns\u0020the\u0020originating\u0020repository\u0020of\u0020the\u0020part.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getRepository"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003AgetRepositoryAttributes\u0028\u0029",
+            "name": "getRepositoryAttributes",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#method_getRepositoryAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequest\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequest.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequests",
+            "name": "GuildJoinRequests",
+            "summary": "Represents\u0020the\u0020response\u0020from\u0020listing\u0020guild\u0020join\u0020requests.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequests.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequests\u003A\u003AgetGuildJoinRequestsAttribute\u0028\u0029",
+            "name": "getGuildJoinRequestsAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020\u0060GuildJoinRequest\u0060\u0020parts.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequests.html#method_getGuildJoinRequestsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildJoinRequests\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-GuildJoinRequests.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildPreview",
             "name": "GuildPreview",
             "summary": "A\u0020guild\u0020can\u0020be\u0020previewed\u0020before\u0020joining\u0020via\u0020Membership\u0020Screening\u0020or\u0020the\u0020directory.",
@@ -9331,6 +9446,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureMemberVerificationGateEnabledAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureMemberVerificationManualApprovalAttribute\u0028\u0029",
+            "name": "getFeatureMemberVerificationManualApprovalAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureMemberVerificationManualApprovalAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureMoreSoundboardAttribute\u0028\u0029",
             "name": "getFeatureMoreSoundboardAttribute",
             "summary": "",
@@ -9541,6 +9661,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Integration.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\MultipleChoiceFormFieldResponse",
+            "name": "MultipleChoiceFormFieldResponse",
+            "summary": "Represents\u0020a\u0020single\u0020form\u0020field\u0020response\u0020in\u0020a\u0020guild\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-MultipleChoiceFormFieldResponse.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\MultipleChoiceFormFieldResponse\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-MultipleChoiceFormFieldResponse.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction",
             "name": "NewMemberAction",
             "summary": "An\u0020action\u0020taken\u0020for\u0020a\u0020new\u0020member\u0020in\u0020the\u0020welcome\u0020message.",
@@ -9655,6 +9785,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-OnboardingPromptOption.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ParagraphFormFieldResponse",
+            "name": "ParagraphFormFieldResponse",
+            "summary": "Represents\u0020a\u0020single\u0020form\u0020field\u0020response\u0020in\u0020a\u0020guild\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-ParagraphFormFieldResponse.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ParagraphFormFieldResponse\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-ParagraphFormFieldResponse.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Profile",
             "name": "Profile",
@@ -10185,6 +10325,26 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Sticker.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\TermsFormFieldResponse",
+            "name": "TermsFormFieldResponse",
+            "summary": "Represents\u0020a\u0020single\u0020form\u0020field\u0020response\u0020in\u0020a\u0020guild\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-TermsFormFieldResponse.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\TermsFormFieldResponse\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-TermsFormFieldResponse.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\TextInputFormFieldResponse",
+            "name": "TextInputFormFieldResponse",
+            "summary": "Represents\u0020a\u0020single\u0020form\u0020field\u0020response\u0020in\u0020a\u0020guild\u0020join\u0020request.",
+            "url": "classes/Discord-Parts-Guild-TextInputFormFieldResponse.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\TextInputFormFieldResponse\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-TextInputFormFieldResponse.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\WelcomeChannel",
             "name": "WelcomeChannel",
@@ -14576,6 +14736,36 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-Guild-GuildCommandRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildJoinRequestRepository",
+            "name": "GuildJoinRequestRepository",
+            "summary": "Contains\u0020join\u0020requests\u0020for\u0020a\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-GuildJoinRequestRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildJoinRequestRepository\u003A\u003Afreshen\u0028\u0029",
+            "name": "freshen",
+            "summary": "Freshens\u0020the\u0020repository\u0020cache\u0020with\u0020validated\u0020query\u0020params.",
+            "url": "classes/Discord-Repository-Guild-GuildJoinRequestRepository.html#method_freshen"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildJoinRequestRepository\u003A\u003AcacheFreshen\u0028\u0029",
+            "name": "cacheFreshen",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-GuildJoinRequestRepository.html#method_cacheFreshen"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildJoinRequestRepository\u003A\u003Aaction\u0028\u0029",
+            "name": "action",
+            "summary": "Approve\u0020or\u0020reject\u0020a\u0020join\u0020request.",
+            "url": "classes/Discord-Repository-Guild-GuildJoinRequestRepository.html#method_action"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildJoinRequestRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-Guild-GuildJoinRequestRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildJoinRequestRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-Guild-GuildJoinRequestRepository.html#property_class"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildTemplateRepository",
             "name": "GuildTemplateRepository",
             "summary": "Contains\u0020guild\u0020templates\u0020of\u0020a\u0020guild.",
@@ -16536,6 +16726,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_INTEGRATIONS_UPDATE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_JOIN_REQUEST_CREATE",
+            "name": "GUILD_JOIN_REQUEST_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_JOIN_REQUEST_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_JOIN_REQUEST_UPDATE",
+            "name": "GUILD_JOIN_REQUEST_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_JOIN_REQUEST_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_JOIN_REQUEST_DELETE",
+            "name": "GUILD_JOIN_REQUEST_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_JOIN_REQUEST_DELETE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AINTEGRATION_CREATE",
             "name": "INTEGRATION_CREATE",
             "summary": "",
@@ -16946,6 +17151,61 @@ Search.appendIndex(
             "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_CREATE\u0060\u0020event.",
             "url": "classes/Discord-WebSockets-Events-Data-GuildCreateData.html"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestCreateData",
+            "name": "GuildJoinRequestCreateData",
+            "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_JOIN_REQUEST_CREATE\u0060\u0020event.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestCreateData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestCreateData\u003A\u003AgetRequestAttribute\u0028\u0029",
+            "name": "getRequestAttribute",
+            "summary": "Gets\u0020the\u0020request\u0020attribute\u0020as\u0020a\u0020\u0060GuildJoinRequest\u0060\u0020part.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestCreateData.html#method_getRequestAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestCreateData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestCreateData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestDeleteData",
+            "name": "GuildJoinRequestDeleteData",
+            "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_JOIN_REQUEST_DELETE\u0060\u0020event.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestDeleteData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestDeleteData\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestDeleteData.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestDeleteData\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Gets\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestDeleteData.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestDeleteData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestDeleteData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestUpdateData",
+            "name": "GuildJoinRequestUpdateData",
+            "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_JOIN_REQUEST_UPDATE\u0060\u0020event.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestUpdateData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestUpdateData\u003A\u003AgetRequestAttribute\u0028\u0029",
+            "name": "getRequestAttribute",
+            "summary": "Gets\u0020the\u0020request\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestUpdateData.html#method_getRequestAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestUpdateData\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestUpdateData.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildJoinRequestUpdateData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildJoinRequestUpdateData.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildMembersChunkData",
             "name": "GuildMembersChunkData",
             "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_MEMBERS_CHUNK\u0060\u0020event.",
@@ -17135,6 +17395,36 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-GuildIntegrationsUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestCreate",
+            "name": "GuildJoinRequestCreate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildJoinRequestCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildJoinRequestCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestDelete",
+            "name": "GuildJoinRequestDelete",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildJoinRequestDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildJoinRequestDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestUpdate",
+            "name": "GuildJoinRequestUpdate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildJoinRequestUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildJoinRequestUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildMemberAdd",
             "name": "GuildMemberAdd",
