@@ -20,6 +20,12 @@ use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Events\Data\GuildJoinRequestCreateData;
 
 /**
+ * Sent when a user submits a new join request to a guild.
+ * 
+ * This event is only sent to bots with the `KICK_MEMBERS` permission.
+ * 
+ * @see GuildJoinRequest
+ * 
  * @link https://docs.discord.com/developers/events/gateway-events#guild-join-request-create
  *
  * @since 10.55.0
