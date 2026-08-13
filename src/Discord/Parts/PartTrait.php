@@ -76,6 +76,21 @@ trait PartTrait
     }
 
     /**
+     * Delete the part with its originating repository.
+     *
+     * @param string|null $reason The reason for the audit log, if supported.
+     *
+     * @throws \Exception             If the part does not support deleting.
+     * @throws NoPermissionsException Missing permission.
+     *
+     * @return PromiseInterface<Part> Resolves with the deleted part.
+     */
+    public function delete(?string $reason = null): PromiseInterface
+    {
+        return reject(new \Exception('This part does not support deleting.'));
+    }
+
+    /**
      * Whether the part is considered partial i.e. missing information which can
      * be fetched from Discord.
      *
