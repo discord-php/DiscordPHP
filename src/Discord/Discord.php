@@ -26,6 +26,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
+use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Gateway\SessionStartLimit;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -1301,7 +1302,7 @@ class Discord
      */
     public function identify(): void
     {
-        $data = [
+        $data = $this->factory->part(Identify::class, [
             'token' => $this->token,
             'properties' => [
                 'os' => PHP_OS,
@@ -1312,37 +1313,37 @@ class Discord
             ],
             'compress' => $this->usePayloadCompression,
             'intents' => $this->options['intents'],
-        ];
+        ]);
 
         if (isset($this->options['large_threshold'])) {
-            $data['large_threshold'] = $this->options['large_threshold'];
+            $data->large_threshold = $this->options['large_threshold'];
         }
 
         if (isset($this->options['shard'])) {
-            $data['shard'] = $this->options['shard'];
+            $data->shard = $this->options['shard'];
         } elseif (isset($this->options['shard_id'], $this->options['num_shards'])) {
-            $data['shard'] = [
+            $data->shard = [
                 (int) $this->options['shard_id'],
                 (int) $this->options['num_shards'],
             ];
         } elseif (isset($this->options['shardId'], $this->options['shardCount'])) {
-            $data['shard'] = [
+            $data->shard = [
                 (int) $this->options['shardId'], // shard_id
                 (int) $this->options['shardCount'], // num_shards
             ];
         }
 
         if (isset($this->options['presence'])) {
-            $data['presence'] = $this->options['presence'];
+            $data->presence = $this->options['presence'];
         }
 
         if (isset($this->options['capabilities']) && $this->options['capabilities']) {
-            $data['capabilities'] = $this->options['capabilities'];
+            $data->capabilities = $this->options['capabilities'];
         }
 
         $payload = Payload::new(
             Op::OP_IDENTIFY,
-            $data,
+            $data->jsonSerialize(),
         );
 
         $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
