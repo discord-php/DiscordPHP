@@ -22,7 +22,7 @@ use Discord\Parts\User\Activity;
  *
  * @link https://docs.discord.com/developers/events/gateway-events#update-presence
  *
- * @since 10.55.1
+ * @since 10.55.2
  *
  * @property int|null   $since      Unix time (in milliseconds) of when the client went idle, or null if the client is not idle.
  * @property Activity[] $activities User's activities.
