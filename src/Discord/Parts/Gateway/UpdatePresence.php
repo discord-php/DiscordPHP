@@ -42,6 +42,13 @@ class UpdatePresence extends Part
     ];
 
     /**
+     * @inheritDoc
+     */
+    protected $attributes = [
+        'activities' => [],
+    ];
+
+    /**
      * Sets the user's activities.
      *
      * @param Activity[] $activities
