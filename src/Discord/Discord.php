@@ -1589,6 +1589,7 @@ class Discord
             $status = 'online';
         }
 
+        /** @var UpdatePresence $update_presence */
         $update_presence = $this->factory->part(UpdatePresence::class, [
             'since' => $idle,
             'activities' => isset($activity) ? [$activity] : [],

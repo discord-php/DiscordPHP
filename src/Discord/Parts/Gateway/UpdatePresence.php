@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Gateway;
 
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\Activity;
 
@@ -25,10 +24,10 @@ use Discord\Parts\User\Activity;
  *
  * @since 10.55.1
  *
- * @property ?int|null                                  $since      Unix time (in milliseconds) of when the client went idle, or null if the client is not idle.
- * @property ExCollectionInterface<Activity>|Activity[] $activities User's activities.
- * @property string                                     $status     User's new status.
- * @property bool                                       $afk        Whether or not the client is afk.
+ * @property ?int|null  $since      Unix time (in milliseconds) of when the client went idle, or null if the client is not idle.
+ * @property Activity[] $activities User's activities.
+ * @property string     $status     User's new status.
+ * @property bool       $afk        Whether or not the client is afk.
  */
 class UpdatePresence extends Part
 {
@@ -43,32 +42,16 @@ class UpdatePresence extends Part
     ];
 
     /**
-     * Gets the activities attribute.
-     *
-     * @return ExCollectionInterface<Activity> The activities collection.
-     */
-    protected function getActivitiesAttribute(): ExCollectionInterface
-    {
-        return $this->attributeCollectionHelper('activities', Activity::class);
-    }
-
-    /**
      * @inheritDoc
      */
     public function jsonSerialize(): array
     {
         $data = [
+            'since' => $this->since ?? null,
             'status' => $this->status,
             'afk' => $this->afk,
+            'activities' => $this->activities ?? [],
         ];
-
-        if (isset($this->since)) {
-            $data['since'] = $this->since;
-        }
-
-        if (isset($this->activities)) {
-            $data['activities'] = $this->activities;
-        }
 
         return $data;
     }
