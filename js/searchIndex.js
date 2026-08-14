@@ -7881,6 +7881,21 @@ Search.appendIndex(
             "summary": "Sent\u0020by\u0020the\u0020client\u0020to\u0020indicate\u0020a\u0020presence\u0020or\u0020status\u0020update.",
             "url": "classes/Discord-Parts-Gateway-UpdatePresence.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence\u003A\u003AsetActivities\u0028\u0029",
+            "name": "setActivities",
+            "summary": "Sets\u0020the\u0020user\u0027s\u0020activities.",
+            "url": "classes/Discord-Parts-Gateway-UpdatePresence.html#method_setActivities"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence\u003A\u003AaddActivity\u0028\u0029",
+            "name": "addActivity",
+            "summary": "Adds\u0020an\u0020activity\u0020to\u0020the\u0020user\u0027s\u0020presence.",
+            "url": "classes/Discord-Parts-Gateway-UpdatePresence.html#method_addActivity"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence\u003A\u003AremoveActivity\u0028\u0029",
+            "name": "removeActivity",
+            "summary": "Removes\u0020an\u0020activity\u0020from\u0020the\u0020user\u0027s\u0020presence.",
+            "url": "classes/Discord-Parts-Gateway-UpdatePresence.html#method_removeActivity"
+        },                {
             "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
             "summary": "",
