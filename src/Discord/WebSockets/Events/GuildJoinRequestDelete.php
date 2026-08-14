@@ -21,11 +21,11 @@ use Discord\WebSockets\Events\Data\GuildJoinRequestDeleteData;
 
 /**
  * Sent when a join request is deleted, such as when the applicant withdraws it.
- * 
+ *
  * This event is only sent to bots with the `KICK_MEMBERS` permission.
- * 
+ *
  * @see GuildJoinRequest
- * 
+ *
  * @link https://docs.discord.com/developers/events/gateway-events#guild-join-request-delete
  *
  * @since 10.55.0

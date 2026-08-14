@@ -21,11 +21,11 @@ use Discord\Parts\Guild\GuildJoinRequest;
 
 /**
  * Sent when a join request is updated, such as when a user submits a request they had already started, or when a request is approved or rejected.
- * 
+ *
  * This event is only sent to bots with the `KICK_MEMBERS` permission.
- * 
+ *
  * @see GuildJoinRequest
- * 
+ *
  * @link https://docs.discord.com/developers/events/gateway-events#guild-join-request-update
  *
  * @since 10.55.0
