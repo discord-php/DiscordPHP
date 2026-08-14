@@ -118,7 +118,6 @@ class Discord
      *
      * @var string Version.
      */
-
     public const VERSION = 'v10.56.0';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
@@ -1563,12 +1562,12 @@ class Discord
      * @link https://docs.discord.com/developers/events/gateway-events#update-presence
      *
      * @param Activity[]|Activity|null $activity The current client activity, or null.
-     *                                Note: Both name and state must be set to use custom, and the only valid fields are `name`, `state`, `type` and `url`.
-     * @param bool          $idle     Whether the client is idle.
-     * @param string        $status   The current status of the client.
-     *                                Must be one of the following:
-     *                                online, dnd, idle, invisible, offline
-     * @param bool          $afk      Whether the client is AFK.
+     *                                           Note: Both name and state must be set to use custom, and the only valid fields are `name`, `state`, `type` and `url`.
+     * @param bool                     $idle     Whether the client is idle.
+     * @param string                   $status   The current status of the client.
+     *                                           Must be one of the following:
+     *                                           online, dnd, idle, invisible, offline
+     * @param bool                     $afk      Whether the client is AFK.
      *
      * @throws \UnexpectedValueException
      */
@@ -1580,8 +1579,8 @@ class Discord
             $activities = is_array($activity) ? $activity : [$activity];
             foreach ($activities as $act) {
                 if (! $act instanceof Activity) {
-                     throw new \UnexpectedValueException('Each activity must be an instance of '.Activity::class.'.');
-                 }
+                    throw new \UnexpectedValueException('Each activity must be an instance of '.Activity::class.'.');
+                }
 
                 if (! in_array($act->type, [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
                     throw new \UnexpectedValueException("The given activity type ({$act->type}) is invalid.");
