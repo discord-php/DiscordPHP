@@ -28,6 +28,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Gateway\SessionStartLimit;
+use Discord\Parts\Gateway\UpdatePresence;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -1588,14 +1589,16 @@ class Discord
             $status = 'online';
         }
 
+        $update_presence = $this->factory->part(UpdatePresence::class, [
+            'since' => $idle,
+            'activities' => isset($activity) ? [$activity] : [],
+            'status' => $status,
+            'afk' => $afk,
+        ]);
+
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
-            [
-                'since' => $idle,
-                'activities' => [$activity],
-                'status' => $status,
-                'afk' => $afk,
-            ],
+            $update_presence->jsonSerialize(),
         );
 
         $this->send($payload);
