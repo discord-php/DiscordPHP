@@ -28,6 +28,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Gateway\SessionStartLimit;
+use Discord\Parts\Gateway\UpdatePresence;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -117,7 +118,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.55.1';
+    public const VERSION = 'v10.55.2';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -1588,14 +1589,17 @@ class Discord
             $status = 'online';
         }
 
+        /** @var UpdatePresence $update_presence */
+        $update_presence = $this->factory->part(UpdatePresence::class, [
+            'since' => $idle,
+            'activities' => isset($activity) ? [$activity] : [],
+            'status' => $status,
+            'afk' => $afk,
+        ]);
+
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
-            [
-                'since' => $idle,
-                'activities' => [$activity],
-                'status' => $status,
-                'afk' => $afk,
-            ],
+            $update_presence->jsonSerialize(),
         );
 
         $this->send($payload);
