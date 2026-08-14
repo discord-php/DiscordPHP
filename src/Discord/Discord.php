@@ -1579,7 +1579,7 @@ class Discord
             $activities = is_array($activity) ? $activity : [$activity];
             foreach ($activities as $act) {
                 if (! $act instanceof Activity) {
-                    throw new \UnexpectedValueException('Each activity must be an instance of '.Activity::class.'.');
+                    throw new \UnexpectedValueException('Each activity must be an instance of an Activity.');
                 }
 
                 if (! in_array($act->type, [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
