@@ -7841,6 +7841,26 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-GetGatewayBot.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\Identify",
+            "name": "Identify",
+            "summary": "The\u0020payload\u0020used\u0020to\u0020trigger\u0020the\u0020initial\u0020handshake\u0020with\u0020the\u0020Gateway.",
+            "url": "classes/Discord-Parts-Gateway-Identify.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\Identify\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Gateway-Identify.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\Identify\u003A\u003AFLAG_CHANNEL_OBFUSCATION",
+            "name": "FLAG_CHANNEL_OBFUSCATION",
+            "summary": "Opts\u0020the\u0020client\u0020into\u0020receiving\u0020obfuscated\u0020channel\u0020metadata.",
+            "url": "classes/Discord-Parts-Gateway-Identify.html#constant_FLAG_CHANNEL_OBFUSCATION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\Identify\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-Identify.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Gateway\\SessionStartLimit",
             "name": "SessionStartLimit",
             "summary": "Information\u0020on\u0020the\u0020current\u0020session\u0020start\u0020limit.",
@@ -17398,7 +17418,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestCreate",
             "name": "GuildJoinRequestCreate",
-            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "summary": "Sent\u0020when\u0020a\u0020user\u0020submits\u0020a\u0020new\u0020join\u0020request\u0020to\u0020a\u0020guild.",
             "url": "classes/Discord-WebSockets-Events-GuildJoinRequestCreate.html"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestCreate\u003A\u003Ahandle\u0028\u0029",
@@ -17408,7 +17428,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestDelete",
             "name": "GuildJoinRequestDelete",
-            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "summary": "Sent\u0020when\u0020a\u0020join\u0020request\u0020is\u0020deleted,\u0020such\u0020as\u0020when\u0020the\u0020applicant\u0020withdraws\u0020it.",
             "url": "classes/Discord-WebSockets-Events-GuildJoinRequestDelete.html"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestDelete\u003A\u003Ahandle\u0028\u0029",
@@ -17418,7 +17438,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestUpdate",
             "name": "GuildJoinRequestUpdate",
-            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "summary": "Sent\u0020when\u0020a\u0020join\u0020request\u0020is\u0020updated,\u0020such\u0020as\u0020when\u0020a\u0020user\u0020submits\u0020a\u0020request\u0020they\u0020had\u0020already\u0020started,\u0020or\u0020when\u0020a\u0020request\u0020is\u0020approved\u0020or\u0020rejected.",
             "url": "classes/Discord-WebSockets-Events-GuildJoinRequestUpdate.html"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildJoinRequestUpdate\u003A\u003Ahandle\u0028\u0029",
