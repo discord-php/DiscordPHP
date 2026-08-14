@@ -7876,6 +7876,21 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-SessionStartLimit.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence",
+            "name": "UpdatePresence",
+            "summary": "Sent\u0020by\u0020the\u0020client\u0020to\u0020indicate\u0020a\u0020presence\u0020or\u0020status\u0020update.",
+            "url": "classes/Discord-Parts-Gateway-UpdatePresence.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Gateway-UpdatePresence.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdatePresence\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-UpdatePresence.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Account",
             "name": "Account",
             "summary": "integration\u0020account\u0020information.",
