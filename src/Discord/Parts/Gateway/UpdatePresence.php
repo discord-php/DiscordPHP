@@ -47,23 +47,27 @@ class UpdatePresence extends Part
      * @param Activity[] $activities
      *
      * @return self
-     * 
+     *
      * @since 10.56.0
      */
     public function setActivities(array $activities = []): self
     {
-        $this->activities = $activities;
+        $this->activities = [];
+        
+        foreach ($activities as $activity) {
+            $this->addActivity($activity);
+        }
 
         return $this;
     }
 
     /**
      * Adds an activity to the user's presence.
-     * 
+     *
      * @param Activity $activity The activity to add.
-     * 
+     *
      * @return self
-     * 
+     *
      * @since 10.56.0
      */
     public function addActivity(Activity $activity): self
@@ -82,7 +86,7 @@ class UpdatePresence extends Part
      * @param Activity $activity The activity to remove.
      *
      * @return self
-     * 
+     *
      * @since 10.56.0
      */
     public function removeActivity(Activity $activity): self
