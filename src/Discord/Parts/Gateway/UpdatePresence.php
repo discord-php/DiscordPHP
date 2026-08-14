@@ -24,7 +24,7 @@ use Discord\Parts\User\Activity;
  *
  * @since 10.55.1
  *
- * @property ?int|null  $since      Unix time (in milliseconds) of when the client went idle, or null if the client is not idle.
+ * @property int|null   $since      Unix time (in milliseconds) of when the client went idle, or null if the client is not idle.
  * @property Activity[] $activities User's activities.
  * @property string     $status     User's new status.
  * @property bool       $afk        Whether or not the client is afk.
