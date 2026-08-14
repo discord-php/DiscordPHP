@@ -1562,7 +1562,7 @@ class Discord
      *
      * @link https://docs.discord.com/developers/events/gateway-events#update-presence
      *
-     * @param Activity|null $activity The current client activity, or null.
+     * @param Activity[]|Activity|null $activity The current client activity, or null.
      *                                Note: Both name and state must be set to use custom, and the only valid fields are `name`, `state`, `type` and `url`.
      * @param bool          $idle     Whether the client is idle.
      * @param string        $status   The current status of the client.
@@ -1572,13 +1572,16 @@ class Discord
      *
      * @throws \UnexpectedValueException
      */
-    public function updatePresence(?Activity $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
+    public function updatePresence(array|Activity|null $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
     {
         $idle = $idle ? time() * 1000 : null;
 
         if (null !== $activity) {
-            if (! in_array($activity->type, [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
-                throw new \UnexpectedValueException("The given activity type ({$activity->type}) is invalid.");
+            $activities = is_array($activity) ? $activity : [$activity];
+            foreach ($activities as $act) {
+                if (! in_array($act->type, [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
+                    throw new \UnexpectedValueException("The given activity type ({$act->type}) is invalid.");
+                }
             }
         }
 
@@ -1595,9 +1598,15 @@ class Discord
             'afk' => $afk,
         ]);
 
-        isset($activity)
-            ? $update_presence->addActivity($activity)
-            : $update_presence->setActivities();
+        if (isset($activity)) {
+            if (is_array($activity)) {
+                $update_presence->setActivities($activity);
+            } else {
+                $update_presence->addActivity($activity);
+            }
+        } else {
+            $update_presence->setActivities();
+        }
 
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
