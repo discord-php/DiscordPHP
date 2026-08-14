@@ -1576,10 +1576,8 @@ class Discord
         $idle = $idle ? time() * 1000 : null;
 
         if (null !== $activity) {
-            $activity = $activity->getRawAttributes();
-
-            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
-                throw new \UnexpectedValueException("The given activity type ({$activity['type']}) is invalid.");
+            if (! in_array($activity->type, [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
+                throw new \UnexpectedValueException("The given activity type ({$activity->type}) is invalid.");
             }
         }
 
@@ -1592,10 +1590,13 @@ class Discord
         /** @var UpdatePresence $update_presence */
         $update_presence = $this->factory->part(UpdatePresence::class, [
             'since' => $idle,
-            'activities' => isset($activity) ? [$activity] : [],
             'status' => $status,
             'afk' => $afk,
         ]);
+
+        isset($activity)
+            ? $update_presence->addActivity($activity)
+            : $update_presence->setActivities();
 
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
