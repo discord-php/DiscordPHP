@@ -64,7 +64,10 @@ class UpdatePresence extends Part
      */
     public function addActivity(Activity $activity): self
     {
-        $this->activities[] = $activity;
+        $activities = $this->activities ?? [];
+        $activities[] = $activity;
+
+        $this->activities = $activities;
 
         return $this;
     }
@@ -78,9 +81,12 @@ class UpdatePresence extends Part
      */
     public function removeActivity(Activity $activity): self
     {
-        if (($idx = array_search($activity, $this->activities)) !== false) {
-            array_splice($this->activities, $idx, 1);
+        $activities = $this->activities ?? [];
+        if (($idx = array_search($activity, $activities)) !== false) {
+            array_splice($activities, $idx, 1);
         }
+
+        $this->activities = $activities;
 
         return $this;
     }
