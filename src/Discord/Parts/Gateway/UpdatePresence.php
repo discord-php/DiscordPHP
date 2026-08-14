@@ -42,6 +42,62 @@ class UpdatePresence extends Part
     ];
 
     /**
+     * Sets the user's activities.
+     *
+     * @param Activity[] $activities
+     *
+     * @return self
+     * 
+     * @since 10.56.0
+     */
+    public function setActivities(array $activities = []): self
+    {
+        $this->activities = $activities;
+
+        return $this;
+    }
+
+    /**
+     * Adds an activity to the user's presence.
+     * 
+     * @param Activity $activity The activity to add.
+     * 
+     * @return self
+     * 
+     * @since 10.56.0
+     */
+    public function addActivity(Activity $activity): self
+    {
+        $activities = $this->activities ?? [];
+        $activities[] = $activity;
+
+        $this->activities = $activities;
+
+        return $this;
+    }
+
+    /**
+     * Removes an activity from the user's presence.
+     *
+     * @param Activity $activity The activity to remove.
+     *
+     * @return self
+     * 
+     * @since 10.56.0
+     */
+    public function removeActivity(Activity $activity): self
+    {
+        $activities = $this->activities ?? [];
+        if (($idx = array_search($activity, $activities)) !== false) {
+            array_splice($activities, $idx, 1);
+        }
+
+        $this->activities = $activities;
+
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      */
     public function jsonSerialize(): array
