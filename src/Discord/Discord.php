@@ -1602,11 +1602,7 @@ class Discord
         ]);
 
         if (isset($activity)) {
-            if (is_array($activity)) {
-                $update_presence->setActivities($activity);
-            } else {
-                $update_presence->addActivity($activity);
-            }
+            $update_presence->setActivities(is_array($activity) ? $activity : [$activity]);
         } else {
             $update_presence->setActivities();
         }
