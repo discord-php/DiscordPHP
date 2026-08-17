@@ -7906,6 +7906,21 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-UpdatePresence.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdateVoiceState",
+            "name": "UpdateVoiceState",
+            "summary": "Sent\u0020when\u0020a\u0020client\u0020wants\u0020to\u0020join,\u0020move,\u0020or\u0020disconnect\u0020from\u0020a\u0020voice\u0020channel.",
+            "url": "classes/Discord-Parts-Gateway-UpdateVoiceState.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdateVoiceState\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Gateway-UpdateVoiceState.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\UpdateVoiceState\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-UpdateVoiceState.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Account",
             "name": "Account",
             "summary": "integration\u0020account\u0020information.",
