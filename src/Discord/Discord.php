@@ -1544,6 +1544,7 @@ class Discord
             $channel_id = $channel_id->id;
         }
 
+        /** @var UpdateVoiceState $updateVoiceState */
         $updateVoiceState = $this->factory->part(UpdateVoiceState::class, [
             'guild_id' => $guild_id,
             'channel_id' => $channel_id,
@@ -1598,21 +1599,21 @@ class Discord
         }
 
         /** @var UpdatePresence $update_presence */
-        $update_presence = $this->factory->part(UpdatePresence::class, [
+        $UpdatePresence = $this->factory->part(UpdatePresence::class, [
             'since' => $idle,
             'status' => $status,
             'afk' => $afk,
         ]);
 
         if (isset($activity)) {
-            $update_presence->setActivities(is_array($activity) ? $activity : [$activity]);
+            $UpdatePresence->setActivities(is_array($activity) ? $activity : [$activity]);
         } else {
-            $update_presence->setActivities();
+            $UpdatePresence->setActivities();
         }
 
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
-            $update_presence->jsonSerialize(),
+            $UpdatePresence->jsonSerialize(),
         );
 
         $this->send($payload);
