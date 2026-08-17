@@ -39,4 +39,19 @@ class UpdateVoiceState extends Part
         'self_mute',
         'self_deaf',
     ];
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = [
+            'guild_id' => $this->guild_id,
+            'channel_id' => $this->channel_id ?? null,
+            'self_mute' => $this->self_mute,
+            'self_deaf' => $this->self_deaf,
+        ];
+
+        return $data;
+    }
 }
