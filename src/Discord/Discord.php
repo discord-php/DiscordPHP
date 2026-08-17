@@ -1598,22 +1598,22 @@ class Discord
             $status = 'online';
         }
 
-        /** @var UpdatePresence $update_presence */
-        $UpdatePresence = $this->factory->part(UpdatePresence::class, [
+        /** @var UpdatePresence $updatePresence */
+        $updatePresence = $this->factory->part(UpdatePresence::class, [
             'since' => $idle,
             'status' => $status,
             'afk' => $afk,
         ]);
 
         if (isset($activity)) {
-            $UpdatePresence->setActivities(is_array($activity) ? $activity : [$activity]);
+            $updatePresence->setActivities(is_array($activity) ? $activity : [$activity]);
         } else {
-            $UpdatePresence->setActivities();
+            $updatePresence->setActivities();
         }
 
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
-            $UpdatePresence->jsonSerialize(),
+            $updatePresence->jsonSerialize(),
         );
 
         $this->send($payload);
