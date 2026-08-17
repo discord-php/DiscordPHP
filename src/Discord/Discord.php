@@ -29,6 +29,7 @@ use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Gateway\SessionStartLimit;
 use Discord\Parts\Gateway\UpdatePresence;
+use Discord\Parts\Gateway\UpdateVoiceState;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -1543,14 +1544,16 @@ class Discord
             $channel_id = $channel_id->id;
         }
 
+        $updateVoiceState = $this->factory->part(UpdateVoiceState::class, [
+            'guild_id' => $guild_id,
+            'channel_id' => $channel_id,
+            'self_mute' => $self_mute,
+            'self_deaf' => $self_deaf,
+        ]);
+
         $payload = Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
-            [
-                'guild_id' => $guild_id,
-                'channel_id' => $channel_id,
-                'self_mute' => $self_mute,
-                'self_deaf' => $self_deaf,
-            ]
+            $updateVoiceState->jsonSerialize()
         );
 
         $this->send($payload);
