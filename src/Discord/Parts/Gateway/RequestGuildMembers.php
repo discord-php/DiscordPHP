@@ -26,12 +26,12 @@ use Discord\Parts\User\User;
  *
  * @since 10.56.3
  *
- * @property string                $guild_id  ID of the guild to get members for.
- * @property ?string               $query     String that username starts with, or an empty string to return all members. One of `query` or `user_ids` is required.
- * @property int                   $limit     Maximum number of members to send matching the `query`; a limit of `0` can be used with an empty string `query` to return all members. Required when specifying `query`.
- * @property ?bool                 $presences Used to specify if we want the presences of the matched members.
- * @property ?string|string[]|null $user_ids  Used to specify which users you wish to fetch. One of `query` or `user_ids` is required.
- * @property ?string               $nonce     Nonce to identify the Guild Members Chunk response.
+ * @property string             $guild_id  ID of the guild to get members for.
+ * @property string             $query     String that username starts with, or an empty string to return all members. Required when not including `user_ids`.
+ * @property int                $limit     Maximum number of members to send matching the `query`; a limit of `0` can be used with an empty string `query` to return all members. Required when including a `query`.
+ * @property ?bool|null         $presences Whether to include presences of matched members.
+ * @property ?string|array|null $user_ids  Snowflake or array of snowflakes to specify which users to fetch. Required when not including a `query`.
+ * @property ?string|null       $nonce     Nonce to identify the Guild Members Chunk response.
  *
  * @property-read ?Guild                             $guild The guild to get members for.
  * @property-read ExCollectionInterface<User>|User[] $users The users of the `user_ids`.
@@ -94,23 +94,23 @@ class RequestGuildMembers extends Part
     {
         $data = [
             'guild_id' => $this->guild_id,
-            'limit' => $this->limit,
         ];
 
-        if (isset($this->query)) {
-            $data['query'] = $this->query;
+        if (isset($this->attributes['user_ids'])) {
+            $data['user_ids'] = is_array($this->attributes['user_ids'])
+                ? array_values($this->attributes['user_ids'])
+                : [$this->attributes['user_ids']];
+        } else {
+            $data['query'] = $this->attributes['query'] ?? '';
+            $data['limit'] = $this->limit;
         }
 
-        if (isset($this->presences)) {
-            $data['presences'] = $this->presences;
+        if (isset($this->attributes['presences'])) {
+            $data['presences'] = (bool) $this->attributes['presences'];
         }
 
-        if (isset($this->user_ids)) {
-            $data['user_ids'] = $this->user_ids;
-        }
-
-        if (isset($this->nonce)) {
-            $data['nonce'] = $this->nonce;
+        if (isset($this->attributes['nonce'])) {
+            $data['nonce'] = (string) $this->attributes['nonce'];
         }
 
         return $data;
