@@ -7861,6 +7861,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-Identify.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestChannelInfo",
+            "name": "RequestChannelInfo",
+            "summary": "Requests\u0020ephemeral\u0020channel\u0020data\u0020for\u0020channels\u0020in\u0020a\u0020guild.\u0020The\u0020server\u0020will\u0020send\u0020a\u0020Channel\u0020Info\u0020event\u0020in\u0020response.",
+            "url": "classes/Discord-Parts-Gateway-RequestChannelInfo.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestChannelInfo\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-RequestChannelInfo.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers",
             "name": "RequestGuildMembers",
             "summary": "Used\u0020to\u0020request\u0020all\u0020members\u0020for\u0020a\u0020guild\u0020or\u0020a\u0020list\u0020of\u0020guilds.",
