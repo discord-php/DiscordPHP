@@ -1307,7 +1307,7 @@ class Discord
      */
     public function identify(): void
     {
-        $data = $this->factory->part(Identify::class, [
+        $identify = $this->factory->part(Identify::class, [
             'token' => $this->token,
             'properties' => [
                 'os' => PHP_OS,
@@ -1321,34 +1321,34 @@ class Discord
         ]);
 
         if (isset($this->options['large_threshold'])) {
-            $data->large_threshold = $this->options['large_threshold'];
+            $identify->large_threshold = $this->options['large_threshold'];
         }
 
         if (isset($this->options['shard'])) {
-            $data->shard = $this->options['shard'];
+            $identify->shard = $this->options['shard'];
         } elseif (isset($this->options['shard_id'], $this->options['num_shards'])) {
-            $data->shard = [
+            $identify->shard = [
                 (int) $this->options['shard_id'],
                 (int) $this->options['num_shards'],
             ];
         } elseif (isset($this->options['shardId'], $this->options['shardCount'])) {
-            $data->shard = [
+            $identify->shard = [
                 (int) $this->options['shardId'], // shard_id
                 (int) $this->options['shardCount'], // num_shards
             ];
         }
 
         if (isset($this->options['presence'])) {
-            $data->presence = $this->options['presence'];
+            $identify->presence = $this->options['presence'];
         }
 
         if (isset($this->options['capabilities']) && $this->options['capabilities']) {
-            $data->capabilities = $this->options['capabilities'];
+            $identify->capabilities = $this->options['capabilities'];
         }
 
         $payload = Payload::new(
             Op::OP_IDENTIFY,
-            $data->jsonSerialize(),
+            $identify->jsonSerialize(),
         );
 
         $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
