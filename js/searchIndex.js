@@ -7891,6 +7891,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\Resume",
+            "name": "Resume",
+            "summary": "Used\u0020to\u0020replay\u0020missed\u0020events\u0020when\u0020a\u0020disconnected\u0020client\u0020resumes.",
+            "url": "classes/Discord-Parts-Gateway-Resume.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\Resume\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-Resume.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Gateway\\SessionStartLimit",
             "name": "SessionStartLimit",
             "summary": "Information\u0020on\u0020the\u0020current\u0020session\u0020start\u0020limit.",
