@@ -28,6 +28,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Gateway\RequestGuildMembers;
+use Discord\Parts\Gateway\Resume;
 use Discord\Parts\Gateway\SessionStartLimit;
 use Discord\Parts\Gateway\UpdatePresence;
 use Discord\Parts\Gateway\UpdateVoiceState;
@@ -120,7 +121,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.56.2';
+    public const VERSION = 'v10.56.4';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -1364,13 +1365,15 @@ class Discord
      */
     public function resume(#[\SensitiveParameter] string $token, string $session_id, int $seq): void
     {
+        $resume = $this->factory->part(Resume::class, [
+            'token' => $token,
+            'session_id' => $session_id,
+            'seq' => $seq,
+        ]);
+
         $payload = Payload::new(
             Op::OP_RESUME,
-            [
-                'session_id' => $session_id,
-                'seq' => $seq,
-                'token' => $token,
-            ],
+            $resume->jsonSerialize(),
         );
 
         $this->logger->info('resuming connection', ['payload' => $payload->__debugInfo()]);
