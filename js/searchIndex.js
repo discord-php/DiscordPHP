@@ -7861,6 +7861,36 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-Identify.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers",
+            "name": "RequestGuildMembers",
+            "summary": "Used\u0020to\u0020request\u0020all\u0020members\u0020for\u0020a\u0020guild\u0020or\u0020a\u0020list\u0020of\u0020guilds.",
+            "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers\u003A\u003AgetLimitAttribute\u0028\u0029",
+            "name": "getLimitAttribute",
+            "summary": "Gets\u0020the\u0020limit\u0020attribute,\u0020defaulting\u0020to\u00200\u0020if\u0020not\u0020set.",
+            "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html#method_getLimitAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers\u003A\u003AgetUsersAttribute\u0028\u0029",
+            "name": "getUsersAttribute",
+            "summary": "Gets\u0020the\u0020users\u0020of\u0020the\u0020user\u0020IDs.",
+            "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html#method_getUsersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\RequestGuildMembers\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-RequestGuildMembers.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Gateway\\SessionStartLimit",
             "name": "SessionStartLimit",
             "summary": "Information\u0020on\u0020the\u0020current\u0020session\u0020start\u0020limit.",
