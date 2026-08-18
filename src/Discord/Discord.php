@@ -27,6 +27,7 @@ use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
+use Discord\Parts\Gateway\RequestGuildMembers;
 use Discord\Parts\Gateway\SessionStartLimit;
 use Discord\Parts\Gateway\UpdatePresence;
 use Discord\Parts\Gateway\UpdateVoiceState;
@@ -1428,43 +1429,16 @@ class Discord
      */
     public function requestGuildMembers($guild_id, array $options = []): void
     {
-        if (! isset($options['query']) && ! isset($options['user_ids'])) {
-            if (! isset($options['limit'])) {
-                $options['limit'] = 0;
-            }
-            $options['query'] = '';
-        }
-
         if (! is_string($guild_id)) {
             $guild_id = $guild_id->id;
         }
 
-        $payloadData = [
-            'guild_id' => $guild_id,
-        ];
-
-        if (isset($options['user_ids'])) {
-            // If user_ids is set, query and limit must NOT be set
-            $payloadData['user_ids'] = is_array($options['user_ids'])
-                ? array_values($options['user_ids'])
-                : [$options['user_ids']];
-        } else {
-            // If user_ids is not set, query and limit are required
-            $payloadData['query'] = $options['query'] ?? '';
-            $payloadData['limit'] = $options['limit'] ?? 0;
-        }
-
-        if (array_key_exists('presences', $options)) {
-            $payloadData['presences'] = (bool) $options['presences'];
-        }
-
-        if (isset($options['nonce'])) {
-            $payloadData['nonce'] = (string) $options['nonce'];
-        }
+        /** @var RequestGuildMembers $requestGuildMembers */
+        $requestGuildMembers = $this->factory->part(RequestGuildMembers::class, array_merge(['guild_id' => $guild_id], $options));
 
         $payload = Payload::new(
             Op::OP_REQUEST_GUILD_MEMBERS,
-            $payloadData,
+            $requestGuildMembers->jsonSerialize(),
         );
 
         $this->send($payload);
