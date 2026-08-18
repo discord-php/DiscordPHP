@@ -27,6 +27,7 @@ use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
+use Discord\Parts\Gateway\RequestChannelInfo;
 use Discord\Parts\Gateway\RequestGuildMembers;
 use Discord\Parts\Gateway\Resume;
 use Discord\Parts\Gateway\SessionStartLimit;
@@ -121,7 +122,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.56.4';
+    public const VERSION = 'v10.56.5';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -1486,14 +1487,14 @@ class Discord
             $guild = $guild->id;
         }
 
-        $payloadData = [
+        $RequestChannelInfo = $this->factory->part(RequestChannelInfo::class, [
             'guild_id' => $guild,
             'fields' => array_values($fields),
-        ];
+        ]);
 
         $payload = Payload::new(
             Op::OP_REQUEST_CHANNEL_INFO,
-            $payloadData,
+            $RequestChannelInfo->jsonSerialize(),
         );
 
         $this->send($payload);
