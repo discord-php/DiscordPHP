@@ -1583,11 +1583,7 @@ class Discord
             'afk' => $afk,
         ]);
 
-        if (isset($activity)) {
-            $updatePresence->setActivities(is_array($activity) ? $activity : [$activity]);
-        } else {
-            $updatePresence->setActivities();
-        }
+        $updatePresence->setActivities(isset($activity) ? (is_array($activity) ? $activity : [$activity]) : []);
 
         $payload = Payload::new(
             Op::OP_UPDATE_PRESENCE,
