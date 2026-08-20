@@ -14,12 +14,8 @@ declare(strict_types=1);
 
 namespace Discord\Helpers;
 
-use Discord\Parts\Part;
-
 use DateTimeInterface;
-use Discord\Discord;
 use InvalidArgumentException;
-use ReflectionClass;
 use Stringable;
 
 /**
@@ -34,8 +30,16 @@ use Stringable;
  * @property int    $timestamp Unix timestamp (in seconds) that will be displayed.
  * @property string $format    The Discord timestamp style, one of the `Timestamp::*` constants. Defaults to `Timestamp::STYLE_SHORT_DATE_TIME`.
  */
-class Timestamp extends Part implements Stringable
+class Timestamp implements Stringable
 {
+    use DynamicPropertyMutatorTrait;
+
+    /** Unix timestamp (in seconds) that will be displayed. */
+    protected int $timestamp;
+
+    /** The Discord timestamp style, one of the `Timestamp::*` constants. Defaults to `Timestamp::STYLE_SHORT_DATE_TIME`. */
+    protected string $format;
+
     /** Short Time, e.g. `16:20`. */
     public const STYLE_SHORT_TIME = 't';
 
@@ -81,27 +85,34 @@ class Timestamp extends Part implements Stringable
     ];
 
     /**
-     * @inheritdoc
+     * Creates a new Timestamp instance.
+     *
+     * @param DateTimeInterface|int|string $timestamp A `DateTimeInterface` (e.g. `DateTime`, `Carbon`) or a Unix timestamp in seconds.
+     * @param string                       $format    One of the `Timestamp::*` style constants.
      */
-    protected $fillable = [
-        'timestamp',
-        'format',
-    ];
+    public function __construct($timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
+    {
+        $this->setProperty('timestamp', $timestamp);
+        $this->setProperty('format', $format);
+    }
 
     /**
      * Creates a new Timestamp instance.
      *
-     * @param Discord                      $discord   The Discord client instance.
      * @param DateTimeInterface|int|string $timestamp A `DateTimeInterface` (e.g. `DateTime`, `Carbon`) or a Unix timestamp in seconds.
      * @param string                       $format    One of the `Timestamp::*` style constants.
      */
-    public static function new(Discord $discord, $timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
+    public static function new($timestamp, string $format = self::STYLE_SHORT_DATE_TIME): self
     {
-        $instance = new self($discord);
-        $instance->timestamp = $timestamp;
-        $instance->format = $format;
+        return new self($timestamp, $format);
+    }
 
-        return $instance;
+    /**
+     * @return int Unix timestamp (in seconds).
+     */
+    protected function getTimestamp(): int
+    {
+        return $this->timestamp;
     }
 
     /**
@@ -109,7 +120,7 @@ class Timestamp extends Part implements Stringable
      *
      * @param DateTimeInterface|int|string $timestamp
      */
-    protected function setTimestampAttribute($timestamp): void
+    protected function setTimestamp($timestamp): void
     {
         if ($timestamp instanceof DateTimeInterface) {
             $timestamp = $timestamp->getTimestamp();
@@ -117,7 +128,15 @@ class Timestamp extends Part implements Stringable
             throw new InvalidArgumentException('Timestamp must be a DateTimeInterface (e.g. DateTime, Carbon) or a Unix timestamp.');
         }
 
-        $this->attributes['timestamp'] = (int) $timestamp;
+        $this->timestamp = (int) $timestamp;
+    }
+
+    /**
+     * @return string One of the `Timestamp::STYLE_*` constants.
+     */
+    protected function getFormat(): string
+    {
+        return $this->format;
     }
 
     /**
@@ -127,15 +146,13 @@ class Timestamp extends Part implements Stringable
      *
      * @throws \InvalidArgumentException
      */
-    protected function setFormatAttribute(string $format): void
+    protected function setFormat(string $format): void
     {
-        $styles = array_values((new ReflectionClass(Timestamp::class))->getConstants());
-
-        if (! in_array($format, $styles, true)) {
+        if (! in_array($format, self::STYLES, true)) {
             throw new InvalidArgumentException('Format must be one of the Timestamp styles.');
         }
 
-        $this->attributes['format'] = $format;
+        $this->format = $format;
     }
 
     /**
