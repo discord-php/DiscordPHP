@@ -91,7 +91,7 @@ class Timestamp extends Part implements Stringable
      * @param DateTimeInterface|int|string $timestamp A `DateTimeInterface` (e.g. `DateTime`, `Carbon`) or a Unix timestamp in seconds.
      * @param string                       $format    One of the `Timestamp::*` style constants.
      */
-    public function __construct($timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
+    public function new($timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
     {
         $this->setTimestampAttribute($timestamp);
         $this->setFormatAttribute($format);
