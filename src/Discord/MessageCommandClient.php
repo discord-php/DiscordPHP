@@ -60,9 +60,7 @@ class MessageCommandClient extends Discord
         });
 
         if ($this->options['defaultHelpCommand']) {
-            $this->registerCommand('help', function ($message, $args) {
-                return $this->defaultHelpHandler($message, $args);
-            }, [
+            $this->registerCommand('help', fn ($message, $args) => $this->defaultHelpHandler($message, $args), [
                 'description' => 'Provides a list of commands available.',
                 'usage' => '[command]',
             ]);
