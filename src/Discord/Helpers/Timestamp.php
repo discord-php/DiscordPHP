@@ -17,6 +17,7 @@ namespace Discord\Helpers;
 use Discord\Parts\Part;
 
 use DateTimeInterface;
+use Discord\Discord;
 use InvalidArgumentException;
 use ReflectionClass;
 use Stringable;
@@ -88,13 +89,19 @@ class Timestamp extends Part implements Stringable
     ];
 
     /**
+     * Creates a new Timestamp instance.
+     *
+     * @param Discord                      $discord   The Discord client instance.
      * @param DateTimeInterface|int|string $timestamp A `DateTimeInterface` (e.g. `DateTime`, `Carbon`) or a Unix timestamp in seconds.
      * @param string                       $format    One of the `Timestamp::*` style constants.
      */
-    public function new($timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
+    public static function new(Discord $discord, $timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
     {
-        $this->setTimestampAttribute($timestamp);
-        $this->setFormatAttribute($format);
+        $instance = new self($discord);
+        $instance->timestamp = $timestamp;
+        $instance->format = $format;
+
+        return $instance;
     }
 
     /**
