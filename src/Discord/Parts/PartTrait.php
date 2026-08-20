@@ -65,8 +65,7 @@ trait PartTrait
      *
      * @param string|null $reason The reason for the audit log, if supported.
      *
-     * @throws \Exception             If the part does not support saving.
-     * @throws NoPermissionsException Missing permission.
+     * @throws \Exception If the part does not support saving.
      *
      * @return PromiseInterface<Part> Resolves with the saved part.
      */
@@ -469,7 +468,6 @@ trait PartTrait
      * Helps with getting ISO8601 timestamp attributes.
      *
      * @param string $key   The attribute key.
-     * @param string $class The attribute class.
      *
      * @throws \Exception
      *
