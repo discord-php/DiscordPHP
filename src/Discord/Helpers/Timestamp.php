@@ -92,8 +92,8 @@ class Timestamp implements Stringable
      */
     public function __construct($timestamp, string $format = self::STYLE_SHORT_DATE_TIME)
     {
-        $this->setProperty('timestamp', $timestamp);
-        $this->setProperty('format', $format);
+        $this->setTimestamp($timestamp);
+        $this->setFormat($format);
     }
 
     /**
