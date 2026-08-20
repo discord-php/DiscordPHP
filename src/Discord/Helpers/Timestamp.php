@@ -88,13 +88,6 @@ class Timestamp extends Part implements Stringable
     ];
 
     /**
-     * The attributes and content.
-     *
-     * @var array
-     */
-    protected $attributes = [];
-
-    /**
      * @param DateTimeInterface|int|string $timestamp A `DateTimeInterface` (e.g. `DateTime`, `Carbon`) or a Unix timestamp in seconds.
      * @param string                       $format    One of the `Timestamp::*` style constants.
      */
