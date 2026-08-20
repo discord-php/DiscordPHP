@@ -32,7 +32,7 @@ use Stringable;
  * @author Valithor Obsidion <valithor@discordphp.org>
  *
  * @property int    $timestamp Unix timestamp (in seconds) that will be displayed.
- * @property string $format    The Discord timestamp style, one of the `Timestamp::*` constants. Defaults to `Timestamp::RELATIVE_TIME`.
+ * @property string $format    The Discord timestamp style, one of the `Timestamp::*` constants. Defaults to `Timestamp::STYLE_SHORT_DATE_TIME`.
  */
 class Timestamp extends Part implements Stringable
 {
