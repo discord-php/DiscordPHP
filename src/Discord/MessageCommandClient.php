@@ -51,7 +51,7 @@ class MessageCommandClient extends Discord
 
         $this->registry = $registry ?? new CommandRegistry((bool) ($this->options['caseInsensitiveCommands'] ?? false));
 
-        $this->on('init', function () {
+        $this->on('application-init', function () {
             $this->preparePrefixes();
 
             $this->on('message', function ($message) {
