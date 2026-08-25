@@ -29,12 +29,12 @@ use Stringable;
  *
  * @author Valithor Obsidion <valithor@discordphp.org>
  *
- * @property-read string $id         The snowflake ID as a numeric string.
- * @property-read int    $timestamp  Milliseconds since the Unix Epoch that the snowflake was generated at.
- * @property-read Carbon $datetime   The `Carbon` instance the snowflake was generated at.
- * @property-read int    $worker_id  Internal worker ID, 0-31.
- * @property-read int    $process_id Internal process ID, 0-31.
- * @property-read int    $increment  Increment for the ID generated on that worker/process, 0-4095.
+ * @property-read string     $id         The snowflake ID as a numeric string.
+ * @property-read int|string $timestamp  Milliseconds since the Unix Epoch that the snowflake was generated at. Returned as a numeric string on 32-bit PHP, where it does not fit in a native `int`.
+ * @property-read Carbon     $datetime   The `Carbon` instance the snowflake was generated at.
+ * @property-read int        $worker_id  Internal worker ID, 0-31.
+ * @property-read int        $process_id Internal process ID, 0-31.
+ * @property-read int        $increment  Increment for the ID generated on that worker/process, 0-4095.
  */
 class Snowflake implements Stringable
 {
@@ -66,9 +66,9 @@ class Snowflake implements Stringable
      * Creates a new Snowflake from a timestamp and optional internal fields.
      *
      * @param DateTimeInterface|int|string $timestamp A `DateTimeInterface` or a Unix timestamp in milliseconds.
-     * @param int                          $workerId   Internal worker ID, 0-31. Defaults to 0.
-     * @param int                          $processId  Internal process ID, 0-31. Defaults to 0.
-     * @param int                          $increment  Increment for the ID, 0-4095. Defaults to 0.
+     * @param int                          $workerId  Internal worker ID, 0-31. Defaults to 0.
+     * @param int                          $processId Internal process ID, 0-31. Defaults to 0.
+     * @param int                          $increment Increment for the ID, 0-4095. Defaults to 0.
      *
      * @throws InvalidArgumentException
      */
@@ -103,19 +103,25 @@ class Snowflake implements Stringable
     /**
      * Normalizes a `DateTimeInterface` or numeric timestamp to milliseconds since the Unix Epoch.
      *
+     * Returned as a numeric string on 32-bit PHP, since millisecond timestamps overflow a native `int` there.
+     *
      * @param DateTimeInterface|int|string $timestamp
+     *
+     * @return int|string
      */
-    protected static function normalizeTimestampToMs($timestamp): int
+    protected static function normalizeTimestampToMs($timestamp)
     {
         if ($timestamp instanceof DateTimeInterface) {
-            return (int) round(((float) $timestamp->format('U.u')) * 1000);
+            $ms = round(((float) $timestamp->format('U.u')) * 1000);
+
+            return PHP_INT_SIZE === 4 ? sprintf('%.0f', $ms) : (int) $ms;
         }
 
         if (! is_numeric($timestamp)) {
             throw new InvalidArgumentException('Timestamp must be a DateTimeInterface or a Unix timestamp in milliseconds.');
         }
 
-        return (int) $timestamp;
+        return PHP_INT_SIZE === 4 ? sprintf('%.0f', (float) $timestamp) : (int) $timestamp;
     }
 
     /**
@@ -143,11 +149,15 @@ class Snowflake implements Stringable
     }
 
     /**
-     * @return int Milliseconds since the Unix Epoch that the snowflake was generated at.
+     * Returned as a numeric string on 32-bit PHP, since the value overflows a native `int` there.
+     *
+     * @return int|string Milliseconds since the Unix Epoch that the snowflake was generated at.
      */
-    protected function getTimestamp(): int
+    protected function getTimestamp()
     {
-        return (int) BigInt::add(BigInt::shiftRight($this->id, 22), self::DISCORD_EPOCH);
+        $ms = BigInt::add(BigInt::shiftRight($this->id, 22), self::DISCORD_EPOCH);
+
+        return $ms instanceof GMP ? gmp_strval($ms) : (int) $ms;
     }
 
     /**
