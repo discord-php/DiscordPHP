@@ -155,8 +155,8 @@ class FileUpload extends Interactive
      * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
      *
      * @param ?string[] $file_types
-     * 
-     * @throws \OutOfRangeException        You cannot specify more than 10 file types.
+     *
+     * @throws \OutOfRangeException You cannot specify more than 10 file types.
      *
      * @return self
      *

@@ -467,7 +467,7 @@ trait PartTrait
     /**
      * Helps with getting ISO8601 timestamp attributes.
      *
-     * @param string $key   The attribute key.
+     * @param string $key The attribute key.
      *
      * @throws \Exception
      *
