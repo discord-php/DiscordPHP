@@ -49,10 +49,14 @@ class Snowflake implements Stringable
     /**
      * @param Stringable|int|string $id The snowflake ID.
      */
-    public function __construct($id)
-    {
-        $this->setId($id);
+public function __construct($id)
+{
+    if (PHP_INT_SIZE === 4) {
+        BigInt::init();
     }
+
+    $this->setId($id);
+}
 
     /**
      * @param Stringable|int|string $id The snowflake ID.
