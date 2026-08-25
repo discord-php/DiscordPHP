@@ -59,7 +59,7 @@ $discord->on('message', function (Message $message) {
 
 ## Message components
 
-Message components (buttons, select menus) are now availabe! See the [documentation](https://discord-php.github.io/DiscordPHP/) on how to use implement these into your bot.
+Message components (buttons, select menus) are now available! See the [documentation](https://discord-php.github.io/DiscordPHP/) on how to use implement these into your bot.
 
 ## Slash Commands
 
