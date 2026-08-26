@@ -14,11 +14,16 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use function Discord\poly_strlen;
+
 /**
  * A Text Display is a top-level content component that allows you to add markdown formatted text, including mentions (users, roles, etc) and emojis.
  *
  * The behavior of this component is extremely similar to the content field of a message, but allows you to add multiple text components, controlling the layout of your message.
  * When sent in a message, pingable mentions (@user, @role, etc) present in this component will ping and send notifications based on the value of the allowed mention object set in message.allowed_mentions.
+ * 
+ * The character count of all text display components in a message may total up to 4000 characters.
+ * This also means that a single text display may contain 4000 characters compared to the 2000 characters normal messages allow.
  *
  * @link https://docs.discord.com/developers/components/reference#text-display
  *
@@ -65,11 +70,17 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      * Sets the content of the text display.
      *
      * @param string $content Content of the text display.
+     * 
+     * @throws \LengthException If the content exceeds 4000 characters.
      *
      * @return self
      */
     public function setContent(string $content): self
     {
+        if (poly_strlen($content) > 4000) {
+            throw new \LengthException('Content cannot exceed 4000 characters.');
+        }
+
         $this->content = $content;
 
         return $this;
