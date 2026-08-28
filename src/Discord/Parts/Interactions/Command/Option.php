@@ -134,7 +134,7 @@ class Option extends Part
 
     /**
      * Sets the name of the option.
-     * CHAT_INPUT command option names must match the following regex ^[\w-]{1,32}$ with the unicode flag set.
+     * CHAT_INPUT command option names must match the following regex ^[-_\u02BC\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$ with the unicode flag set.
      * If there is a lowercase variant of any letters used, you must use those.
      * Characters with no lowercase variants and/or uncased letters are still allowed.
      *
@@ -157,7 +157,7 @@ class Option extends Part
 
     /**
      * Sets the name of the option in another language.
-     * CHAT_INPUT command option names must match the following regex ^[\w-]{1,32}$ with the unicode flag set.
+     * CHAT_INPUT command option names must match the following regex ^[-_\u02BC\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$ with the unicode flag set.
      * If there is a lowercase variant of any letters used, you must use those.
      * Characters with no lowercase variants and/or uncased letters are still allowed.
      *
