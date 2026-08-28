@@ -27,6 +27,7 @@ use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
+use Discord\Parts\Gateway\Ready;
 use Discord\Parts\Gateway\RequestChannelInfo;
 use Discord\Parts\Gateway\RequestGuildMembers;
 use Discord\Parts\Gateway\Resume;
@@ -122,7 +123,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.56.10';
+    public const VERSION = 'v10.56.11';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -563,11 +564,12 @@ class Discord
     {
         $this->logger->debug('ready packet received');
 
-        $content = $data->d;
+        /** @var Ready $ready */
+        $ready = $this->factory->part(Ready::class, (array) $data->d, true);
 
-        if (isset($content->resume_gateway_url)) {
-            $this->resume_gateway_url = $content->resume_gateway_url;
-            $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
+        if (isset($ready->resume_gateway_url)) {
+            $this->resume_gateway_url = $ready->resume_gateway_url;
+            $this->logger->debug('resume_gateway_url received', ['url' => $ready->resume_gateway_url]);
         }
 
         // If this is a reconnect we don't want to
@@ -581,16 +583,16 @@ class Discord
             return;
         }
 
-        $this->emit('trace', $content->_trace);
-        $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
+        $this->emit('trace', $ready->_trace);
+        $this->logger->debug('discord trace received', ['trace' => $ready->_trace]);
 
         // Set up the user account
-        $this->client->fill((array) $content->user);
+        $this->client->fill((array) $ready->user);
         $this->client->created = true;
-        $this->sessionId = $content->session_id;
+        $this->sessionId = $ready->session_id;
 
         $this->logger->debug('client created and session id stored', [
-            'session_id' => $content->session_id,
+            'session_id' => $ready->session_id,
             'user' => $this->client->user->getPublicAttributes(),
         ]);
 
@@ -599,7 +601,7 @@ class Discord
         $unavailable = [];
         $guildLoad = new Deferred();
 
-        foreach ($content->guilds as $guild) {
+        foreach ($ready->guilds as $guild) {
             $result = $event->handle($guild);
 
             // Normalize safely (NO coroutine dependency here)
