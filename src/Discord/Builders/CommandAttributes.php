@@ -86,7 +86,7 @@ trait CommandAttributes
             throw new \LengthException('Command name can be only up to 32 characters long.');
         }
 
-        if ($this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+        if ($this->type === Command::CHAT_INPUT && preg_match('/^[-_\x{02BC}\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u', $name) !== 1) {
             throw new \DomainException('Slash command name contains invalid characters.');
         }
 
@@ -116,7 +116,7 @@ trait CommandAttributes
                 throw new \LengthException('Command name can be only up to 32 characters long.');
             }
 
-            if ($this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+            if ($this->type === Command::CHAT_INPUT && preg_match('/^[-_\x{02BC}\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u', $name) !== 1) {
                 throw new \DomainException('Slash command localized name contains invalid characters.');
             }
         }
