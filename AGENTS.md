@@ -323,12 +323,12 @@ When you need an example worth imitating, start here:
 
 ### Tests
 
-- Prefer plain `PHPUnit\Framework\TestCase` when logic is isolated.
-- Use `DiscordTestCase` only when real Discord integration matters.
-- Use `wait()` from `tests/functions.php` to bridge promises into test assertions.
+- All unit-test classes extend `DiscordTestCase`.
+- Use `$this->getMockBuilder()` for isolated class dependencies and `getMockDiscord()` when a lightweight real `Discord` client is needed.
+- Use and return `wait()` from `tests/functions.php` whenever a test performs asynchronous work so PHPUnit tracks it.
 - Keep semantic tests focused on behavior, not on incidental implementation details.
 
-- When a test requires a live `Discord` or `MessageCommandClient` instance (for example, to exercise registration, event handling, or runtime integration), obtain the client via the `wait(function (Discord $discord, $resolve) { ... })` pattern (and extend `DiscordTestCase`) rather than attempting to mock `Discord`/`MessageCommandClient`. Use mocks or `PHPUnit\Framework\TestCase` only for isolated logic that does not need a runtime client.
+- When a test requires a live `Discord` or `MessageCommandClient` instance (for example, to exercise registration, event handling, or runtime integration), obtain it via the `wait(function (Discord $discord, $resolve) { ... })` pattern and return that `wait()` call. Use `$this->getMockBuilder()` for isolated class dependencies and `getMockDiscord()` when a lightweight real client is needed without network access.
 
 ### Docs
 
