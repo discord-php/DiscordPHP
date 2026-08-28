@@ -278,6 +278,11 @@ trait GuildTrait
         return in_array('ENHANCED_ROLE_COLORS', $this->features);
     }
 
+    protected function getFeaturePruneRequiresAdminAttribute(): bool
+    {
+        return in_array('PRUNE_REQUIRES_ADMIN', $this->features);
+    }
+
     /**
      * @inheritDoc
      */

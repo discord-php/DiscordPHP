@@ -126,7 +126,10 @@ use function React\Promise\resolve;
  * @property-read bool $feature_creator_store_page                        Guild has enabled the role subscription promo page.
  * @property-read bool $feature_developer_support_server                  Guild has been set as a support server on the App Directory.
  * @property-read bool $feature_discoverable                              Guild is able to be discovered in the directory.
+ * @property-read bool $feature_enhanced_role_colors                      Guild is able to set gradient colors to roles.
  * @property-read bool $feature_featurable                                Guild is able to be featured in the directory.
+ * @property-read bool $feature_guild_tags                                Guild has access to set guild tags.
+ * @property-read bool $feature_guests_enabled                            Guild has access to guest invites.
  * @property-read bool $feature_invites_disabled                          Guild has paused invites, preventing new users from joining.
  * @property-read bool $feature_invite_splash                             Guild has access to set an invite splash background.
  * @property-read bool $feature_member_verification_gate_enabled          Guild has enabled membership screening.
@@ -137,6 +140,7 @@ use function React\Promise\resolve;
  * @property-read bool $feature_news                                      Guild has access to create announcement channels.
  * @property-read bool $feature_partnered                                 Guild is partnered.
  * @property-read bool $feature_preview_enabled                           Guild can be previewed before joining via membership screening or the directory.
+ * @property-read bool $feature_prune_requires_admin                      Guild has enabled requiring admin to prune members.
  * @property-read bool $feature_raid_alerts_disabled                      Guild has disabled alerts for join raids in the configured safety alerts channel.
  * @property-read bool $feature_role_icons                                Guild is able to set role icons.
  * @property-read bool $feature_role_subscriptions_available_for_purchase Guild has role subscriptions that can be purchased.
@@ -1317,6 +1321,16 @@ class Guild extends Part
      */
     public function getPruneCount(array $options = []): PromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if ($this->feature_prune_requires_admin) {
+                if (! $botperms->administrator) {
+                    return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
+                }
+            } elseif (! ($botperms->kick_members && $botperms->manage_guild)) {
+                return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
+            }
+        }
+
         $resolver = new OptionsResolver();
         $resolver->setDefined([
             'days',
@@ -1337,12 +1351,6 @@ class Guild extends Part
         });
 
         $options = $resolver->resolve($options);
-
-        if ($botperms = $this->getBotPermissions()) {
-            if (! ($botperms->kick_members && $botperms->manage_guild)) {
-                return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
-            }
-        }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id);
         $endpoint->addQuery('days', $options['days']);
@@ -1372,6 +1380,16 @@ class Guild extends Part
      */
     public function beginPrune(array $options = [], ?string $reason = null): PromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if ($this->feature_prune_requires_admin) {
+                if (! $botperms->administrator) {
+                    return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
+                }
+            } elseif (! ($botperms->kick_members && $botperms->manage_guild)) {
+                return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
+            }
+        }
+
         $resolver = new OptionsResolver();
         $resolver->setDefined([
             'days',
@@ -1394,13 +1412,6 @@ class Guild extends Part
         });
 
         $options = $resolver->resolve($options);
-
-        if ($botperms = $this->getBotPermissions()) {
-            if (! ($botperms->kick_members && $botperms->manage_guild)) {
-                return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
-            }
-        }
-
         $headers = [];
         if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
