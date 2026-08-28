@@ -15,7 +15,6 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\contains;
@@ -26,7 +25,7 @@ use function Discord\normalizePartId;
 use function Discord\poly_strlen;
 use function Discord\studly;
 
-final class FunctionsTest extends TestCase
+final class FunctionsTest extends DiscordTestCase
 {
     public function testContains(): void
     {

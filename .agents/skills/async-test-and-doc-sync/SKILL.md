@@ -46,7 +46,7 @@ Keep tests, PHPDoc, and long-form documentation synchronized with the public beh
 Tests and docs in this repo are not afterthoughts. They form a contract surface:
 
 - PHPDoc `@property` and `@property-read` annotations on parts are how IDEs and users discover magic properties. If code adds a fillable field or getter mutator without updating the docblock, the property is effectively invisible to consumers.
-- Unit tests using plain `PHPUnit\Framework\TestCase` prove that isolated logic works without needing Discord credentials or a running event loop. These are fast and reliable.
+- Unit tests extend `DiscordTestCase`; use `$this->getMockBuilder()` for isolated class dependencies and `getMockDiscord()` when a lightweight real client is needed.
 - Integration tests extending `DiscordTestCase` prove that async flows work against real Discord infrastructure. These require environment variables and a live bot token.
 - Guide pages in `guide/` and Gatsby pages in `docs/` describe recommended patterns. They should only change when public behavior or preferred usage actually changes — not for internal refactors.
 
@@ -54,9 +54,9 @@ If a change touches public behavior but skips one of these surfaces, the contrac
 
 ## Unit tests vs integration tests
 
-### When to use `TestCase`
+### Unit tests
 
-Use plain `PHPUnit\Framework\TestCase` when the logic under test is isolated from Discord I/O:
+All unit-test classes must extend `DiscordTestCase`, including tests for logic isolated from Discord I/O:
 
 - builder validation limits (content length, component counts, enum values)
 - helper function behavior (`contains()`, `studly()`, `escapeMarkdown()`, `poly_strlen()`)
@@ -64,19 +64,21 @@ Use plain `PHPUnit\Framework\TestCase` when the logic under test is isolated fro
 - part attribute hydration from raw arrays using `getMockDiscord()`
 - serialization shape from `jsonSerialize()` on builders
 
-These tests need no token, no loop, and no network. They run in milliseconds.
+Use `$this->getMockBuilder()` for isolated class dependencies and `getMockDiscord()` when a lightweight real client is needed. `DiscordTestCase` supplies the shared test lifecycle and skips cleanly when Discord integration is unavailable.
 
 Example: `tests/Builders/ModalBuilderTest.php` uses `$this->expectException(\LogicException::class)` and `str_repeat('a', 101)` to verify title length validation.
 
-### When to use `DiscordTestCase`
+### Integration tests
 
-Use `DiscordTestCase` only when the test must interact with real Discord infrastructure — sending/editing/deleting messages, pinning, creating invites, fetching message history, verifying embed hydration, or testing repository `fetch()`/`freshen()` against live API.
+Use `wait()` and return the `wait()` call when the test must interact with real Discord infrastructure — sending/editing/deleting messages, pinning, creating invites, fetching message history, verifying embed hydration, or testing repository `fetch()`/`freshen()` against live API.
 
 These tests require `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME` in `.env` or environment. `DiscordSingleton` shares a single connected client across the suite. Tests `markTestSkipped` if credentials are missing.
 
 ### The `getMockDiscord()` factory
 
 Defined in `tests/functions.php`. Creates a minimal `Discord` instance with empty token and `NullLogger` — suitable for constructing parts and testing attribute access without connecting to gateway.
+
+Use `$this->getMockBuilder()` for mocked class dependencies. Use `getMockDiscord()` for local client-backed tests; otherwise use and return `wait()` for asynchronous work.
 
 ## Test suite organization
 
@@ -89,7 +91,7 @@ Test files mirror the source structure. Builder tests live in `tests/Builders/`,
 - Builder tests → `tests/Builders/{BuilderName}Test.php`
 - Part tests → `tests/Parts/{Family}/{PartName}Test.php`
 - Helper/utility tests → `tests/` root
-- Unit tests extend `TestCase`, integration tests extend `DiscordTestCase`
+- All unit tests extend `DiscordTestCase`
 
 ### phpunit.xml
 
@@ -253,19 +255,20 @@ Stop if you see:
 - new public magic property with no `@property` docblock entry
 - builder with validation logic but no test for boundary cases
 - integration test that could be a unit test (no real Discord interaction needed)
-- unit test extending `DiscordTestCase` when `TestCase` would suffice
 - `wait()` used in a test that never performs async I/O
 - guide page updated for internal refactor that did not change public behavior
 - public method added with no test and no docblock
 - test asserting exact internal array structure instead of semantic behavior
-- `getMockDiscord()` used where real client interaction is actually needed
+- `getMockDiscord()` used where asynchronous real client interaction is actually needed
 
 ## Checklist before commit
 
 - [ ] New public properties have `@property` or `@property-read` in class docblock
 - [ ] Builder validation has boundary test cases (valid edge, invalid edge, exception type)
 - [ ] Integration tests use `wait()` pattern with proper `$resolve` chaining
-- [ ] Unit tests use plain `TestCase`, not `DiscordTestCase`
+- [ ] Every test class extends `DiscordTestCase`
+- [ ] Tests use `getMockBuilder()` or `getMockDiscord()` where appropriate
+- [ ] Async tests use and return `wait()` with proper `$resolve` chaining
 - [ ] Test file placed in correct directory mirroring source structure
 - [ ] Guide pages updated if preferred usage or public contract changed
 - [ ] README updated if installation, requirements, or getting-started flow changed

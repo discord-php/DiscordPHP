@@ -13,9 +13,8 @@ declare(strict_types=1);
  */
 
 use Discord\Helpers\Collection;
-use PHPUnit\Framework\TestCase;
 
-final class CollectionsTest extends TestCase
+final class CollectionsTest extends DiscordTestCase
 {
     public function testFrom()
     {

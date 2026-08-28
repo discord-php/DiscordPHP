@@ -15,11 +15,9 @@ declare(strict_types=1);
 use Discord\Discord;
 use Discord\Parts\Channel\Invite;
 use Discord\Http\Endpoint;
-use PHPUnit\Framework\TestCase;
-
 use function React\Promise\resolve;
 
-final class InviteTest extends TestCase
+final class InviteTest extends DiscordTestCase
 {
     public function testUpdateTargetUsersSendsMultipartPut()
     {
