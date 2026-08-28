@@ -9866,6 +9866,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureEnhancedRoleColorsAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeaturePruneRequiresAdminAttribute\u0028\u0029",
+            "name": "getFeaturePruneRequiresAdminAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeaturePruneRequiresAdminAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
