@@ -14,11 +14,9 @@ declare(strict_types=1);
 
 use Discord\MessageCommandClient as MessageCommandClientClass;
 use Discord\MessageCommandClient\Command;
-use PHPUnit\Framework\TestCase;
-
 use Discord\MessageCommandClient\BuiltCommand;
 
-final class CommandRegistrationTest extends TestCase
+final class CommandRegistrationTest extends DiscordTestCase
 {
     public function testCaseInsensitiveSubcommandDuplicateThrows()
     {

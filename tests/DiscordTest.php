@@ -13,9 +13,8 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
-use PHPUnit\Framework\TestCase;
 
-final class DiscordTest extends TestCase
+final class DiscordTest extends DiscordTestCase
 {
     public function testCheckEnvVariablesPresent()
     {
