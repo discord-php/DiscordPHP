@@ -656,6 +656,13 @@ not received in 5 seconds.</dd>
 <dd>Payload count reset timer.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-MessageCommandClient.html#property_prefixesPrepared">$prefixesPrepared</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>Whether prefixes have already been prepared.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Discord.html#property_reconnectCount">$reconnectCount</a>
     <span>
                         &nbsp;: int            </span>
@@ -1279,6 +1286,14 @@ handler methods.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Handles `VOICE_STATE_UPDATE` packets.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-MessageCommandClient.html#method_prepareOnce">prepareOnce()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Prepare prefixes once the client username is available, guarding against
+&#039;application-init&#039; and &#039;init&#039; firing in either order.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-MessageCommandClient.html#method_preparePrefixes">preparePrefixes()</a>
@@ -3338,6 +3353,44 @@ not received in 5 seconds.</p>
             -protected
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_prefixesPrepared">
+        $prefixesPrepared
+        <a href="classes/Discord-MessageCommandClient.html#property_prefixesPrepared" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">45</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether prefixes have already been prepared.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$prefixesPrepared</span>
+     = <span class="phpdocumentor-signature__default-value">false</span></code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_reconnectCount">
         $reconnectCount
         <a href="classes/Discord-Discord.html#property_reconnectCount" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4003,7 +4056,7 @@ not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -4247,7 +4300,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">426</span>
+    <span class="phpdocumentor-element-found-in__line">445</span>
 
     </aside>
 
@@ -4418,7 +4471,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -4710,7 +4763,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">410</span>
+    <span class="phpdocumentor-element-found-in__line">429</span>
 
     </aside>
 
@@ -4761,7 +4814,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">650</span>
+    <span class="phpdocumentor-element-found-in__line">669</span>
 
     </aside>
 
@@ -4800,7 +4853,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">660</span>
+    <span class="phpdocumentor-element-found-in__line">679</span>
 
     </aside>
 
@@ -5684,7 +5737,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
@@ -5733,7 +5786,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">377</span>
+    <span class="phpdocumentor-element-found-in__line">396</span>
 
     </aside>
 
@@ -5805,7 +5858,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">316</span>
+    <span class="phpdocumentor-element-found-in__line">335</span>
 
     </aside>
 
@@ -6341,7 +6394,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">360</span>
+    <span class="phpdocumentor-element-found-in__line">379</span>
 
     </aside>
 
@@ -6404,7 +6457,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">398</span>
+    <span class="phpdocumentor-element-found-in__line">417</span>
 
     </aside>
 
@@ -6642,7 +6695,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">597</span>
+    <span class="phpdocumentor-element-found-in__line">616</span>
 
     </aside>
 
@@ -6691,7 +6744,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">579</span>
+    <span class="phpdocumentor-element-found-in__line">598</span>
 
     </aside>
 
@@ -6861,7 +6914,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">266</span>
+    <span class="phpdocumentor-element-found-in__line">285</span>
 
     </aside>
 
@@ -6916,7 +6969,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">513</span>
+    <span class="phpdocumentor-element-found-in__line">532</span>
 
     </aside>
 
@@ -7105,7 +7158,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">548</span>
+    <span class="phpdocumentor-element-found-in__line">567</span>
 
     </aside>
 
@@ -7671,7 +7724,7 @@ handler methods.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">227</span>
+    <span class="phpdocumentor-element-found-in__line">246</span>
 
     </aside>
 
@@ -7963,6 +8016,42 @@ handler methods.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_prepareOnce">
+        prepareOnce()
+        <a href="classes/Discord-MessageCommandClient.html#method_prepareOnce" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">210</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Prepare prefixes once the client username is available, guarding against
+&#039;application-init&#039; and &#039;init&#039; firing in either order.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">prepareOnce</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_preparePrefixes">
         preparePrefixes()
         <a href="classes/Discord-MessageCommandClient.html#method_preparePrefixes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -7971,7 +8060,7 @@ handler methods.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">208</span>
+    <span class="phpdocumentor-element-found-in__line">227</span>
 
     </aside>
 
@@ -8092,7 +8181,7 @@ handler methods.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
@@ -8156,7 +8245,7 @@ handler methods.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -8211,7 +8300,7 @@ handler methods.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -8667,7 +8756,7 @@ handler methods.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient.php"><a href="files/src-discord-messagecommandclient.html"><abbr title="src/Discord/MessageCommandClient.php">MessageCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">468</span>
+    <span class="phpdocumentor-element-found-in__line">487</span>
 
     </aside>
 
@@ -8785,6 +8874,7 @@ accept fewer parameters than the command invocation provides.</p>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_payloadBuffer">$payloadBuffer</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_payloadCount">$payloadCount</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_payloadTimer">$payloadTimer</a></li>
+                                                    <li class=""><a href="classes/Discord-MessageCommandClient.html#property_prefixesPrepared">$prefixesPrepared</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_reconnectCount">$reconnectCount</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_reconnecting">$reconnecting</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_regions">$regions</a></li>
@@ -8879,6 +8969,7 @@ accept fewer parameters than the command invocation provides.</p>
                                             <li class=""><a href="classes/Discord-Discord.html#method_handleResume">handleResume()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_handleVoiceServerUpdate">handleVoiceServerUpdate()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_handleVoiceStateUpdate">handleVoiceStateUpdate()</a></li>
+                                            <li class=""><a href="classes/Discord-MessageCommandClient.html#method_prepareOnce">prepareOnce()</a></li>
                                             <li class=""><a href="classes/Discord-MessageCommandClient.html#method_preparePrefixes">preparePrefixes()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_processWsMessage">processWsMessage()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_ready">ready()</a></li>

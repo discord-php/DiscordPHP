@@ -4801,6 +4801,11 @@ Search.appendIndex(
             "summary": "Normalize\u0020a\u0020command\u0020or\u0020alias\u0020according\u0020to\u0020client\u0020options.",
             "url": "classes/Discord-MessageCommandClient.html#method_normalizeCommandName"
         },                {
+            "fqsen": "\\Discord\\MessageCommandClient\u003A\u003AprepareOnce\u0028\u0029",
+            "name": "prepareOnce",
+            "summary": "Prepare\u0020prefixes\u0020once\u0020the\u0020client\u0020username\u0020is\u0020available,\u0020guarding\u0020against\n\u0027application\u002Dinit\u0027\u0020and\u0020\u0027init\u0027\u0020firing\u0020in\u0020either\u0020order.",
+            "url": "classes/Discord-MessageCommandClient.html#method_prepareOnce"
+        },                {
             "fqsen": "\\Discord\\MessageCommandClient\u003A\u003ApreparePrefixes\u0028\u0029",
             "name": "preparePrefixes",
             "summary": "Prepare\u0020and\u0020normalize\u0020prefixes,\u0020expanding\u0020\u0040mention\u0020placeholders.",
@@ -4890,6 +4895,11 @@ Search.appendIndex(
             "name": "registry",
             "summary": "Command\u0020registry\u0020storing\u0020commands\u0020and\u0020aliases.",
             "url": "classes/Discord-MessageCommandClient.html#property_registry"
+        },                {
+            "fqsen": "\\Discord\\MessageCommandClient\u003A\u003A\u0024prefixesPrepared",
+            "name": "prefixesPrepared",
+            "summary": "Whether\u0020prefixes\u0020have\u0020already\u0020been\u0020prepared.",
+            "url": "classes/Discord-MessageCommandClient.html#property_prefixesPrepared"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\AnnouncementThread",
             "name": "AnnouncementThread",
