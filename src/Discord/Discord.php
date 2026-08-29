@@ -565,7 +565,7 @@ class Discord
         $this->logger->debug('ready packet received');
 
         /** @var Ready $ready */
-        $ready = $this->factory->part(Ready::class, (array) $data->d, true);
+        $ready = $data->d;
 
         if (isset($ready->resume_gateway_url)) {
             $this->resume_gateway_url = $ready->resume_gateway_url;
