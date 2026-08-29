@@ -38,26 +38,27 @@ class MessageCommandClient extends Discord
     protected CommandRegistry $registry;
 
     /**
+     * Whether prefixes have already been prepared.
+     *
+     * @var bool
+     */
+    protected bool $prefixesPrepared = false;
+
+    /**
      * Construct the message command client.
      *
      * @param array $options Client options (see resolveOptions()).
      */
     public function __construct(array $options = [], ?CommandRegistry $registry = null)
     {
+        $this->once('application-init', fn () => $this->prepareOnce());
+        $this->once('init', fn () => $this->prepareOnce());
+
         $this->options = $this->resolveOptions($options);
 
-        // Pass resolved options to parent so it doesn't receive unknown keys
         parent::__construct($this->options);
 
         $this->registry = $registry ?? new CommandRegistry((bool) ($this->options['caseInsensitiveCommands'] ?? false));
-
-        $this->on('application-init', function () {
-            $this->preparePrefixes();
-
-            $this->on('message', function ($message) {
-                $this->handleMessage($message);
-            });
-        });
 
         if ($this->options['defaultHelpCommand']) {
             $this->registerCommand('help', fn ($message, $args) => $this->defaultHelpHandler($message, $args), [
@@ -200,6 +201,24 @@ class MessageCommandClient extends Discord
         }
 
         return $name;
+    }
+
+    /**
+     * Prepare prefixes once the client username is available, guarding against
+     * 'application-init' and 'init' firing in either order.
+     */
+    protected function prepareOnce(): void
+    {
+        if ($this->prefixesPrepared || $this->username === null) {
+            return;
+        }
+
+        $this->prefixesPrepared = true;
+        $this->preparePrefixes();
+
+        $this->on('message', function ($message) {
+            $this->handleMessage($message);
+        });
     }
 
     /**
