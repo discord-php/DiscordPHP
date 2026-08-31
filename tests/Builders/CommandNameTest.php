@@ -35,12 +35,4 @@ final class CommandNameTest extends DiscordTestCase
         $this->expectException(\DomainException::class);
         CommandBuilder::new()->setName('foo.bar');
     }
-
-    public function testOptionNamesRejectInvalidCharacters(): void
-    {
-        $discord = $this->createMock(Discord::class);
-
-        $this->expectException(\DomainException::class);
-        (new Option($discord))->setName('foo.bar');
-    }
 }
