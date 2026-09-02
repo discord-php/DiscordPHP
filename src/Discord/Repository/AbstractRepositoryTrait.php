@@ -472,7 +472,7 @@ trait AbstractRepositoryTrait
     public function pushItem($item): self
     {
         if (is_a($item, $this->class)) {
-            $key = $item->{$this->discrim};
+            $key = $item->{$this->discrim} ?? '';
             $this->items[$key] = $item;
             $this->cache->set($key, $item);
         }
