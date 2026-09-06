@@ -17,6 +17,7 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
+use Discord\Parts\User\User;
 use Discord\Repository\Guild\MemberRepository;
 use Evenement\EventEmitterTrait;
 
@@ -205,12 +206,28 @@ abstract class Event
      */
     protected function cacheUser(object $userdata): void
     {
-        $users = $this->discord->users;
-        if ($user = $users->get('id', $userdata->id)) {
-            $user->fill((array) $userdata);
-        } else {
-            $users->pushItem($users->create($userdata, true));
+        // Guard against partial payloads with no id — pushing one would key the
+        // repository (and its cache) on null. Also tolerate being handed a
+        // hydrated User part instead of raw gateway data: `(array)` on a Part
+        // yields its internal props, not its attributes, so `create()` would
+        // otherwise build a User with a null id.
+        $id = $userdata->id ?? null;
+        if ($id === null) {
+            return;
         }
+
+        $users = $this->discord->users;
+        $isPart = $userdata instanceof User;
+
+        if ($user = $users->get('id', $id)) {
+            if (! $isPart) {
+                $user->fill((array) $userdata);
+            }
+
+            return;
+        }
+
+        $users->pushItem($isPart ? $userdata : $users->create($userdata, true));
     }
 
     /**
