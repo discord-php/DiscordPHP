@@ -18,8 +18,14 @@ use Discord\Discord;
 use React\Promise\PromiseInterface;
 
 /**
- * This class is the base of all objects that are returned. All "Parts" extend
- * off this base class.
+ * Contract for every DiscordPHP "Part" — the hydrated objects returned for
+ * Discord API entities (users, channels, messages, …). Defines construction,
+ * attribute access via mutators, `ArrayAccess`, (de)serialization and the
+ * attribute projections (`getCreatableAttributes()` / `getUpdatableAttributes()`)
+ * the repositories use when POST/PATCHing. {@see Part} is the concrete base.
+ *
+ * @see Part The abstract implementation every Part extends
+ * @see \Discord\Repository\AbstractRepositoryInterface Repositories that hold Parts
  *
  * @since 2.0.0
  */

@@ -20,6 +20,18 @@ use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
 use Traversable;
 
+/**
+ * Contract for a DiscordPHP repository: a keyed, cached {@see CollectionInterface}
+ * of {@see Part}s for one Discord API resource, plus the async CRUD methods
+ * (`freshen()`, `fetch()`, `create()`, `save()`, `delete()`) that talk to the
+ * Discord REST API and keep the cache in sync. {@see AbstractRepository} is the
+ * concrete base every repository extends.
+ *
+ * @see AbstractRepository The abstract implementation
+ * @see \Discord\Parts\PartInterface The items held by a repository
+ *
+ * @since 10.1.4
+ */
 interface AbstractRepositoryInterface extends CollectionInterface
 {
     public function __construct($discord, array $vars = []);
