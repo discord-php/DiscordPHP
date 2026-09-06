@@ -34,7 +34,7 @@ use function Discord\poly_strlen;
  * @property string                                  $name                       1-32 character name of the command.
  * @property ?int|null                               $guild_id                   The optional guild ID this command is for. If not set, the command is global.
  * @property ?string[]|null                          $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property ?string                                 $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property ?string                                 $description                For `CHAT_INPUT` and `PRIMARY_ENTRY_POINT` commands, 1-100 characters. Empty string for `USER` and `MESSAGE` commands.
  * @property ?string[]|null                          $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property ?ExCollectionInterface<Option>|Option[] $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property ?string                                 $default_member_permissions Set of permissions represented as a bit set.
