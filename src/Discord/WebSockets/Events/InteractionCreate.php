@@ -39,11 +39,11 @@ class InteractionCreate extends Event
         /** @var Interaction */
         $interaction = $this->factory->part(Interaction::TYPES[$data->type ?? 0], (array) $data, true);
 
+        // `resolved->users` are already hydrated User parts — cache them as-is.
+        // `create()`/`fill()` here would `(array)`-cast a part and lose its id.
         foreach ($interaction->data->resolved->users ?? [] as $snowflake => $user) {
-            if ($userPart = $this->discord->users->get('id', $snowflake)) {
-                $userPart->fill((array) $user);
-            } else {
-                $this->discord->users->pushItem($this->discord->users->create($user, true));
+            if (! $this->discord->users->get('id', $snowflake)) {
+                $this->discord->users->pushItem($user);
             }
         }
 
@@ -61,15 +61,17 @@ class InteractionCreate extends Event
                 $this->cacheMember($members, (array) $interaction->member);
             }
 
-            // User caching from member
-            if ($interaction->member->user) {
-                $this->cacheUser($interaction->member->user);
+            // User caching from member — pass the raw gateway payload, not the
+            // hydrated part (cacheUser expects `$data->member->user`).
+            if (isset($data->member->user)) {
+                $this->cacheUser($data->member->user);
             }
         }
 
-        if ($interaction->user) {
-            // User caching from user dm
-            $this->cacheUser($interaction->user);
+        // User caching from a DM interaction. `$data->user` is absent for guild
+        // interactions, so this does not double up with the member branch above.
+        if (isset($data->user)) {
+            $this->cacheUser($data->user);
         }
 
         if ($interaction->entitlements) {
