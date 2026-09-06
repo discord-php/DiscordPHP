@@ -472,7 +472,15 @@ trait AbstractRepositoryTrait
     public function pushItem($item): self
     {
         if (is_a($item, $this->class)) {
-            $key = $item->{$this->discrim} ?? '';
+            $key = $item->{$this->discrim} ?? null;
+
+            // A part with no discriminator cannot be addressed later; caching it
+            // would key `items`/`cache` on null (an E_DEPRECATED on PHP >= 8.5)
+            // and let unrelated keyless parts overwrite each other.
+            if ($key === null) {
+                return $this;
+            }
+
             $this->items[$key] = $item;
             $this->cache->set($key, $item);
         }
