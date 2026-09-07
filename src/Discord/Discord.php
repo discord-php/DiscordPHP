@@ -704,7 +704,7 @@ class Discord
      *
      * @param object   $guild       The guild payload (a Promise is resolved first).
      * @param array    $unavailable Map of still-pending guild ids, by reference.
-     * @param Deferred  $guildLoad   Resolved when $unavailable empties.
+     * @param Deferred $guildLoad   Resolved when $unavailable empties.
      */
     protected function handleGuildCreateForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
     {
@@ -737,7 +737,7 @@ class Discord
      *
      * @param object   $guild       The guild delete payload.
      * @param array    $unavailable Map of still-pending guild ids, by reference.
-     * @param Deferred  $guildLoad   Resolved when $unavailable empties.
+     * @param Deferred $guildLoad   Resolved when $unavailable empties.
      */
     protected function handleGuildDeleteForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
     {

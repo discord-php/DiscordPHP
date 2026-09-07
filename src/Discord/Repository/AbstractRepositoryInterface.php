@@ -71,7 +71,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
      * Deletes `$part` (a Part or its id) on Discord and removes it from the repository.
      *
      * @param Part|string $part
-     * @param string|null  $reason Audit-log reason.
+     * @param string|null $reason Audit-log reason.
      */
     public function delete($part, ?string $reason = null): PromiseInterface;
 
