@@ -232,6 +232,13 @@ abstract class SelectMenu extends Interactive
         return $this;
     }
 
+    /**
+     * Sets the pre-selected default values (auto-populated select menus only).
+     *
+     * @param array|null $default_values
+     *
+     * @throws \InvalidArgumentException When the menu is not a user/role/mentionable/channel select.
+     */
     public function setDefaultValues(?array $default_values): self
     {
         static $allowed_types = [self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];

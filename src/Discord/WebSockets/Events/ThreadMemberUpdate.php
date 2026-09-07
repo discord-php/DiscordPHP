@@ -27,6 +27,9 @@ use Discord\WebSockets\Event;
  */
 class ThreadMemberUpdate extends Event
 {
+    /**
+     * @inheritDoc
+     */
     public function handle($data)
     {
         /** @var Member */

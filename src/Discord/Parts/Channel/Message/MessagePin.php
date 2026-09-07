@@ -38,11 +38,21 @@ class MessagePin extends Part
         'message',
     ];
 
+    /**
+     * Gets the `pinned_at` attribute.
+     *
+     * @return Carbon
+     */
     protected function getPinnedAtAttribute(): Carbon
     {
         return $this->attributeCarbonHelper('pinned_at');
     }
 
+    /**
+     * Gets the `message` attribute.
+     *
+     * @return Message
+     */
     protected function getMessageAttribute(): Message
     {
         return $this->attributePartHelper('message', Message::class);

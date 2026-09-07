@@ -86,6 +86,13 @@ class CacheConfig
         $this->ttl = $ttl;
     }
 
+    /**
+     * Exposes the read-only \`interface\` and \`separator\` properties.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
     public function __get(string $name)
     {
         if (in_array($name, ['interface', 'separator'])) {

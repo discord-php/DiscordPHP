@@ -247,6 +247,9 @@ abstract class Event
         }
     }
 
+    /**
+     * @return array
+     */
     public function __debugInfo(): array
     {
         return [];

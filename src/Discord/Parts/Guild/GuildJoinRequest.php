@@ -110,21 +110,41 @@ class GuildJoinRequest extends Part
         return $this->action('REJECTED', $reason);
     }
 
+    /**
+     * Gets the `created_at` attribute.
+     *
+     * @return ?Carbon
+     */
     protected function getCreatedAtAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('created_at');
     }
 
+    /**
+     * Gets the `reviewed_at` attribute.
+     *
+     * @return ?Carbon
+     */
     protected function getReviewedAtAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('reviewed_at');
     }
 
+    /**
+     * Gets the `guild` attribute.
+     *
+     * @return ?Guild
+     */
     protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
 
+    /**
+     * Gets the `user` attribute.
+     *
+     * @return ?User
+     */
     protected function getUserAttribute(): ?User
     {
         return $this->attributePartHelper('user', User::class);
@@ -140,6 +160,11 @@ class GuildJoinRequest extends Part
         return $this->attributeTypedCollectionHelper(FormFieldResponse::class, 'form_responses');
     }
 
+    /**
+     * Gets the `actioned_by_user` attribute.
+     *
+     * @return ?User
+     */
     protected function getActionedByUserAttribute(): ?User
     {
         return $this->attributePartHelper('actioned_by_user', User::class);

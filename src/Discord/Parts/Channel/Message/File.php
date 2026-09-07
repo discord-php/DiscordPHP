@@ -44,6 +44,11 @@ class File extends Content
         'size',
     ];
 
+    /**
+     * Gets the `file` attribute.
+     *
+     * @return UnfurledMediaItem
+     */
     protected function getFileAttribute(): UnfurledMediaItem
     {
         return $this->attributePartHelper('file', UnfurledMediaItem::class, true);

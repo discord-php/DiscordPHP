@@ -267,6 +267,7 @@ trait PartTrait
         return serialize($this->getRawAttributes());
     }
 
+    /** The raw attributes, for PHP native serialization. */
     public function __serialize(): array
     {
         return $this->getRawAttributes();
@@ -288,6 +289,11 @@ trait PartTrait
         }
     }
 
+    /**
+     * Restores attributes from PHP native unserialization.
+     *
+     * @param array $data
+     */
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {

@@ -40,6 +40,11 @@ abstract class SelectMenu extends Interactive
         return $this->attributes['type'] ?? $this->attributes['component_type'];
     }
 
+    /**
+     * Gets the `default_values` attribute.
+     *
+     * @return ExCollectionInterface
+     */
     protected function getDefaultValuesAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('default_values', DefaultValue::class);

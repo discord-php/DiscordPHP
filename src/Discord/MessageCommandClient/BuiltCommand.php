@@ -33,6 +33,10 @@ final class BuiltCommand
      */
     public array $options;
 
+    /**
+     * @param Command             $command The registered application command.
+     * @param array<string,mixed> $options The resolved option values for the invocation.
+     */
     public function __construct(Command $command, array $options)
     {
         $this->command = $command;

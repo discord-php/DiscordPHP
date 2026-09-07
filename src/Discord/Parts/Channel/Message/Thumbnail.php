@@ -42,6 +42,11 @@ class Thumbnail extends Content
         'spoiler',
     ];
 
+    /**
+     * Gets the `media` attribute.
+     *
+     * @return UnfurledMediaItem
+     */
     protected function getMediaAttribute(): UnfurledMediaItem
     {
         return $this->attributePartHelper('media', UnfurledMediaItem::class);

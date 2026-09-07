@@ -58,6 +58,10 @@ class GroupOption extends Component
      */
     protected $default;
 
+    /**
+     * @param string $value The option value (1-100 characters).
+     * @param string $label The option label shown to the user (1-100 characters).
+     */
     public function __construct(string $value, string $label)
     {
         $this->setValue($value);

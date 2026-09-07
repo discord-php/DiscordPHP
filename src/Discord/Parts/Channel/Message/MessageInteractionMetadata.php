@@ -160,6 +160,11 @@ class MessageInteractionMetadata extends Part
         return $channel->messages->get('id', $this->attributes['interacted_message_id']);
     }
 
+    /**
+     * Gets the `guild` attribute.
+     *
+     * @return ?Guild
+     */
     protected function getGuildAttribute(): ?Guild
     {
         if (! isset($this->attributes['guild_id'])) {
@@ -169,6 +174,11 @@ class MessageInteractionMetadata extends Part
         return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }
 
+    /**
+     * Gets the `channel` attribute.
+     *
+     * @return ?Channel
+     */
     protected function getChannelAttribute(): ?Channel
     {
         if (! isset($this->attributes['channel_id'])) {

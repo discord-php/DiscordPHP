@@ -539,6 +539,7 @@ class Invite extends Part implements Stringable
         ];
     }
 
+    /** @return string The \`discord.gg/<code>\` short URL. */
     public function __toString(): string
     {
         return 'discord.gg/'.$this->code;

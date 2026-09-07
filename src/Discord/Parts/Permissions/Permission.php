@@ -399,6 +399,7 @@ abstract class Permission extends Part
         $this->attributes['manage_guild_expressions'] = $value;
     }
 
+    /** @return string The permission bitfield as a decimal string. */
     public function __toString(): string
     {
         return (string) $this->bitwise;

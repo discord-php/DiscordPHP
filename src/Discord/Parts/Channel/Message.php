@@ -714,6 +714,11 @@ class Message extends Part
         return $this->attributePartHelper('referenced_message', self::class);
     }
 
+    /**
+     * Gets the `message_reference` attribute.
+     *
+     * @return ?MessageReference
+     */
     protected function getMessageReferenceAttribute(): ?MessageReference
     {
         return $this->attributePartHelper('message_reference', MessageReference::class);
@@ -1257,6 +1262,10 @@ class Message extends Part
         });
     }
 
+    /**
+     * Sends the edit request (multipart when the builder carries files) and
+     * resolves with the raw API response.
+     */
     private function _edit(MessageBuilder $message): PromiseInterface
     {
         if ($message->requiresMultipart()) {

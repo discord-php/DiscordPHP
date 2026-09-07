@@ -758,6 +758,13 @@ trait AbstractRepositoryTrait
         }
     }
 
+    /**
+     * Exposes the read-only \`discrim\` and \`cache\` properties.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function __get(string $key)
     {
         if (in_array($key, ['discrim', 'cache'])) {

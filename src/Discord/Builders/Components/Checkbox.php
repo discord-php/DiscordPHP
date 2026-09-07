@@ -93,6 +93,9 @@ class Checkbox extends Interactive
         return $this->value ?? null;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         $content = [

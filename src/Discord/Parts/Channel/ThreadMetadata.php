@@ -45,6 +45,11 @@ class ThreadMetadata extends Part
         'create_timestamp',
     ];
 
+    /**
+     * Gets the `create_timestamp` attribute.
+     *
+     * @return ?Carbon
+     */
     protected function getCreateTimestampAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('create_timestamp');

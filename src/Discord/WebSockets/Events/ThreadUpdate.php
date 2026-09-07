@@ -27,6 +27,9 @@ use Discord\WebSockets\Event;
  */
 class ThreadUpdate extends Event
 {
+    /**
+     * @inheritDoc
+     */
     public function handle($data)
     {
         $threadPart = $oldThread = null;

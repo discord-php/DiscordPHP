@@ -670,6 +670,9 @@ class Button extends Interactive
         return $content;
     }
 
+    /**
+     * @return array
+     */
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);

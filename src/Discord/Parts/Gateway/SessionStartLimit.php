@@ -40,6 +40,9 @@ class SessionStartLimit extends Part
         'max_concurrency',
     ];
 
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [

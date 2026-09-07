@@ -50,11 +50,21 @@ class Ready extends Part
         'application',
     ];
 
+    /**
+     * Gets the `user` attribute.
+     *
+     * @return User
+     */
     public function getUserAttribute(): User
     {
         return $this->attributePartHelper('user', User::class);
     }
 
+    /**
+     * Gets the `application` attribute.
+     *
+     * @return ?Application
+     */
     public function getApplicationAttribute(): ?Application
     {
         return $this->attributePartHelper('application', Application::class);

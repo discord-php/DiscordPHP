@@ -36,11 +36,15 @@ class SubCommandRegistry
      */
     protected $normalizer;
 
+    /**
+     * @param callable $normalizer Normalises a sub-command/alias name (e.g. lower-casing).
+     */
     public function __construct(callable $normalizer)
     {
         $this->normalizer = $normalizer;
     }
 
+    /** Applies the configured normaliser to \`$name\`. */
     protected function normalize(string $name): string
     {
         $fn = $this->normalizer;
@@ -48,6 +52,10 @@ class SubCommandRegistry
         return $fn($name);
     }
 
+    /**
+     * Resolves \`$command\` (optionally following aliases) to a registered
+     * sub-command, or null when it is unknown.
+     */
     public function get(?string $command, bool $aliases = true): ?Command
     {
         if ($command !== null) {
@@ -99,6 +107,11 @@ class SubCommandRegistry
         return $key;
     }
 
+    /**
+     * Removes a sub-command and any aliases that pointed at it.
+     *
+     * @throws \RuntimeException When the sub-command does not exist.
+     */
     public function unregister(string $command): void
     {
         $command = $this->normalize($command);
@@ -117,6 +130,12 @@ class SubCommandRegistry
         }
     }
 
+    /**
+     * Points \`$alias\` at an existing sub-command.
+     *
+     * @throws \RuntimeException When the target is unknown, or the alias collides
+     *                           with a sub-command or a different existing alias.
+     */
     public function registerAlias(string $alias, string $command): void
     {
         $alias = $this->normalize($alias);
@@ -142,6 +161,11 @@ class SubCommandRegistry
         $this->subCommandAliases[$alias] = $command;
     }
 
+    /**
+     * Removes a sub-command alias.
+     *
+     * @throws \RuntimeException When the alias does not exist.
+     */
     public function unregisterAlias(string $alias): void
     {
         $alias = $this->normalize($alias);

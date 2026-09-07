@@ -25,6 +25,23 @@ namespace Discord\Voice;
  */
 interface VoiceGroupCryptoInterface
 {
+    /**
+     * Encrypts the payload of an RTP `$packet` for the current voice group.
+     *
+     * @param VoicePacket $packet
+     * @param int         $seq    RTP sequence number, mixed into the nonce.
+     *
+     * @return string The encrypted packet bytes.
+     */
     public function encryptRTPPacket(VoicePacket $packet, int $seq = 0): string;
+
+    /**
+     * Decrypts the payload of an RTP `$packet` for the current voice group.
+     *
+     * @param VoicePacket $packet
+     * @param int         $seq    RTP sequence number, mixed into the nonce.
+     *
+     * @return string|false The decrypted bytes, or false on authentication failure.
+     */
     public function decryptRTPPacket(VoicePacket $packet, int $seq = 0): string|false;
 }

@@ -56,6 +56,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      */
     protected $loop;
 
+    /**
+     * @param LoopInterface|null $loop The event loop, or the global loop when null.
+     */
     public function __construct(?LoopInterface $loop = null)
     {
         $this->loop = $loop ?? Loop::get();

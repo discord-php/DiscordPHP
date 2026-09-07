@@ -325,6 +325,11 @@ class MessageBuilder extends Builder implements JsonSerializable
         return $this;
     }
 
+    /**
+     * Gets the allowed mentions object for the message, or null when unset.
+     *
+     * @return array|null
+     */
     public function getAllowedMentions(): ?array
     {
         return $this->allowed_mentions ?? null;

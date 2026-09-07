@@ -273,6 +273,213 @@ final class CollectionsTest extends DiscordTestCase
 
         $this->assertEquals(range(1, 10), $collected);
     }
+
+    public function testForBuildsAnEmptyClassRestrictedCollection()
+    {
+        $collection = Collection::for(ClassOne::class, 'id');
+
+        $this->assertSame([], $collection->toArray());
+        $this->assertSame(0, $collection->count());
+    }
+
+    public function testPushItemKeysByDiscriminatorAndAppendsWhenNull()
+    {
+        $collection = new Collection([], 'id');
+
+        $a = ['id' => 5, 'name' => 'a'];
+        $b = ['id' => 9, 'name' => 'b'];
+        $c = ['name' => 'no-id'];
+
+        $collection->pushItem($a)->pushItem($b)->pushItem($c);
+
+        $this->assertSame($a, $collection->get('id', 5));
+        $this->assertSame($b, $collection->get('id', 9));
+        // An item with no discriminator is appended rather than keyed.
+        $this->assertSame($c, $collection->last());
+        $this->assertSame(3, $collection->count());
+    }
+
+    public function testGetMatchesObjectProperties()
+    {
+        $one = new ClassOne();
+        $one->id = 'x';
+        $two = new ClassOne();
+        $two->id = 'y';
+
+        $collection = new Collection([$one, $two], 'id', ClassOne::class);
+
+        $this->assertSame($two, $collection->get('id', 'y'));
+        $this->assertNull($collection->get('id', 'missing'));
+    }
+
+    public function testSet()
+    {
+        $collection = new Collection([], null);
+
+        $collection->set('key', 'value');
+
+        $this->assertSame('value', $collection->offsetGet('key'));
+    }
+
+    public function testShift()
+    {
+        $collection = new Collection([1, 2, 3], null);
+
+        // shift() returns the removed [key => value] pair.
+        $this->assertSame([0 => 1], $collection->shift());
+        $this->assertSame([2, 3], $collection->values());
+        $this->assertSame(2, $collection->count());
+    }
+
+    public function testShiftReturnsNullWhenEmpty()
+    {
+        $this->assertNull((new Collection([], null))->shift());
+    }
+
+    public function testSearch()
+    {
+        $collection = new Collection(['a', 'b', 'c'], null);
+
+        $this->assertSame(1, $collection->search('b'));
+        $this->assertFalse($collection->search('z'));
+        $this->assertFalse($collection->search('1', true));
+        $this->assertSame(0, $collection->search('a', true));
+    }
+
+    public function testFindKey()
+    {
+        $collection = new Collection([10, 20, 30], null);
+
+        $this->assertSame(1, $collection->find_key(fn ($n) => $n === 20));
+        $this->assertNull($collection->find_key(fn ($n) => $n === 999));
+    }
+
+    public function testAnyAndAll()
+    {
+        $collection = new Collection([2, 4, 6], null);
+
+        $this->assertTrue($collection->any(fn ($n) => $n === 4));
+        $this->assertFalse($collection->any(fn ($n) => $n === 5));
+        $this->assertTrue($collection->all(fn ($n) => $n % 2 === 0));
+        $this->assertFalse($collection->all(fn ($n) => $n > 2));
+    }
+
+    public function testSplice()
+    {
+        $collection = new Collection([1, 2, 3, 4, 5], null);
+
+        // splice() mutates in place and returns the collection.
+        $returned = $collection->splice(1, 2, ['a', 'b', 'c']);
+
+        $this->assertSame($collection, $returned);
+        $this->assertSame([1, 'a', 'b', 'c', 4, 5], $collection->values());
+    }
+
+    public function testSlice()
+    {
+        $collection = new Collection([1, 2, 3, 4, 5], null);
+
+        $this->assertSame([2, 3, 4], $collection->slice(1, 3)->values());
+        $this->assertSame([4, 5], $collection->slice(-2)->values());
+        // The original collection is untouched.
+        $this->assertSame([1, 2, 3, 4, 5], $collection->values());
+    }
+
+    public function testSortWithCallback()
+    {
+        $collection = new Collection([3, 1, 2], null);
+
+        // sort() returns a new, sorted collection.
+        $sorted = $collection->sort(fn ($a, $b) => $a <=> $b);
+
+        $this->assertSame([1, 2, 3], $sorted->values());
+    }
+
+    public function testSortWithFlag()
+    {
+        $collection = new Collection(['banana', 'apple', 'cherry'], null);
+
+        $sorted = $collection->sort(SORT_STRING);
+
+        $this->assertSame(['apple', 'banana', 'cherry'], $sorted->values());
+    }
+
+    public function testDiff()
+    {
+        $a = new Collection([1, 2, 3, 4], null);
+        $b = new Collection([2, 4], null);
+
+        $this->assertSame([1, 3], array_values($a->diff($b)->toArray()));
+    }
+
+    public function testIntersect()
+    {
+        $a = new Collection([1, 2, 3, 4], null);
+        $b = new Collection([2, 4, 5], null);
+
+        $this->assertSame([2, 4], array_values($a->intersect($b)->toArray()));
+    }
+
+    public function testWalk()
+    {
+        $collection = new Collection([1, 2, 3], null);
+        $seen = [];
+
+        $collection->walk(function ($value, $key) use (&$seen) {
+            $seen[$key] = $value;
+        });
+
+        $this->assertSame([1, 2, 3], array_values($seen));
+    }
+
+    public function testReduce()
+    {
+        $collection = new Collection([1, 2, 3, 4], null);
+
+        $this->assertSame(10, $collection->reduce(fn ($carry, $item) => $carry + $item, 0));
+    }
+
+    public function testUnique()
+    {
+        $collection = new Collection([1, 2, 2, 3, 3, 3], null);
+
+        $this->assertSame([1, 2, 3], array_values($collection->unique()->toArray()));
+    }
+
+    public function testKeysAndValues()
+    {
+        $collection = new Collection(['a' => 1, 'b' => 2], null);
+
+        $this->assertSame(['a', 'b'], $collection->keys());
+        $this->assertSame([1, 2], $collection->values());
+    }
+
+    public function testSerializeRoundTrip()
+    {
+        $collection = new Collection([1, 2, 3], null);
+
+        $restored = new Collection([], null);
+        $restored->unserialize($collection->serialize());
+
+        $this->assertSame([1, 2, 3], $restored->values());
+    }
+
+    public function testNativeSerializeRoundTrip()
+    {
+        $collection = new Collection(['x' => 1, 'y' => 2], null);
+
+        /** @var Collection $restored */
+        $restored = unserialize(serialize($collection));
+
+        $this->assertSame(['x' => 1, 'y' => 2], $restored->toArray());
+    }
+
+    public function testDebugInfoReturnsItems()
+    {
+        $collection = new Collection([1, 2, 3], null);
+
+        $this->assertSame([1, 2, 3], $collection->__debugInfo());
+    }
 }
 
 final class ClassOne

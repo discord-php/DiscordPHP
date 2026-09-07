@@ -698,6 +698,14 @@ class Discord
         }
     }
 
+    /**
+     * During the READY sequence, marks a guild as available and resolves
+     * $guildLoad once every initially-unavailable guild has arrived.
+     *
+     * @param object   $guild       The guild payload (a Promise is resolved first).
+     * @param array    $unavailable Map of still-pending guild ids, by reference.
+     * @param Deferred  $guildLoad   Resolved when $unavailable empties.
+     */
     protected function handleGuildCreateForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
     {
         // At this point $guild should be a resolved object; callers resolve Generators/Promises.
@@ -723,6 +731,14 @@ class Discord
         }
     }
 
+    /**
+     * During the READY sequence, drops a deleted guild from the pending set and
+     * resolves $guildLoad once $unavailable empties.
+     *
+     * @param object   $guild       The guild delete payload.
+     * @param array    $unavailable Map of still-pending guild ids, by reference.
+     * @param Deferred  $guildLoad   Resolved when $unavailable empties.
+     */
     protected function handleGuildDeleteForReady(object $guild, array &$unavailable, Deferred $guildLoad): void
     {
         if (! isset($guild->unavailable)) {

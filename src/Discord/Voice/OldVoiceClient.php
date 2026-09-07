@@ -825,6 +825,11 @@ class OldVoiceClient extends EventEmitter
     {
     }
 
+    /**
+     * Handles the "DAVE Prepare Transition" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDavePrepareTransition(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE Prepare Transition', ['data' => $data]);
@@ -837,6 +842,11 @@ class OldVoiceClient extends EventEmitter
         ));
     }
 
+    /**
+     * Handles the "DAVE Execute Transition" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveExecuteTransition(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE Execute Transition', ['data' => $data]);
@@ -844,12 +854,22 @@ class OldVoiceClient extends EventEmitter
         // Update local state to reflect the new protocol context
     }
 
+    /**
+     * Handles the "DAVE Transition Ready" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveTransitionReady(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
+    /**
+     * Handles the "DAVE Prepare Epoch" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDavePrepareEpoch(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE Prepare Epoch', ['data' => $data]);
@@ -863,18 +883,33 @@ class OldVoiceClient extends EventEmitter
         ));
     }
 
+    /**
+     * Handles the "DAVE MLS External Sender" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsExternalSender(object $data)
     {
         $this->discord->getLogger()->debug('DAVE MLS External Sender', ['data' => $data]);
         // Handle external sender public key and credential
     }
 
+    /**
+     * Handles the "DAVE MLS Key Package" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsKeyPackage(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
+    /**
+     * Handles the "DAVE MLS Proposals" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsProposals(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE MLS Proposals', ['data' => $data]);
@@ -888,24 +923,44 @@ class OldVoiceClient extends EventEmitter
         ));
     }
 
+    /**
+     * Handles the "DAVE MLS Commit Welcome" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsCommitWelcome(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
+    /**
+     * Handles the "DAVE MLS Announce Commit Transition" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsAnnounceCommitTransition(object $data): void
     {
         // Handle MLS announce commit transition
         $this->discord->getLogger()->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
+    /**
+     * Handles the "DAVE MLS Welcome" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsWelcome(object $data): void
     {
         // Handle MLS welcome message
         $this->discord->getLogger()->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
+    /**
+     * Handles the "DAVE MLS Invalid Commit Welcome" voice gateway op.
+     *
+     * @param Payload $data
+     */
     protected function handleDaveMlsInvalidCommitWelcome(object $data): void
     {
         $this->discord->getLogger()->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
@@ -919,6 +974,7 @@ class OldVoiceClient extends EventEmitter
         ));
     }
 
+    /** Handles a voice-gateway disconnect: tears down the session for this guild. */
     protected function handleCloseVoiceDisconnected(): void
     {
         $this->discord->getLogger()->info('voice client disconnected from channel', ['channel_id' => $this->channel_id]);
@@ -1887,16 +1943,19 @@ class OldVoiceClient extends EventEmitter
         return $decoder;
     }
 
+    /** Generates an MLS key package for the DAVE protocol. */
     protected function generateKeyPackage()
     {
         // Generate and return a new MLS key package
     }
 
+    /** Generates an MLS commit message for the DAVE protocol. */
     protected function generateCommit()
     {
         // Generate and return an MLS commit message
     }
 
+    /** Generates an MLS welcome message for the DAVE protocol. */
     protected function generateWelcome()
     {
         // Generate and return an MLS welcome message

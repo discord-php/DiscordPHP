@@ -245,6 +245,11 @@ class Resolved extends Part
         return $this->attributeCollectionHelper('attachments', Attachment::class);
     }
 
+    /**
+     * Gets the `guild` attribute.
+     *
+     * @return ?Guild
+     */
     protected function getGuildAttribute(): ?Guild
     {
         if (! isset($this->attributes['guild_id'])) {
