@@ -262,14 +262,48 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Contract for a DiscordPHP repository: a keyed, cached {@see CollectionInterface}
+of {@see Part}s for one Discord API resource, plus the async CRUD methods
+(`freshen()`, `fetch()`, `create()`, `save()`, `delete()`) that talk to the
+Discord REST API and keep the cache in sync. {@see AbstractRepository} is the
+concrete base every repository extends.</p>
 
 
 
+
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The abstract implementation</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-PartInterface.html"><abbr title="\Discord\Parts\PartInterface">PartInterface</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The items held by a repository</p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.1.4</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
 
     
     
@@ -305,18 +339,21 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Reads an otherwise-protected repository property (`discrim`, `cache`, …).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_cacheGet">cacheGet()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Resolves with the cached item at `$offset`, loading it from the cache backend if needed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_cachePull">cachePull()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Removes and resolves with the cached item at `$key` (or `$default`).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_clear">clear()</a>
@@ -329,24 +366,28 @@
     <span>
                                 &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>    </span>
 </dt>
+<dd>Returns the repository&#039;s items as a new collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_create">create()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>    </span>
 </dt>
+<dd>Builds a new, un-saved Part of this repository&#039;s class from `$attributes`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_delete">delete()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Deletes `$part` (a Part or its id) on Discord and removes it from the repository.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_fetch">fetch()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Fetches the Part with id `$id`, resolving from cache unless `$fresh` is true.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_filter">filter()</a>
@@ -371,12 +412,14 @@
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Re-fetches `$part` from the Discord API and refills it in place.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_freshen">freshen()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Freshens the repository from the Discord API and resolves with itself.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_get">get()</a>
@@ -503,14 +546,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$vars</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$vars</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -520,7 +563,7 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$discord</span>
-                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -530,7 +573,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Variables bound into the repository's endpoint URIs.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -554,11 +599,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Reads an otherwise-protected repository property (`discrim`, `cache`, …).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -598,11 +644,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Resolves with the cached item at `$offset`, loading it from the cache backend if needed.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">cacheGet</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$offset</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
@@ -646,11 +693,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Removes and resolves with the cached item at `$key` (or `$default`).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">cachePull</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$default</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
@@ -701,7 +749,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">150</span>
 
     </aside>
 
@@ -716,6 +764,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_clear_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_clear_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -735,11 +796,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Returns the repository&#039;s items as a new collection.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">collect</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></span></code>
@@ -773,11 +835,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Builds a new, un-saved Part of this repository&#039;s class from `$attributes`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">create</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$attributes</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$created</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a></span></code>
@@ -800,7 +863,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">bool</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">false</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Whether the Part should be marked as already existing on Discord.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -828,14 +893,15 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Deletes `$part` (a Part or its id) on Discord and removes it from the repository.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -845,7 +911,7 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$part</span>
-                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -855,7 +921,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Audit-log reason.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -883,11 +951,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Fetches the Part with id `$id`, resolving from cache unless `$fresh` is true.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
@@ -938,7 +1007,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -963,6 +1032,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_filter_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_filter_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -986,7 +1068,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -1011,6 +1093,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_find_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_find_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1030,7 +1125,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -1045,6 +1140,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_first_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_first_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1064,11 +1172,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Re-fetches `$part` from the Discord API and refills it in place.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">fresh</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
@@ -1091,7 +1200,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Query string parameters for the fetch.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1119,11 +1230,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Freshens the repository from the Discord API and resolves with itself.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
@@ -1139,7 +1251,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Query string parameters for the list endpoint.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1167,7 +1281,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1199,6 +1313,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_get_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_get_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1218,7 +1345,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -1233,6 +1360,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getIterator_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_getIterator_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1256,7 +1396,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1281,6 +1421,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_has_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_has_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1304,7 +1457,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -1329,6 +1482,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_jsonSerialize_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_jsonSerialize_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1352,7 +1518,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -1367,6 +1533,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_keys_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_keys_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1390,7 +1569,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -1405,6 +1584,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_last_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_last_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1424,7 +1616,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">170</span>
 
     </aside>
 
@@ -1449,6 +1641,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_offsetExists_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_offsetExists_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1472,7 +1677,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1497,6 +1702,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_offsetGet_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_offsetGet_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
             <section class="phpdocumentor-attributes">
@@ -1527,7 +1745,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -1559,6 +1777,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_offsetSet_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_offsetSet_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1578,7 +1809,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -1603,6 +1834,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_offsetUnset_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_offsetUnset_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1622,7 +1866,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -1654,6 +1898,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_pull_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_pull_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1673,7 +1930,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -1698,6 +1955,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_pushItem_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_pushItem_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1721,7 +1991,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -1783,7 +2053,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -1815,6 +2085,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_set_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_set_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -1834,7 +2117,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -1889,7 +2172,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryInterface.php"><a href="files/src-discord-repository-abstractrepositoryinterface.html"><abbr title="src/Discord/Repository/AbstractRepositoryInterface.php">AbstractRepositoryInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -1904,6 +2187,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_values_tags">
+        Tags
+        <a href="classes/Discord-Repository-AbstractRepositoryInterface.html#method_values_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">inheritDoc</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     

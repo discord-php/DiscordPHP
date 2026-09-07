@@ -325,12 +325,14 @@
     <span>
                                 &nbsp;: string|false    </span>
 </dt>
+<dd>Decrypts the payload of an RTP `$packet` for the current voice group.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Voice-VoiceGroupCryptoInterface.html#method_encryptRTPPacket">encryptRTPPacket()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Encrypts the payload of an RTP `$packet` for the current voice group.</dd>
 
     </dl>
 
@@ -361,11 +363,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCryptoInterface.php"><a href="files/src-discord-voice-voicegroupcryptointerface.html"><abbr title="src/Discord/Voice/VoiceGroupCryptoInterface.php">VoiceGroupCryptoInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Decrypts the payload of an RTP `$packet` for the current voice group.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">decryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packet</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
@@ -388,7 +391,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">int</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">0</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>RTP sequence number, mixed into the nonce.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -399,6 +404,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The decrypted bytes, or false on authentication failure.</p>
+</section>
+
             </section>
 
 </article>
@@ -416,11 +425,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCryptoInterface.php"><a href="files/src-discord-voice-voicegroupcryptointerface.html"><abbr title="src/Discord/Voice/VoiceGroupCryptoInterface.php">VoiceGroupCryptoInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Encrypts the payload of an RTP `$packet` for the current voice group.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">encryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packet</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -443,7 +453,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">int</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">0</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>RTP sequence number, mixed into the nonce.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -454,6 +466,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The encrypted packet bytes.</p>
+</section>
+
             </section>
 
 </article>

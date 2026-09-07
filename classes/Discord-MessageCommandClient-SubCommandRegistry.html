@@ -345,6 +345,8 @@
     <span>
                                 &nbsp;: <a href="classes/Discord-MessageCommandClient-Command.html"><abbr title="\Discord\MessageCommandClient\Command">Command</abbr></a>|null    </span>
 </dt>
+<dd>Resolves \`$command\` (optionally following aliases) to a registered
+sub-command, or null when it is unknown.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_register">register()</a>
@@ -358,24 +360,28 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Points \`$alias\` at an existing sub-command.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_unregister">unregister()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Removes a sub-command and any aliases that pointed at it.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_unregisterAlias">unregisterAlias()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Removes a sub-command alias.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_normalize">normalize()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Applies the configured normaliser to \`$name\`.</dd>
 
     </dl>
 
@@ -524,7 +530,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -544,7 +550,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">callable</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Normalises a sub-command/alias name (e.g. lower-casing).</p>
+</section>
+
             </dd>
             </dl>
 
@@ -568,7 +576,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -607,11 +615,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Resolves \`$command\` (optionally following aliases) to a registered
+sub-command, or null when it is unknown.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aliases</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-MessageCommandClient-Command.html"><abbr title="\Discord\MessageCommandClient\Command">Command</abbr></a>|null</span></code>
@@ -662,7 +672,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -718,11 +728,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Points \`$alias\` at an existing sub-command.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">registerAlias</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$alias</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -750,6 +761,23 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_registerAlias_tags">
+        Tags
+        <a href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_registerAlias_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>When the target is unknown, or the alias collides
+with a sub-command or a different existing alias.</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         
     
@@ -769,11 +797,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Removes a sub-command and any aliases that pointed at it.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">unregister</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -794,6 +823,22 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_unregister_tags">
+        Tags
+        <a href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_unregister_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>When the sub-command does not exist.</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         
     
@@ -813,11 +858,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Removes a sub-command alias.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">unregisterAlias</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$alias</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -838,6 +884,22 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_unregisterAlias_tags">
+        Tags
+        <a href="classes/Discord-MessageCommandClient-SubCommandRegistry.html#method_unregisterAlias_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>When the alias does not exist.</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         
     
@@ -857,11 +919,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/MessageCommandClient/SubCommandRegistry.php"><a href="files/src-discord-messagecommandclient-subcommandregistry.html"><abbr title="src/Discord/MessageCommandClient/SubCommandRegistry.php">SubCommandRegistry.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Applies the configured normaliser to \`$name\`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">normalize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>

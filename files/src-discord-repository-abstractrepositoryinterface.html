@@ -267,7 +267,11 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Repository-AbstractRepositoryInterface.html"><abbr title="\Discord\Repository\AbstractRepositoryInterface">AbstractRepositoryInterface</abbr></a></dt>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Repository-AbstractRepositoryInterface.html"><abbr title="\Discord\Repository\AbstractRepositoryInterface">AbstractRepositoryInterface</abbr></a></dt><dd>Contract for a DiscordPHP repository: a keyed, cached {@see CollectionInterface}
+of {@see Part}s for one Discord API resource, plus the async CRUD methods
+(`freshen()`, `fetch()`, `create()`, `save()`, `delete()`) that talk to the
+Discord REST API and keep the cache in sync. {@see AbstractRepository} is the
+concrete base every repository extends.</dd>    </dl>
 
 
 

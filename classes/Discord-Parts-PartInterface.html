@@ -259,12 +259,15 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">This class is the base of all objects that are returned. All &quot;Parts&quot; extend
-off this base class.</p>
+            <p class="phpdocumentor-summary">Contract for every DiscordPHP &quot;Part&quot; — the hydrated objects returned for
+Discord API entities (users, channels, messages, …). Defines construction,
+attribute access via mutators, `ArrayAccess`, (de)serialization and the
+attribute projections (`getCreatableAttributes()` / `getUpdatableAttributes()`)
+the repositories use when POST/PATCHing. {@see Part} is the concrete base.</p>
 
 
 
@@ -276,6 +279,21 @@ off this base class.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The abstract implementation every Part extends</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Repository-AbstractRepositoryInterface.html"><abbr title="\Discord\Repository\AbstractRepositoryInterface">AbstractRepositoryInterface</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>Repositories that hold Parts</p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">since</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
@@ -318,138 +336,161 @@ off this base class.</p>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Debug representation for `var_dump()`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method___get">__get()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Magic getter for an attribute or accessor mutator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method___serialize">__serialize()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The Part&#039;s attributes, for PHP&#039;s native `serialize()`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method___set">__set()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Magic setter for an attribute or mutator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method___toString">__toString()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>A short string representation of the Part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method___unserialize">__unserialize()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Restores the Part from the payload of PHP&#039;s native `unserialize()`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_createOf">createOf()</a>
     <span>
                                 &nbsp;: self    </span>
 </dt>
+<dd>Hydrates a new Part of `$class` from `$data` using this Part&#039;s client.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_fetch">fetch()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Fetches the full Part from the Discord API and refills it in place.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_fill">fill()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Mass-assigns `$attributes` (respecting the `$fillable` whitelist).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_getCreatableAttributes">getCreatableAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The attribute subset sent when creating this Part (POST).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_getDiscord">getDiscord()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>    </span>
 </dt>
+<dd>The Discord client this Part belongs to.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_getPublicAttributes">getPublicAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The attributes safe to expose publicly (secrets stripped).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_getRawAttributes">getRawAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The raw, unmutated attribute array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_getRepositoryAttributes">getRepositoryAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The attributes the owning repository binds into its endpoint URIs.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_getUpdatableAttributes">getUpdatableAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The attribute subset sent when updating this Part (PATCH).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_isPartial">isPartial()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Whether the Part holds only a partial set of attributes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_jsonSerialize">jsonSerialize()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>The Part&#039;s public attributes, for `json_encode()`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_offsetExists">offsetExists()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Whether the attribute at `$key` is set (ArrayAccess).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_offsetGet">offsetGet()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Gets the attribute at `$key` (ArrayAccess).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_offsetSet">offsetSet()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Sets the attribute at `$key` (ArrayAccess).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_offsetUnset">offsetUnset()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Unsets the attribute at `$key` (ArrayAccess).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_serialize">serialize()</a>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
+<dd>Serialises the Part&#039;s attributes to a string, or null on failure.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartInterface.html#method_unserialize">unserialize()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>Restores the Part from a string produced by {@see serialize()}.</dd>
 
     </dl>
 
@@ -480,7 +521,7 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -507,14 +548,18 @@ off this base class.</p>
                 : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Initial attribute values.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$created</span>
                 : <span class="phpdocumentor-argument-list__argument__type">bool</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">false</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Whether the Part already exists on Discord.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -538,11 +583,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Debug representation for `var_dump()`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__debugInfo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -576,11 +622,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Magic getter for an attribute or accessor mutator.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -620,11 +667,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The Part&#039;s attributes, for PHP&#039;s native `serialize()`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -658,11 +706,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Magic setter for an attribute or mutator.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -709,11 +758,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">A short string representation of the Part.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__toString</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -747,11 +797,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Restores the Part from the payload of PHP&#039;s native `unserialize()`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__unserialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -791,11 +842,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Hydrates a new Part of `$class` from `$data` using this Part&#039;s client.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">createOf</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
@@ -846,11 +898,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Fetches the full Part from the Discord API and refills it in place.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
@@ -884,11 +937,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Mass-assigns `$attributes` (respecting the `$fillable` whitelist).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">fill</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$attributes</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -928,11 +982,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The attribute subset sent when creating this Part (POST).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getCreatableAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -966,11 +1021,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The Discord client this Part belongs to.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDiscord</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></span></code>
@@ -1004,11 +1060,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The attributes safe to expose publicly (secrets stripped).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getPublicAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1042,11 +1099,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The raw, unmutated attribute array.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRawAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1080,11 +1138,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The attributes the owning repository binds into its endpoint URIs.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRepositoryAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1118,11 +1177,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The attribute subset sent when updating this Part (PATCH).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getUpdatableAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1156,11 +1216,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Whether the Part holds only a partial set of attributes.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isPartial</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1194,11 +1255,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The Part&#039;s public attributes, for `json_encode()`.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1232,11 +1294,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Whether the attribute at `$key` is set (ArrayAccess).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">offsetExists</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -1280,11 +1343,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Gets the attribute at `$key` (ArrayAccess).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">offsetGet</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -1335,11 +1399,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Sets the attribute at `$key` (ArrayAccess).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">offsetSet</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1386,11 +1451,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Unsets the attribute at `$key` (ArrayAccess).</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">offsetUnset</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -1430,11 +1496,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Serialises the Part&#039;s attributes to a string, or null on failure.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
@@ -1468,11 +1535,12 @@ off this base class.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartInterface.php"><a href="files/src-discord-parts-partinterface.html"><abbr title="src/Discord/Parts/PartInterface.php">PartInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Restores the Part from a string produced by {@see serialize()}.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">unserialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>

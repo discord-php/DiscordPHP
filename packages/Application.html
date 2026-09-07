@@ -261,8 +261,15 @@
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Builders-Components-Contracts-ComponentV2.html"><abbr title="\Discord\Builders\Components\Contracts\ComponentV2">ComponentV2</abbr></a></dt><dd>This interface is a contract for V2 components.</dd>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Parts-PartInterface.html"><abbr title="\Discord\Parts\PartInterface">PartInterface</abbr></a></dt><dd>This class is the base of all objects that are returned. All &quot;Parts&quot; extend
-off this base class.</dd>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Repository-AbstractRepositoryInterface.html"><abbr title="\Discord\Repository\AbstractRepositoryInterface">AbstractRepositoryInterface</abbr></a></dt>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Voice-VoiceGroupCryptoInterface.html"><abbr title="\Discord\Voice\VoiceGroupCryptoInterface">VoiceGroupCryptoInterface</abbr></a></dt><dd>Interface for group-based AEAD encryption and decryption for Discord voice RTP packets.</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Builders-Components-Contracts-ComponentV2.html"><abbr title="\Discord\Builders\Components\Contracts\ComponentV2">ComponentV2</abbr></a></dt><dd>This interface is a contract for V2 components.</dd>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Parts-PartInterface.html"><abbr title="\Discord\Parts\PartInterface">PartInterface</abbr></a></dt><dd>Contract for every DiscordPHP &quot;Part&quot; — the hydrated objects returned for
+Discord API entities (users, channels, messages, …). Defines construction,
+attribute access via mutators, `ArrayAccess`, (de)serialization and the
+attribute projections (`getCreatableAttributes()` / `getUpdatableAttributes()`)
+the repositories use when POST/PATCHing. {@see Part} is the concrete base.</dd>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Repository-AbstractRepositoryInterface.html"><abbr title="\Discord\Repository\AbstractRepositoryInterface">AbstractRepositoryInterface</abbr></a></dt><dd>Contract for a DiscordPHP repository: a keyed, cached {@see CollectionInterface}
+of {@see Part}s for one Discord API resource, plus the async CRUD methods
+(`freshen()`, `fetch()`, `create()`, `save()`, `delete()`) that talk to the
+Discord REST API and keep the cache in sync. {@see AbstractRepository} is the
+concrete base every repository extends.</dd>            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Voice-VoiceGroupCryptoInterface.html"><abbr title="\Discord\Voice\VoiceGroupCryptoInterface">VoiceGroupCryptoInterface</abbr></a></dt><dd>Interface for group-based AEAD encryption and decryption for Discord voice RTP packets.</dd>    </dl>
 
     <h4 id="toc-classes">
         Classes

@@ -386,12 +386,14 @@
     <span>
                                 &nbsp;: string|false    </span>
 </dt>
+<dd>Decrypts the payload of an RTP `$packet` for the current voice group.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encryptRTPPacket">encryptRTPPacket()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Encrypts the payload of an RTP `$packet` for the current voice group.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_validateEncryptedRTPPacket">validateEncryptedRTPPacket()</a>
@@ -683,7 +685,8 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Decrypts the payload of an RTP `$packet` for the current voice group.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">decryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packet</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"> = '0'</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
@@ -708,7 +711,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">int</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value"> = '0'</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>RTP sequence number, mixed into the nonce.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -740,7 +745,8 @@
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Encrypts the payload of an RTP `$packet` for the current voice group.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">encryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packet</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"> = '0'</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -765,7 +771,9 @@
                 : <span class="phpdocumentor-argument-list__argument__type">int</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value"> = '0'</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>RTP sequence number, mixed into the nonce.</p>
+</section>
+
             </dd>
             </dl>
 

@@ -423,6 +423,7 @@ within the class. If it does, it calls that method with the provided arguments.<
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
+<dd>Exposes the read-only \`discrim\` and \`cache\` properties.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="-deprecated" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_clear">clear()</a>
@@ -484,6 +485,7 @@ based on the response of the callback.</dd>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
+<dd>Freshens the repository from the Discord API and resolves with itself.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Guild-MemberRepository.html#method_get">get()</a>
@@ -1039,7 +1041,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">783</span>
+    <span class="phpdocumentor-element-found-in__line">790</span>
 
     </aside>
 
@@ -1216,11 +1218,12 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">761</span>
+    <span class="phpdocumentor-element-found-in__line">768</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Exposes the read-only \`discrim\` and \`cache\` properties.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -1755,7 +1758,8 @@ based on the response of the callback.</p>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Freshens the repository from the Discord API and resolves with itself.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
