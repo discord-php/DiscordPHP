@@ -88,7 +88,7 @@ class Member extends Part implements Stringable
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);
     /** Member is exempt from guild verification requirements. */
     public const FLAGS_BYPASSES_VERIFICATION = (1 << 2);
-    /** Member has started onboarding, */
+    /** Member has started onboarding. */
     public const FLAGS_STARTED_ONBOARDING = (1 << 3);
     /** Member is a guest and can only access the voice channel they were invited to. */
     public const FLAGS_IS_GUEST = (1 << 4);
