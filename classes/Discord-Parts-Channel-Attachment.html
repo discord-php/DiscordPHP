@@ -300,44 +300,6 @@
                                             <span class="phpdocumentor-tag-link">7.0.0</span>
                                                                                                         
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">@property</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null         $height              Height of file (if image).</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null         $width               Width of file (if image).</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null      $placeholder         Thumbhash placeholder (if image or video).</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null         $placeholder_version Version of the placeholder (if image or video)</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?User[]|null      $clip_participants   Array of user objects. For Clips, array of users who were in the stream.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?Carbon|null      $clip_created_at     For Clips, when the clip was created.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?Application|null $application         For Clips, the application in the stream, if recognized.</p>
-</section>
-
-                                    </dd>
                         </dl>
 
     
@@ -405,6 +367,24 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_application">$application</a>
+    <span>
+                        &nbsp;: ?<a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_clip_created_at">$clip_created_at</a>
+    <span>
+                        &nbsp;: ?<abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_clip_participants">$clip_participants</a>
+    <span>
+                        &nbsp;: ?array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_content_type">$content_type</a>
     <span>
                         &nbsp;: string|null            </span>
@@ -448,9 +428,27 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_height">$height</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_placeholder">$placeholder</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_placeholder_version">$placeholder_version</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -488,6 +486,12 @@
     <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_waveform">$waveform</a>
     <span>
                         &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#property_width">$width</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -627,21 +631,21 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-Attachment.html#method_getApplicationAttribute">getApplicationAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null    </span>
+                                &nbsp;: ?<a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>    </span>
 </dt>
 <dd>Returns the application attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-Attachment.html#method_getClipCreatedAtAttribute">getClipCreatedAtAttribute()</a>
     <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
+                                &nbsp;: ?<abbr title="\Carbon\Carbon">Carbon</abbr>    </span>
 </dt>
 <dd>Returns the clip created at attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-Attachment.html#method_getClipParticipantsAttribute">getClipParticipantsAttribute()</a>
     <span>
-                                &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null    </span>
+                                &nbsp;: ?<abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;    </span>
 </dt>
 <dd>Returns the clip participants attribute.</dd>
 
@@ -755,7 +759,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a>
     <span>
-                                &nbsp;: string|null    </span>
+                                &nbsp;: ?string    </span>
 </dt>
 <dd>Serializes the data. Used for Serializable.</dd>
 
@@ -1018,6 +1022,123 @@ JSON. Used for JsonSerializable.</dd>
             <a href="classes/Discord-Parts-Channel-Attachment.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_application">
+        $application
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_application" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?<a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$application</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>For Clips, the application in the stream, if recognized.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_clip_created_at">
+        $clip_created_at
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_clip_created_at" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?<abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
+    <span class="phpdocumentor-signature__name">$clip_created_at</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>For Clips, when the clip was created.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_clip_participants">
+        $clip_participants
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_clip_participants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$clip_participants</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Array of user objects. For Clips, array of users who were in the stream.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -1299,6 +1420,45 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_height">
+        $height
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_height" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$height</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Height of file (if image).</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
         <a href="classes/Discord-Parts-Channel-Attachment.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1322,6 +1482,84 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Attachment ID.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_placeholder">
+        $placeholder
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_placeholder" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$placeholder</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Thumbhash placeholder (if image or video).</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_placeholder_version">
+        $placeholder_version
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_placeholder_version" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$placeholder_version</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Version of the placeholder (if image or video)</p>
 </section>
 
     
@@ -1564,6 +1802,45 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Base64 encoded bytearray representing a sampled waveform (currently for voice messages).</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_width">
+        $width
+        <a href="classes/Discord-Parts-Channel-Attachment.html#property_width" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$width</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Width of file (if image).</p>
 </section>
 
     
@@ -2492,7 +2769,7 @@ JSON. Used for JsonSerializable.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getApplicationAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getApplicationAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2505,7 +2782,7 @@ JSON. Used for JsonSerializable.</dd>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a></span>
             </section>
 
 </article>
@@ -2531,7 +2808,7 @@ JSON. Used for JsonSerializable.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getClipCreatedAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getClipCreatedAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<abbr title="\Carbon\Carbon">Carbon</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2544,7 +2821,7 @@ JSON. Used for JsonSerializable.</dd>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
+        <span class="phpdocumentor-signature__response_type">?<abbr title="\Carbon\Carbon">Carbon</abbr></span>
             </section>
 
 </article>
@@ -2570,7 +2847,7 @@ JSON. Used for JsonSerializable.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getClipParticipantsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null</span></code>
+                    <span class="phpdocumentor-signature__name">getClipParticipantsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2583,7 +2860,7 @@ JSON. Used for JsonSerializable.</dd>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null</span>
+        <span class="phpdocumentor-signature__response_type">?<abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -3429,7 +3706,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3442,7 +3719,7 @@ JSON. Used for JsonSerializable.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
+        <span class="phpdocumentor-signature__response_type">?string</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>A string of serialized data.</p>
 </section>
@@ -3642,7 +3919,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">attributeCollectionHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'id'</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extraData</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">attributeCollectionHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'id'</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extraData</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3670,7 +3947,7 @@ JSON. Used for JsonSerializable.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$discrim</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?string</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">'id'</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The attribute discriminator.</p>
@@ -3679,7 +3956,7 @@ JSON. Used for JsonSerializable.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$extraData</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -4290,6 +4567,9 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_application">$application</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_clip_created_at">$clip_created_at</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_clip_participants">$clip_participants</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_content_type">$content_type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_description">$description</a></li>
@@ -4297,13 +4577,17 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_ephemeral">$ephemeral</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_filename">$filename</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_flags">$flags</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_height">$height</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_placeholder">$placeholder</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_placeholder_version">$placeholder_version</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_proxy_url">$proxy_url</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_size">$size</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_title">$title</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_url">$url</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_waveform">$waveform</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#property_width">$width</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>

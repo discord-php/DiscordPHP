@@ -305,39 +305,6 @@
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                                         
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">@property</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null $bot_id                  The id of the bot this role belongs to.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null $integration_id          The id of the integration this role belongs to.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?true|null   $premium_subscriber      Whether this is the guild's Booster role.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null $subscription_listing_id The id of this role's subscription sku and listing.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?true|null   $available_for_purchase  Whether this role is available for purchase.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?true|null   $guild_connections       Whether this role is a guild's linked role.</p>
-</section>
-
-                                    </dd>
                         </dl>
 
     
@@ -370,6 +337,18 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-RoleTags.html#property_available_for_purchase">$available_for_purchase</a>
+    <span>
+                        &nbsp;: ?true|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-RoleTags.html#property_bot_id">$bot_id</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
                         &nbsp;: bool            </span>
@@ -377,11 +356,35 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-RoleTags.html#property_guild_connections">$guild_connections</a>
+    <span>
+                        &nbsp;: ?true|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-RoleTags.html#property_integration_id">$integration_id</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-RoleTags.html#property_premium_subscriber">$premium_subscriber</a>
+    <span>
+                        &nbsp;: ?true|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="-deprecated" href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a>
     <span>
                         &nbsp;: mixed            </span>
 </dt>
 <dd>Custom script data.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-RoleTags.html#property_subscription_listing_id">$subscription_listing_id</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a>
@@ -627,7 +630,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a>
     <span>
-                                &nbsp;: string|null    </span>
+                                &nbsp;: ?string    </span>
 </dt>
 <dd>Serializes the data. Used for Serializable.</dd>
 
@@ -756,6 +759,84 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_available_for_purchase">
+        $available_for_purchase
+        <a href="classes/Discord-Parts-Guild-RoleTags.html#property_available_for_purchase" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/RoleTags.php"><a href="files/src-discord-parts-guild-roletags.html"><abbr title="src/Discord/Parts/Guild/RoleTags.php">RoleTags.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?true|null</span>
+    <span class="phpdocumentor-signature__name">$available_for_purchase</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether this role is available for purchase.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_bot_id">
+        $bot_id
+        <a href="classes/Discord-Parts-Guild-RoleTags.html#property_bot_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/RoleTags.php"><a href="files/src-discord-parts-guild-roletags.html"><abbr title="src/Discord/Parts/Guild/RoleTags.php">RoleTags.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$bot_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The id of the bot this role belongs to.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_created">
         $created
         <a href="classes/Discord-Parts-Part.html#property_created" class="headerlink"><i class="fas fa-link"></i></a>
@@ -783,6 +864,123 @@ JSON. Used for JsonSerializable.</dd>
         <section class="phpdocumentor-description"><p>Whether the part has been created.</p>
 </section>
 
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_guild_connections">
+        $guild_connections
+        <a href="classes/Discord-Parts-Guild-RoleTags.html#property_guild_connections" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/RoleTags.php"><a href="files/src-discord-parts-guild-roletags.html"><abbr title="src/Discord/Parts/Guild/RoleTags.php">RoleTags.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?true|null</span>
+    <span class="phpdocumentor-signature__name">$guild_connections</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether this role is a guild's linked role.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_integration_id">
+        $integration_id
+        <a href="classes/Discord-Parts-Guild-RoleTags.html#property_integration_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/RoleTags.php"><a href="files/src-discord-parts-guild-roletags.html"><abbr title="src/Discord/Parts/Guild/RoleTags.php">RoleTags.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$integration_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The id of the integration this role belongs to.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_premium_subscriber">
+        $premium_subscriber
+        <a href="classes/Discord-Parts-Guild-RoleTags.html#property_premium_subscriber" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/RoleTags.php"><a href="files/src-discord-parts-guild-roletags.html"><abbr title="src/Discord/Parts/Guild/RoleTags.php">RoleTags.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?true|null</span>
+    <span class="phpdocumentor-signature__name">$premium_subscriber</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether this is the guild's Booster role.</p>
+</section>
+
+    
     
 
         
@@ -827,6 +1025,45 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Used for storing custom information, used by end products.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_subscription_listing_id">
+        $subscription_listing_id
+        <a href="classes/Discord-Parts-Guild-RoleTags.html#property_subscription_listing_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/RoleTags.php"><a href="files/src-discord-parts-guild-roletags.html"><abbr title="src/Discord/Parts/Guild/RoleTags.php">RoleTags.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$subscription_listing_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The id of this role's subscription sku and listing.</p>
 </section>
 
     
@@ -2575,7 +2812,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2588,7 +2825,7 @@ JSON. Used for JsonSerializable.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
+        <span class="phpdocumentor-signature__response_type">?string</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>A string of serialized data.</p>
 </section>
@@ -2788,7 +3025,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">attributeCollectionHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'id'</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extraData</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">attributeCollectionHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'id'</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extraData</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2816,7 +3053,7 @@ JSON. Used for JsonSerializable.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$discrim</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?string</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">'id'</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The attribute discriminator.</p>
@@ -2825,7 +3062,7 @@ JSON. Used for JsonSerializable.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$extraData</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -3542,8 +3779,14 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-RoleTags.html#property_available_for_purchase">$available_for_purchase</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-RoleTags.html#property_bot_id">$bot_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-RoleTags.html#property_guild_connections">$guild_connections</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-RoleTags.html#property_integration_id">$integration_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-RoleTags.html#property_premium_subscriber">$premium_subscriber</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-RoleTags.html#property_subscription_listing_id">$subscription_listing_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>

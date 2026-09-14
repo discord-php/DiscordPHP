@@ -13653,7 +13653,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_STARTED_ONBOARDING",
             "name": "FLAGS_STARTED_ONBOARDING",
-            "summary": "Member\u0020has\u0020started\u0020onboarding,",
+            "summary": "Member\u0020has\u0020started\u0020onboarding.",
             "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_STARTED_ONBOARDING"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_IS_GUEST",

@@ -286,44 +286,6 @@
                                             <span class="phpdocumentor-tag-link">7.1.0</span>
                                                                                                         
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">@property</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null                               $guild_id                   The optional guild ID this command is for. If not set, the command is global.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string[]|null                          $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string[]|null                          $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?ExCollectionInterface&lt;Option&gt;|Option[] $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?bool|null                              $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int[]|null                             $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null                               $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord</p>
-</section>
-
-                                    </dd>
                         </dl>
 
     
@@ -349,27 +311,57 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_contexts">$contexts</a>
+    <span>
+                        &nbsp;: ?array&lt;string|int, int&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions">$default_member_permissions</a>
     <span>
-                        &nbsp;: string|null            </span>
+                        &nbsp;: ?string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
     <span>
-                        &nbsp;: bool|null            </span>
+                        &nbsp;: ?bool            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_description">$description</a>
     <span>
-                        &nbsp;: string|null            </span>
+                        &nbsp;: ?string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_description_localizations">$description_localizations</a>
+    <span>
+                        &nbsp;: ?array&lt;string|int, string&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_dm_permission">$dm_permission</a>
+    <span>
+                        &nbsp;: ?bool|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_guild_id">$guild_id</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_handler">$handler</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_integration_types">$integration_types</a>
     <span>
-                        &nbsp;: array&lt;string|int, int&gt;|null            </span>
+                        &nbsp;: ?array&lt;string|int, int&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -379,9 +371,21 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_name_localizations">$name_localizations</a>
+    <span>
+                        &nbsp;: ?array&lt;string|int, string&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_nsfw">$nsfw</a>
     <span>
-                        &nbsp;: bool|null            </span>
+                        &nbsp;: ?bool            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_options">$options</a>
+    <span>
+                        &nbsp;: ?<abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -552,6 +556,45 @@
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_contexts">
+        $contexts
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_contexts" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?array&lt;string|int, int&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$contexts</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Interaction context(s) where the command can be used, only for globally-scoped commands.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_default_member_permissions">
         $default_member_permissions
         <a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions" class="headerlink"><i class="fas fa-link"></i></a>
@@ -570,7 +613,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
+            <span class="phpdocumentor-signature__type">?string</span>
     <span class="phpdocumentor-signature__name">$default_member_permissions</span>
     </code>
 
@@ -609,7 +652,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
+            <span class="phpdocumentor-signature__type">?bool</span>
     <span class="phpdocumentor-signature__name">$default_permission</span>
     </code>
 
@@ -648,11 +691,167 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
+            <span class="phpdocumentor-signature__type">?string</span>
     <span class="phpdocumentor-signature__name">$description</span>
     </code>
 
         <section class="phpdocumentor-description"><p>For <code class="prettyprint">CHAT_INPUT</code> and <code class="prettyprint">PRIMARY_ENTRY_POINT</code> commands, 1-100 characters. Empty string for <code class="prettyprint">USER</code> and <code class="prettyprint">MESSAGE</code> commands.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_description_localizations">
+        $description_localizations
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_description_localizations" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?array&lt;string|int, string&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$description_localizations</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Localization dictionary for the description field. Values follow the same restrictions as description.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_dm_permission">
+        $dm_permission
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_dm_permission" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?bool|null</span>
+    <span class="phpdocumentor-signature__name">$dm_permission</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_guild_id">
+        $guild_id
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$guild_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The optional guild ID this command is for. If not set, the command is global.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_handler">
+        $handler
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_handler" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$handler</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Determines whether the interaction is handled by the app's interactions handler or by Discord</p>
 </section>
 
     
@@ -687,7 +886,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, int&gt;|null</span>
+            <span class="phpdocumentor-signature__type">?array&lt;string|int, int&gt;</span>
     <span class="phpdocumentor-signature__name">$integration_types</span>
     </code>
 
@@ -747,6 +946,45 @@
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_name_localizations">
+        $name_localizations
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_name_localizations" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?array&lt;string|int, string&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$name_localizations</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Localization dictionary for the name field. Values follow the same restrictions as name.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_nsfw">
         $nsfw
         <a href="classes/Discord-Builders-CommandAttributes.html#property_nsfw" class="headerlink"><i class="fas fa-link"></i></a>
@@ -765,11 +1003,50 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
+            <span class="phpdocumentor-signature__type">?bool</span>
     <span class="phpdocumentor-signature__name">$nsfw</span>
     </code>
 
         <section class="phpdocumentor-description"><p>Indicates whether the command is age-restricted, defaults to <code class="prettyprint">false</code>.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_options">
+        $options
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_options" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?<abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$options</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).</p>
 </section>
 
     
@@ -1434,7 +1711,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">?bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1451,7 +1728,7 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$permission</span>
-                : <span class="phpdocumentor-argument-list__argument__type">bool|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Default permission of the command</p>
@@ -2076,12 +2353,19 @@
                                     <li class="phpdocumentor-on-this-page-section__title">Properties</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_contexts">$contexts</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions">$default_member_permissions</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_description">$description</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_description_localizations">$description_localizations</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_dm_permission">$dm_permission</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_guild_id">$guild_id</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_handler">$handler</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_integration_types">$integration_types</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_name">$name</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_name_localizations">$name_localizations</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_nsfw">$nsfw</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_options">$options</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_type">$type</a></li>
                                     </ul>
             </li>

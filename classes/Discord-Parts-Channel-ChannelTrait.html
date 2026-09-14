@@ -276,19 +276,6 @@
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                                         
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">@property</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null $name                The name of the channel or thread.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null $last_message_id     The unique identifier of the last message sent in the channel or thread. (may not point to an existing or valid message or thread).</p>
-</section>
-
-                                    </dd>
                         </dl>
 
     
@@ -344,6 +331,12 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#property_last_message_id">$last_message_id</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#property_last_pin_timestamp">$last_pin_timestamp</a>
     <span>
                         &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
@@ -359,6 +352,12 @@
     <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#property_messages">$messages</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a>            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#property_name">$name</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -477,7 +476,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages">getPinnedMessages()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>|null&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, ?<a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>&gt;    </span>
 </dt>
 <dd>Returns the channels pinned messages.</dd>
 
@@ -788,6 +787,45 @@
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_last_message_id">
+        $last_message_id
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_last_message_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$last_message_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The unique identifier of the last message sent in the channel or thread. (may not point to an existing or valid message or thread).</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_last_pin_timestamp">
         $last_pin_timestamp
         <a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_last_pin_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
@@ -889,6 +927,45 @@
     </code>
 
         <section class="phpdocumentor-description"><p>Text channel only - messages sent in the channel or thread.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_name">
+        $name
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$name</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The name of the channel or thread.</p>
 </section>
 
     
@@ -1716,7 +1793,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPinnedMessages</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|<abbr title="\Carbon\Carbon">Carbon</abbr>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>|null&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getPinnedMessages</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|<abbr title="\Carbon\Carbon">Carbon</abbr>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, ?<a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1763,7 +1840,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>|null&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, ?<a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -2609,9 +2686,11 @@ rest of the arguments are disregarded.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_guild_id">$guild_id</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_id">$id</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_is_private">$is_private</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_last_message_id">$last_message_id</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_last_pin_timestamp">$last_pin_timestamp</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_members">$members</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_messages">$messages</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_name">$name</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_owner">$owner</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_owner_id">$owner_id</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#property_owner_member">$owner_member</a></li>

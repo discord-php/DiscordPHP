@@ -306,34 +306,6 @@
                                             <span class="phpdocumentor-tag-link">7.0.0</span>
                                                                                                         
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">@property</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null $placeholder Placeholder text if nothing is selected or default; max 150 characters.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null    $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25. Must be either omitted or at least <code class="prettyprint">1</code> if <code class="prettyprint">required</code> is omitted or <code class="prettyprint">true</code>.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null    $max_values  Maximum number of items that can be chosen (defaults to 1); max 25.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?bool|null   $required    Whether the string select is required to answer in a modal (defaults to true).</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?bool|null   $disabled    Whether select menu is disabled in a message (defaults to false). Using in a modal will result in an error.</p>
-</section>
-
-                                    </dd>
                         </dl>
 
     
@@ -538,6 +510,41 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_disabled">$disabled</a>
+    <span>
+                        &nbsp;: ?bool|null            </span>
+</dt>
+<dd>Whether the select menu should be disabled.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_max_values">$max_values</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
+</dt>
+<dd>Maximum number of options that must be selected.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_min_values">$min_values</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
+</dt>
+<dd>Minimum number of options that must be selected.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_placeholder">$placeholder</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+<dd>Placeholder string to display if nothing is selected. Maximum 150 characters.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_required">$required</a>
+    <span>
+                        &nbsp;: ?bool|null            </span>
+</dt>
+<dd>Whether the select menu is required. Defaults to true. (Modal only).</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_channel_types">$channel_types</a>
     <span>
@@ -561,13 +568,6 @@
 number of default values must be in the range defined by min_values and max_values.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_disabled">$disabled</a>
-    <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-<dd>Whether the select menu should be disabled.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_discord">$discord</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>|null            </span>
@@ -589,39 +589,11 @@ number of default values must be in the range defined by min_values and max_valu
 <dd>Callback used to listen for `INTERACTION_CREATE` events.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_max_values">$max_values</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>Maximum number of options that must be selected.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_min_values">$min_values</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>Minimum number of options that must be selected.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_options">$options</a>
     <span>
                         &nbsp;: array&lt;string|int, <a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a>&gt;            </span>
 </dt>
 <dd>Array of options that the select menu has.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_placeholder">$placeholder</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>Placeholder string to display if nothing is selected. Maximum 150 characters.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_required">$required</a>
-    <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-<dd>Whether the select menu is required. Defaults to true. (Modal only).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-StringSelect.html#property_type">$type</a>
@@ -1731,6 +1703,206 @@ will be called when the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_disabled">
+        $disabled
+        <a href="classes/Discord-Builders-Components-StringSelect.html#property_disabled" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/StringSelect.php"><a href="files/src-discord-builders-components-stringselect.html"><abbr title="src/Discord/Builders/Components/StringSelect.php">StringSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether the select menu should be disabled.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?bool|null</span>
+    <span class="phpdocumentor-signature__name">$disabled</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether select menu is disabled in a message (defaults to false). Using in a modal will result in an error.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_max_values">
+        $max_values
+        <a href="classes/Discord-Builders-Components-StringSelect.html#property_max_values" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/StringSelect.php"><a href="files/src-discord-builders-components-stringselect.html"><abbr title="src/Discord/Builders/Components/StringSelect.php">StringSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Maximum number of options that must be selected.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$max_values</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Maximum number of items that can be chosen (defaults to 1); max 25.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_min_values">
+        $min_values
+        <a href="classes/Discord-Builders-Components-StringSelect.html#property_min_values" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/StringSelect.php"><a href="files/src-discord-builders-components-stringselect.html"><abbr title="src/Discord/Builders/Components/StringSelect.php">StringSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Minimum number of options that must be selected.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$min_values</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Minimum number of items that must be chosen (defaults to 1); min 0, max 25. Must be either omitted or at least <code class="prettyprint">1</code> if <code class="prettyprint">required</code> is omitted or <code class="prettyprint">true</code>.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_placeholder">
+        $placeholder
+        <a href="classes/Discord-Builders-Components-StringSelect.html#property_placeholder" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/StringSelect.php"><a href="files/src-discord-builders-components-stringselect.html"><abbr title="src/Discord/Builders/Components/StringSelect.php">StringSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Placeholder string to display if nothing is selected. Maximum 150 characters.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$placeholder</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Placeholder text if nothing is selected or default; max 150 characters.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_required">
+        $required
+        <a href="classes/Discord-Builders-Components-StringSelect.html#property_required" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/StringSelect.php"><a href="files/src-discord-builders-components-stringselect.html"><abbr title="src/Discord/Builders/Components/StringSelect.php">StringSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether the select menu is required. Defaults to true. (Modal only).</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?bool|null</span>
+    <span class="phpdocumentor-signature__name">$required</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether the string select is required to answer in a modal (defaults to true).</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
             -protected
                                                                     "
 >
@@ -1832,44 +2004,6 @@ number of default values must be in the range defined by min_values and max_valu
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
     <span class="phpdocumentor-signature__name">$default_values</span>
-    </code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_disabled">
-        $disabled
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_disabled" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">105</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Whether the select menu should be disabled.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$disabled</span>
     </code>
 
     
@@ -2001,86 +2135,6 @@ number of default values must be in the range defined by min_values and max_valu
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_max_values">
-        $max_values
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_max_values" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">98</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Maximum number of options that must be selected.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$max_values</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Default 1, maximum 25.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_min_values">
-        $min_values
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_min_values" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">90</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Minimum number of options that must be selected.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$min_values</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Default 1, minimum 0, maximum 25.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_options">
         $options
         <a href="classes/Discord-Builders-Components-StringSelect.html#property_options" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2103,82 +2157,6 @@ number of default values must be in the range defined by min_values and max_valu
             <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$options</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_placeholder">
-        $placeholder
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_placeholder" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">74</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Placeholder string to display if nothing is selected. Maximum 150 characters.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$placeholder</span>
-    </code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_required">
-        $required
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_required" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">112</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Whether the select menu is required. Defaults to true. (Modal only).</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$required</span>
-    </code>
 
     
     
@@ -4423,18 +4401,18 @@ as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_disabled">$disabled</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_max_values">$max_values</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_min_values">$min_values</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_placeholder">$placeholder</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_required">$required</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_channel_types">$channel_types</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_custom_id">$custom_id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_default_values">$default_values</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_disabled">$disabled</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_listener">$listener</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_max_values">$max_values</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_min_values">$min_values</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_options">$options</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_placeholder">$placeholder</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_required">$required</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#property_type">$type</a></li>
                                             </ul>
                 </li>

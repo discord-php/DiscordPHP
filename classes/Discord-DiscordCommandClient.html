@@ -756,7 +756,7 @@ not received in 5 seconds.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Discord.html#property_voiceLoggers">$voiceLoggers</a>
     <span>
-                        &nbsp;: array&lt;string|int, <abbr title="\Psr\Log\LoggerInterface">LoggerInterface</abbr>&gt;|null            </span>
+                        &nbsp;: ?array&lt;string|int, <abbr title="\Psr\Log\LoggerInterface">LoggerInterface</abbr>&gt;            </span>
 </dt>
 <dd>An array of loggers for voice clients.</dd>
 
@@ -863,7 +863,7 @@ object.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Discord.html#method_getCacheConfig">getCacheConfig()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>|null    </span>
+                                &nbsp;: ?<a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>    </span>
 </dt>
 <dd>Gets the cache configuration.</dd>
 
@@ -3832,7 +3832,7 @@ not received in 5 seconds.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, <abbr title="\Psr\Log\LoggerInterface">LoggerInterface</abbr>&gt;|null</span>
+            <span class="phpdocumentor-signature__type">?array&lt;string|int, <abbr title="\Psr\Log\LoggerInterface">LoggerInterface</abbr>&gt;</span>
     <span class="phpdocumentor-signature__name">$voiceLoggers</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
@@ -4548,7 +4548,7 @@ object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getCacheConfig</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repository_class</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><abbr title="\Discord\Repository\AbstractRepository::class">AbstractRepository::class</abbr></span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getCacheConfig</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repository_class</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><abbr title="\Discord\Repository\AbstractRepository::class">AbstractRepository::class</abbr></span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4573,7 +4573,7 @@ object.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a></span>
             </section>
 
 </article>
@@ -5881,7 +5881,7 @@ object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">requestGuildMembers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild_id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">requestGuildMembers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild_id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -5903,10 +5903,10 @@ object.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$options</span>
-                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>['limit']     Maximum number of members to send matching the query. 0 with empty query returns all. Required when including a query.</p>
+                    <section class="phpdocumentor-description"><p>['nonce']     Nonce to identify the Guild Members Chunk response.</p>
 </section>
 
             </dd>

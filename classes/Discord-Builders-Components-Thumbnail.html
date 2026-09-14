@@ -303,24 +303,6 @@
                                             <span class="phpdocumentor-tag-link">10.5.0</span>
                                                                                                         
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">@property</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?int|null         $id          Optional identifier for component.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?string|null      $description Alt text for the media, max 1024 characters.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>?bool|null        $spoiler     Whether the thumbnail should be a spoiler (or blurred out). Defaults to false.</p>
-</section>
-
-                                    </dd>
                         </dl>
 
     
@@ -532,19 +514,18 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-Thumbnail.html#property_id">$id</a>
+    <span>
+                        &nbsp;: ?int|null            </span>
+</dt>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-Thumbnail.html#property_description">$description</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
 <dd>Description for the thumbnail.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>32 bit integer used as an optional identifier for component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-Thumbnail.html#property_media">$media</a>
@@ -613,7 +594,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-Thumbnail.html#method_getMedia">getMedia()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html"><abbr title="\Discord\Builders\Components\UnfurledMediaItem">UnfurledMediaItem</abbr></a>|null    </span>
+                                &nbsp;: ?<a href="classes/Discord-Builders-Components-UnfurledMediaItem.html"><abbr title="\Discord\Builders\Components\UnfurledMediaItem">UnfurledMediaItem</abbr></a>    </span>
 </dt>
 <dd>Returns the media item for the thumbnail.</dd>
 
@@ -1548,6 +1529,45 @@
         class="
             phpdocumentor-element
             -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Builders-Components-Thumbnail.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Thumbnail.php"><a href="files/src-discord-builders-components-thumbnail.html"><abbr title="src/Discord/Builders/Components/Thumbnail.php">Thumbnail.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?int|null</span>
+    <span class="phpdocumentor-signature__name">$id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Optional identifier for component.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
             -protected
                                                                     "
 >
@@ -1572,44 +1592,6 @@
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$description</span>
-    </code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_id">
-        $id
-        <a href="classes/Discord-Builders-Components-ComponentObject.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">127</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">32 bit integer used as an optional identifier for component.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
     
@@ -2041,7 +2023,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMedia</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html"><abbr title="\Discord\Builders\Components\UnfurledMediaItem">UnfurledMediaItem</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getMedia</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Builders-Components-UnfurledMediaItem.html"><abbr title="\Discord\Builders\Components\UnfurledMediaItem">UnfurledMediaItem</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2054,7 +2036,7 @@
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html"><abbr title="\Discord\Builders\Components\UnfurledMediaItem">UnfurledMediaItem</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Builders-Components-UnfurledMediaItem.html"><abbr title="\Discord\Builders\Components\UnfurledMediaItem">UnfurledMediaItem</abbr></a></span>
             </section>
 
 </article>
@@ -2894,8 +2876,8 @@ as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Builders-Components-Thumbnail.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Thumbnail.html#property_description">$description</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Thumbnail.html#property_media">$media</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Thumbnail.html#property_spoiler">$spoiler</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Thumbnail.html#property_type">$type</a></li>
