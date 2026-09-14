@@ -16,11 +16,14 @@ jobs:
         with:
           php-version: '8.1'
           extensions: iconv
-          tools: phive
+          tools: composer
       - name: Install phpDocumentor
-        run: phive install phpDocumentor --trust-gpg-keys 67F861C3D889C656,6DA3ACC4991FFAE5
+        run: >-
+          composer create-project discord-php/phpdoc-tool:^1.0 phpdoc-tool
+          --no-interaction --no-progress
+          --repository='{"type":"vcs","url":"https://github.com/discord-php/phpdoc-tool"}'
       - name: Build class reference
-        run: ./tools/phpDocumentor
+        run: php phpdoc-tool/vendor/bin/phpdoc
       - name: Build documentation
         run: |
           cd ./docs
