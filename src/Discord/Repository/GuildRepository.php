@@ -101,12 +101,19 @@ class GuildRepository extends AbstractRepository
      * This endpoint returns 200 guilds by default, which is the maximum number of guilds a non-bot user can join.
      * Therefore, pagination is not needed for integrations that need to get a list of the users' guilds.
      *
+     * Accepts a `shard` query param, which returns only the guilds stored in that shard.
+     * Apps using large bot sharding are **required** to pass it — requests without `shard` now return `400 Bad Request`.
+     * Valid values are `0` through `max_concurrency - 1`, using the `max_concurrency` returned by Get Gateway Bot
+     * @see Discord::setGateway()
+     *
      * @link https://docs.discord.com/developers/resources/user#get-current-user-guilds
      *
-     * @param ?string|null $before      Get guilds before this guild ID.
-     * @param ?string|null $after       Get guilds after this guild ID.
-     * @param ?int|null    $limit       Max number of guilds to return (1-200). Defaults to 200.
-     * @param ?bool|null   $with_counts Include approximate member and presence counts in response. Defaults to false.
+     * @param array        $params                An array of query parameters including 'before', 'after', 'limit', 'shard', and 'with_counts'.
+     * @param ?string|null $params['before']      Get guilds before this guild ID.
+     * @param ?string|null $params['after']       Get guilds after this guild ID.
+     * @param ?int|null    $params['limit']       Max number of guilds to return (1-200). Defaults to 200.
+     * @param ?int|null    $params['shard']       Only return guilds in this shard (0 to max_concurrency - 1). Required for large bot sharding.
+     * @param ?bool|null   $params['with_counts'] Include approximate member and presence counts in response. Defaults to false.
      *
      * @throws \InvalidArgumentException No valid parameters to query.
      *
@@ -116,7 +123,7 @@ class GuildRepository extends AbstractRepository
      */
     public function getCurrentUserGuilds(array $params): PromiseInterface
     {
-        $allowed = ['before', 'after', 'limit', 'with_counts'];
+        $allowed = ['before', 'after', 'limit', 'shard', 'with_counts'];
         $params = array_filter(
             $params,
             fn ($key) => in_array($key, $allowed, true),
