@@ -23,6 +23,12 @@ use Stringable;
 /**
  * The Activity part describes activities the member is undertaking.
  *
+ * If a user's Profile Privacy Setting is set to `Friends Only`, or to `Friends & Small Servers Only` in a guild with more than 200 members,
+ * their custom status (an Activity object with `type` `4`) is omitted from the `activities` field of Presence Update events dispatched to that guild.
+ * This applies to apps and bots subscribed to the guild's presence.
+ * Other activity types (Playing, Streaming, Listening, Watching, Competing) are not affected by this setting but may be controlled by Activity Sharing settings.
+ * @see https://support.discord.com/hc/en-us/articles/7931156448919-Activity-Sharing-on-Discord-FAQ
+
  * @link https://docs.discord.com/developers/events/gateway-events#activity-object
  *
  * @since 5.0.0 Renamed from Game to Activity
