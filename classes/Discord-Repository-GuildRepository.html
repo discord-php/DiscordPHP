@@ -1862,7 +1862,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/GuildRepository.php"><a href="files/src-discord-repository-guildrepository.html"><abbr title="src/Discord/Repository/GuildRepository.php">GuildRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -1870,7 +1870,7 @@ based on the response of the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getCurrentUserGuilds</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getCurrentUserGuilds</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1878,16 +1878,21 @@ based on the response of the callback.</p>
         <section class="phpdocumentor-description"><p>For OAuth2, requires the guilds scope.</p>
 <p>This endpoint returns 200 guilds by default, which is the maximum number of guilds a non-bot user can join.
 Therefore, pagination is not needed for integrations that need to get a list of the users' guilds.</p>
+<p>Accepts a <code class="prettyprint">shard</code> query param, which returns only the guilds stored in that shard.
+Apps using large bot sharding are <strong>required</strong> to pass it — requests without <code class="prettyprint">shard</code> now return <code class="prettyprint">400 Bad Request</code>.
+Valid values are <code class="prettyprint">0</code> through <code class="prettyprint">max_concurrency - 1</code>, using the <code class="prettyprint">max_concurrency</code> returned by Get Gateway Bot</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$params</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?bool|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>['with_counts'] Include approximate member and presence counts in response. Defaults to false.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1899,6 +1904,13 @@ Therefore, pagination is not needed for integrations that need to get a list of 
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Repository\Discord::setGateway()">Discord::setGateway()</abbr></span>
+                                                                
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">link</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
