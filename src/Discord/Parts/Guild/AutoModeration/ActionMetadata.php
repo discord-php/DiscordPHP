@@ -24,9 +24,9 @@ use Discord\Parts\Part;
  *
  * @since 10.0.0
  *
- * @property string      $channel_id       Channel to which user content should be logged. For `SEND_ALERT_MESSAGE`.
- * @property int         $duration_seconds Timeout duration in seconds. Maximum of 2419200 seconds (4 weeks). For `TYPE_TIMEOUT`.
- * @property string|null $custom_message   Additional explanation that will be shown to members whenever their message is blocked. Maximum of 150 characters. For `TYPE_BLOCK_MESSAGE`.
+ * @property string       $channel_id       Channel to which user content should be logged. For `SEND_ALERT_MESSAGE`.
+ * @property int          $duration_seconds Timeout duration in seconds. Maximum of 2419200 seconds (4 weeks). For `TYPE_TIMEOUT`.
+ * @property ?string|null $custom_message   Additional explanation that will be shown to members whenever their message is blocked. Maximum of 150 characters. For `TYPE_BLOCK_MESSAGE`.
  */
 class ActionMetadata extends Part
 {

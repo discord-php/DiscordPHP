@@ -29,7 +29,7 @@ use Discord\Parts\User\User;
  *
  * @property int              $v                  API version.
  * @property User             $user               Information about the user including email.
- * @property array            $guilds             Guilds the user is in.
+ * @property array            $guilds             Guilds the user is in. When sharding is used they are filtered to that shard.
  * @property string           $session_id         Used for resuming connections.
  * @property string           $resume_gateway_url Gateway URL for resuming connections.
  * @property ?array|null      $shard              Shard information associated with this session, if sent when identifying.

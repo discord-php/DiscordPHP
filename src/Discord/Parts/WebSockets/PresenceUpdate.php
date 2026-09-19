@@ -27,7 +27,7 @@ use Discord\Parts\User\ClientStatus;
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on
  * the WebSocket. It contains information about the users presence such as their
  * status (online/away) and their current game.
- * 
+ *
  * If the presence author's Profile Privacy Setting is set to `Friends Only`, or to `Friends & Small Servers Only` in a guild with more than 200 members,
  * their custom status (activity type `4`) is omitted from `activities` in Presence Update events dispatched to that guild.
  * This applies to any subscription to the guild's presence, including bots and apps.
