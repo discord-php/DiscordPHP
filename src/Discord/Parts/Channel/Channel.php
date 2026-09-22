@@ -791,6 +791,16 @@ class Channel extends Part implements Stringable
             if (! $botperms->create_instant_invite) {
                 return reject(new NoPermissionsException("You do not have permission to create instant invite in the channel {$this->id}."));
             }
+            if (isset($options['role_ids'])) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("You do not have permission to manage roles in the channel {$this->id}."));
+                }
+            }
+        }
+
+        // target_user_ids and target_users_file are mutually exclusive, only one can be sent at a time.
+        if (isset($options['target_user_ids'])) {
+            unset($options['target_users_file']);
         }
 
         $resolver = new OptionsResolver();
