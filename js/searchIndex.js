@@ -5566,10 +5566,30 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020users\u0020allowed\u0020to\u0020see\u0020and\u0020accept\u0020this\u0020invite.",
             "url": "classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsers"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AaddTargetUser\u0028\u0029",
+            "name": "addTargetUser",
+            "summary": "Adds\u0020a\u0020target\u0020user\u0020to\u0020an\u0020existing\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_addTargetUser"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AremoveTargetUser\u0028\u0029",
+            "name": "removeTargetUser",
+            "summary": "Removes\u0020a\u0020target\u0020user\u0020from\u0020an\u0020existing\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_removeTargetUser"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AupdateTargetUsersFromContent\u0028\u0029",
             "name": "updateTargetUsersFromContent",
             "summary": "Updates\u0020the\u0020users\u0020allowed\u0020to\u0020see\u0020and\u0020accept\u0020this\u0020invite.",
             "url": "classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsersFromContent"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003ABulkAddTargetUsers\u0028\u0029",
+            "name": "BulkAddTargetUsers",
+            "summary": "Adds\u0020multiple\u0020target\u0020users\u0020to\u0020an\u0020existing\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_BulkAddTargetUsers"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003ABulkDeleteTargetUsers\u0028\u0029",
+            "name": "BulkDeleteTargetUsers",
+            "summary": "Removes\u0020multiple\u0020target\u0020users\u0020from\u0020an\u0020existing\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_BulkDeleteTargetUsers"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AgetTargetUsersJobStatus\u0028\u0029",
             "name": "getTargetUsersJobStatus",
