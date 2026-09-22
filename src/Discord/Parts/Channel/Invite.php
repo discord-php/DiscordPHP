@@ -27,6 +27,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Parts\User\User\Member;
 use Discord\Repository\Channel\InviteRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
@@ -380,6 +381,56 @@ class Invite extends Part implements Stringable
     }
 
     /**
+     * Adds a target user to an existing invite.
+     *
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
+     * Returns a 204 empty response on success.
+     *
+     * @param Member|User|string $user The user or user ID to add to the invite's target users.
+     *
+     * @return PromiseInterface
+     */
+    public function addTargetUser($user): PromiseInterface
+    {
+        if ($this->channel && $botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && $this->inviter->id !== $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
+        if (! is_string($user)) {
+            $user = $user->id;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::INVITE_TARGET_USERS_ADD, $this->id, $user));
+    }
+
+    /**
+     * Removes a target user from an existing invite.
+     *
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
+     * Returns a 204 empty response on success.
+     *
+     * @param Member|User|string $user The user or user ID to remove from the invite's target users.
+     *
+     * @return PromiseInterface
+     */
+    public function removeTargetUser($user): PromiseInterface
+    {
+        if ($this->channel && $botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && $this->inviter->id !== $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
+        if (! is_string($user)) {
+            $user = $user->id;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::INVITE_TARGET_USERS_REMOVE, $this->id, $user));
+    }
+
+    /**
      * Updates the users allowed to see and accept this invite.
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
@@ -418,7 +469,57 @@ class Invite extends Part implements Stringable
 
         return $this->http->put(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id), (string) $multipart, $multipart->getHeaders());
     }
-    
+
+    /**
+     * Adds multiple target users to an existing invite.
+     *
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
+     * Returns a 204 empty response on success.
+     *
+     * @param Member[]|User[]|string[] $user_ids The IDs of users to add, max of 1000 users.
+     *
+     * @return PromiseInterface
+     */
+    public function BulkAddTargetUsers($user_ids): PromiseInterface
+    {
+        if (count($user_ids) > 1000) {
+            return reject(new \InvalidArgumentException('You cannot add more than 1000 target users at once.'));
+        }
+
+        foreach ($user_ids as $user_id) {
+            if (! is_string($user_id)) {
+                $user_id = $user_id->id;
+            }
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::INVITE_TARGET_USERS_BULK_ADD, $this->id), ['user_ids' => $user_ids]);
+    }
+
+    /**
+     * Removes multiple target users from an existing invite.
+     *
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
+     * Returns a 204 empty response on success.
+     *
+     * @param Member[]|User[]|string[] $user_ids The IDs of users to remove, max of 1000 users.
+     *
+     * @return PromiseInterface
+     */
+    public function BulkDeleteTargetUsers($user_ids): PromiseInterface
+    {
+        if (count($user_ids) > 1000) {
+            return reject(new \InvalidArgumentException('You cannot delete more than 1000 target users at once.'));
+        }
+
+        foreach ($user_ids as $user_id) {
+            if (! is_string($user_id)) {
+                $user_id = $user_id->id;
+            }
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::INVITE_TARGET_USERS_BULK_DELETE, $this->id), ['user_ids' => $user_ids]);
+    }
+
     /**
      * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
      *
