@@ -770,6 +770,7 @@ class Channel extends Part implements Stringable
      * @param bool        $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
      * @param int         $options['target_type']           The type of target for this voice channel invite.
      * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
+     * @param string      $options['target_user_ids']       An array of IDs of all users able to see and accept this invite. Max of 1000 IDs.
      * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
      * @param object      $options['target_users_file']     (TODO) A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body. Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described. Duplicate user IDs in the file will be ignored.
      * @param string      $options['payload_json']          JSON-encoded body of non-file params, only for `multipart/form-data` requests.
@@ -801,6 +802,7 @@ class Channel extends Part implements Stringable
                 'unique',
                 'target_type',
                 'target_user_id',
+                'target_user_ids',
                 'target_application_id',
                 'target_users_file',
                 'payload_json',
@@ -814,6 +816,7 @@ class Channel extends Part implements Stringable
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
+            ->setAllowedTypes('target_user_ids', 'array')
             ->setAllowedTypes('target_application_id', ['string', 'int'])
             ->setAllowedTypes('payload_json', 'string')
             ->setAllowedTypes('role_ids', 'array');
