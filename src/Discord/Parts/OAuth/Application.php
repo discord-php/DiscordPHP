@@ -20,6 +20,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
 use Discord\Repository\ActivityInstanceRepository;
+use Discord\Repository\ApplicationIdentityRepository;
 use Discord\Repository\Monetization\EntitlementRepository;
 use Discord\Repository\Monetization\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
@@ -71,10 +72,11 @@ use function React\Promise\reject;
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
  *
- * @property GlobalCommandRepository    $commands           The application global commands.
- * @property EntitlementRepository      $entitlements       The application entitlements.
- * @property SKURepository              $skus               The application SKUs.
- * @property ActivityInstanceRepository $activity_instances The application activity instances.
+ * @property GlobalCommandRepository       $commands           The application global commands.
+ * @property EntitlementRepository         $entitlements       The application entitlements.
+ * @property SKURepository                 $skus               The application SKUs.
+ * @property ActivityInstanceRepository    $activity_instances The application activity instances.
+ * @property ApplicationIdentityRepository $identities         The external identities users have linked to the application, and their game stats profiles.
  */
 class Application extends Part
 {
@@ -153,6 +155,7 @@ class Application extends Part
         'entitlements' => EntitlementRepository::class,
         'skus' => SKURepository::class,
         'activity_instances' => ActivityInstanceRepository::class,
+        'identities' => ApplicationIdentityRepository::class,
     ];
 
     /**

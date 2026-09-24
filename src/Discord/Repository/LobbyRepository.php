@@ -14,16 +14,23 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Invite;
 use Discord\Parts\Lobby\Lobby;
 use Discord\Parts\Lobby\Member;
+use Discord\Parts\Lobby\Message;
 use Discord\Parts\User\Member as UserMember;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 
 /**
  * Contains lobbies.
+ *
+ * Everything here is done with the bot token, as a game's backend does it.
+ * What a player does in a lobby — creating or joining one by secret, leaving,
+ * linking a channel, sending and reading messages — uses the player's own
+ * OAuth2 token instead.
  *
  * @see Lobby
  *
@@ -45,7 +52,6 @@ class LobbyRepository extends AbstractRepository
         'get' => Endpoint::LOBBY,
         'update' => Endpoint::LOBBY,
         'delete' => Endpoint::LOBBY,
-        'leave' => Endpoint::LOBBY_SELF,
     ];
 
     /**
@@ -66,16 +72,21 @@ class LobbyRepository extends AbstractRepository
     public function createLobby($data = []): PromiseInterface
     {
         return $this->http->post(Endpoint::LOBBIES, $data)
-            ->then(fn ($response) => $this->factory->part($this->class, $response, true));
+            ->then(function ($response) {
+                $lobby = $this->factory->part($this->class, (array) $response, true);
+
+                return $this->cache->set($lobby->id, $lobby)->then(static fn ($success) => $lobby);
+            });
     }
 
     /**
      * Modifies the specified lobby with new values, if provided.
      *
-     * @param array     $data
-     * @param ?array    $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
-     * @param ?Member[] $data['members']              Optional array of up to 25 users to be added to the lobby.
-     * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
+     * @param Lobby|string $lobby                        The lobby or lobby id to modify.
+     * @param array        $data
+     * @param ?array       $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
+     * @param ?Member[]    $data['members']              Optional array of up to 25 users to replace the lobby members with.
+     * @param ?int         $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
      *
      * @return PromiseInterface<Lobby>
      */
@@ -85,8 +96,12 @@ class LobbyRepository extends AbstractRepository
             $lobby = $lobby->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::LOBBY, $lobby->id), $data)
-            ->then(fn ($response) => $this->factory->part($this->class, $response, true));
+        return $this->http->patch(Endpoint::bind(Endpoint::LOBBY, $lobby), $data)
+            ->then(function ($response) {
+                $lobby = $this->factory->part($this->class, (array) $response, true);
+
+                return $this->cache->set($lobby->id, $lobby)->then(static fn ($success) => $lobby);
+            });
     }
 
     /**
@@ -94,11 +109,12 @@ class LobbyRepository extends AbstractRepository
      *
      * If called when the user is already a member of the lobby will update fields such as metadata on that user instead.
      *
-     * @param Lobby|string           $lobby            The lobby or lobby id to add the member to.
-     * @param UserMember|User|string $user             Member, user, or user id to add to the lobby.
+     * @param Lobby|string           $lobby                   The lobby or lobby id to add the member to.
+     * @param UserMember|User|string $user                    Member, user, or user id to add to the lobby.
      * @param array                  $data
-     * @param ?array                 $data['metadata'] Optional dictionary of string key/value pairs. The max total length is 1000.
-     * @param ?int                   $data['flags']    Lobby member flags combined as a bitfield.
+     * @param ?array                 $data['metadata']        Optional dictionary of string key/value pairs. The max total length is 1000.
+     * @param ?int                   $data['flags']           Lobby member flags combined as a bitfield.
+     * @param ?string                $data['additional_name'] An additional 1-80 character display name for the member, such as an in-game character name. Null clears it; omit it to keep the current value.
      *
      * @return PromiseInterface<Member>
      */
@@ -113,7 +129,7 @@ class LobbyRepository extends AbstractRepository
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::LOBBY_MEMBER, $lobby, $user), $data)
-            ->then(fn ($response) => $this->factory->part(Member::class, $response, true));
+            ->then(fn ($response) => $this->factory->part(Member::class, (array) $response, true));
     }
 
     /**
@@ -140,50 +156,87 @@ class LobbyRepository extends AbstractRepository
     }
 
     /**
-     * Removes the current user from the specified lobby.
+     * Adds, updates and removes up to 25 lobby members in one request.
      *
-     * It is safe to call this even if the user is no longer a member of the lobby, but will fail if the lobby does not exist.
+     * Each entry is a {@see Member}, or an array with an `id` and any of `metadata`, `flags`, `additional_name`,
+     * and `remove_member` (true to remove the user rather than add or update them).
      *
-     * @param Lobby|string $lobby The lobby or lobby id to add the member to.
+     * @param Lobby|string     $lobby   The lobby or lobby id whose members to update.
+     * @param array[]|Member[] $members The members to add, update or remove.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<ExCollectionInterface<Member>|Member[]> The members that were added or updated. Removed members are not included.
+     *
+     * @since 10.59.0
      */
-    public function leave($lobby): PromiseInterface
+    public function bulkUpdateMembers($lobby, array $members): PromiseInterface
     {
         if (! is_string($lobby)) {
             $lobby = $lobby->id;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::LOBBY_SELF, $lobby));
+        $payload = array_map(
+            static fn ($member) => $member instanceof Member ? $member->getRawAttributes() : $member,
+            array_values($members)
+        );
+
+        return $this->http->post(Endpoint::bind(Endpoint::LOBBY_MEMBERS_BULK, $lobby), $payload)
+            ->then(function ($response) {
+                /** @var ExCollectionInterface<Member> $collection */
+                $collection = $this->discord->getCollectionClass()::for(Member::class);
+
+                foreach ((array) $response as $member) {
+                    $collection->pushItem($this->factory->part(Member::class, (array) $member, true));
+                }
+
+                return $collection;
+            });
     }
 
     /**
-     * Links or unlinks a lobby to a channel.
+     * Creates an invite for a lobby member to the channel linked to the lobby.
      *
-     * Uses Bearer token for authorization and user must be a lobby member with CanLinkLobby lobby member flag.
+     * @param Lobby|string           $lobby The lobby or lobby id whose linked channel to invite to.
+     * @param UserMember|User|string $user  Member, user, or user id of the lobby member to invite.
      *
-     * @param Lobby|string        $lobby   The lobby or lobby id to link the channel to.
-     * @param Channel|string|null $channel The channel or channel id to link the lobby to. If null, unlinks the lobby.
+     * @return PromiseInterface<Invite> An invite with only its `code`.
      *
-     * @return PromiseInterface<Lobby>
+     * @since 10.59.0
      */
-    public function linkChannelLobby($lobby, $channel = null): PromiseInterface
+    public function createInvite($lobby, $user): PromiseInterface
     {
         if (! is_string($lobby)) {
             $lobby = $lobby->id;
         }
 
-        if (! is_string($channel)) {
-            $channel = $channel->id;
+        if (! is_string($user)) {
+            $user = $user->id;
         }
 
-        $payload = [];
+        return $this->http->post(Endpoint::bind(Endpoint::LOBBY_MEMBER_INVITES, $lobby, $user))
+            ->then(fn ($response) => $this->factory->part(Invite::class, (array) $response, true));
+    }
 
-        if ($channel !== null) {
-            $payload['channel_id'] = $channel;
+    /**
+     * Sets the moderation metadata on a lobby message, which is delivered to the players' clients.
+     *
+     * @param Lobby|string   $lobby    The lobby or lobby id the message was sent in.
+     * @param Message|string $message  The lobby message or its id.
+     * @param array          $metadata Up to 5 free-form string key/value pairs describing the decision, e.g. `['action' => 'hide', 'reason' => 'toxicity']`.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.59.0
+     */
+    public function updateMessageModerationMetadata($lobby, $message, array $metadata): PromiseInterface
+    {
+        if (! is_string($lobby)) {
+            $lobby = $lobby->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::LOBBY_CHANNEL_LINKING, $lobby, $channel), $payload)
-            ->then(fn ($response) => $this->factory->part($this->class, $response, true));
+        if (! is_string($message)) {
+            $message = $message->id;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::LOBBY_MESSAGE_MODERATION_METADATA, $lobby, $message), $metadata);
     }
 }
