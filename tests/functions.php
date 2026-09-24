@@ -91,7 +91,7 @@ function getMockMessageCommandClient(): MessageCommandClient
 function getMockHttpDriver(callable $respond): DriverInterface
 {
     return new class ($respond) implements DriverInterface {
-        /** @var array<int, array{method: string, url: string, content: mixed}> */
+        /** @var array<int, array{method: string, url: string, content: mixed, raw: string, headers: array<string, string>}> */
         public array $requests = [];
 
         public function __construct(private $respond)
@@ -112,6 +112,8 @@ function getMockHttpDriver(callable $respond): DriverInterface
                 'method' => $method,
                 'url' => $request->getUrl(),
                 'content' => json_decode($request->getContent() ?: 'null', true),
+                'raw' => $request->getContent(),
+                'headers' => $request->getHeaders(),
             ];
 
             $body = ($this->respond)($method, $request->getUrl());

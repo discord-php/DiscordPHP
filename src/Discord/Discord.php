@@ -24,6 +24,10 @@ use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\OAuth2\SessionManager;
+use Discord\OAuth2\TokenStore\ArrayTokenStore;
+use Discord\OAuth2\TokenStore\CacheTokenStore;
+use Discord\OAuth2\TokenStore\TokenStoreInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
@@ -106,6 +110,8 @@ use function React\Promise\resolve;
  * @property SoundRepository          $sounds
  * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
+ *
+ * @property-read SessionManager $sessions Users' OAuth2 sessions: acting as a player, and provisional accounts.
  */
 class Discord
 {
@@ -177,6 +183,8 @@ class Discord
         'collection',
         'useTransportCompression',
         'usePayloadCompression',
+        'tokenStore',
+        'clientSecret',
     ];
 
     /**
@@ -405,6 +413,13 @@ class Discord
     protected $client;
 
     /**
+     * Users' OAuth2 sessions.
+     *
+     * @var SessionManager
+     */
+    protected $sessions;
+
+    /**
      * An array of registered slash commands.
      *
      * @var RegisteredCommand[]
@@ -522,6 +537,7 @@ class Discord
 
         $this->factory = new Factory($this);
         $this->client = $this->factory->part(Client::class, []);
+        $this->sessions = new SessionManager($this, $options['tokenStore'], $options['clientSecret']);
 
         $this->useTransportCompression = $options['useTransportCompression'];
         $this->usePayloadCompression = $options['usePayloadCompression'];
@@ -1968,6 +1984,8 @@ class Discord
                 'collection' => Collection::class,
                 'useTransportCompression' => true,
                 'usePayloadCompression' => true,
+                'tokenStore' => null,
+                'clientSecret' => null,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -2009,7 +2027,18 @@ class Discord
                 return Collection::class;
             })
             ->setAllowedTypes('useTransportCompression', 'bool')
-            ->setAllowedTypes('usePayloadCompression', 'bool');
+            ->setAllowedTypes('usePayloadCompression', 'bool')
+            ->setAllowedTypes('tokenStore', ['null', TokenStoreInterface::class, CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
+            ->setNormalizer('tokenStore', function ($options, $value) {
+                // Its own store, never the part cache: that one is built to lose data, and a lost token signs its user out.
+                return match (true) {
+                    null === $value => new ArrayTokenStore(),
+                    $value instanceof TokenStoreInterface => $value,
+                    $value instanceof CacheConfig => new CacheTokenStore($value->interface, 'discordphp'.$value->separator.'oauth2'.$value->separator.'token'.$value->separator),
+                    default => new CacheTokenStore($value),
+                };
+            })
+            ->setAllowedTypes('clientSecret', ['null', 'string']);
 
         $options = $resolver->resolve($options);
 
@@ -2150,6 +2179,18 @@ class Discord
     }
 
     /**
+     * Gets the manager for users' OAuth2 sessions.
+     *
+     * @return SessionManager
+     *
+     * @since 10.59.0
+     */
+    public function getSessions(): SessionManager
+    {
+        return $this->sessions;
+    }
+
+    /**
      * Gets the loop being used by the client.
      *
      * @return LoopInterface
@@ -2218,7 +2259,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'sessions'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
@@ -2341,6 +2382,7 @@ class Discord
     {
         static $secrets = [
             'token' => '*****',
+            'clientSecret' => '*****',
         ];
         $replace = array_intersect_key($secrets, $this->options ?? []);
         $config = $replace + $this->options ?? [];
