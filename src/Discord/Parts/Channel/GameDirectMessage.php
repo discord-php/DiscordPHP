@@ -14,9 +14,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-use Carbon\Carbon;
+use Discord\Discord;
 use Discord\Parts\Part;
-use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -24,57 +23,44 @@ use function React\Promise\reject;
 /**
  * A direct message sent while at least one of its users has an active Social SDK session.
  *
- * Delivered by the `GAME_DIRECT_MESSAGE_*` webhook events. Between two provisional accounts it is an
- * "SDK DM message", which exists only in-game; otherwise it is an ordinary DM with the channel attached.
+ * Delivered by the `GAME_DIRECT_MESSAGE_*` webhook events: a message with the DM channel and its recipients
+ * attached. Between two provisional accounts it is an "SDK DM message", which exists only in-game and carries
+ * a subset of a message's fields.
+ *
+ * The bot is not in the DM, so the methods it inherits that act through the channel, such as `reply()`,
+ * `edit()`, `delete()` and `react()`, are refused by Discord. Moderate it with {@see GameDirectMessage::updateModerationMetadata()}.
  *
  * @since 10.59.0
  *
+ * @link https://docs.discord.com/developers/events/webhook-events#message-object
  * @link https://docs.discord.com/developers/events/webhook-events#sdk-dm-message-object
  *
- * @property      string        $id                  The id of the message.
- * @property      int|null      $type                The message type.
- * @property      string|null   $content             The message content.
- * @property      string        $channel_id          The id of the DM channel.
- * @property-read Channel|null  $channel             The DM channel, with its recipients, when Discord included it.
- * @property      User|null     $author              The user who sent the message.
- * @property      string|null   $recipient_id        The other user in the DM.
- * @property      string|null   $lobby_id            The lobby, for a message in a linked channel.
- * @property      Carbon|null   $timestamp           When the message was sent.
- * @property      Carbon|null   $edited_timestamp    When the message was last edited.
- * @property      int|null      $flags               Message flags combined as a bitfield.
- * @property      string|null   $application_id      The application that sent the message.
- * @property      array|null    $attachments         The message's attachments.
- * @property      array|null    $embeds              The message's embeds.
- * @property      array|null    $components          The message's components.
- * @property      object|null   $activity            Sent with Rich Presence-related chat embeds.
- * @property      object|null   $application         Partial application, sent with Rich Presence-related chat embeds.
- * @property      ?array|null   $moderation_metadata Moderation metadata set with {@see GameDirectMessage::updateModerationMetadata()}.
+ * @property-read Channel     $channel             The DM channel, with its recipients when Discord included them.
+ * @property      string|null $recipient_id        The other user in the DM.
+ * @property      string|null $lobby_id            The lobby, for a message in a linked channel.
+ * @property      ?array|null $moderation_metadata Moderation metadata set with {@see GameDirectMessage::updateModerationMetadata()}.
  */
-class GameDirectMessage extends Part
+class GameDirectMessage extends Message
 {
+    /**
+     * The fields Discord adds to a message for these events.
+     */
+    protected const GAME_FILLABLE = [
+        'channel',
+        'recipient_id',
+        'lobby_id',
+        'moderation_metadata',
+    ];
+
     /**
      * @inheritDoc
      */
-    protected $fillable = [
-        'id',
-        'type',
-        'content',
-        'channel_id',
-        'channel',
-        'author',
-        'recipient_id',
-        'lobby_id',
-        'timestamp',
-        'edited_timestamp',
-        'flags',
-        'application_id',
-        'attachments',
-        'embeds',
-        'components',
-        'activity',
-        'application',
-        'moderation_metadata',
-    ];
+    public function __construct(Discord $discord, array $attributes = [], bool $created = false)
+    {
+        $this->fillable = array_merge($this->fillable, self::GAME_FILLABLE);
+
+        parent::__construct($discord, $attributes, $created);
+    }
 
     /**
      * Sets the moderation metadata on this message, which is delivered to the players' clients.
@@ -89,8 +75,8 @@ class GameDirectMessage extends Part
      */
     public function updateModerationMetadata(array $metadata): PromiseInterface
     {
-        $author = $this->author?->id;
-        $recipient = $this->recipient_id;
+        $author = $this->user_id;
+        $recipient = null === $author ? null : $this->recipient_id;
 
         if (null === $author || null === $recipient) {
             return reject(new \DomainException('The message does not name both of its users, so it cannot be moderated.'));
@@ -110,10 +96,13 @@ class GameDirectMessage extends Part
             return $this->attributes['recipient_id'];
         }
 
-        $author = $this->author?->id;
+        // Without one, the stand-in DM that Message builds lists only the author.
+        if (! isset($this->attributes['channel'])) {
+            return null;
+        }
 
-        foreach ($this->channel->recipients ?? [] as $recipient) {
-            if ($recipient->id === $author) {
+        foreach ($this->channel->recipients as $recipient) {
+            if ($recipient->id === $this->user_id) {
                 continue;
             }
 
@@ -126,44 +115,14 @@ class GameDirectMessage extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return Channel|null The DM channel, with its recipients, when Discord included it.
+     * @return Part The DM channel Discord attached, or else the one {@see Message} would find.
      */
-    protected function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute(): Part
     {
         if (! isset($this->attributes['channel'])) {
-            return null;
+            return parent::getChannelAttribute();
         }
 
         return $this->attributePartHelper('channel', Channel::TYPES[$this->attributes['channel']->type ?? Channel::TYPE_DM] ?? Channel::class);
-    }
-
-    /**
-     * Gets the author attribute.
-     *
-     * @return User|null The user who sent the message.
-     */
-    protected function getAuthorAttribute(): ?User
-    {
-        return $this->attributePartHelper('author', User::class);
-    }
-
-    /**
-     * Gets the timestamp attribute.
-     *
-     * @return Carbon|null When the message was sent.
-     */
-    protected function getTimestampAttribute(): ?Carbon
-    {
-        return $this->attributeCarbonHelper('timestamp');
-    }
-
-    /**
-     * Gets the edited_timestamp attribute.
-     *
-     * @return Carbon|null When the message was last edited.
-     */
-    protected function getEditedTimestampAttribute(): ?Carbon
-    {
-        return $this->attributeCarbonHelper('edited_timestamp');
     }
 }

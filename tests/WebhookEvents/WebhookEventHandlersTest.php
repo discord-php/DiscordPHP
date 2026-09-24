@@ -13,7 +13,9 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
+use Discord\Parts\Channel\DM;
 use Discord\Parts\Channel\GameDirectMessage;
+use Discord\Parts\Channel\Message as ChannelMessage;
 use Discord\Parts\Lobby\Message;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\ApplicationAuthorized as ApplicationAuthorizedPart;
@@ -111,6 +113,11 @@ final class WebhookEventHandlersTest extends DiscordTestCase
             ]));
 
             $this->assertSame('6', $message->recipient_id);
+            // Everything else is typed the way a message is.
+            $this->assertInstanceOf(ChannelMessage::class, $message);
+            $this->assertInstanceOf(DM::class, $message->channel);
+            $this->assertSame(0, $message->attachments->count());
+            $this->assertSame('2025-08-14', $message->timestamp->toDateString());
 
             $message->updateModerationMetadata(['action' => 'hide', 'reason' => 'toxicity'])
                 ->then(function () use ($driver) {
@@ -136,7 +143,9 @@ final class WebhookEventHandlersTest extends DiscordTestCase
         ]));
 
         $this->assertSame('6', $message->recipient_id);
-        $this->assertNull($message->channel);
+        // Without an attached channel, it is found the way a message's is.
+        $this->assertInstanceOf(DM::class, $message->channel);
+        $this->assertSame('6', $message->channel->id);
     }
 
     public function testADirectMessageWithoutItsOtherUserCannotBeModerated()
