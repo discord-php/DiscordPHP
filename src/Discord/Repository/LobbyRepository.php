@@ -68,6 +68,8 @@ class LobbyRepository extends AbstractRepository
      * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
      *
      * @return PromiseInterface<Lobby>
+     *
+     * @since 10.59.0
      */
     public function createLobby($data = []): PromiseInterface
     {
@@ -89,6 +91,8 @@ class LobbyRepository extends AbstractRepository
      * @param ?int         $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
      *
      * @return PromiseInterface<Lobby>
+     *
+     * @since 10.59.0
      */
     public function modifyLobby($lobby, $data = []): PromiseInterface
     {
@@ -117,6 +121,8 @@ class LobbyRepository extends AbstractRepository
      * @param ?string                $data['additional_name'] An additional 1-80 character display name for the member, such as an in-game character name. Null clears it; omit it to keep the current value.
      *
      * @return PromiseInterface<Member>
+     *
+     * @since 10.59.0
      */
     public function addMember($lobby, $user, $data = []): PromiseInterface
     {
