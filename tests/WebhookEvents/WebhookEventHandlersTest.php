@@ -14,8 +14,10 @@ declare(strict_types=1);
 
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\DM;
 use Discord\Parts\Channel\GameDirectMessage;
+use Discord\Parts\Channel\GroupDM;
 use Discord\Parts\Channel\Message as ChannelMessage;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Lobby\Message;
@@ -148,6 +150,17 @@ final class WebhookEventHandlersTest extends DiscordTestCase
         // Without an attached channel, it is found the way a message's is.
         $this->assertInstanceOf(DM::class, $message->channel);
         $this->assertSame('6', $message->channel->id);
+    }
+
+    public function testADirectMessagesChannelIsAlwaysADirectMessageChannel()
+    {
+        [$mock] = $this->client();
+        $channelOf = fn (int $type) => $mock->getFactory()->part(GameDirectMessage::class, ['id' => '9', 'channel_id' => '20', 'channel' => $this->decode(['id' => '20', 'type' => $type])], true)->channel;
+
+        $this->assertInstanceOf(DM::class, $channelOf(Channel::TYPE_DM));
+        $this->assertInstanceOf(GroupDM::class, $channelOf(Channel::TYPE_GROUP_DM));
+        // A thread type is not a DM; it must not turn the channel into a Thread, which is not a Channel.
+        $this->assertInstanceOf(DM::class, $channelOf(Channel::TYPE_PUBLIC_THREAD));
     }
 
     public function testADirectMessageWithoutItsOtherUserCannotBeModerated()

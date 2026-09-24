@@ -17,7 +17,6 @@ namespace Discord\Parts\Channel;
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
 use Discord\Parts\Embed\Embed;
-use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -310,14 +309,23 @@ class GameDirectMessage extends Message
     /**
      * Gets the channel attribute.
      *
-     * @return Part The DM channel Discord attached, or else the one {@see Message} would find.
+     * Always a DM or group DM, never a thread, so it narrows {@see Message}'s `Channel|Thread`.
+     *
+     * @return Channel The DM channel Discord attached, else the cached private channel, else a DM with only the author.
      */
-    protected function getChannelAttribute(): Part
+    protected function getChannelAttribute(): Channel
     {
-        if (! isset($this->attributes['channel'])) {
-            return parent::getChannelAttribute();
+        if (isset($this->attributes['channel'])) {
+            $type = $this->attributes['channel']->type ?? Channel::TYPE_DM;
+
+            return $this->attributePartHelper('channel', Channel::TYPE_GROUP_DM === $type ? GroupDM::class : DM::class);
         }
 
-        return $this->attributePartHelper('channel', Channel::TYPES[$this->attributes['channel']->type ?? Channel::TYPE_DM] ?? Channel::class);
+        return $this->discord->private_channels->get('id', $this->channel_id)
+            ?? $this->factory->part(DM::class, [
+                'id' => $this->channel_id,
+                'type' => Channel::TYPE_DM,
+                'recipients' => [$this->author],
+            ], true);
     }
 }
