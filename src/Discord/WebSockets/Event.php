@@ -152,6 +152,18 @@ abstract class Event
     public const GAME_SERVER_UPDATE = 'GAME_SERVER_UPDATE';
     public const GAME_SERVER_DELETE = 'GAME_SERVER_DELETE';
 
+    // Webhook events, sent to the application's Webhook Events URL rather than the gateway
+    // (see Discord::getWebhookEvents()). The ENTITLEMENT_* events above can arrive both ways.
+    public const APPLICATION_AUTHORIZED = 'APPLICATION_AUTHORIZED';
+    /** For Social SDK apps, the only out-of-game sign that a user's tokens were revoked and their account unmerged. */
+    public const APPLICATION_DEAUTHORIZED = 'APPLICATION_DEAUTHORIZED';
+    public const LOBBY_MESSAGE_CREATE = 'LOBBY_MESSAGE_CREATE';
+    public const LOBBY_MESSAGE_UPDATE = 'LOBBY_MESSAGE_UPDATE';
+    public const LOBBY_MESSAGE_DELETE = 'LOBBY_MESSAGE_DELETE';
+    public const GAME_DIRECT_MESSAGE_CREATE = 'GAME_DIRECT_MESSAGE_CREATE';
+    public const GAME_DIRECT_MESSAGE_UPDATE = 'GAME_DIRECT_MESSAGE_UPDATE';
+    public const GAME_DIRECT_MESSAGE_DELETE = 'GAME_DIRECT_MESSAGE_DELETE';
+
     /**
      * The Discord client instance.
      *

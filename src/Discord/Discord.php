@@ -58,6 +58,7 @@ use Discord\Repository\UserRepository;
 use Discord\Voice\Manager;
 use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
+use Discord\WebhookEvents\WebhookEventReceiver;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\GuildMembersChunkData;
 use Discord\WebSockets\Events\GuildCreate;
@@ -418,6 +419,13 @@ class Discord
      * @var SessionManager
      */
     protected $sessions;
+
+    /**
+     * The receiver for events sent to the application's Webhook Events URL, created on first use.
+     *
+     * @var WebhookEventReceiver|null
+     */
+    protected $webhookEvents;
 
     /**
      * An array of registered slash commands.
@@ -2132,6 +2140,7 @@ class Discord
         if ($this->ws) {
             $this->ws->close($closeLoop ? Op::CLOSE_UNKNOWN_ERROR : Op::CLOSE_NORMAL, 'discordphp closing...');
         }
+        $this->webhookEvents?->close();
         $this->emit('closed', [$this]);
         $this->logger->info('discord closed');
 
@@ -2188,6 +2197,24 @@ class Discord
     public function getSessions(): SessionManager
     {
         return $this->sessions;
+    }
+
+    /**
+     * Gets the receiver for events Discord sends to the application's Webhook Events URL, creating it on first use.
+     *
+     * Lobby messages, game direct messages and application authorizations only arrive this way. The receiver
+     * emits them on the client like gateway events; nothing is received until it is given a socket with
+     * {@see WebhookEventReceiver::listen()}, or handed to a ReactPHP HTTP server as its request handler.
+     *
+     * @link https://docs.discord.com/developers/events/webhook-events
+     *
+     * @return WebhookEventReceiver
+     *
+     * @since 10.59.0
+     */
+    public function getWebhookEvents(): WebhookEventReceiver
+    {
+        return $this->webhookEvents ??= new WebhookEventReceiver($this, fn (object $packet) => $this->handleDispatch($packet));
     }
 
     /**

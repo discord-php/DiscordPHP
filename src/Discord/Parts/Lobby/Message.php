@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Lobby;
 
+use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
@@ -36,6 +37,8 @@ use React\Promise\PromiseInterface;
  * @property      ?array|null  $moderation_metadata Moderation metadata set with {@see \Discord\Repository\LobbyRepository::updateMessageModerationMetadata()}.
  * @property      int          $flags               Message flags combined as a bitfield.
  * @property      string       $application_id      The application that sent the message.
+ * @property      Carbon|null  $timestamp           When the message was sent; sent with `LOBBY_MESSAGE_UPDATE`.
+ * @property      Carbon|null  $edited_timestamp    When the message was last edited; sent with `LOBBY_MESSAGE_UPDATE`.
  * @property-read Lobby|null   $lobby               The lobby, when it is cached.
  */
 class Message extends Part
@@ -55,6 +58,8 @@ class Message extends Part
         'moderation_metadata',
         'flags',
         'application_id',
+        'timestamp',
+        'edited_timestamp',
     ];
 
     /**
@@ -87,5 +92,25 @@ class Message extends Part
     protected function getLobbyAttribute(): ?Lobby
     {
         return $this->discord->lobbies->get('id', $this->lobby_id);
+    }
+
+    /**
+     * Gets the timestamp attribute.
+     *
+     * @return Carbon|null When the message was sent.
+     */
+    protected function getTimestampAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('timestamp');
+    }
+
+    /**
+     * Gets the edited_timestamp attribute.
+     *
+     * @return Carbon|null When the message was last edited.
+     */
+    protected function getEditedTimestampAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('edited_timestamp');
     }
 }
