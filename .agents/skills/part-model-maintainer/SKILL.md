@@ -268,6 +268,7 @@ When a payload is an existing part's object plus a few fields, extend that part 
 
 - **Fields:** declare only the extra keys, and merge them into the inherited `$fillable` in the constructor before `parent::__construct()`, so the subclass keeps up as the parent gains fields.
 - **Narrow return types whenever possible.** When an override can only ever return a subset of what the parent declares, declare the narrowest type it truly returns; PHP allows covariant return types. `Message::getChannelAttribute()` returns `Part` because a guild message's channel may be a `Thread`, which extends `Part`, not `Channel`. A game DM's channel is only a `DM` or `GroupDM`, so `GameDirectMessage::getChannelAttribute()` returns `Channel`.
+- **When it is not possible:** the return type has already shipped on a class users may extend. A user subclass overriding the method with the old type would then fatal, so narrow it only in a major release. New classes and new overrides have no such constraint.
 - **Make every path honour the narrower type:**
   - don't `return parent::method()` when the parent's declared type is broader;
   - don't hydrate through a `TYPES` map that also holds types outside it (`Channel::TYPES` maps thread types to `Thread` subclasses). Choose from the subset, falling back to one of its members.
