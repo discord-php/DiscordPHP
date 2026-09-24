@@ -108,6 +108,9 @@ Semantic rules:
 - nested typed data should become a `Part`, typed collection, or `Carbon` value through helper methods
 - permission checks for high-level mutations belong on the part before repository delegation
 - `created` tells you whether the object already exists remotely
+- a payload that is an existing part's object plus a few fields gets a subclass of that part, which merges only its extra keys into the inherited `$fillable`
+- a subclass's override declares the narrowest return type it can truly return (PHP return types are covariant), and every path must honour it. For example, `GameDirectMessage::getChannelAttribute()` returns `Channel` where `Message`'s returns `Part`, because a game DM's channel can never be a `Thread`
+- inherited methods that can never work in a subclass's context return a rejected promise (`\BadMethodCallException`) instead of sending a request Discord will refuse. See `part-model-maintainer` for all three
 
 ### Repositories
 

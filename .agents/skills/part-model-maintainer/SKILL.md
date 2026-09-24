@@ -262,10 +262,30 @@ Examples:
 - messages need `channel_id`, maybe `guild_id`, maybe webhook context
 - members need `guild_id`
 
+## Extending a concrete part
+
+When a payload is an existing part's object plus a few fields, extend that part rather than copying its fields or adding the extras to it. Example: the `GAME_DIRECT_MESSAGE_*` payload is Discord's message object with the DM channel attached, so `GameDirectMessage extends Message`.
+
+- **Fields:** declare only the extra keys, and merge them into the inherited `$fillable` in the constructor before `parent::__construct()`, so the subclass keeps up as the parent gains fields.
+- **Narrow return types whenever possible.** When an override can only ever return a subset of what the parent declares, declare the narrowest type it truly returns; PHP allows covariant return types. `Message::getChannelAttribute()` returns `Part` because a guild message's channel may be a `Thread`, which extends `Part`, not `Channel`. A game DM's channel is only a `DM` or `GroupDM`, so `GameDirectMessage::getChannelAttribute()` returns `Channel`.
+- **Make every path honour the narrower type:**
+  - don't `return parent::method()` when the parent's declared type is broader;
+  - don't hydrate through a `TYPES` map that also holds types outside it (`Channel::TYPES` maps thread types to `Thread` subclasses). Choose from the subset, falling back to one of its members.
+- **Inherited methods that cannot work in the subclass's context** (for example, REST calls through a channel the bot is not in):
+  - override them to return `reject(new \BadMethodCallException(...))`, naming the method and what to use instead, rather than sending a request Discord will refuse or throwing synchronously;
+  - return `false` from boolean guards such as `isDeletable()`;
+  - keep the parent's exact signature, including by-reference parameters.
+- **Tests:**
+  - assert the narrowed type on every path, including a payload that would have produced a type outside it;
+  - assert each rejected method rejects without sending a request.
+
 ## Smells
 
 Stop if you see:
 
+- an override declaring the parent's broad return type when it can only ever return a narrower one
+- a subclass that copies its parent's `$fillable` instead of merging its extra keys
+- an inherited method left to fail at Discord, or to throw, when the subclass knows it can never work
 - raw arrays where typed nested parts already exist
 - new field added to docblock but not to `$fillable`
 - `save()` building raw endpoints even though repository exists
@@ -283,6 +303,7 @@ Stop if you see:
 - `getRepository()` and `getRepositoryAttributes()` route correctly
 - `save()` enforces semantic permission or special-case behavior when needed
 - class docblock reflects public magic surface
+- a subclass's overrides declare the narrowest return type every path honours
 - related repository and gateway event code still coherent
 - tests/docs updated if public behavior changed
 
