@@ -14,7 +14,9 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets;
 
+use Discord\WebSockets\Events\ApplicationAuthorized;
 use Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate;
+use Discord\WebSockets\Events\ApplicationDeauthorized;
 use Discord\WebSockets\Events\AutoModerationActionExecution;
 use Discord\WebSockets\Events\AutoModerationRuleCreate;
 use Discord\WebSockets\Events\AutoModerationRuleDelete;
@@ -26,6 +28,9 @@ use Discord\WebSockets\Events\ChannelUpdate;
 use Discord\WebSockets\Events\EntitlementCreate;
 use Discord\WebSockets\Events\EntitlementDelete;
 use Discord\WebSockets\Events\EntitlementUpdate;
+use Discord\WebSockets\Events\GameDirectMessageCreate;
+use Discord\WebSockets\Events\GameDirectMessageDelete;
+use Discord\WebSockets\Events\GameDirectMessageUpdate;
 use Discord\WebSockets\Events\GuildAuditLogEntryCreate;
 use Discord\WebSockets\Events\GuildBanAdd;
 use Discord\WebSockets\Events\GuildBanRemove;
@@ -58,6 +63,9 @@ use Discord\WebSockets\Events\IntegrationUpdate;
 use Discord\WebSockets\Events\InteractionCreate;
 use Discord\WebSockets\Events\InviteCreate;
 use Discord\WebSockets\Events\InviteDelete;
+use Discord\WebSockets\Events\LobbyMessageCreate;
+use Discord\WebSockets\Events\LobbyMessageDelete;
+use Discord\WebSockets\Events\LobbyMessageUpdate;
 use Discord\WebSockets\Events\MessageCreate;
 use Discord\WebSockets\Events\MessageDelete;
 use Discord\WebSockets\Events\MessageDeleteBulk;
@@ -213,6 +221,16 @@ class Handlers
         $this->addHandler(Event::ENTITLEMENT_CREATE, EntitlementCreate::class);
         $this->addHandler(Event::ENTITLEMENT_UPDATE, EntitlementUpdate::class);
         $this->addHandler(Event::ENTITLEMENT_DELETE, EntitlementDelete::class);
+
+        // Webhook Event Handlers, run for events the WebhookEventReceiver delivers
+        $this->addHandler(Event::APPLICATION_AUTHORIZED, ApplicationAuthorized::class);
+        $this->addHandler(Event::APPLICATION_DEAUTHORIZED, ApplicationDeauthorized::class);
+        $this->addHandler(Event::LOBBY_MESSAGE_CREATE, LobbyMessageCreate::class);
+        $this->addHandler(Event::LOBBY_MESSAGE_UPDATE, LobbyMessageUpdate::class);
+        $this->addHandler(Event::LOBBY_MESSAGE_DELETE, LobbyMessageDelete::class);
+        $this->addHandler(Event::GAME_DIRECT_MESSAGE_CREATE, GameDirectMessageCreate::class);
+        $this->addHandler(Event::GAME_DIRECT_MESSAGE_UPDATE, GameDirectMessageUpdate::class);
+        $this->addHandler(Event::GAME_DIRECT_MESSAGE_DELETE, GameDirectMessageDelete::class);
     }
 
     /**

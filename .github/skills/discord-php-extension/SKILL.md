@@ -132,3 +132,12 @@ In the core `DiscordPHP` repo, PHPDoc changes are **additive only** — add
 `@property` / `@param` tags, never reword existing prose (it mirrors Discord's
 official docs). Extension repos are freer, but still lead with a one-paragraph
 class docblock saying what the class is and what it is NOT responsible for.
+
+When a class extends a DiscordPHP part (or any class), narrow each override's
+return type to the most specific type it can truly return. PHP return types are
+covariant, so `Part` can become `Channel` when a `Thread` is impossible. Make
+every path honour it: no `return parent::…()` with the broader type, and no
+hydrating through a `TYPES` map that holds types outside it. Inherited methods
+that can never work in the subclass's context should return
+`reject(new \BadMethodCallException(…))` rather than fail at Discord. The core
+repo's `.agents/skills/part-model-maintainer` has the full pattern.

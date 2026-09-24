@@ -23,9 +23,10 @@ use Discord\Parts\Part;
  *
  * @link https://docs.discord.com/developers/resources/lobby#lobby-object
  *
- * @property string      $id       The unique identifier of the user.
- * @property ?array|null $metadata Dictionary of string key/value pairs. The max total length is 1000.
- * @property ?int|null   $flags    Lobby member flags combined as a bitfield.
+ * @property string       $id              The unique identifier of the user.
+ * @property ?array|null  $metadata        Dictionary of string key/value pairs. The max total length is 1000.
+ * @property ?int|null    $flags           Lobby member flags combined as a bitfield.
+ * @property ?string|null $additional_name An additional 1-80 character display name for the member, such as an in-game character name. Can only be set through the HTTP API.
  */
 class Member extends Part
 {
@@ -37,9 +38,8 @@ class Member extends Part
      */
     protected $fillable = [
         'id',
-        'application_id',
         'metadata',
-        'members',
-        'linked_channel',
+        'flags',
+        'additional_name',
     ];
 }
