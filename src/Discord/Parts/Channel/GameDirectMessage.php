@@ -14,7 +14,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+use Discord\Builders\MessageBuilder;
 use Discord\Discord;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
 
@@ -28,7 +30,8 @@ use function React\Promise\reject;
  * a subset of a message's fields.
  *
  * The bot is not in the DM, so the methods it inherits that act through the channel, such as `reply()`,
- * `edit()`, `delete()` and `react()`, are refused by Discord. Moderate it with {@see GameDirectMessage::updateModerationMetadata()}.
+ * `edit()`, `delete()` and `react()`, reject with a `\BadMethodCallException` rather than send a request
+ * Discord would refuse. Moderate it with {@see GameDirectMessage::updateModerationMetadata()}.
  *
  * @since 10.59.0
  *
@@ -83,6 +86,198 @@ class GameDirectMessage extends Message
         }
 
         return $this->discord->private_channels->updateGameDirectMessageModerationMetadata($author, $recipient, $this->id, $metadata);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function reply($message): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function crosspost(): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`, and sets no timer.
+     */
+    public function delayedReply($message, int $delay, &$timer = null): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`, and sets no timer.
+     */
+    public function delayedDelete(int $delay, &$timer = null): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function react($emoticon): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function deleteAllReactions(): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function deleteOwnReaction($emoticon): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function deleteUserReaction($emoticon, string $user_id): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function deleteEmojiReactions($emoticon): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function edit(MessageBuilder $message): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function delete(?string $reason = null): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot receives no reactions from the DM, so the collector would never collect anything.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function addEmbed(Embed $embed): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * Not available: the bot is not in the DM.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    public function fetch(): PromiseInterface
+    {
+        return $this->notInChannel(__FUNCTION__);
+    }
+
+    /**
+     * The bot cannot delete a message in a DM it is not in.
+     *
+     * @return bool Always false.
+     */
+    public function isDeletable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Rejects a call that would act through the DM channel.
+     *
+     * @param string $method The method called.
+     *
+     * @return PromiseInterface Rejects with a `\BadMethodCallException`.
+     */
+    protected function notInChannel(string $method): PromiseInterface
+    {
+        return reject(new \BadMethodCallException("{$method}() acts through the DM channel, which the bot is not in. A game direct message can only be moderated, with updateModerationMetadata()."));
     }
 
     /**

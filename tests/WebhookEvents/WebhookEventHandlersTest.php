@@ -12,10 +12,12 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
+use Discord\Builders\MessageBuilder;
 use Discord\Discord;
 use Discord\Parts\Channel\DM;
 use Discord\Parts\Channel\GameDirectMessage;
 use Discord\Parts\Channel\Message as ChannelMessage;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Lobby\Message;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\ApplicationAuthorized as ApplicationAuthorizedPart;
@@ -162,6 +164,50 @@ final class WebhookEventHandlersTest extends DiscordTestCase
                 )
                 ->then(fn () => $this->assertSame([], $driver->requests))
                 ->then($resolve, $resolve);
+        });
+    }
+
+    public function testMessageMethodsThatNeedTheChannelRejectWithoutARequest()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$mock, $driver] = $this->client();
+
+            /** @var GameDirectMessage $message */
+            $message = $mock->getFactory()->part(GameDirectMessage::class, ['id' => '9', 'channel_id' => '20', 'author' => $this->decode($this->user('5', 'author')), 'recipient_id' => '6'], true);
+
+            $calls = [
+                'startThread' => fn () => $message->startThread('thread'),
+                'reply' => fn () => $message->reply('hi'),
+                'crosspost' => fn () => $message->crosspost(),
+                'delayedReply' => fn () => $message->delayedReply('hi', 10),
+                'delayedDelete' => fn () => $message->delayedDelete(10),
+                'react' => fn () => $message->react('👍'),
+                'deleteReaction' => fn () => $message->deleteReaction(ChannelMessage::REACT_DELETE_ALL),
+                'deleteAllReactions' => fn () => $message->deleteAllReactions(),
+                'deleteOwnReaction' => fn () => $message->deleteOwnReaction('👍'),
+                'deleteUserReaction' => fn () => $message->deleteUserReaction('👍', '6'),
+                'deleteEmojiReactions' => fn () => $message->deleteEmojiReactions('👍'),
+                'edit' => fn () => $message->edit(MessageBuilder::new()->setContent('hi')),
+                'delete' => fn () => $message->delete(),
+                'createReactionCollector' => fn () => $message->createReactionCollector(static fn () => true),
+                'addEmbed' => fn () => $message->addEmbed(new Embed($mock)),
+                'save' => fn () => $message->save(),
+                'fetch' => fn () => $message->fetch(),
+            ];
+
+            $rejected = [];
+            foreach ($calls as $method => $call) {
+                $call()->then(null, function (\Throwable $e) use ($method, &$rejected) {
+                    $this->assertInstanceOf(\BadMethodCallException::class, $e, $method);
+                    $this->assertStringStartsWith("{$method}()", $e->getMessage());
+                    $rejected[] = $method;
+                });
+            }
+
+            $this->assertSame(array_keys($calls), $rejected);
+            $this->assertFalse($message->isDeletable());
+            $this->assertSame([], $driver->requests);
+            $resolve();
         });
     }
 
