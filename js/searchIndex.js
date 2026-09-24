@@ -3331,6 +3331,16 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020HTTP\u0020client.",
             "url": "classes/Discord-Discord.html#method_getHttpClient"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AgetSessions\u0028\u0029",
+            "name": "getSessions",
+            "summary": "Gets\u0020the\u0020manager\u0020for\u0020users\u0027\u0020OAuth2\u0020sessions.",
+            "url": "classes/Discord-Discord.html#method_getSessions"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AgetWebhookEvents\u0028\u0029",
+            "name": "getWebhookEvents",
+            "summary": "Gets\u0020the\u0020receiver\u0020for\u0020events\u0020Discord\u0020sends\u0020to\u0020the\u0020application\u0027s\u0020Webhook\u0020Events\u0020URL,\u0020creating\u0020it\u0020on\u0020first\u0020use.",
+            "url": "classes/Discord-Discord.html#method_getWebhookEvents"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AgetLoop\u0028\u0029",
             "name": "getLoop",
             "summary": "Gets\u0020the\u0020loop\u0020being\u0020used\u0020by\u0020the\u0020client.",
@@ -3580,6 +3590,16 @@ Search.appendIndex(
             "name": "client",
             "summary": "The\u0020Client\u0020class.",
             "url": "classes/Discord-Discord.html#property_client"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024sessions",
+            "name": "sessions",
+            "summary": "Users\u0027\u0020OAuth2\u0020sessions.",
+            "url": "classes/Discord-Discord.html#property_sessions"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024webhookEvents",
+            "name": "webhookEvents",
+            "summary": "The\u0020receiver\u0020for\u0020events\u0020sent\u0020to\u0020the\u0020application\u0027s\u0020Webhook\u0020Events\u0020URL,\u0020created\u0020on\u0020first\u0020use.",
+            "url": "classes/Discord-Discord.html#property_webhookEvents"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024application_commands",
             "name": "application_commands",
@@ -4901,6 +4921,381 @@ Search.appendIndex(
             "summary": "Whether\u0020prefixes\u0020have\u0020already\u0020been\u0020prepared.",
             "url": "classes/Discord-MessageCommandClient.html#property_prefixesPrepared"
         },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken",
+            "name": "AccessToken",
+            "summary": "A\u0020user\u0027s\u0020OAuth2\u0020access\u0020token,\u0020as\u0020Discord\u0020issued\u0020it.",
+            "url": "classes/Discord-OAuth2-AccessToken.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003AfromResponse\u0028\u0029",
+            "name": "fromResponse",
+            "summary": "Builds\u0020a\u0020token\u0020from\u0020a\u0020token\u0020response,\u0020such\u0020as\u0020the\u0020one\u0020\u0060oauth2\/token\u0060\u0020or\u0020\u0060partner\u002Dsdk\/token\/bot\u0060\u0020returns.",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method_fromResponse"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003AfromArray\u0028\u0029",
+            "name": "fromArray",
+            "summary": "Rebuilds\u0020a\u0020token\u0020from\u0020what\u0020\u007B\u0040see\u0020jsonSerialize\u0028\u0029\u007D\u0020produced,\u0020as\u0020a\u0020token\u0020store\u0020keeps\u0020it.",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method_fromArray"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003AisExpired\u0028\u0029",
+            "name": "isExpired",
+            "summary": "Whether\u0020the\u0020token\u0020has\u0020expired,\u0020or\u0020will\u0020within\u0020\u0060\u0024leeway\u0060\u0020seconds.",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method_isExpired"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003AisRefreshable\u0028\u0029",
+            "name": "isRefreshable",
+            "summary": "Whether\u0020the\u0020token\u0020can\u0020be\u0020refreshed\u0020through\u0020\u0060oauth2\/token\u0060.",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method_isRefreshable"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003Aauthorization\u0028\u0029",
+            "name": "authorization",
+            "summary": "The\u0020value\u0020for\u0020an\u0020\u0060Authorization\u0060\u0020header.",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method_authorization"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#method___debugInfo"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A\u0024access_token",
+            "name": "access_token",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#property_access_token"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A\u0024token_type",
+            "name": "token_type",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#property_token_type"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A\u0024refresh_token",
+            "name": "refresh_token",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#property_refresh_token"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A\u0024expires_at",
+            "name": "expires_at",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#property_expires_at"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A\u0024scopes",
+            "name": "scopes",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#property_scopes"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\AccessToken\u003A\u003A\u0024id_token",
+            "name": "id_token",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-AccessToken.html#property_id_token"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session",
+            "name": "Session",
+            "summary": "Acts\u0020as\u0020one\u0020user,\u0020with\u0020their\u0020own\u0020OAuth2\u0020token\u0020rather\u0020than\u0020the\u0020bot\u0027s.",
+            "url": "classes/Discord-OAuth2-Session.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetToken\u0028\u0029",
+            "name": "getToken",
+            "summary": "The\u0020user\u0027s\u0020token.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getToken"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetKey\u0028\u0029",
+            "name": "getKey",
+            "summary": "What\u0020the\u0020token\u0020is\u0020stored\u0020under,\u0020or\u0020null\u0020if\u0020it\u0020is\u0020not\u0020stored.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getKey"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetHttpClient\u0028\u0029",
+            "name": "getHttpClient",
+            "summary": "The\u0020HTTP\u0020client\u0020that\u0020sends\u0020the\u0020user\u0027s\u0020token.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getHttpClient"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetCurrentUser\u0028\u0029",
+            "name": "getCurrentUser",
+            "summary": "Returns\u0020the\u0020user\u0020the\u0020token\u0020belongs\u0020to.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getCurrentUser"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetConnections\u0028\u0029",
+            "name": "getConnections",
+            "summary": "Returns\u0020the\u0020user\u0027s\u0020connected\u0020accounts.\u0020Requires\u0020the\u0020\u0060connections\u0060\u0020scope.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getConnections"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetEntitlements\u0028\u0029",
+            "name": "getEntitlements",
+            "summary": "Returns\u0020the\u0020user\u0027s\u0020entitlements\u0020for\u0020an\u0020application.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getEntitlements"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetApplicationRoleConnection\u0028\u0029",
+            "name": "getApplicationRoleConnection",
+            "summary": "Returns\u0020the\u0020user\u0027s\u0020role\u0020connection\u0020for\u0020an\u0020application.\u0020Requires\u0020the\u0020\u0060role_connections.write\u0060\u0020scope.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getApplicationRoleConnection"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AupdateApplicationRoleConnection\u0028\u0029",
+            "name": "updateApplicationRoleConnection",
+            "summary": "Updates\u0020the\u0020user\u0027s\u0020role\u0020connection\u0020for\u0020an\u0020application.\u0020Requires\u0020the\u0020\u0060role_connections.write\u0060\u0020scope.",
+            "url": "classes/Discord-OAuth2-Session.html#method_updateApplicationRoleConnection"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "Exposes\u0020the\u0020read\u002Donly\u0020\u0060lobbies\u0060\u0020repository.",
+            "url": "classes/Discord-OAuth2-Session.html#method___get"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#method___debugInfo"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AclientFor\u0028\u0029",
+            "name": "clientFor",
+            "summary": "A\u0020client\u0020that\u0020sends\u0020this\u0020token,\u0020sharing\u0020the\u0020bot\u0027s\u0020driver.",
+            "url": "classes/Discord-OAuth2-Session.html#method_clientFor"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AforApplication\u0028\u0029",
+            "name": "forApplication",
+            "summary": "Runs\u0020a\u0020request\u0020for\u0020an\u0020application\u0020given\u0020as\u0020a\u0020part\u0020or\u0020an\u0020id,\u0020or\u0020for\u0020the\u0020bot\u0027s\u0020own.",
+            "url": "classes/Discord-OAuth2-Session.html#method_forApplication"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003Acollect\u0028\u0029",
+            "name": "collect",
+            "summary": "Hydrates\u0020a\u0020list\u0020of\u0020parts\u0020into\u0020a\u0020collection.",
+            "url": "classes/Discord-OAuth2-Session.html#method_collect"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A\u0024http",
+            "name": "http",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#property_http"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A\u0024lobbies",
+            "name": "lobbies",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#property_lobbies"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A\u0024discord",
+            "name": "discord",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#property_discord"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A\u0024token",
+            "name": "token",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#property_token"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A\u0024key",
+            "name": "key",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-Session.html#property_key"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager",
+            "name": "SessionManager",
+            "summary": "Opens,\u0020stores,\u0020resumes\u0020and\u0020refreshes\u0020users\u0027\u0020sessions\u0020\u2014\u0020\u0060\u0024discord\u002D\u003Esessions\u0060.",
+            "url": "classes/Discord-OAuth2-SessionManager.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Aopen\u0028\u0029",
+            "name": "open",
+            "summary": "Opens\u0020a\u0020session\u0020with\u0020a\u0020token,\u0020storing\u0020it\u0020under\u0020\u0060\u0024key\u0060\u0020if\u0020one\u0020is\u0020given.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_open"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Returns\u0020a\u0020keyed\u0020session\u0020that\u0020is\u0020already\u0020open,\u0020without\u0020touching\u0020the\u0020token\u0020store.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_get"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Aresume\u0028\u0029",
+            "name": "resume",
+            "summary": "Returns\u0020the\u0020session\u0020stored\u0020under\u0020\u0060\u0024key\u0060,\u0020refreshing\u0020its\u0020token\u0020first\u0020if\u0020it\u0020has\u0020expired\u0020and\u0020can\u0020be\u0020refreshed.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_resume"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Arefresh\u0028\u0029",
+            "name": "refresh",
+            "summary": "Exchanges\u0020a\u0020session\u0027s\u0020refresh\u0020token\u0020for\u0020a\u0020new\u0020token,\u0020and\u0020stores\u0020it\u0020if\u0020the\u0020session\u0020is\u0020keyed.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_refresh"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Aforget\u0028\u0029",
+            "name": "forget",
+            "summary": "Closes\u0020a\u0020keyed\u0020session\u0020and\u0020removes\u0020its\u0020token\u0020from\u0020the\u0020store.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_forget"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AcreateProvisionalAccount\u0028\u0029",
+            "name": "createProvisionalAccount",
+            "summary": "Creates\u0020a\u0020provisional\u0020account\u0020for\u0020a\u0020player\u0020in\u0020your\u0020own\u0020account\u0020system,\u0020or\u0020returns\u0020the\u0020one\u0020already\u0020made,\u0020and\u0020opens\u0020a\u0020session\u0020as\u0020it.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_createProvisionalAccount"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AunmergeProvisionalAccount\u0028\u0029",
+            "name": "unmergeProvisionalAccount",
+            "summary": "Separates\u0020a\u0020provisional\u0020account\u0020from\u0020the\u0020Discord\u0020account\u0020it\u0020was\u0020merged\u0020into,\u0020using\u0020the\u0020bot\u0020token.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_unmergeProvisionalAccount"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AexchangeExternalToken\u0028\u0029",
+            "name": "exchangeExternalToken",
+            "summary": "Exchanges\u0020a\u0020token\u0020from\u0020an\u0020external\u0020identity\u0020provider\u0020for\u0020a\u0020Discord\u0020token,\u0020creating\u0020a\u0020provisional\u0020account\u0020if\u0020needed,\u0020and\u0020opens\u0020a\u0020session\u0020as\u0020it.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_exchangeExternalToken"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AunmergeExternalAccount\u0028\u0029",
+            "name": "unmergeExternalAccount",
+            "summary": "Separates\u0020a\u0020provisional\u0020account\u0020from\u0020the\u0020Discord\u0020account\u0020it\u0020was\u0020merged\u0020into,\u0020identifying\u0020the\u0020player\u0020by\u0020an\u0020external\u0020provider\u0027s\u0020token.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_unmergeExternalAccount"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AexchangeChildToken\u0028\u0029",
+            "name": "exchangeChildToken",
+            "summary": "Exchanges\u0020a\u0020publisher\u0020application\u0027s\u0020token\u0020for\u0020one\u0020of\u0020its\u0020child\u0020applications\u0027\u0020tokens,\u0020and\u0020opens\u0020a\u0020session\u0020as\u0020it.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_exchangeChildToken"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Aremember\u0028\u0029",
+            "name": "remember",
+            "summary": "Keeps\u0020a\u0020keyed\u0020session\u0020in\u0020memory\u0020as\u0020the\u0020most\u0020recently\u0020used,\u0020dropping\u0020the\u0020least\u0020recently\u0020used\u0020past\u0020the\u0020limit.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_remember"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AwithCredentials\u0028\u0029",
+            "name": "withCredentials",
+            "summary": "Runs\u0020a\u0020call\u0020that\u0020authenticates\u0020as\u0020the\u0020application,\u0020once\u0020its\u0020id\u0020and\u0020secret\u0020are\u0020known.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_withCredentials"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A\u0024credentialsHttp",
+            "name": "credentialsHttp",
+            "summary": "Sends\u0020no\u0020Authorization,\u0020for\u0020routes\u0020that\u0020take\u0020the\u0020application\u0027s\u0020credentials\u0020in\u0020the\u0020body.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#property_credentialsHttp"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method___debugInfo"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003ADEFAULT_LIMIT",
+            "name": "DEFAULT_LIMIT",
+            "summary": "How\u0020many\u0020keyed\u0020sessions\u0020to\u0020keep\u0020in\u0020memory.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#constant_DEFAULT_LIMIT"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A\u0024sessions",
+            "name": "sessions",
+            "summary": "Keyed\u0020sessions,\u0020least\u0020recently\u0020used\u0020first.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#property_sessions"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A\u0024discord",
+            "name": "discord",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-SessionManager.html#property_discord"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A\u0024store",
+            "name": "store",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-SessionManager.html#property_store"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A\u0024clientSecret",
+            "name": "clientSecret",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-SessionManager.html#property_clientSecret"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003A\u0024limit",
+            "name": "limit",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-SessionManager.html#property_limit"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\ArrayTokenStore",
+            "name": "ArrayTokenStore",
+            "summary": "Keeps\u0020tokens\u0020in\u0020memory,\u0020for\u0020as\u0020long\u0020as\u0020the\u0020process\u0020runs.",
+            "url": "classes/Discord-OAuth2-TokenStore-ArrayTokenStore.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\ArrayTokenStore\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-ArrayTokenStore.html#method_get"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\ArrayTokenStore\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-ArrayTokenStore.html#method_set"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\ArrayTokenStore\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-ArrayTokenStore.html#method_delete"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\ArrayTokenStore\u003A\u003A\u0024tokens",
+            "name": "tokens",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-ArrayTokenStore.html#property_tokens"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore",
+            "name": "CacheTokenStore",
+            "summary": "Keeps\u0020tokens\u0020in\u0020a\u0020ReactPHP\u0020or\u0020PSR\u002D16\u0020cache\u0020\u2014\u0020Redis,\u0020for\u0020instance.",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#method_get"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#method_set"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#method_delete"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003Akey\u0028\u0029",
+            "name": "key",
+            "summary": "Encoded,\u0020because\u0020PSR\u002D16\u0020reserves\u0020\u0060\u007B\u007D\u0028\u0029\/\\\u0040\u003A\u0060\u0020in\u0020keys\u0020and\u0020a\u0020store\u0020key\u0020may\u0020well\u0020contain\u0020\u0060\u003A\u0060.",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#method_key"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003Acall\u0028\u0029",
+            "name": "call",
+            "summary": "Runs\u0020a\u0020cache\u0020call,\u0020which\u0020a\u0020ReactPHP\u0020cache\u0020answers\u0020with\u0020a\u0020promise\u0020and\u0020a\u0020PSR\u002D16\u0020cache\u0020answers\u0020directly,\u0020or\u0020by\u0020throwing.",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#method_call"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003A\u0024cache",
+            "name": "cache",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#property_cache"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\CacheTokenStore\u003A\u003A\u0024prefix",
+            "name": "prefix",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-CacheTokenStore.html#property_prefix"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\TokenStoreInterface",
+            "name": "TokenStoreInterface",
+            "summary": "Where\u0020users\u0027\u0020OAuth2\u0020tokens\u0020are\u0020kept\u0020between\u0020restarts.",
+            "url": "classes/Discord-OAuth2-TokenStore-TokenStoreInterface.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\TokenStoreInterface\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-TokenStoreInterface.html#method_get"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\TokenStoreInterface\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-TokenStoreInterface.html#method_set"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore\\TokenStoreInterface\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "",
+            "url": "classes/Discord-OAuth2-TokenStore-TokenStoreInterface.html#method_delete"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\AnnouncementThread",
             "name": "AnnouncementThread",
             "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020GUILD_ANNOUNCEMENT\u0020channel.",
@@ -5450,6 +5845,131 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Forum-Tag.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage",
+            "name": "GameDirectMessage",
+            "summary": "A\u0020direct\u0020message\u0020sent\u0020while\u0020at\u0020least\u0020one\u0020of\u0020its\u0020users\u0020has\u0020an\u0020active\u0020Social\u0020SDK\u0020session.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Create\u0020a\u0020new\u0020part\u0020instance.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AupdateModerationMetadata\u0028\u0029",
+            "name": "updateModerationMetadata",
+            "summary": "Sets\u0020the\u0020moderation\u0020metadata\u0020on\u0020this\u0020message,\u0020which\u0020is\u0020delivered\u0020to\u0020the\u0020players\u0027\u0020clients.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_updateModerationMetadata"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AstartThread\u0028\u0029",
+            "name": "startThread",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_startThread"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Areply\u0028\u0029",
+            "name": "reply",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_reply"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Acrosspost\u0028\u0029",
+            "name": "crosspost",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_crosspost"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdelayedReply\u0028\u0029",
+            "name": "delayedReply",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_delayedReply"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdelayedDelete\u0028\u0029",
+            "name": "delayedDelete",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_delayedDelete"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Areact\u0028\u0029",
+            "name": "react",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_react"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdeleteReaction\u0028\u0029",
+            "name": "deleteReaction",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_deleteReaction"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdeleteAllReactions\u0028\u0029",
+            "name": "deleteAllReactions",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_deleteAllReactions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdeleteOwnReaction\u0028\u0029",
+            "name": "deleteOwnReaction",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_deleteOwnReaction"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdeleteUserReaction\u0028\u0029",
+            "name": "deleteUserReaction",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_deleteUserReaction"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AdeleteEmojiReactions\u0028\u0029",
+            "name": "deleteEmojiReactions",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_deleteEmojiReactions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Aedit\u0028\u0029",
+            "name": "edit",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_edit"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_delete"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AcreateReactionCollector\u0028\u0029",
+            "name": "createReactionCollector",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020receives\u0020no\u0020reactions\u0020from\u0020the\u0020DM,\u0020so\u0020the\u0020collector\u0020would\u0020never\u0020collect\u0020anything.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_createReactionCollector"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AaddEmbed\u0028\u0029",
+            "name": "addEmbed",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_addEmbed"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_save"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003Afetch\u0028\u0029",
+            "name": "fetch",
+            "summary": "Not\u0020available\u003A\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_fetch"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AisDeletable\u0028\u0029",
+            "name": "isDeletable",
+            "summary": "The\u0020bot\u0020cannot\u0020delete\u0020a\u0020message\u0020in\u0020a\u0020DM\u0020it\u0020is\u0020not\u0020in.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_isDeletable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AnotInChannel\u0028\u0029",
+            "name": "notInChannel",
+            "summary": "Rejects\u0020a\u0020call\u0020that\u0020would\u0020act\u0020through\u0020the\u0020DM\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_notInChannel"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AgetRecipientIdAttribute\u0028\u0029",
+            "name": "getRecipientIdAttribute",
+            "summary": "Gets\u0020the\u0020recipient_id\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_getRecipientIdAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Gets\u0020the\u0020channel\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GameDirectMessage\u003A\u003AGAME_FILLABLE",
+            "name": "GAME_FILLABLE",
+            "summary": "The\u0020fields\u0020Discord\u0020adds\u0020to\u0020a\u0020message\u0020for\u0020these\u0020events.",
+            "url": "classes/Discord-Parts-Channel-GameDirectMessage.html#constant_GAME_FILLABLE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GroupDM",
             "name": "GroupDM",
@@ -11353,12 +11873,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE",
             "name": "RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE",
-            "summary": "For\u0020components,\u0020ACK\u0020an\u0020interaction\u0020and\u0020edit\u0020the\u0020original\u0020message\u0020later\u003B\u0020the\u0020user\u0020does\u0020not\u0020see\u0020a\u0020loading\u0020state.",
+            "summary": "For\u0020components\u0020and\u0020\u0060MODAL_SUBMIT\u0060,\u0020ACK\u0020an\u0020interaction\u0020and\u0020edit\u0020the\u0020original\u0020message\u0020later\u003B\u0020the\u0020user\u0020does\u0020not\u0020see\u0020a\u0020loading\u0020state.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_UPDATE_MESSAGE",
             "name": "RESPONSE_TYPE_UPDATE_MESSAGE",
-            "summary": "For\u0020components,\u0020edit\u0020the\u0020message\u0020the\u0020component\u0020was\u0020attached\u0020to.",
+            "summary": "For\u0020components\u0020and\u0020\u0060MODAL_SUBMIT\u0060,\u0020edit\u0020the\u0020message\u0020the\u0020component\u0020was\u0020attached\u0020to.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_UPDATE_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT",
@@ -11616,10 +12136,30 @@ Search.appendIndex(
             "summary": "Represents\u0020a\u0020lobby\u0020within\u0020Discord.\u0020See\u0020Managing\u0020Lobbies\u0020for\u0020more\u0020information.",
             "url": "classes/Discord-Parts-Lobby-Lobby.html"
         },                {
-            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003Aleave\u0028\u0029",
-            "name": "leave",
-            "summary": "Removes\u0020the\u0020current\u0020user\u0020from\u0020the\u0020specified\u0020lobby.",
-            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_leave"
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AaddMember\u0028\u0029",
+            "name": "addMember",
+            "summary": "Adds\u0020a\u0020user\u0020to\u0020the\u0020lobby,\u0020or\u0020updates\u0020their\u0020metadata,\u0020flags\u0020or\u0020additional\u0020name\u0020if\u0020they\u0020are\u0020already\u0020a\u0020member.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_addMember"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AremoveMember\u0028\u0029",
+            "name": "removeMember",
+            "summary": "Removes\u0020a\u0020user\u0020from\u0020the\u0020lobby.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_removeMember"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AbulkUpdateMembers\u0028\u0029",
+            "name": "bulkUpdateMembers",
+            "summary": "Adds,\u0020updates\u0020and\u0020removes\u0020up\u0020to\u002025\u0020members\u0020in\u0020one\u0020request.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_bulkUpdateMembers"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AcreateInvite\u0028\u0029",
+            "name": "createInvite",
+            "summary": "Creates\u0020an\u0020invite\u0020for\u0020a\u0020lobby\u0020member\u0020to\u0020the\u0020channel\u0020linked\u0020to\u0020the\u0020lobby.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_createInvite"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Gets\u0020the\u0020members\u0020attribute.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_getMembersAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AgetLinkedChannelAttribute\u0028\u0029",
             "name": "getLinkedChannelAttribute",
@@ -11645,6 +12185,41 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Lobby-Member.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message",
+            "name": "Message",
+            "summary": "A\u0020message\u0020sent\u0020in\u0020a\u0020lobby\u0020through\u0020the\u0020Social\u0020SDK.",
+            "url": "classes/Discord-Parts-Lobby-Message.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message\u003A\u003AupdateModerationMetadata\u0028\u0029",
+            "name": "updateModerationMetadata",
+            "summary": "Sets\u0020the\u0020moderation\u0020metadata\u0020on\u0020this\u0020message,\u0020which\u0020is\u0020delivered\u0020to\u0020the\u0020players\u0027\u0020clients.",
+            "url": "classes/Discord-Parts-Lobby-Message.html#method_updateModerationMetadata"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message\u003A\u003AgetAuthorAttribute\u0028\u0029",
+            "name": "getAuthorAttribute",
+            "summary": "Gets\u0020the\u0020author\u0020attribute.",
+            "url": "classes/Discord-Parts-Lobby-Message.html#method_getAuthorAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message\u003A\u003AgetLobbyAttribute\u0028\u0029",
+            "name": "getLobbyAttribute",
+            "summary": "Gets\u0020the\u0020lobby\u0020attribute.",
+            "url": "classes/Discord-Parts-Lobby-Message.html#method_getLobbyAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message\u003A\u003AgetTimestampAttribute\u0028\u0029",
+            "name": "getTimestampAttribute",
+            "summary": "Gets\u0020the\u0020timestamp\u0020attribute.",
+            "url": "classes/Discord-Parts-Lobby-Message.html#method_getTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message\u003A\u003AgetEditedTimestampAttribute\u0028\u0029",
+            "name": "getEditedTimestampAttribute",
+            "summary": "Gets\u0020the\u0020edited_timestamp\u0020attribute.",
+            "url": "classes/Discord-Parts-Lobby-Message.html#method_getEditedTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Message\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Lobby-Message.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement",
             "name": "Entitlement",
@@ -12025,6 +12600,31 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-OAuth-Application.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationIdentity",
+            "name": "ApplicationIdentity",
+            "summary": "A\u0020link\u0020between\u0020a\u0020Discord\u0020user\u0020and\u0020their\u0020account\u0020in\u0020an\u0020external\u0020system,\u0020recorded\u0020for\u0020an\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationIdentity.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationIdentity\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Gets\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationIdentity.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationIdentity\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationIdentity.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationIdentityProfile",
+            "name": "ApplicationIdentityProfile",
+            "summary": "The\u0020game\u0020stats\u0020an\u0020application\u0020publishes\u0020for\u0020a\u0020user\u0027s\u0020external\u0020identity,\u0020shown\u0020in\u0020game\u0020stats\u0020widgets.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationIdentityProfile.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationIdentityProfile\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationIdentityProfile.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata",
             "name": "ApplicationRoleConnectionMetadata",
@@ -14036,6 +14636,26 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-User.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\ApplicationAuthorized",
+            "name": "ApplicationAuthorized",
+            "summary": "Sent\u0020when\u0020a\u0020user\u0020adds\u0020the\u0020application\u0020to\u0020a\u0020server\u0020or\u0020to\u0020their\u0020account.",
+            "url": "classes/Discord-Parts-WebSockets-ApplicationAuthorized.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\ApplicationAuthorized\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Gets\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-ApplicationAuthorized.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\ApplicationAuthorized\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-ApplicationAuthorized.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\ApplicationAuthorized\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-WebSockets-ApplicationAuthorized.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution",
             "name": "AutoModerationActionExecution",
             "summary": "Sent\u0020when\u0020a\u0020rule\u0020is\u0020triggered\u0020and\u0020an\u0020action\u0020is\u0020executed\u0020\u0028e.g.\u0020when\u0020a\u0020message\nis\u0020blocked\u0029.",
@@ -14731,6 +15351,61 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-ActivityInstanceRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository",
+            "name": "ApplicationIdentityRepository",
+            "summary": "The\u0020links\u0020between\u0020Discord\u0020users\u0020and\u0020their\u0020accounts\u0020in\u0020external\u0020systems,\u0020recorded\u0020for\u0020an\u0020application,\nand\u0020the\u0020game\u0020stats\u0020profiles\u0020published\u0020for\u0020them.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003AforUser\u0028\u0029",
+            "name": "forUser",
+            "summary": "Returns\u0020the\u0020external\u0020identities\u0020a\u0020user\u0020has\u0020linked\u0020to\u0020the\u0020application.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_forUser"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003AfindByExternalId\u0028\u0029",
+            "name": "findByExternalId",
+            "summary": "Returns\u0020the\u0020identities\u0020recorded\u0020for\u0020the\u0020Discord\u0020user\u0020currently\u0020linked\u0020to\u0020an\u0020external\u0020account.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_findByExternalId"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Deletes\u0020an\u0020identity.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_delete"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003AgetProfile\u0028\u0029",
+            "name": "getProfile",
+            "summary": "Returns\u0020the\u0020game\u0020stats\u0020profile\u0020the\u0020application\u0020published\u0020for\u0020one\u0020of\u0020a\u0020user\u0027s\u0020identities.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_getProfile"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003AupdateProfile\u0028\u0029",
+            "name": "updateProfile",
+            "summary": "Publishes\u0020the\u0020game\u0020stats\u0020profile\u0020for\u0020one\u0020of\u0020a\u0020user\u0027s\u0020identities.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_updateProfile"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003AcollectIdentities\u0028\u0029",
+            "name": "collectIdentities",
+            "summary": "Turns\u0020a\u0020wrapped\u0020list\u0020of\u0020identities\u0020into\u0020a\u0020collection.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_collectIdentities"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003AuserId\u0028\u0029",
+            "name": "userId",
+            "summary": "The\u0020id\u0020of\u0020a\u0020user\u0020given\u0020as\u0020a\u0020part\u0020or\u0020already\u0020as\u0020an\u0020id.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#method_userId"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003A\u0024discrim",
+            "name": "discrim",
+            "summary": "The\u0020collection\u0020discriminator.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#property_discrim"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ApplicationIdentityRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-ApplicationIdentityRepository.html#property_class"
+        },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository",
             "name": "InviteRepository",
             "summary": "Contains\u0020invites\u0020of\u0020a\u0020channel.",
@@ -15406,15 +16081,20 @@ Search.appendIndex(
             "summary": "Removes\u0020the\u0020provided\u0020user\u0020from\u0020the\u0020specified\u0020lobby.",
             "url": "classes/Discord-Repository-LobbyRepository.html#method_removeMember"
         },                {
-            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003Aleave\u0028\u0029",
-            "name": "leave",
-            "summary": "Removes\u0020the\u0020current\u0020user\u0020from\u0020the\u0020specified\u0020lobby.",
-            "url": "classes/Discord-Repository-LobbyRepository.html#method_leave"
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AbulkUpdateMembers\u0028\u0029",
+            "name": "bulkUpdateMembers",
+            "summary": "Adds,\u0020updates\u0020and\u0020removes\u0020up\u0020to\u002025\u0020lobby\u0020members\u0020in\u0020one\u0020request.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_bulkUpdateMembers"
         },                {
-            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AlinkChannelLobby\u0028\u0029",
-            "name": "linkChannelLobby",
-            "summary": "Links\u0020or\u0020unlinks\u0020a\u0020lobby\u0020to\u0020a\u0020channel.",
-            "url": "classes/Discord-Repository-LobbyRepository.html#method_linkChannelLobby"
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AcreateInvite\u0028\u0029",
+            "name": "createInvite",
+            "summary": "Creates\u0020an\u0020invite\u0020for\u0020a\u0020lobby\u0020member\u0020to\u0020the\u0020channel\u0020linked\u0020to\u0020the\u0020lobby.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_createInvite"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AupdateMessageModerationMetadata\u0028\u0029",
+            "name": "updateMessageModerationMetadata",
+            "summary": "Sets\u0020the\u0020moderation\u0020metadata\u0020on\u0020a\u0020lobby\u0020message,\u0020which\u0020is\u0020delivered\u0020to\u0020the\u0020players\u0027\u0020clients.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_updateMessageModerationMetadata"
         },                {
             "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
@@ -15516,6 +16196,11 @@ Search.appendIndex(
             "summary": "Fires\u0020a\u0020Channel\u0020Update\u0020Gateway\u0020event.",
             "url": "classes/Discord-Repository-PrivateChannelRepository.html#method_modifyGroupDM"
         },                {
+            "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003AupdateGameDirectMessageModerationMetadata\u0028\u0029",
+            "name": "updateGameDirectMessageModerationMetadata",
+            "summary": "Sets\u0020the\u0020moderation\u0020metadata\u0020on\u0020a\u0020direct\u0020message\u0020sent\u0020during\u0020a\u0020Social\u0020SDK\u0020session,\u0020which\u0020is\u0020delivered\u0020to\u0020the\u0020players\u0027\u0020clients.",
+            "url": "classes/Discord-Repository-PrivateChannelRepository.html#method_updateGameDirectMessageModerationMetadata"
+        },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
@@ -15525,6 +16210,76 @@ Search.appendIndex(
             "name": "class",
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-PrivateChannelRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository",
+            "name": "SessionLobbyRepository",
+            "summary": "The\u0020lobbies\u0020a\u0020player\u0020is\u0020in,\u0020and\u0020what\u0020the\u0020player\u0020does\u0020in\u0020them.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AcreateOrJoin\u0028\u0029",
+            "name": "createOrJoin",
+            "summary": "Joins\u0020the\u0020lobby\u0020with\u0020this\u0020secret,\u0020creating\u0020it\u0020first\u0020if\u0020there\u0020is\u0020none.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_createOrJoin"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003Aleave\u0028\u0029",
+            "name": "leave",
+            "summary": "Leaves\u0020a\u0020lobby.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_leave"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AlinkChannel\u0028\u0029",
+            "name": "linkChannel",
+            "summary": "Links\u0020a\u0020guild\u0020text\u0020channel\u0020to\u0020a\u0020lobby,\u0020so\u0020the\u0020lobby\u0027s\u0020chat\u0020appears\u0020there.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_linkChannel"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AunlinkChannel\u0028\u0029",
+            "name": "unlinkChannel",
+            "summary": "Unlinks\u0020whatever\u0020channel\u0020is\u0020linked\u0020to\u0020a\u0020lobby.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_unlinkChannel"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AsendMessage\u0028\u0029",
+            "name": "sendMessage",
+            "summary": "Sends\u0020a\u0020message\u0020to\u0020a\u0020lobby.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_sendMessage"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AgetMessages\u0028\u0029",
+            "name": "getMessages",
+            "summary": "Returns\u0020the\u0020most\u0020recent\u0020messages\u0020in\u0020a\u0020lobby\u0020the\u0020player\u0020is\u0020in.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_getMessages"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AcreateInvite\u0028\u0029",
+            "name": "createInvite",
+            "summary": "Creates\u0020an\u0020invite\u0020for\u0020the\u0020player\u0020to\u0020the\u0020channel\u0020linked\u0020to\u0020a\u0020lobby.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_createInvite"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003Ahttp\u0028\u0029",
+            "name": "http",
+            "summary": "The\u0020session\u0027s\u0020client,\u0020looked\u0020up\u0020each\u0020time\u0020because\u0020refreshing\u0020the\u0020token\u0020replaces\u0020it.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_http"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003Aremember\u0028\u0029",
+            "name": "remember",
+            "summary": "Hydrates\u0020a\u0020lobby\u0020and\u0020keeps\u0020it\u0020here.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_remember"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003AidOf\u0028\u0029",
+            "name": "idOf",
+            "summary": "The\u0020id\u0020of\u0020a\u0020part,\u0020or\u0020the\u0020id\u0020itself.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#method_idOf"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\SessionLobbyRepository\u003A\u003A\u0024session",
+            "name": "session",
+            "summary": "The\u0020player\u0020whose\u0020token\u0020every\u0020request\u0020here\u0020is\u0020sent\u0020with.",
+            "url": "classes/Discord-Repository-SessionLobbyRepository.html#property_session"
         },                {
             "fqsen": "\\Discord\\Repository\\SoundRepository",
             "name": "SoundRepository",
@@ -16886,6 +17641,86 @@ Search.appendIndex(
             "summary": "The\u0020packet\u0020timestamp.",
             "url": "classes/Discord-Voice-VoicePacket.html#property_timestamp"
         },                {
+            "fqsen": "\\Discord\\WebhookEvents\\Signature",
+            "name": "Signature",
+            "summary": "Checks\u0020the\u0020Ed25519\u0020signature\u0020Discord\u0020puts\u0020on\u0020every\u0020request\u0020it\u0020sends\u0020to\u0020an\u0020application.",
+            "url": "classes/Discord-WebhookEvents-Signature.html"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\Signature\u003A\u003Averify\u0028\u0029",
+            "name": "verify",
+            "summary": "Whether\u0020a\u0020request\u0020was\u0020signed\u0020by\u0020Discord\u0020for\u0020this\u0020application.",
+            "url": "classes/Discord-WebhookEvents-Signature.html#method_verify"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\Signature\u003A\u003AassertAvailable\u0028\u0029",
+            "name": "assertAvailable",
+            "summary": "",
+            "url": "classes/Discord-WebhookEvents-Signature.html#method_assertAvailable"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver",
+            "name": "WebhookEventReceiver",
+            "summary": "Receives\u0020the\u0020events\u0020Discord\u0020sends\u0020to\u0020the\u0020application\u0027s\u0020Webhook\u0020Events\u0020URL,\u0020and\u0020emits\u0020them\u0020on\u0020the\u0020client.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003Alisten\u0028\u0029",
+            "name": "listen",
+            "summary": "Receives\u0020webhook\u0020events\u0020on\u0020a\u0020socket.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#method_listen"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003Aclose\u0028\u0029",
+            "name": "close",
+            "summary": "Stops\u0020listening\u0020on\u0020every\u0020socket\u0020opened\u0020by\u0020\u007B\u0040see\u0020WebhookEventReceiver\u003A\u003Alisten\u0028\u0029\u007D.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#method_close"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003A__invoke\u0028\u0029",
+            "name": "__invoke",
+            "summary": "Handles\u0020one\u0020request\u0020from\u0020Discord.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#method___invoke"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003Adeliver\u0028\u0029",
+            "name": "deliver",
+            "summary": "Emits\u0020an\u0020event,\u0020unless\u0020it\u0020is\u0020unknown\u0020or\u0020a\u0020copy\u0020of\u0020one\u0020already\u0020delivered.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#method_deliver"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003ATYPE_PING",
+            "name": "TYPE_PING",
+            "summary": "A\u0020request\u0020Discord\u0020sends\u0020to\u0020check\u0020the\u0020URL\u0020is\u0020ready.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#constant_TYPE_PING"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003ATYPE_EVENT",
+            "name": "TYPE_EVENT",
+            "summary": "A\u0020request\u0020carrying\u0020an\u0020event.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#constant_TYPE_EVENT"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003AEVENTS",
+            "name": "EVENTS",
+            "summary": "The\u0020events\u0020Discord\u0020sends\u0020as\u0020webhooks.\u0020Any\u0020other\u0020type\u0020is\u0020acknowledged\u0020and\u0020dropped.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#constant_EVENTS"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003AGATEWAY_EVENTS",
+            "name": "GATEWAY_EVENTS",
+            "summary": "The\u0020events\u0020the\u0020gateway\u0020delivers\u0020as\u0020well.\u0020A\u0020webhook\u0020copy\u0020of\u0020one\u0020the\u0020gateway\u0020already\u0020delivered\u0020is\u0020dropped.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#constant_GATEWAY_EVENTS"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003A\u0024discord",
+            "name": "discord",
+            "summary": "",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#property_discord"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003A\u0024dispatch",
+            "name": "dispatch",
+            "summary": "Runs\u0020a\u0020packet\u0020through\u0020the\u0020client\u0027s\u0020dispatch\u0020handlers.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#property_dispatch"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003A\u0024delivered",
+            "name": "delivered",
+            "summary": "The\u0020events\u0020already\u0020delivered,\u0020to\u0020drop\u0020copies\u0020of\u0020them.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#property_delivered"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents\\WebhookEventReceiver\u003A\u003A\u0024sockets",
+            "name": "sockets",
+            "summary": "The\u0020sockets\u0020opened\u0020by\u0020\u007B\u0040see\u0020WebhookEventReceiver\u003A\u003Alisten\u0028\u0029\u007D.",
+            "url": "classes/Discord-WebhookEvents-WebhookEventReceiver.html#property_sockets"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event",
             "name": "Event",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
@@ -17351,6 +18186,46 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_GAME_SERVER_DELETE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAPPLICATION_AUTHORIZED",
+            "name": "APPLICATION_AUTHORIZED",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_APPLICATION_AUTHORIZED"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAPPLICATION_DEAUTHORIZED",
+            "name": "APPLICATION_DEAUTHORIZED",
+            "summary": "For\u0020Social\u0020SDK\u0020apps,\u0020the\u0020only\u0020out\u002Dof\u002Dgame\u0020sign\u0020that\u0020a\u0020user\u0027s\u0020tokens\u0020were\u0020revoked\u0020and\u0020their\u0020account\u0020unmerged.",
+            "url": "classes/Discord-WebSockets-Event.html#constant_APPLICATION_DEAUTHORIZED"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ALOBBY_MESSAGE_CREATE",
+            "name": "LOBBY_MESSAGE_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_LOBBY_MESSAGE_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ALOBBY_MESSAGE_UPDATE",
+            "name": "LOBBY_MESSAGE_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_LOBBY_MESSAGE_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ALOBBY_MESSAGE_DELETE",
+            "name": "LOBBY_MESSAGE_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_LOBBY_MESSAGE_DELETE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGAME_DIRECT_MESSAGE_CREATE",
+            "name": "GAME_DIRECT_MESSAGE_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GAME_DIRECT_MESSAGE_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGAME_DIRECT_MESSAGE_UPDATE",
+            "name": "GAME_DIRECT_MESSAGE_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GAME_DIRECT_MESSAGE_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGAME_DIRECT_MESSAGE_DELETE",
+            "name": "GAME_DIRECT_MESSAGE_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GAME_DIRECT_MESSAGE_DELETE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003A\u0024discord",
             "name": "discord",
             "summary": "The\u0020Discord\u0020client\u0020instance.",
@@ -17366,6 +18241,16 @@ Search.appendIndex(
             "summary": "The\u0020Factory.",
             "url": "classes/Discord-WebSockets-Event.html#property_factory"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationAuthorized",
+            "name": "ApplicationAuthorized",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-ApplicationAuthorized.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationAuthorized\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-ApplicationAuthorized.html#method_handle"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationCommandPermissionsUpdate",
             "name": "ApplicationCommandPermissionsUpdate",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
@@ -17375,6 +18260,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ApplicationCommandPermissionsUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationDeauthorized",
+            "name": "ApplicationDeauthorized",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-ApplicationDeauthorized.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationDeauthorized\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-ApplicationDeauthorized.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationActionExecution",
             "name": "AutoModerationActionExecution",
@@ -17650,6 +18545,36 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-EntitlementUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameDirectMessageCreate",
+            "name": "GameDirectMessageCreate",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-GameDirectMessageCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameDirectMessageCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GameDirectMessageCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameDirectMessageDelete",
+            "name": "GameDirectMessageDelete",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-GameDirectMessageDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameDirectMessageDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GameDirectMessageDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameDirectMessageUpdate",
+            "name": "GameDirectMessageUpdate",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-GameDirectMessageUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameDirectMessageUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GameDirectMessageUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GameServerDelete",
             "name": "GameServerDelete",
@@ -18040,6 +18965,36 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-InviteDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\LobbyMessageCreate",
+            "name": "LobbyMessageCreate",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-LobbyMessageCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\LobbyMessageCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-LobbyMessageCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\LobbyMessageDelete",
+            "name": "LobbyMessageDelete",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-LobbyMessageDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\LobbyMessageDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-LobbyMessageDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\LobbyMessageUpdate",
+            "name": "LobbyMessageUpdate",
+            "summary": "Received\u0020as\u0020a\u0020webhook\u0020event,\u0020through\u0020\u007B\u0040see\u0020\\Discord\\WebhookEvents\\WebhookEventReceiver\u007D.",
+            "url": "classes/Discord-WebSockets-Events-LobbyMessageUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\LobbyMessageUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-LobbyMessageUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\MessageCreate",
             "name": "MessageCreate",
@@ -18986,6 +19941,16 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/discord-messagecommandclient.html"
         },                {
+            "fqsen": "\\Discord\\OAuth2",
+            "name": "OAuth2",
+            "summary": "",
+            "url": "namespaces/discord-oauth2.html"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\TokenStore",
+            "name": "TokenStore",
+            "summary": "",
+            "url": "namespaces/discord-oauth2-tokenstore.html"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel",
             "name": "Channel",
             "summary": "",
@@ -19120,6 +20085,11 @@ Search.appendIndex(
             "name": "Voice",
             "summary": "",
             "url": "namespaces/discord-voice.html"
+        },                {
+            "fqsen": "\\Discord\\WebhookEvents",
+            "name": "WebhookEvents",
+            "summary": "",
+            "url": "namespaces/discord-webhookevents.html"
         },                {
             "fqsen": "\\Discord\\WebSockets",
             "name": "WebSockets",

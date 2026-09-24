@@ -199,6 +199,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/discord-oauth2.html" class="">OAuth2</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/discord-parts.html" class="">Parts</a>
                 
             </li>
@@ -208,6 +212,10 @@
             </li>
                     <li>
                 <a href="namespaces/discord-voice.html" class="">Voice</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-webhookevents.html" class="">WebhookEvents</a>
                 
             </li>
                     <li>
@@ -271,13 +279,18 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">Contains lobbies.</p>
 
 
+    <section class="phpdocumentor-description"><p>Everything here is done with the bot token, as a game's backend does it.
+What a player does in a lobby — creating or joining one by secret, leaving,
+linking a channel, sending and reading messages — uses the player's own
+OAuth2 token instead.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -428,6 +441,13 @@ within the class. If it does, it calls that method with the provided arguments.<
 <dd>Adds the provided user to the specified lobby.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_bulkUpdateMembers">bulkUpdateMembers()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;&gt;    </span>
+</dt>
+<dd>Adds, updates and removes up to 25 lobby members in one request.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="-deprecated" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_clear">clear()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -440,6 +460,13 @@ within the class. If it does, it calls that method with the provided arguments.<
                                 &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>    </span>
 </dt>
 <dd>Builds a new, empty part.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_createInvite">createInvite()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a>&gt;    </span>
+</dt>
+<dd>Creates an invite for a lobby member to the channel linked to the lobby.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_createLobby">createLobby()</a>
@@ -536,20 +563,6 @@ based on the response of the callback.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_leave">leave()</a>
-    <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
-</dt>
-<dd>Removes the current user from the specified lobby.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_linkChannelLobby">linkChannelLobby()</a>
-    <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>&gt;    </span>
-</dt>
-<dd>Links or unlinks a lobby to a channel.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_modifyLobby">modifyLobby()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>&gt;    </span>
@@ -624,6 +637,13 @@ based on the response of the callback.</dd>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Converts the weak caches to array.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-LobbyRepository.html#method_updateMessageModerationMetadata">updateMessageModerationMetadata()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Sets the moderation metadata on a lobby message, which is delivered to the players&#039; clients.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_values">values()</a>
@@ -746,7 +766,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -834,7 +854,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -850,7 +870,6 @@ based on the response of the callback.</dd>
     &#039;get&#039; =&gt; \Discord\Http\Endpoint::LOBBY,
     &#039;update&#039; =&gt; \Discord\Http\Endpoint::LOBBY,
     &#039;delete&#039; =&gt; \Discord\Http\Endpoint::LOBBY,
-    &#039;leave&#039; =&gt; \Discord\Http\Endpoint::LOBBY_SELF,
 ]</span></code>
 
     
@@ -1278,7 +1297,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -1286,7 +1305,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">addMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1316,22 +1335,117 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$data</span>
-                : <span class="phpdocumentor-argument-list__argument__type">?int</span>
+                : <span class="phpdocumentor-argument-list__argument__type">?string</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>['flags']    Lobby member flags combined as a bitfield.</p>
+                    <section class="phpdocumentor-description"><p>['additional_name'] An additional 1-80 character display name for the member, such as an in-game character name. Null clears it; omit it to keep the current value.</p>
 </section>
 
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_addMember_tags">
+        Tags
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_addMember_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.59.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_bulkUpdateMembers">
+        bulkUpdateMembers()
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_bulkUpdateMembers" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">177</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Adds, updates and removes up to 25 lobby members in one request.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">bulkUpdateMembers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, array&lt;string|int, mixed&gt;&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$members</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Each entry is a <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>, or an array with an <code class="prettyprint">id</code> and any of <code class="prettyprint">metadata</code>, <code class="prettyprint">flags</code>, <code class="prettyprint">additional_name</code>,
+and <code class="prettyprint">remove_member</code> (true to remove the user rather than add or update them).</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$lobby</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The lobby or lobby id whose members to update.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$members</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, array&lt;string|int, mixed&gt;&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The members to add, update or remove.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_bulkUpdateMembers_tags">
+        Tags
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_bulkUpdateMembers_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.59.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Lobby-Member.html"><abbr title="\Discord\Parts\Lobby\Member">Member</abbr></a>&gt;&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The members that were added or updated. Removed members are not included.</p>
+</section>
+
             </section>
 
 </article>
@@ -1459,6 +1573,84 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_createInvite">
+        createInvite()
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_createInvite" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">211</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Creates an invite for a lobby member to the channel linked to the lobby.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">createInvite</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$lobby</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The lobby or lobby id whose linked channel to invite to.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$user</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Member, user, or user id of the lobby member to invite.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_createInvite_tags">
+        Tags
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_createInvite_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.59.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>An invite with only its <code class="prettyprint">code</code>.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_createLobby">
         createLobby()
         <a href="classes/Discord-Repository-LobbyRepository.html#method_createLobby" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1467,7 +1659,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -1495,6 +1687,20 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_createLobby_tags">
+        Tags
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_createLobby_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.59.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -2236,121 +2442,6 @@ based on the response of the callback.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_leave">
-        leave()
-        <a href="classes/Discord-Repository-LobbyRepository.html#method_leave" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">151</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Removes the current user from the specified lobby.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">leave</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <section class="phpdocumentor-description"><p>It is safe to call this even if the user is no longer a member of the lobby, but will fail if the lobby does not exist.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$lobby</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The lobby or lobby id to add the member to.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_linkChannelLobby">
-        linkChannelLobby()
-        <a href="classes/Discord-Repository-LobbyRepository.html#method_linkChannelLobby" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">170</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Links or unlinks a lobby to a channel.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">linkChannelLobby</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$channel</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <section class="phpdocumentor-description"><p>Uses Bearer token for authorization and user must be a lobby member with CanLinkLobby lobby member flag.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$lobby</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The lobby or lobby id to link the channel to.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$channel</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|string|null</span>
-                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The channel or channel id to link the lobby to. If null, unlinks the lobby.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_modifyLobby">
         modifyLobby()
         <a href="classes/Discord-Repository-LobbyRepository.html#method_modifyLobby" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2359,7 +2450,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -2367,7 +2458,7 @@ based on the response of the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">modifyLobby</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">modifyLobby</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2377,10 +2468,12 @@ based on the response of the callback.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$lobby</span>
-                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The lobby or lobby id to modify.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$data</span>
@@ -2394,6 +2487,20 @@ based on the response of the callback.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_modifyLobby_tags">
+        Tags
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_modifyLobby_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.59.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     
@@ -2754,7 +2861,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -2997,6 +3104,89 @@ This method is deprecated for userland code but can still be used internally wit
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_updateMessageModerationMetadata">
+        updateMessageModerationMetadata()
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_updateMessageModerationMetadata" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/LobbyRepository.php"><a href="files/src-discord-repository-lobbyrepository.html"><abbr title="src/Discord/Repository/LobbyRepository.php">LobbyRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">236</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the moderation metadata on a lobby message, which is delivered to the players&#039; clients.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">updateMessageModerationMetadata</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$lobby</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Lobby-Message.html"><abbr title="\Discord\Parts\Lobby\Message">Message</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$metadata</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$lobby</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Lobby.html"><abbr title="\Discord\Parts\Lobby\Lobby">Lobby</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The lobby or lobby id the message was sent in.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$message</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Lobby-Message.html"><abbr title="\Discord\Parts\Lobby\Message">Message</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The lobby message or its id.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$metadata</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Up to 5 free-form string key/value pairs describing the decision, e.g. <code class="prettyprint">['action' =&gt; 'hide', 'reason' =&gt; 'toxicity']</code>.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_updateMessageModerationMetadata_tags">
+        Tags
+        <a href="classes/Discord-Repository-LobbyRepository.html#method_updateMessageModerationMetadata_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.59.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_values">
         values()
         <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_values" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3120,8 +3310,10 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#method___debugInfo">__debugInfo()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_addMember">addMember()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_bulkUpdateMembers">bulkUpdateMembers()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_clear">clear()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_create">create()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_createInvite">createInvite()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_createLobby">createLobby()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_delete">delete()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_fetch">fetch()</a></li>
@@ -3136,8 +3328,6 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_keys">keys()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_last">last()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_leave">leave()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_linkChannelLobby">linkChannelLobby()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_modifyLobby">modifyLobby()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetGet">offsetGet()</a></li>
@@ -3149,6 +3339,7 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_save">save()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_set">set()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_toArray">toArray()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-LobbyRepository.html#method_updateMessageModerationMetadata">updateMessageModerationMetadata()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_values">values()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_cacheFreshen">cacheFreshen()</a></li>
                                     </ul>

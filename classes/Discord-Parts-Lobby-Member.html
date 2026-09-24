@@ -199,6 +199,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/discord-oauth2.html" class="">OAuth2</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/discord-parts.html" class="">Parts</a>
                 
             </li>
@@ -208,6 +212,10 @@
             </li>
                     <li>
                 <a href="namespaces/discord-voice.html" class="">Voice</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-webhookevents.html" class="">WebhookEvents</a>
                 
             </li>
                     <li>
@@ -272,7 +280,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Member.php"><a href="files/src-discord-parts-lobby-member.html"><abbr title="src/Discord/Parts/Lobby/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -338,6 +346,12 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Lobby-Member.html#property_additional_name">$additional_name</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
@@ -723,7 +737,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Member.php"><a href="files/src-discord-parts-lobby-member.html"><abbr title="src/Discord/Parts/Lobby/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -753,6 +767,45 @@ JSON. Used for JsonSerializable.</dd>
             <a href="classes/Discord-Parts-Lobby-Member.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_additional_name">
+        $additional_name
+        <a href="classes/Discord-Parts-Lobby-Member.html#property_additional_name" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Member.php"><a href="files/src-discord-parts-lobby-member.html"><abbr title="src/Discord/Parts/Lobby/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$additional_name</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>An additional 1-80 character display name for the member, such as an in-game character name. Can only be set through the HTTP API.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -1094,7 +1147,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Member.php"><a href="files/src-discord-parts-lobby-member.html"><abbr title="src/Discord/Parts/Lobby/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -1105,7 +1158,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;application_id&#039;, &#039;metadata&#039;, &#039;members&#039;, &#039;linked_channel&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;metadata&#039;, &#039;flags&#039;, &#039;additional_name&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -3553,6 +3606,7 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Member.html#property_additional_name">$additional_name</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Lobby-Member.html#property_flags">$flags</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Lobby-Member.html#property_id">$id</a></li>
