@@ -799,7 +799,7 @@ class Discord
             return $this->ready();
         }
 
-        $this->loop->addPeriodicTimer(5, fn () => $this->checkForChunks);
+        $this->loop->addPeriodicTimer(5, fn () => $this->checkForChunks());
         $this->logger->info('set up chunking, checking for chunks every 5 seconds');
         $this->checkForChunks();
     }
@@ -1060,6 +1060,12 @@ class Discord
      */
     protected function handleDispatch(object $data): void
     {
+        // Member loading happens before 'init', while other events are held back below, so a refused
+        // member request has to be dealt with here or its guild would wait for chunks forever.
+        if (Event::RATE_LIMITED === $data->t) {
+            $this->retryRateLimitedRequest($data->d);
+        }
+
         $hData = $this->handlers->getHandler($data->t);
 
         if ($hData === null) {
@@ -1083,6 +1089,36 @@ class Discord
         }
 
         $this->runDispatchHandler($handler, $data, $hData);
+    }
+
+    /**
+     * Sends a member request the client made for itself again, once Discord's rate limit allows.
+     *
+     * The client requests the members of large guilds while it starts up, and waits for them before it
+     * emits `init`. Discord drops a rate-limited request, so after the wait Discord asks for, the guild
+     * goes back in the queue {@see Discord::checkForChunks()} sends from. It stays counted as sent until
+     * then, so the client does not become ready without its members.
+     *
+     * @param object $data The `RATE_LIMITED` event's data.
+     *
+     * @since 10.60.0
+     */
+    protected function retryRateLimitedRequest(object $data): void
+    {
+        $guild_id = isset($data->meta->guild_id) ? (string) $data->meta->guild_id : null;
+
+        if (Op::OP_REQUEST_GUILD_MEMBERS !== ($data->opcode ?? null) || null === $guild_id || ! in_array($guild_id, $this->largeSent, true)) {
+            return;
+        }
+
+        $retryAfter = max(0.0, (float) ($data->retry_after ?? 0));
+        $this->logger->info('member request rate limited, sending it again', ['guild' => $guild_id, 'retry_after' => $retryAfter]);
+
+        $this->loop->addTimer($retryAfter, function () use ($guild_id) {
+            $this->largeSent = array_values(array_diff($this->largeSent, [$guild_id]));
+            $this->largeGuilds[] = $guild_id;
+            $this->checkForChunks();
+        });
     }
 
     /**

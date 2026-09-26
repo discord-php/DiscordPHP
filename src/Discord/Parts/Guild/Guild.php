@@ -1260,6 +1260,125 @@ class Guild extends Part
     }
 
     /**
+     * Moves channels, in one request: their positions, and the category one of them is in.
+     *
+     * Discord answers with no content and sends a `CHANNEL_UPDATE` for each channel it moved; the cached
+     * channels are updated as soon as the request succeeds, so they are right before those arrive.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-channel-positions
+     *
+     * @param ExCollectionInterface|array $channels Either an associative array where the key is the position
+     *                                              and the value a `Channel` or its ID, as
+     *                                              {@see Guild::updateRolePositions()} takes, e.g.
+     *                                              `[1 => 'channel_id_1', 3 => 'channel_id_3']`; or a list of
+     *                                              arrays with `id` and any of `position`, `parent_id`,
+     *                                              `lock_permissions` and `flags`. At most one entry may
+     *                                              change `parent_id`.
+     *
+     * @throws NoPermissionsException Missing manage_channels permission.
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.60.0
+     */
+    public function updateChannelPositions($channels): PromiseInterface
+    {
+        if ($channels instanceof ExCollectionInterface) {
+            $channels = $channels->jsonSerialize();
+        }
+        if (! is_array($channels)) {
+            return reject(new \InvalidArgumentException('Channels must be an array of Channel instances, channel IDs or arrays with an id.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_channels) {
+                return reject(new NoPermissionsException("You do not have permission to move channels in the guild {$this->id}."));
+            }
+        }
+
+        $payload = [];
+
+        foreach ($channels as $position => $channel) {
+            if (is_array($channel)) {
+                if (($channel['id'] ?? null) instanceof Part) {
+                    $channel['id'] = $channel['id']->id;
+                }
+                if (($channel['parent_id'] ?? null) instanceof Part) {
+                    $channel['parent_id'] = $channel['parent_id']->id;
+                }
+                $payload[] = $channel;
+
+                continue;
+            }
+
+            $payload[] = [
+                'id' => $channel instanceof Part ? $channel->id : (string) $channel,
+                'position' => $position,
+            ];
+        }
+
+        if (count(array_filter($payload, static fn (array $entry): bool => array_key_exists('parent_id', $entry))) > 1) {
+            return reject(new \InvalidArgumentException('Only one channel can move to another category in a single request.'));
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_CHANNELS, $this->id), $payload)
+            ->then(function () use ($payload) {
+                foreach ($payload as $entry) {
+                    if (isset($entry['id']) && $channel = $this->channels->get('id', $entry['id'])) {
+                        $channel->fill(array_intersect_key($entry, array_flip(['position', 'parent_id', 'flags'])));
+                    }
+                }
+
+                return $this;
+            });
+    }
+
+    /**
+     * Pauses invites or direct messages in the guild for up to 24 hours, or resumes them, as the server's
+     * security actions do in the client.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-incident-actions
+     *
+     * @param array                          $options
+     * @param \DateTimeInterface|string|null $options['invites_disabled_until'] When invites resume, at most 24 hours from now; null resumes them now.
+     * @param \DateTimeInterface|string|null $options['dms_disabled_until']     When direct messages resume, at most 24 hours from now; null resumes them now.
+     *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
+     * @return PromiseInterface<IncidentsData> The guild's incident actions as they now are.
+     *
+     * @since 10.60.0
+     */
+    public function updateIncidentActions(array $options): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to change incident actions in the guild {$this->id}."));
+            }
+        }
+
+        $payload = [];
+
+        foreach (['invites_disabled_until', 'dms_disabled_until'] as $action) {
+            if (array_key_exists($action, $options)) {
+                $until = $options[$action];
+                $payload[$action] = $until instanceof \DateTimeInterface ? $until->format(\DateTimeInterface::ATOM) : $until;
+            }
+        }
+
+        if ([] === $payload) {
+            return reject(new \InvalidArgumentException('Give `invites_disabled_until`, `dms_disabled_until`, or both.'));
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_INCIDENT_ACTIONS, $this->id), $payload)
+            ->then(function ($response): IncidentsData {
+                $this->attributes['incidents_data'] = $response;
+
+                return $this->incidents_data;
+            });
+    }
+
+    /**
      * Returns a list of guild member objects whose username or nickname starts
      * with a provided string.
      *

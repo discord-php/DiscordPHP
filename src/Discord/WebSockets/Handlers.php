@@ -52,6 +52,7 @@ use Discord\WebSockets\Events\GuildScheduledEventUserRemove;
 use Discord\WebSockets\Events\GuildSoundboardSoundCreate;
 use Discord\WebSockets\Events\GuildSoundboardSoundDelete;
 use Discord\WebSockets\Events\GuildSoundboardSoundUpdate;
+use Discord\WebSockets\Events\GuildSoundboardSoundsUpdate;
 use Discord\WebSockets\Events\GuildStickersUpdate;
 use Discord\WebSockets\Events\GuildUpdate;
 use Discord\WebSockets\Events\GuildJoinRequestCreate;
@@ -77,10 +78,14 @@ use Discord\WebSockets\Events\MessageReactionRemoveAll;
 use Discord\WebSockets\Events\MessageReactionRemoveEmoji;
 use Discord\WebSockets\Events\MessageUpdate;
 use Discord\WebSockets\Events\PresenceUpdate;
+use Discord\WebSockets\Events\RateLimited;
 use Discord\WebSockets\Events\SoundboardSounds;
 use Discord\WebSockets\Events\StageInstanceCreate;
 use Discord\WebSockets\Events\StageInstanceDelete;
 use Discord\WebSockets\Events\StageInstanceUpdate;
+use Discord\WebSockets\Events\SubscriptionCreate;
+use Discord\WebSockets\Events\SubscriptionDelete;
+use Discord\WebSockets\Events\SubscriptionUpdate;
 use Discord\WebSockets\Events\ThreadCreate;
 use Discord\WebSockets\Events\ThreadDelete;
 use Discord\WebSockets\Events\ThreadListSync;
@@ -89,6 +94,7 @@ use Discord\WebSockets\Events\ThreadMemberUpdate;
 use Discord\WebSockets\Events\ThreadUpdate;
 use Discord\WebSockets\Events\TypingStart;
 use Discord\WebSockets\Events\UserUpdate;
+use Discord\WebSockets\Events\VoiceChannelEffectSend;
 use Discord\WebSockets\Events\VoiceServerUpdate;
 use Discord\WebSockets\Events\VoiceStateUpdate;
 use Discord\WebSockets\Events\ChannelInfo;
@@ -215,12 +221,22 @@ class Handlers
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_CREATE, GuildSoundboardSoundCreate::class);
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_UPDATE, GuildSoundboardSoundUpdate::class);
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_DELETE, GuildSoundboardSoundDelete::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUNDS_UPDATE, GuildSoundboardSoundsUpdate::class);
         $this->addHandler(Event::SOUNDBOARD_SOUNDS, SoundboardSounds::class);
+        $this->addHandler(Event::VOICE_CHANNEL_EFFECT_SEND, VoiceChannelEffectSend::class);
 
         // Entitlements Event Handlers
         $this->addHandler(Event::ENTITLEMENT_CREATE, EntitlementCreate::class);
         $this->addHandler(Event::ENTITLEMENT_UPDATE, EntitlementUpdate::class);
         $this->addHandler(Event::ENTITLEMENT_DELETE, EntitlementDelete::class);
+
+        // Subscriptions Event Handlers
+        $this->addHandler(Event::SUBSCRIPTION_CREATE, SubscriptionCreate::class);
+        $this->addHandler(Event::SUBSCRIPTION_UPDATE, SubscriptionUpdate::class);
+        $this->addHandler(Event::SUBSCRIPTION_DELETE, SubscriptionDelete::class);
+
+        // Gateway Event Handlers
+        $this->addHandler(Event::RATE_LIMITED, RateLimited::class);
 
         // Webhook Event Handlers, run for events the WebhookEventReceiver delivers
         $this->addHandler(Event::APPLICATION_AUTHORIZED, ApplicationAuthorized::class);

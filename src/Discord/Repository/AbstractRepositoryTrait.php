@@ -116,17 +116,30 @@ trait AbstractRepositoryTrait
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            foreach ($this->items as $offset => $value) {
-                if ($value === null) {
-                    unset($this->items[$offset]);
-                } elseif (! ($this->items[$offset] instanceof WeakReference)) {
-                    $this->items[$offset] = WeakReference::create($value);
-                }
-                $this->cache->delete($offset);
-            }
+            $this->forgetCachedItems();
 
             return $this->cacheFreshen($response);
         });
+    }
+
+    /**
+     * Drops every cached part, before the repository is refilled from a response that lists all of them.
+     *
+     * Parts still referenced elsewhere are kept as weak references, so they are reused if the response
+     * names them again.
+     *
+     * @since 10.60.0
+     */
+    protected function forgetCachedItems(): void
+    {
+        foreach ($this->items as $offset => $value) {
+            if ($value === null) {
+                unset($this->items[$offset]);
+            } elseif (! ($this->items[$offset] instanceof WeakReference)) {
+                $this->items[$offset] = WeakReference::create($value);
+            }
+            $this->cache->delete($offset);
+        }
     }
 
     /**

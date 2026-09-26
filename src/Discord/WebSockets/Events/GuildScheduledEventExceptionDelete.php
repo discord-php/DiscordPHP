@@ -38,9 +38,13 @@ class GuildScheduledEventExceptionDelete extends Event
         if ($guild = yield $this->discord->guilds->cacheGet($scheduledEventExceptionPart->guild_id)) {
             /** @var ?ScheduledEvent */
             if ($scheduledEventPart = yield $guild->guild_scheduled_events->cacheGet($scheduledEventExceptionPart->event_id)) {
-                $scheduledEventPart->guild_scheduled_event_exceptions->pull($scheduledEventExceptionPart->event_exception_id);
+                if ($cachedException = $scheduledEventPart->uncacheException($scheduledEventExceptionPart->event_exception_id)) {
+                    $scheduledEventExceptionPart = $cachedException;
+                }
             }
         }
+
+        $scheduledEventExceptionPart->created = false;
 
         return $scheduledEventExceptionPart;
     }
