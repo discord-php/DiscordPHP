@@ -90,6 +90,8 @@ class ScheduledEvent extends Part
         'entity_metadata',
         'creator',
         'user_count',
+        'recurrence_rule',
+        'guild_scheduled_event_exceptions',
     ];
 
     /**
@@ -135,11 +137,150 @@ class ScheduledEvent extends Part
                 function ($response): ScheduledEventException {
                     $part = $this->factory->part(ScheduledEventException::class, (array) $response, true);
 
-                    $this->guild_scheduled_event_exceptions->pushItem($part);
+                    $this->cacheException($part);
 
                     return $part;
                 }
             );
+    }
+
+    /**
+     * Keeps an exception to the recurrence rule in the event, in place of any with the same ID.
+     *
+     * The `guild_scheduled_event_exceptions` collection is built afresh from the event's attributes each
+     * time it is read, so changes are made here rather than to it.
+     *
+     * @param ScheduledEventException $exception The exception, created or changed.
+     *
+     * @since 10.60.0
+     */
+    public function cacheException(ScheduledEventException $exception): void
+    {
+        $exceptions = $this->attributes['guild_scheduled_event_exceptions'] ?? [];
+
+        foreach ($exceptions as $index => $cached) {
+            if (self::exceptionId($cached) === $exception->event_exception_id) {
+                $exceptions[$index] = $exception;
+                $this->attributes['guild_scheduled_event_exceptions'] = $exceptions;
+
+                return;
+            }
+        }
+
+        $exceptions[] = $exception;
+        $this->attributes['guild_scheduled_event_exceptions'] = $exceptions;
+    }
+
+    /**
+     * Removes an exception to the recurrence rule from the event.
+     *
+     * @param string $exception_id The exception's `event_exception_id`.
+     *
+     * @return ScheduledEventException|null The exception, when the event held it.
+     *
+     * @since 10.60.0
+     */
+    public function uncacheException(string $exception_id): ?ScheduledEventException
+    {
+        $exceptions = $this->attributes['guild_scheduled_event_exceptions'] ?? [];
+
+        foreach ($exceptions as $index => $cached) {
+            if (self::exceptionId($cached) === $exception_id) {
+                unset($exceptions[$index]);
+                $this->attributes['guild_scheduled_event_exceptions'] = array_values($exceptions);
+
+                return $cached instanceof ScheduledEventException
+                    ? $cached
+                    : $this->factory->part(ScheduledEventException::class, (array) $cached, true);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * An exception's ID, whether it is a part or still raw data.
+     *
+     * @param ScheduledEventException|object|array $exception
+     */
+    private static function exceptionId($exception): ?string
+    {
+        if ($exception instanceof ScheduledEventException) {
+            return $exception->event_exception_id;
+        }
+
+        $id = ((array) $exception)['event_exception_id'] ?? null;
+
+        return null === $id ? null : (string) $id;
+    }
+
+    /**
+     * Changes an exception to the scheduled event's recurrence rule: when that occurrence starts or ends,
+     * or whether it is skipped.
+     *
+     * @param ScheduledEventException|string $exception                       The exception, or its `event_exception_id`.
+     * @param array                          $options                         The changes.
+     * @param ?Carbon                        $options['scheduled_start_time'] When the occurrence now starts.
+     * @param ?Carbon                        $options['scheduled_end_time']   When the occurrence now ends.
+     * @param ?bool                          $options['is_canceled']          Whether the occurrence is skipped.
+     * @param ?string                        $reason                          Reason for Audit Log.
+     *
+     * @return PromiseInterface<ScheduledEventException>
+     *
+     * @since 10.60.0
+     */
+    public function updateException($exception, array $options, ?string $reason = null): PromiseInterface
+    {
+        $exception_id = $exception instanceof ScheduledEventException ? $exception->event_exception_id : (string) $exception;
+        $payload = array_intersect_key($options, array_flip(['scheduled_start_time', 'scheduled_end_time', 'is_canceled']));
+
+        if ([] === $payload) {
+            return reject(new \InvalidArgumentException('At minimum, you must provide a value for one of `is_canceled`, `scheduled_start_time`, or `scheduled_end_time`.'));
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_EXCEPTION, $this->guild_id, $this->id, $exception_id), $payload, $headers)
+            ->then(function ($response): ScheduledEventException {
+                $part = $this->factory->part(ScheduledEventException::class, (array) $response, true);
+
+                $this->cacheException($part);
+
+                return $part;
+            });
+    }
+
+    /**
+     * Deletes an exception to the scheduled event's recurrence rule, so that occurrence happens as the rule
+     * says again.
+     *
+     * @param ScheduledEventException|string $exception The exception, or its `event_exception_id`.
+     * @param ?string                        $reason    Reason for Audit Log.
+     *
+     * @return PromiseInterface<ScheduledEventException|null> The deleted exception, when it was cached.
+     *
+     * @since 10.60.0
+     */
+    public function deleteException($exception, ?string $reason = null): PromiseInterface
+    {
+        $exception_id = $exception instanceof ScheduledEventException ? $exception->event_exception_id : (string) $exception;
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_EXCEPTION, $this->guild_id, $this->id, $exception_id), null, $headers)
+            ->then(function () use ($exception_id) {
+                if ($part = $this->uncacheException($exception_id)) {
+                    $part->created = false;
+                }
+
+                return $part;
+            });
     }
 
     /**
@@ -339,7 +480,7 @@ class ScheduledEvent extends Part
      */
     protected function getGuildScheduledEventExceptionsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('guild_scheduled_event_exceptions', ScheduledEventException::class, 'event_id');
+        return $this->attributeCollectionHelper('guild_scheduled_event_exceptions', ScheduledEventException::class, 'event_exception_id');
     }
 
     /**

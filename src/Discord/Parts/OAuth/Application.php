@@ -14,8 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
@@ -240,6 +243,41 @@ class Application extends Part
 
                 return $this->factory->part(ActivityInstance::class, (array) $response, true);
             });
+    }
+
+    /**
+     * Uploads a file for the application to use as an attachment, as an Activity does to share an image.
+     *
+     * Discord describes this endpoint in its OpenAPI description rather than in its documentation.
+     *
+     * @param string      $filepath The file.
+     * @param string|null $filename The name to give it; the file's own name if omitted.
+     *
+     * @throws FileNotFoundException The file does not exist.
+     *
+     * @return PromiseInterface<Attachment>
+     *
+     * @since 10.60.0
+     */
+    public function uploadAttachment(string $filepath, ?string $filename = null): PromiseInterface
+    {
+        if (! is_file($filepath)) {
+            return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
+        }
+
+        $multipart = new Multipart([
+            [
+                'name' => 'file',
+                'filename' => $filename ?? basename($filepath),
+                'content' => file_get_contents($filepath),
+                'headers' => [
+                    'Content-Type' => (function_exists('mime_content_type') ? \mime_content_type($filepath) : false) ?: 'application/octet-stream',
+                ],
+            ],
+        ]);
+
+        return $this->http->post(Endpoint::bind(Endpoint::APPLICATION_ATTACHMENT, $this->id), (string) $multipart, $multipart->getHeaders())
+            ->then(fn ($response) => $this->factory->part(Attachment::class, (array) $response->attachment, true));
     }
 
     /**

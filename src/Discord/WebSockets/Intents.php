@@ -96,6 +96,7 @@ class Intents
      * Guild voice state events.
      *
      * - VOICE_STATE_UPDATE
+     * - VOICE_CHANNEL_EFFECT_SEND
      */
     public const GUILD_VOICE_STATES = (1 << 7);
 

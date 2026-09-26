@@ -17,6 +17,8 @@ namespace Discord\Repository\Guild;
 use Discord\Http\Endpoint;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
+use Discord\Repository\Interaction\CommandRepositoryTrait;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains application guild commands.
@@ -34,6 +36,8 @@ use Discord\Repository\AbstractRepository;
  */
 class GuildCommandRepository extends AbstractRepository
 {
+    use CommandRepositoryTrait;
+
     /**
      * @inheritDoc
      */
@@ -58,5 +62,13 @@ class GuildCommandRepository extends AbstractRepository
         $vars['application_id'] = $discord->application->id; // For the bot's Application Guild Commands
 
         parent::__construct($discord, $vars);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function putCommands(array $commands): PromiseInterface
+    {
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMANDS, $this->vars['application_id'], $this->vars['guild_id']), $commands);
     }
 }
