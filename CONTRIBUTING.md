@@ -1,3 +1,5 @@
 We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). Please run php-cs-fixer before opening a pull request by running ``composer run-script cs.``
 
+`composer openapi` compares DiscordPHP with the live preview of [Discord's OpenAPI description](https://github.com/discord/discord-api-spec): which operations it sends no request for, and what Discord has added, changed or removed since the commit recorded in `scripts/openapi-baseline.json`. It fails on anything new. The baseline also records why each known gap is there. After implementing a change or recording why not, run `composer openapi:update` and commit the baseline. A workflow runs the check daily and opens an issue labelled `openapi` when it finds something.
+
 Please only use the issue tracker for submitting issues with the code. If you have questions about how to use DiscordPHP, hop over to our discord at [![DiscordPHP Community](https://discord.com/api/guilds/115233111977099271/widget.png?style=banner1)](https://discord.gg/dphp)

@@ -206,6 +206,7 @@ Docs should **not** change when:
 | Static analysis | `composer run-script mago-lint` |
 | Code style fixer | `composer run-script cs` |
 | Non-mutating style check | `./vendor/bin/pint --test --config ./pint.json ./src` |
+| Compare with Discord's live OpenAPI description | `composer openapi` |
 | Docs site build | `cd docs && yarn install && yarn build` |
 
 ### Integration test environment

@@ -1,0 +1,33 @@
+{
+    "spec": "https://github.com/discord/discord-api-spec/blob/bb8eb1ec745a3dfc1e06c40b6e641c9738393df6/specs/openapi_preview.json",
+    "commit": "bb8eb1ec745a3dfc1e06c40b6e641c9738393df6",
+    "date": "2026-09-17",
+    "unimplemented": {
+        "GET /applications/{application_id}": "The bot's own application is read through GET /applications/@me: Client::getCurrentApplication().",
+        "PATCH /applications/{application_id}": "The bot's own application is edited through PATCH /applications/@me: Client::updateCurrentApplication().",
+        "POST /applications/{application_id}/attachment": "Not implemented yet.",
+        "PUT /applications/{application_id}/commands": "Not implemented yet: global commands are created, edited and deleted one at a time.",
+        "PUT /applications/{application_id}/guilds/{guild_id}/commands": "Not implemented yet: guild commands are created, edited and deleted one at a time.",
+        "PUT /applications/{application_id}/guilds/{guild_id}/commands/{command_id}/permissions": "Needs a user's OAuth2 bearer token with applications.commands.permissions.update, which a bot token cannot stand in for. Not implemented yet.",
+        "GET /channels/{channel_id}/pins": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
+        "PUT /channels/{channel_id}/pins/{message_id}": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
+        "DELETE /channels/{channel_id}/pins/{message_id}": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
+        "PUT /channels/{channel_id}/recipients/{user_id}": "Takes the user's OAuth2 access token with the gdm.join scope. Not implemented yet.",
+        "DELETE /channels/{channel_id}/recipients/{user_id}": "Removes a user from a group DM made with gdm.join. Not implemented yet.",
+        "GET /gateway": "DiscordPHP connects through GET /gateway/bot, which also gives the shard count and session limits.",
+        "PATCH /guilds/{guild_id}/channels": "Not implemented yet: channels are moved one at a time, by saving their position.",
+        "PUT /guilds/{guild_id}/incident-actions": "Not implemented yet: Guild::$incidents_data can be read, but not changed.",
+        "PUT /guilds/{guild_id}/members/{user_id}": "Takes the user's OAuth2 access token with the guilds.join scope. Not implemented yet.",
+        "PATCH /guilds/{guild_id}/scheduled-events/{guild_scheduled_event_id}/exceptions/{exception_id}": "Not implemented yet: a scheduled event's exceptions can be created, but not edited or deleted.",
+        "DELETE /guilds/{guild_id}/scheduled-events/{guild_scheduled_event_id}/exceptions/{exception_id}": "Not implemented yet: a scheduled event's exceptions can be created, but not edited or deleted.",
+        "GET /guilds/{guild_id}/widget.png": "An image rather than an API call: Widget::$image gives its URL.",
+        "GET /oauth2/@me": "Not implemented yet: it describes the authorisation behind an OAuth2 session.",
+        "GET /oauth2/applications/@me": "The bot's own application is read through GET /applications/@me instead.",
+        "GET /oauth2/keys": "Not implemented yet: the public keys that verify OpenID Connect ID tokens.",
+        "GET /oauth2/userinfo": "Not implemented yet: OpenID Connect's view of an OAuth2 session's user.",
+        "GET /stickers/{sticker_id}": "Not implemented yet: stickers are read from their guild, or standard ones from their pack.",
+        "GET /webhooks/{webhook_id}/{webhook_token}": "Not implemented yet: webhooks are read, edited and deleted with the bot's token. Webhook::$url is built from this route.",
+        "PATCH /webhooks/{webhook_id}/{webhook_token}": "Not implemented yet: webhooks are read, edited and deleted with the bot's token.",
+        "DELETE /webhooks/{webhook_id}/{webhook_token}": "Not implemented yet: webhooks are read, edited and deleted with the bot's token."
+    }
+}
