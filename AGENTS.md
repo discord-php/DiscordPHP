@@ -350,6 +350,8 @@ When you need an example worth imitating, start here:
 | non-mutating Pint check | `./vendor/bin/pint --test --config ./pint.json ./src` |
 | Pint formatter (auto-fix) | `composer pint` |
 | test coverage report | `composer coverage` |
+| compare with Discord's live OpenAPI description | `composer openapi` (`-- --all` lists the known gaps too) |
+| accept the live spec and today's gaps as the baseline | `composer openapi:update` |
 | docs build | `cd docs && yarn install && yarn build` |
 
 Integration tests expect `.env` values for `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME`.

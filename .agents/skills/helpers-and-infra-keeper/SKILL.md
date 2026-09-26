@@ -65,6 +65,12 @@ Routes with parameters use `:param` placeholders. Binding happens via `Endpoint:
 
 Browse `vendor/discord-php/http/src/Endpoint.php` for available constants. If a Discord API endpoint is missing, add it to the external package — do not define it inline in DiscordPHP source.
 
+### Checking against Discord's OpenAPI description
+
+`composer openapi` (`scripts/openapi-check.php`) compares the library with the live preview of Discord's OpenAPI description. It lists the operations DiscordPHP never sends a request for, and routes with no `Endpoint` constant. It also lists what Discord has changed since the commit recorded in `scripts/openapi-baseline.json`: endpoints added or removed, parameters and responses, schema properties and enum values. It reads the library's source to see which request each constant is sent with. It recognises a repository's `$endpoints` table (`all`/`get` send GET, `create` POST, `update` PATCH, `delete` DELETE, and other keys whatever method sends `$this->endpoints['key']`), a direct call like `->post(Endpoint::bind(Endpoint::X, …))`, or a variable assigned the endpoint and sent later in the same method. Keep new request code in one of those shapes, or the check will report the operation as unsent.
+
+After implementing an operation, or deciding not to, run `composer openapi:update` and commit the baseline. Record the reason for every gap that remains in its `unimplemented` map. A daily workflow (`.github/workflows/openapi.yml`) runs the same check and opens an issue labelled `openapi` when it finds something new.
+
 ## Collection base class
 
 All repositories extend `Collection` from `discord-php-helpers/collection`. Key behaviors inherited:
