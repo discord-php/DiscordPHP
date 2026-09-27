@@ -739,14 +739,16 @@ class Interaction extends Part
             /** @var ExCollectionInterface<Component> $components */
             $components = $this->discord->getCollectionClass()::for(Component::class);
             foreach ($interaction->data->components as $container) {
-                if ($container->components) { // e.g. ActionRow
+                // Checked first: every component has a `components` collection, and an
+                // empty one is still truthy, so a Label would otherwise contribute nothing.
+                if ($component = $container->component) { // e.g. Label
+                    /** @var Component $component */
+                    $components->pushItem($component);
+                } else { // e.g. ActionRow
                     foreach ($container->components as $component) {
                         /** @var Component $component */
                         $components->pushItem($component);
                     }
-                } elseif ($container->component) { // e.g. Label
-                    /** @var Component $component */
-                    $components->pushItem($component);
                 }
             }
 
