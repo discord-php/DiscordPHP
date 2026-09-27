@@ -82,6 +82,7 @@ use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\all;
@@ -2009,8 +2010,17 @@ class Discord
             ->setRequired('token')
             ->setDefined($this->definedOptions)
             ->setDefaults([
-                'loop' => Loop::get(),
-                'logger' => new Monolog('DiscordPHP', [(new StreamHandler('php://stdout', Level::Debug))->setFormatter(new LineFormatter(null, null, true, true))]),
+                // Lazy: only evaluated when the caller did not pass one.
+                'loop' => static fn (Options $options): LoopInterface => Loop::get(),
+                'logger' => null,
+                'dnsConfig' => static function (Options $options): DnsConfig {
+                    $config = DnsConfig::loadSystemConfigBlocking();
+                    if (! $config->nameservers) {
+                        $config->nameservers[] = '8.8.8.8';
+                    }
+
+                    return $config;
+                },
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'disableVoiceClient' => false,
@@ -2035,6 +2045,17 @@ class Discord
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
+            ->setNormalizer('logger', static function (Options $options, ?LoggerInterface $value): LoggerInterface {
+                // A normalizer rather than a default, so an explicit `null` gets one too.
+                if (null !== $value) {
+                    return $value;
+                }
+
+                $streamHandler = new StreamHandler('php://stdout', Level::Debug);
+                $streamHandler->setFormatter(new LineFormatter(null, null, true, true));
+
+                return new Monolog('DiscordPHP', [$streamHandler]);
+            })
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
@@ -2075,25 +2096,23 @@ class Discord
                 return $value;
             })
             ->setAllowedTypes('dnsConfig', ['string', DnsConfig::class])
-            ->setNormalizer('dnsConfig', function ($options, $value) {
-                if (null === $value) {
-                    $value = DnsConfig::loadSystemConfigBlocking();
-                    if (! $value->nameservers) {
-                        $value->nameservers[] = '8.8.8.8';
-                    }
-                }
-
-                return $value;
-            })
-            ->setAllowedTypes('collection', 'string')
-            ->setNormalizer('collection', function ($options, $value) {
-                if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
+            ->setAllowedTypes('capabilities', ['null', 'array', 'int'])
+            ->setNormalizer('capabilities', function ($options, $value) {
+                if (! is_array($value)) {
                     return $value;
                 }
 
-                return Collection::class;
+                $capabilities = 0;
+                foreach ($value as $idx => $i) {
+                    if (! is_numeric($i)) {
+                        throw new IntentException('Given capability at index '.$idx.' is invalid.');
+                    }
+
+                    $capabilities |= $i;
+                }
+
+                return $capabilities ?: null;
             })
-            ->setAllowedTypes('capabilities', ['null', 'array', 'int'])
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
@@ -2130,54 +2149,7 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        $options['loop'] ??= Loop::get();
-
-        if (null === $options['logger']) {
-            $streamHandler = new StreamHandler('php://stdout', Level::Debug);
-            $lineFormatter = new LineFormatter(null, null, true, true);
-            $streamHandler->setFormatter($lineFormatter);
-            $logger = new Monolog('DiscordPHP', [$streamHandler]);
-            $options['logger'] = $logger;
-        }
-
-        if (! isset($options['dnsConfig'])) {
-            $dnsConfig = \React\Dns\Config\Config::loadSystemConfigBlocking();
-            if (! $dnsConfig->nameservers) {
-                $dnsConfig->nameservers[] = '8.8.8.8';
-            }
-
-            $options['dnsConfig'] = $dnsConfig;
-        }
-
-        if (is_array($options['intents'])) {
-            $intent = 0;
-            $validIntents = Intents::getValidIntents();
-
-            foreach ($options['intents'] as $idx => $i) {
-                if (! in_array($i, $validIntents)) {
-                    throw new IntentException('Given intent at index '.$idx.' is invalid.');
-                }
-
-                $intent |= $i;
-            }
-
-            $options['intents'] = $intent;
-        }
-
-        if (is_array($options['capabilities'])) {
-            $capabilities = 0;
-
-            foreach ($options['capabilities'] as $idx => $i) {
-                if (! is_numeric(($i))) {
-                    throw new IntentException('Given capability at index '.$idx.' is invalid.');
-                }
-
-                $capabilities |= $i;
-            }
-
-            $options['capabilities'] = $capabilities ?: null;
-        }
-
+        // The one check that spans two options, so it runs on the resolved set.
         if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
             throw new IntentException('You have enabled the `loadAllMembers` option but have not enabled the required `GUILD_MEMBERS` intent.'.
             'See the documentation on the `loadAllMembers` property for more information: http://discord-php.github.io/DiscordPHP/#basics');
