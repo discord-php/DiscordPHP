@@ -3566,6 +3566,11 @@ Search.appendIndex(
             "summary": "zlib\u0020decompressor.",
             "url": "classes/Discord-Discord.html#property_zlibDecompressor"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024zstdDecompressor",
+            "name": "zstdDecompressor",
+            "summary": "zstd\u0020decompressor.",
+            "url": "classes/Discord-Discord.html#property_zstdDecompressor"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024payloadCount",
             "name": "payloadCount",
             "summary": "Tracks\u0020the\u0020number\u0020of\u0020payloads\u0020the\u0020client\u0020has\u0020sent\u0020in\u0020the\u0020past\u002060\u0020seconds.",
