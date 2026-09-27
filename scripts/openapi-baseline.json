@@ -1,0 +1,15 @@
+{
+    "spec": "https://github.com/discord/discord-api-spec/blob/bb8eb1ec745a3dfc1e06c40b6e641c9738393df6/specs/openapi_preview.json",
+    "commit": "bb8eb1ec745a3dfc1e06c40b6e641c9738393df6",
+    "date": "2026-09-17",
+    "unimplemented": {
+        "GET /applications/{application_id}": "The bot's own application is read through GET /applications/@me: Client::getCurrentApplication().",
+        "PATCH /applications/{application_id}": "The bot's own application is edited through PATCH /applications/@me: Client::updateCurrentApplication().",
+        "GET /channels/{channel_id}/pins": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
+        "PUT /channels/{channel_id}/pins/{message_id}": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
+        "DELETE /channels/{channel_id}/pins/{message_id}": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
+        "GET /gateway": "DiscordPHP connects through GET /gateway/bot, which also gives the shard count and session limits.",
+        "GET /guilds/{guild_id}/widget.png": "An image rather than an API call: Widget::$image gives its URL.",
+        "GET /oauth2/applications/@me": "The bot's own application is read through GET /applications/@me instead."
+    }
+}

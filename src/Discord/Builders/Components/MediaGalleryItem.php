@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,7 +21,7 @@ use function Discord\poly_strlen;
 /**
  * Represents an item in a media gallery component.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#media-gallery-object-media-gallery-item-structure
+ * @link https://docs.discord.com/developers/components/reference#media-gallery-object-media-gallery-item-structure
  *
  * @since 10.5.0
  */
@@ -31,21 +32,21 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @var UnfurledMediaItem
      */
-    private $media;
+    protected $media;
 
     /**
      * Description for the gallery item.
      *
      * @var string|null
      */
-    private $description;
+    protected $description;
 
     /**
      * Whether the gallery item is a spoiler.
      *
      * @var bool
      */
-    private $spoiler = false;
+    protected $spoiler = false;
 
     /**
      * Creates a new media gallery item.
@@ -95,7 +96,7 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @param UnfurledMediaItem|string $media Media item or URL of the media item.
      *
-     * @return $this
+     * @return self
      */
     public function setMedia(UnfurledMediaItem|string $media): self
     {
@@ -125,7 +126,7 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @throws \LengthException Description exceeds 1024 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(?string $description): self
     {
@@ -153,7 +154,7 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @param bool $spoiler Whether the media item is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(bool $spoiler = true): self
     {

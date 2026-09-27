@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -25,7 +26,7 @@ use React\Promise\PromiseInterface;
  * Represents a member that belongs to a thread. Not the same as a user nor a
  * guild member.
  *
- * @link https://discord.com/developers/docs/resources/channel#thread-member-object
+ * @link https://docs.discord.com/developers/resources/channel#thread-member-object
  *
  * @since 7.0.0
  *
@@ -110,7 +111,7 @@ class Member extends Part
     /**
      * Attempts to remove the member from the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
+     * @link https://docs.discord.com/developers/resources/channel#remove-thread-member
      *
      * @return PromiseInterface
      */

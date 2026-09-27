@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Parts\Channel\Attachment;
 use JsonSerializable;
 
@@ -20,7 +22,7 @@ use JsonSerializable;
  * Represents an unfurled media item, which is the base for V2 components.
  * It allows you to specify an arbitrary url or attachment reference.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#unfurled-media-items
+ * @link https://docs.discord.com/developers/components/reference#unfurled-media-items
  *
  * @since 10.5.0
  *
@@ -53,13 +55,13 @@ class UnfurledMediaItem implements JsonSerializable
     /**
      * Creates a new unfurled media item from an attachment.
      *
-     * @param Attachment|string $filename Name of the attachment file, or null.
+     * @param AttachmentRequestBuilder|Attachment|string $filename Name of the attachment file, or null.
      *
      * @return self
      */
-    public static function fromAttachment(Attachment|string $filename): self
+    public static function fromAttachment(AttachmentRequestBuilder|Attachment|string $filename): self
     {
-        if ($filename instanceof Attachment) {
+        if ($filename instanceof Attachment || $filename instanceof AttachmentRequestBuilder) {
             $filename = $filename->filename;
         }
 
@@ -71,7 +73,7 @@ class UnfurledMediaItem implements JsonSerializable
      *
      * @param string $url URL or attachment reference of the media item.
      *
-     * @return $this
+     * @return self
      */
     public function setUrl(string $url): self
     {

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,8 +16,10 @@ namespace Discord\Builders;
 
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Forum\Tag;
 use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Emoji;
+use Discord\Repository\Guild\ChannelRepository;
 use Discord\Voice\Region;
 use JsonSerializable;
 
@@ -25,12 +28,14 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build guild channels.
  *
- * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+ * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
  *
  * @since 10.23.0
  */
 class ChannelBuilder extends Builder implements JsonSerializable
 {
+    public const TYPES = Channel::TYPES;
+
     protected string $name;
     protected ?int $type;
     protected ?string $topic; // Text, Announcement, Forum, Media
@@ -49,10 +54,30 @@ class ChannelBuilder extends Builder implements JsonSerializable
     protected ?int $default_sort_order; // Forum, Media
     protected ?int $default_forum_layout; // Forum
     protected ?int $default_thread_rate_limit_per_user; // Text, Announcement, Forum, Media
+    protected ?int $flags; // Text, Voice, Announcement, Forum, Media
 
-    public static function new(string $name): self
+    /**
+     * Creates a new channel builder.
+     *
+     * @return static
+     */
+    public static function new(string $name): static
     {
         return (new static())->setName($name);
+    }
+
+    /**
+     * Creates the channel in the given repository.
+     *
+     * @param ChannelRepository $repository
+     *
+     * @return Channel
+     *
+     * @since 10.41.0
+     */
+    public function create(ChannelRepository $repository): Channel
+    {
+        return $repository->create($this->jsonSerialize());
     }
 
     /**
@@ -60,7 +85,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param string $name The channel name (1-100 characters).
      *
-     * @return $this
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -77,7 +102,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int $type The channel type. Must be one of the TYPE_* constants on the Channel class.
      *
-     * @return $this
+     * @return self
      */
     public function setType(int $type): self
     {
@@ -109,14 +134,20 @@ class ChannelBuilder extends Builder implements JsonSerializable
     /**
      * Sets the channel topic for Text, Announcement, Forum, and Media channels.
      *
-     * @param string|null $topic The channel topic (0-1024 characters).
+     * @param string|null $topic The channel topic (0-1024 characters, or 0-4096 characters for Forum and Media channels).
      *
-     * @return $this
+     * @return self
      */
     public function setTopic(?string $topic = null): self
     {
-        if ($topic !== null && poly_strlen($topic) > 1024) {
-            throw new \LengthException('Channel topic must be 0-1024 characters.');
+        if ($topic !== null) {
+            if ($this->type === Channel::TYPE_GUILD_FORUM || $this->type === Channel::TYPE_GUILD_MEDIA) {
+                if (poly_strlen($topic) > 4096) {
+                    throw new \LengthException('Channel topic must be 0-4096 characters for Forum and Media channels.');
+                }
+            } elseif (poly_strlen($topic) > 1024) {
+                throw new \LengthException('Channel topic must be 0-1024 characters.');
+            }
         }
 
         $this->topic = $topic;
@@ -129,7 +160,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $bitrate The bitrate in bits (minimum 8000).
      *
-     * @return $this
+     * @return self
      */
     public function setBitrate(?int $bitrate = null): self
     {
@@ -147,7 +178,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $user_limit The user limit (0-99 for Voice, 0-10,000 for Stage). 0 is unlimited.
      *
-     * @return $this
+     * @return self
      */
     public function setUserLimit(?int $user_limit = null): self
     {
@@ -161,7 +192,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $rate_limit The rate limit per user in seconds (0-21600).
      *
-     * @return $this
+     * @return self
      */
     public function setRateLimitPerUser(?int $rate_limit = null): self
     {
@@ -175,7 +206,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $position The position of the channel.
      *
-     * @return $this
+     * @return self
      */
     public function setPosition(?int $position = null): self
     {
@@ -189,7 +220,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Overwrite[]|null $overwrites An array of permission overwrite arrays.
      *
-     * @return $this
+     * @return self
      */
     public function setPermissionOverwrites(?array $overwrites = null): self
     {
@@ -203,7 +234,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Channel|string|null $parent_id The parent category ID.
      *
-     * @return $this
+     * @return self
      */
     public function setParentId(Channel|string|null $parent_id = null): self
     {
@@ -221,7 +252,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param bool|null $nsfw Whether the channel is NSFW.
      *
-     * @return $this
+     * @return self
      */
     public function setNsfw(?bool $nsfw = null): self
     {
@@ -235,7 +266,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Region|string|null $rtc_region The RTC region ID, or null for automatic.
      *
-     * @return $this
+     * @return self
      */
     public function setRtcRegion(Region|string|null $rtc_region = null): self
     {
@@ -253,7 +284,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $mode The video quality mode. 1 for Discord chooses the quality for optimal performance, 2 for full 720p.
      *
-     * @return $this
+     * @return self
      */
     public function setVideoQualityMode(?int $mode = null): self
     {
@@ -271,7 +302,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $duration The default auto archive duration in minutes. Can be 60, 1440, 4320, or 10080.
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultAutoArchiveDuration(?int $duration = null): self
     {
@@ -285,7 +316,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Emoji|array|null $emoji
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultReactionEmoji(Emoji|array|null $emoji = null): self
     {
@@ -306,7 +337,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param Tag[]|null $tags
      *
-     * @return $this
+     * @return self
      */
     public function setAvailableTags(?array $tags = null): self
     {
@@ -320,7 +351,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $order The default sort order. 0 for Latest Activity, 1 for Creation Date.
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultSortOrder(?int $order = null): self
     {
@@ -346,11 +377,27 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $rate_limit The default thread rate limit per user in seconds (0-21600).
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultThreadRateLimitPerUser(?int $rate_limit = null): self
     {
         $this->default_thread_rate_limit_per_user = $rate_limit;
+
+        return $this;
+    }
+
+    /**
+     * Sets the channel flags for Text, Voice, Announcement, Forum, and Media channels.
+     *
+     * @param int|null $flags The channel flags combined as a bitfield.
+     *
+     * @return self
+     *
+     * @since 10.52.0
+     */
+    public function setFlags(?int $flags = null): self
+    {
+        $this->flags = $flags;
 
         return $this;
     }
@@ -418,6 +465,9 @@ class ChannelBuilder extends Builder implements JsonSerializable
         }
         if (isset($this->default_thread_rate_limit_per_user)) {
             $body['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+        }
+        if (isset($this->flags)) {
+            $body['flags'] = $this->flags;
         }
 
         return $body;

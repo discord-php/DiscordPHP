@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -24,7 +25,7 @@ use React\Promise\PromiseInterface;
 /**
  * A Widget of a Guild.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-widget-object
+ * @link https://docs.discord.com/developers/resources/guild#guild-widget-object
  *
  * @since 7.0.0
  *
@@ -52,29 +53,20 @@ class Widget extends Part
         'presence_count',
     ];
 
-    /** shield style widget with Discord icon and guild members online count. */
+    /** Shield style widget with Discord icon and guild members online count. */
     public const STYLE_SHIELD = 'shield';
 
-    /**
-     * large image with guild icon, name and online count. "POWERED BY DISCORD"
-     * as the footer of the widget.
-     */
+    /** Large image with guild icon, name and online count. "POWERED BY DISCORD" as the footer of the widget. */
     public const STYLE_BANNER1 = 'banner1';
 
-    /**
-     * smaller widget style with guild icon, name and online count. Split on the
-     * right with Discord logo.
-     */
+    /** * Smaller widget style with guild icon, name and online count. Split on the right with Discord logo. */
     public const STYLE_BANNER2 = 'banner2';
 
-    /**
-     * large image with guild icon, name and online count. In the footer,
-     * Discord logo on the left and "Chat Now" on the right.
-     */
+    /** Large image with guild icon, name and online count. In the footer, Discord logo on the left and "Chat Now" on the right. */
     public const STYLE_BANNER3 = 'banner3';
 
     /**
-     * large Discord logo at the top of the widget. Guild icon, name and online
+     * Large Discord logo at the top of the widget. Guild icon, name and online
      * count in the middle portion of the widget and a "JOIN MY SERVER" button
      * at the bottom.
      */

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -21,7 +22,7 @@ use Discord\Parts\Part;
  * Each metadata type offers a comparison operation that allows guilds to configure role requirements based on metadata values stored by the bot.
  * Bots specify a metadata value for each user and guilds specify the required guild's configured value within the guild role settings.
  *
- * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata
+ * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#application-role-connection-metadata
  *
  * @since 10.29.0
  *

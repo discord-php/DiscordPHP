@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Channel\Message\FileUpload;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -21,7 +23,7 @@ use function Discord\poly_strlen;
 /**
  * Option represents an array of options that can be given to a command.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @since 7.0.0
  *
@@ -39,20 +41,35 @@ use function Discord\poly_strlen;
  * @property int|null                               $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
  * @property int|null                               $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
  * @property bool|null                              $autocomplete              Enable autocomplete interactions for this option.
+ * @property string[]|null                          $file_types                If the option is an ATTACHMENT type, the attachment types shown will be restricted to these types.
  */
 class Option extends Part
 {
     public const SUB_COMMAND = 1;
     public const SUB_COMMAND_GROUP = 2;
     public const STRING = 3;
-    public const INTEGER = 4; // Any integer between -2^53 and 2^53
+    /** Any integer between -2^53+1 and 2^53-1. */
+    public const INTEGER = 4;
     public const BOOLEAN = 5;
     public const USER = 6;
-    public const CHANNEL = 7; // Includes all channel types + categories
+    /** Includes all channel types + categories. */
+    public const CHANNEL = 7;
     public const ROLE = 8;
-    public const MENTIONABLE = 9; // Includes users and roles
-    public const NUMBER = 10; // Any double between -2^53 and 2^53
+    /** Includes users and roles. */
+    public const MENTIONABLE = 9;
+    /** Any double between -2^53 and 2^53. */
+    public const NUMBER = 10;
+    /** Attachment object. */
     public const ATTACHMENT = 11;
+
+    /** Supported file types. */
+    public const SUPPORTED_FILE_TYPES = FileUpload::SUPPORTED_FILE_TYPES;
+    /** Natively supported image file extensions. Subject to change. */
+    public const SUPPORTED_IMAGE_EXTENSIONS = FileUpload::SUPPORTED_IMAGE_EXTENSIONS;
+    /** Natively supported video file extensions. Subject to change. */
+    public const SUPPORTED_VIDEO_EXTENSIONS = FileUpload::SUPPORTED_VIDEO_EXTENSIONS;
+    /** Natively supported audio file extensions. Subject to change. */
+    public const SUPPORTED_AUDIO_EXTENSIONS = FileUpload::SUPPORTED_AUDIO_EXTENSIONS;
 
     /**
      * @inheritDoc
@@ -72,6 +89,7 @@ class Option extends Part
         'min_length',
         'max_length',
         'autocomplete',
+        'file_types',
     ];
 
     /**
@@ -81,7 +99,7 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('choices', Choice::class);
+        return $this->attributeCollectionHelper('choices', Choice::class, 'name');
     }
 
     /**
@@ -91,7 +109,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('options', Option::class);
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**
@@ -101,7 +119,7 @@ class Option extends Part
      *
      * @throws \InvalidArgumentException `$type` is not 1-11.
      *
-     * @return $this
+     * @return self
      */
     public function setType(int $type): self
     {
@@ -116,7 +134,7 @@ class Option extends Part
 
     /**
      * Sets the name of the option.
-     * CHAT_INPUT command option names must match the following regex ^[\w-]{1,32}$ with the unicode flag set.
+     * CHAT_INPUT command option names must match the following regex ^[-_\u02BC\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$ with the unicode flag set.
      * If there is a lowercase variant of any letters used, you must use those.
      * Characters with no lowercase variants and/or uncased letters are still allowed.
      *
@@ -124,7 +142,7 @@ class Option extends Part
      *
      * @throws \LengthException `$name` is more than 32 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -139,7 +157,7 @@ class Option extends Part
 
     /**
      * Sets the name of the option in another language.
-     * CHAT_INPUT command option names must match the following regex ^[\w-]{1,32}$ with the unicode flag set.
+     * CHAT_INPUT command option names must match the following regex ^[-_\u02BC\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$ with the unicode flag set.
      * If there is a lowercase variant of any letters used, you must use those.
      * Characters with no lowercase variants and/or uncased letters are still allowed.
      *
@@ -148,7 +166,7 @@ class Option extends Part
      *
      * @throws \LengthException `$name` is more than 32 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setNameLocalization(string $locale, ?string $name): self
     {
@@ -168,7 +186,7 @@ class Option extends Part
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(string $description): self
     {
@@ -189,7 +207,7 @@ class Option extends Part
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
@@ -207,7 +225,7 @@ class Option extends Part
      *
      * @param bool $required requirement of the option (default false)
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(bool $required = false): self
     {
@@ -221,11 +239,49 @@ class Option extends Part
      *
      * @param array|null $types types of the channel.
      *
-     * @return $this
+     * @return self
      */
     public function setChannelTypes(?array $types): self
     {
         $this->channel_types = $types;
+
+        return $this;
+    }
+
+    /**
+     * Sets multiple options to the option.
+     *
+     * @param Option[] $options The options.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
+     *
+     * @return self
+     *
+     * @since 10.42.0
+     */
+    public function setOptions($options = []): self
+    {
+        $this->attributes['options'] = [];
+
+        return $this->addOptions($options);
+    }
+
+    /**
+     * Adds multiple options to the option.
+     *
+     * @param Option[] $options The options.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
+     *
+     * @return self
+     *
+     * @since 10.42.0
+     */
+    public function addOptions($options): self
+    {
+        foreach ($options as $option) {
+            $this->addOption($option);
+        }
 
         return $this;
     }
@@ -237,7 +293,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
-     * @return $this
+     * @return self
      */
     public function addOption(Option $option): self
     {
@@ -251,13 +307,51 @@ class Option extends Part
     }
 
     /**
+     * Sets multiple choices to the option (Only for slash commands).
+     *
+     * @param Choice[] $choices The choices.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 choices.
+     *
+     * @return self
+     *
+     * @since 10.42.0
+     */
+    public function setChoices($choices = []): self
+    {
+        $this->attributes['choices'] = [];
+
+        return $this->addChoices($choices);
+    }
+
+    /**
+     * Adds multiple choices to the option (Only for slash commands).
+     *
+     * @param Choice[] $choices The choices.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 choices.
+     *
+     * @return self
+     *
+     * @since 10.42.0
+     */
+    public function addChoices($choices): self
+    {
+        foreach ($choices as $choice) {
+            $this->addChoice($choice);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds a choice to the option (Only for slash commands).
      *
      * @param Choice $choice The choice.
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
-     * @return $this
+     * @return self
      */
     public function addChoice(Choice $choice): self
     {
@@ -275,7 +369,7 @@ class Option extends Part
      *
      * @param string|Option $option Option object or name to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeOption($option): self
     {
@@ -298,7 +392,7 @@ class Option extends Part
      *
      * @param string|Choice $choice Choice object or name to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeChoice($choice): self
     {
@@ -321,7 +415,7 @@ class Option extends Part
      *
      * @param int|float|null $min_value integer for INTEGER options, double for NUMBER options.
      *
-     * @return $this
+     * @return self
      */
     public function setMinValue($min_value): self
     {
@@ -335,7 +429,7 @@ class Option extends Part
      *
      * @param int|float|null $max_value integer for INTEGER options, double for NUMBER options
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValue($max_value): self
     {
@@ -352,7 +446,7 @@ class Option extends Part
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinLength(?int $min_length): self
     {
@@ -377,7 +471,7 @@ class Option extends Part
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -401,7 +495,7 @@ class Option extends Part
      *
      * @throws \DomainException Command option type is not string/integer/number.
      *
-     * @return $this
+     * @return self
      */
     public function setAutoComplete(?bool $autocomplete): self
     {
@@ -418,5 +512,49 @@ class Option extends Part
         $this->autocomplete = $autocomplete;
 
         return $this;
+    }
+
+    /**
+     * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
+     *
+     * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
+     *
+     * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
+     *
+     * @param string[]|null $file_types Supported file types for uploaded files.
+     *
+     * @return self
+     *
+     * @since 10.49.0
+     */
+    public function setFileTypes(?array $file_types = null): self
+    {
+        $this->file_types = $file_types;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->choices) {
+            $data['choices'] = [];
+            foreach ($this->choices as $choice) {
+                $data['choices'][] = $choice->jsonSerialize();
+            }
+        }
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
     }
 }

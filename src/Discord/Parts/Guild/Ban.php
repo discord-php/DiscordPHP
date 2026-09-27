@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,11 +16,15 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\BanRepository;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
- * @link https://discord.com/developers/docs/resources/guild#ban-object
+ * @link https://docs.discord.com/developers/resources/guild#ban-object
  *
  * @since 2.0.0
  *
@@ -86,6 +91,47 @@ class Ban extends Part
         }
 
         return $this->attributePartHelper('user', User::class);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return BanRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): BanRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->bans;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->ban_members) {
+                    return reject(new \DomainException("You do not have permission to ban members in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->bans->save($this, $reason);
+        }
+
+        return parent::save($reason);
     }
 
     /**

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component as MessageComponent;
 use Discord\Parts\Guild\Emoji;
@@ -22,7 +22,7 @@ use Discord\Parts\Part;
 /**
  * Represents a component received with a message or interaction.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#component-object
+ * @link https://docs.discord.com/developers/components/reference#component-object
  *
  * @since 7.0.0
  * @deprecated 10.11.0 Use \Discord\Parts\Channel\Message\Component` instead.
@@ -76,20 +76,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(MessageComponent::class);
-
-        if (! isset($this->attributes['components'])) {
-            return $components;
-        }
-
-        foreach ($this->attributes['components'] as &$component) {
-            if (! $component instanceof MessageComponent) {
-                $component = $this->createOf(MessageComponent::TYPES[$component->type ?? 0], $component);
-            }
-            $components->pushItem($component);
-        }
-
-        return $components;
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
     }
 
     /**

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,10 +14,18 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use function Discord\poly_strlen;
+
 /**
- * Text display components allow you to send text.
+ * A Text Display is a top-level content component that allows you to add markdown formatted text, including mentions (users, roles, etc) and emojis.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#text-display
+ * The behavior of this component is extremely similar to the content field of a message, but allows you to add multiple text components, controlling the layout of your message.
+ * When sent in a message, pingable mentions (@user, @role, etc) present in this component will ping and send notifications based on the value of the allowed mention object set in message.allowed_mentions.
+ *
+ * The character count of all text display components in a message may total up to 4000 characters.
+ * This also means that a single text display may contain 4000 characters compared to the 2000 characters normal messages allow.
+ *
+ * @link https://docs.discord.com/developers/components/reference#text-display
  *
  * @since 10.5.0
  *
@@ -33,14 +42,14 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_TEXT_DISPLAY;
+    protected $type = ComponentObject::TYPE_TEXT_DISPLAY;
 
     /**
      * Content of the text display.
      *
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * Creates a new text display.
@@ -62,10 +71,16 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      *
      * @param string $content Content of the text display.
      *
-     * @return $this
+     * @throws \LengthException If the content exceeds 4000 characters.
+     *
+     * @return self
      */
     public function setContent(string $content): self
     {
+        if (poly_strlen($content) > 4000) {
+            throw new \LengthException('Content cannot exceed 4000 characters.');
+        }
+
         $this->content = $content;
 
         return $this;

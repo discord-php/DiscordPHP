@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -24,7 +25,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#interaction-create
+ * @link https://docs.discord.com/developers/events/gateway-events#interaction-create
  *
  * @since 6.0.0
  */
@@ -38,11 +39,11 @@ class InteractionCreate extends Event
         /** @var Interaction */
         $interaction = $this->factory->part(Interaction::TYPES[$data->type ?? 0], (array) $data, true);
 
+        // `resolved->users` are already hydrated User parts — cache them as-is.
+        // `create()`/`fill()` here would `(array)`-cast a part and lose its id.
         foreach ($interaction->data->resolved->users ?? [] as $snowflake => $user) {
-            if ($userPart = $this->discord->users->get('id', $snowflake)) {
-                $userPart->fill((array) $user);
-            } else {
-                $this->discord->users->pushItem($this->discord->users->create($user, true));
+            if (! $this->discord->users->get('id', $snowflake)) {
+                $this->discord->users->pushItem($user);
             }
         }
 
@@ -60,15 +61,17 @@ class InteractionCreate extends Event
                 $this->cacheMember($members, (array) $interaction->member);
             }
 
-            // User caching from member
-            if ($interaction->member->user) {
-                $this->cacheUser($interaction->member->user);
+            // User caching from member — pass the raw gateway payload, not the
+            // hydrated part (cacheUser expects `$data->member->user`).
+            if (isset($data->member->user)) {
+                $this->cacheUser($data->member->user);
             }
         }
 
-        if ($interaction->user) {
-            // User caching from user dm
-            $this->cacheUser($interaction->user);
+        // User caching from a DM interaction. `$data->user` is absent for guild
+        // interactions, so this does not double up with the member branch above.
+        if (isset($data->user)) {
+            $this->cacheUser($data->user);
         }
 
         if ($interaction->entitlements) {

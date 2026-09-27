@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,10 +14,13 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Embed;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 
 /**
+ * An embed poll result object to be sent with a message.
+ *
+ * @todo Convert poll_fields to a Part instead of an array.
+ *
  * @property      ?string|null                         $title                                       The title of the embed.
  * @property-read ?string|null                         $type                                        The type of the embed (always "rich" for webhook embeds).
  * @property      ?string|null                         $description                                 A description of the embed.
@@ -44,6 +48,11 @@ class EmbedPollResult extends Embed
 {
     public const TYPE = self::TYPE_POLL_RESULT;
 
+    /**
+     * Gets the poll fields attribute.
+     *
+     * @return array The poll fields attribute.
+     */
     protected function getPollFieldsAttribute(): array
     {
         $fields = [];

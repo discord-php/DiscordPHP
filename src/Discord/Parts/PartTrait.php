@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,10 +17,12 @@ namespace Discord\Parts;
 use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
+use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * @property Http    $http               The HTTP client.
@@ -41,6 +44,34 @@ trait PartTrait
      */
     protected function afterConstruct(): void
     {
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return AbstractRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository()
+    {
+        throw new \Exception('This part does not have an originating repository.');
+    }
+
+    /**
+     * Save the part with its originating repository.
+     *
+     * @param string|null $reason The reason for the audit log, if supported.
+     *
+     * @throws \Exception If the part does not support saving.
+     *
+     * @return PromiseInterface<Part> Resolves with the saved part.
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return reject(new \Exception('This part does not support saving.'));
     }
 
     /**
@@ -139,7 +170,7 @@ trait PartTrait
     {
         if (isset($this->repositories[$key])) {
             if (! isset($this->repositories_cache[$key])) {
-                $this->repositories_cache[$key] = $this->factory->create($this->repositories[$key], $this->getRepositoryAttributes());
+                $this->repositories_cache[$key] = $this->factory->repository($this->repositories[$key], $this->getRepositoryAttributes());
             }
 
             return $this->repositories_cache[$key];
@@ -236,6 +267,7 @@ trait PartTrait
         return serialize($this->getRawAttributes());
     }
 
+    /** The raw attributes, for PHP native serialization. */
     public function __serialize(): array
     {
         return $this->getRawAttributes();
@@ -257,6 +289,11 @@ trait PartTrait
         }
     }
 
+    /**
+     * Restores attributes from PHP native unserialization.
+     *
+     * @param array $data
+     */
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -339,6 +376,8 @@ trait PartTrait
     /**
      * Returns the updatable attributes.
      *
+     * To be used with fields that can be changed after a part has already been created.
+     *
      * @return array
      */
     public function getUpdatableAttributes(): array
@@ -362,6 +401,7 @@ trait PartTrait
             if (array_key_exists($key, $this->attributes)) {
                 $attr[$key] = $value;
             } elseif (is_int($key) && array_key_exists($value, $this->attributes)) {
+                // The key is an index, not a key-value pair, and needs to be stripped.
                 $attr[$value] = $this->attributes[$value];
             }
         }
@@ -433,8 +473,7 @@ trait PartTrait
     /**
      * Helps with getting ISO8601 timestamp attributes.
      *
-     * @param string $key   The attribute key.
-     * @param string $class The attribute class.
+     * @param string $key The attribute key.
      *
      * @throws \Exception
      *
@@ -466,9 +505,10 @@ trait PartTrait
      *
      * @since 10.19.0
      */
-    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
+    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id', ?array $extraData = []): ExCollectionInterface
     {
-        $collection = Collection::for($class, $discrim);
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->getCollectionClass()::for($class, $discrim);
 
         if (empty($this->attributes[$key])) {
             return $collection;
@@ -478,8 +518,35 @@ trait PartTrait
             $collection->pushItem(
                 $part instanceof $class
                     ? $part
-                    : $part = $this->createOf($class, $part)
+                    : $part = $this->createOf($class, ((array) $part) + $extraData)
             );
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Helps with getting Part attributes for classes with extended types.
+     *
+     * @param string $class The attribute class.
+     * @param string $key   The attribute key.
+     *
+     * @return ExCollectionInterface
+     */
+    protected function attributeTypedCollectionHelper(string $class, $key): ExCollectionInterface
+    {
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->getCollectionClass()::for($class);
+
+        if (empty($this->attributes[$key])) {
+            return $collection;
+        }
+
+        foreach ($this->attributes[$key] as &$part) {
+            if (! $part instanceof $class) {
+                $part = $this->createOf($class::TYPES[$part->type ?? $part->component_type ?? $part->field_type ?? 0], $part);
+            }
+            $collection->pushItem($part);
         }
 
         return $collection;

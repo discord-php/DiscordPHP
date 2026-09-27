@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -21,12 +22,29 @@ use Discord\Helpers\ExCollectionInterface;
  * On desktop, clicking on a select menu opens a dropdown-style UI.
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.11.0
  */
 abstract class SelectMenu extends Interactive
 {
+    /**
+     * Gets the type of the select menu.
+     *
+     * In message interaction responses `component_type` will be returned and in modal interaction responses `type` will be returned.
+     *
+     * @return int
+     */
+    protected function getTypeAttribute(): int
+    {
+        return $this->attributes['type'] ?? $this->attributes['component_type'];
+    }
+
+    /**
+     * Gets the `default_values` attribute.
+     *
+     * @return ExCollectionInterface
+     */
     protected function getDefaultValuesAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('default_values', DefaultValue::class);

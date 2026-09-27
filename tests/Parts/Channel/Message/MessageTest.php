@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -42,15 +43,9 @@ final class MessageTest extends DiscordTestCase
             $channel = $this->channel();
             $this->assertEquals(Channel::TYPE_GUILD_ANNOUNCEMENT, $channel->type);
             $channel->sendMessage('crossposting message')
-                ->then(function (Message $message) {
-                    return $message->crosspost();
-                })
-                ->then(function ($message) {
-                    $this->assertInstanceOf(Message::class, $message);
-                })
+                ->then(fn (Message $message) => $message->crosspost())
+                ->then(fn ($message) => $this->assertInstanceOf(Message::class, $message))
                 ->then($resolve, $resolve);
-        }, 10, function () {
-            $this->markTestIncomplete('Crosspost has likely hit ratelimit.');
-        });
+        }, 10, fn () => $this->markTestIncomplete('Crosspost has likely hit ratelimit.'));
     }
 }

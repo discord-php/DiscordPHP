@@ -1,0 +1,114 @@
+name: OpenAPI Check
+
+# Once a day, compares DiscordPHP with Discord's OpenAPI description (scripts/openapi-check.php, the same
+# check as `composer openapi`). When Discord adds, changes or removes an endpoint, or DiscordPHP stops
+# sending a request it used to, this opens an issue labelled `openapi`, which notifies everyone watching the
+# repository. The issue is updated when the findings change, and closed once the check passes again.
+#
+# To also post to a Discord channel, add a webhook URL as the repository secret OPENAPI_DISCORD_WEBHOOK.
+
+on:
+  schedule:
+    # Discord publishes its spec updates during the US working day; this runs after most of them.
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: openapi-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Compare with Discord's OpenAPI description
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HAS_DISCORD_WEBHOOK: ${{ secrets.OPENAPI_DISCORD_WEBHOOK != '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run the check
+        id: check
+        env:
+          # Raises GitHub's API rate limit for looking up the spec's latest commit.
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          php scripts/openapi-check.php > report.txt 2>&1
+          status=$?
+          set -e
+          cat report.txt
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # 0: nothing new. 1: something to report. Anything else: the check could not run.
+          if [ "$status" -gt 1 ]; then exit "$status"; fi
+
+      - name: Open, update or close the issue
+        id: issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.check.outputs.status }}
+        run: |
+          label=openapi
+          issue=$(gh issue list --label "$label" --state open --limit 1 --json number --jq '.[0].number // empty')
+
+          if [ "$STATUS" = 0 ]; then
+            if [ -n "$issue" ]; then
+              gh issue close "$issue" --comment "The daily check passes again: the baseline accounts for everything in Discord's OpenAPI description."
+            fi
+            exit 0
+          fi
+
+          # The first two lines name the spec's commit and the baseline's; the findings follow. Only a change
+          # in the findings is worth another notification.
+          hash=$(tail -n +3 report.txt | sha256sum | cut -c1-64)
+          {
+            echo "The daily check against [Discord's OpenAPI description](https://github.com/discord/discord-api-spec/blob/main/specs/openapi_preview.json) found something new since \`scripts/openapi-baseline.json\`: an endpoint added, changed or removed, a schema that changed, or an operation DiscordPHP no longer sends."
+            echo
+            echo '```text'
+            head -c 60000 report.txt
+            if [ "$(wc -c < report.txt)" -gt 60000 ]; then echo; echo '[The report is longer than an issue allows; the workflow run has all of it.]'; fi
+            echo '```'
+            echo
+            echo "Implement the changes, or record why not in \`scripts/openapi-baseline.json\`. Then run \`composer openapi:update\` and commit the baseline. This issue closes itself once the check passes."
+            echo
+            echo "Found by [this run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."
+            echo "<!-- openapi-report: $hash -->"
+          } > body.md
+
+          if [ -z "$issue" ]; then
+            gh label create "$label" --color 5865F2 --description "Differences from Discord's OpenAPI description" 2>/dev/null || true
+            url=$(gh issue create --title "Discord's API has changed since the OpenAPI baseline" --label "$label" --body-file body.md)
+            echo "notify=true" >> "$GITHUB_OUTPUT"
+          elif gh issue view "$issue" --json body --jq .body | grep -q "openapi-report: $hash"; then
+            url=$(gh issue view "$issue" --json url --jq .url)
+            echo "notify=false" >> "$GITHUB_OUTPUT"
+          else
+            gh issue edit "$issue" --body-file body.md
+            gh issue comment "$issue" --body "The findings have changed; the issue now shows the latest report."
+            url=$(gh issue view "$issue" --json url --jq .url)
+            echo "notify=true" >> "$GITHUB_OUTPUT"
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Tell Discord
+        if: steps.issue.outputs.notify == 'true' && env.HAS_DISCORD_WEBHOOK == 'true'
+        env:
+          WEBHOOK: ${{ secrets.OPENAPI_DISCORD_WEBHOOK }}
+          URL: ${{ steps.issue.outputs.url }}
+        run: |
+          jq -n --arg url "$URL" '{content: ("Discord'"'"'s API has changed since DiscordPHP'"'"'s OpenAPI baseline: " + $url), allowed_mentions: {parse: []}}' \
+            | curl --fail --silent --show-error -H 'Content-Type: application/json' -d @- "$WEBHOOK"

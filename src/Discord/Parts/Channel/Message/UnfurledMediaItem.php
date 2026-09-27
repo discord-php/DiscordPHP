@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,19 +19,25 @@ use Discord\Parts\Part;
 /**
  * A url or attachment, except in the case of File, which only supports attachment.
  *
- * @link https://discord.com/developers/docs/components/reference#unfurled-media-item-structure
+ * @link https://docs.discord.com/developers/components/reference#unfurled-media-item-structure
  *
  * @since 10.11.0
  *
- * @property string       $url           Supports arbitrary urls and attachment://<filename> references.
- * @property ?string|null $proxy_url     The proxied url of the media item. This field is ignored and provided by the API as part of the response.
- * @property ?int|null    $height        The height of the media item. This field is ignored and provided by the API as part of the response.
- * @property ?int|null    $width         The width of the media item. This field is ignored and provided by the API as part of the response.
- * @property ?string|null $content_type  The media type of the content. This field is ignored and provided by the API as part of the response.
- * @property ?string|null $attachment_id The id of the uploaded attachment. This field is ignored and provided by the API as part of the response
+ * @property string       $url                 Supports arbitrary urls and attachment://<filename> references.
+ * @property ?string|null $proxy_url           The proxied url of the media item. This field is ignored and provided by the API as part of the response.
+ * @property ?int|null    $height              The height of the media item. This field is ignored and provided by the API as part of the response.
+ * @property ?int|null    $width               The width of the media item. This field is ignored and provided by the API as part of the response.
+ * @property ?string|null $placeholder         Thumbhash (https://evanw.github.io/thumbhash/) placeholder (if image or video). This field is ignored and provided by the API as part of the response.
+ * @property ?int|null    $placeholder_version Version of the placeholder (if image or video). This field is ignored and provided by the API as part of the response.
+ * @property ?string|null $content_type        The media type of the content. This field is ignored and provided by the API as part of the response.
+ * @property ?int|null    $flags               Unfurled media item flags combined as a bitfield. This field is ignored and provided by the API as part of the response.
+ * @property ?string|null $attachment_id       The id of the uploaded attachment. Only present if the media item was uploaded as an attachment. This field is ignored and provided by the API as part of the response.
  */
 class UnfurledMediaItem extends Part
 {
+    /** This image is animated. */
+    public const FLAG_IS_ANIMATED = 1 << 0;
+
     /**
      * @inheritDoc
      */
@@ -39,7 +46,10 @@ class UnfurledMediaItem extends Part
         'proxy_url',
         'height',
         'width',
+        'placeholder',
+        'placeholder_version',
         'content_type',
+        'flags',
         'attachment_id',
     ];
 }

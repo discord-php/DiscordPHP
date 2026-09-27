@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -21,7 +22,7 @@ use Stringable;
  *
  * Tags with type null represent booleans. They will be present and set to null if they are "true", and will be not present if they are "false".
  *
- * @link https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure
+ * @link https://docs.discord.com/developers/topics/permissions#role-object-role-tags-structure
  *
  * @since 10.19.0
  *

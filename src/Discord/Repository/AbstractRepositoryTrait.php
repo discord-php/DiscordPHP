@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,11 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\CollectionTrait;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
@@ -29,6 +30,19 @@ use function Discord\nowait;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
+/**
+ * Provides common functionality for all repositories.
+ *
+ * @property Discord      $discord   The Discord client instance.
+ * @property string       $discrim   The collection discriminator.
+ * @property array        $items     The items contained in the collection.
+ * @property string       $class     Class type allowed into the collection.
+ * @property Http         $http      The HTTP client.
+ * @property Factory      $factory   The parts factory.
+ * @property array        $endpoints Endpoints for interacting with the Discord servers.
+ * @property array        $vars      Variables that are related to the repository.
+ * @property CacheWrapper $cache     The react/cache wrapper.
+ */
 trait AbstractRepositoryTrait
 {
     use CollectionTrait
@@ -80,39 +94,6 @@ trait AbstractRepositoryTrait
     }
 
     /**
-     * The HTTP client.
-     *
-     * @var Http Client.
-     */
-    protected $http;
-
-    /**
-     * The parts factory.
-     *
-     * @var Factory Parts factory.
-     */
-    protected $factory;
-
-    /**
-     * Endpoints for interacting with the Discord servers.
-     *
-     * @var array Endpoints.
-     */
-    protected $endpoints = [];
-
-    /**
-     * Variables that are related to the repository.
-     *
-     * @var array Variables.
-     */
-    protected $vars = [];
-
-    /**
-     * @var CacheWrapper
-     */
-    protected $cache;
-
-    /**
      * Freshens the repository cache.
      *
      * @param array $queryparams Query string params to add to the request (no validation)
@@ -135,17 +116,30 @@ trait AbstractRepositoryTrait
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            foreach ($this->items as $offset => $value) {
-                if ($value === null) {
-                    unset($this->items[$offset]);
-                } elseif (! ($this->items[$offset] instanceof WeakReference)) {
-                    $this->items[$offset] = WeakReference::create($value);
-                }
-                $this->cache->delete($offset);
-            }
+            $this->forgetCachedItems();
 
             return $this->cacheFreshen($response);
         });
+    }
+
+    /**
+     * Drops every cached part, before the repository is refilled from a response that lists all of them.
+     *
+     * Parts still referenced elsewhere are kept as weak references, so they are reused if the response
+     * names them again.
+     *
+     * @since 10.60.0
+     */
+    protected function forgetCachedItems(): void
+    {
+        foreach ($this->items as $offset => $value) {
+            if ($value === null) {
+                unset($this->items[$offset]);
+            } elseif (! ($this->items[$offset] instanceof WeakReference)) {
+                $this->items[$offset] = WeakReference::create($value);
+            }
+            $this->cache->delete($offset);
+        }
     }
 
     /**
@@ -157,7 +151,7 @@ trait AbstractRepositoryTrait
     {
         foreach ($response as $value) {
             $value = array_merge($this->vars, (array) $value);
-            $part = $this->factory->create($this->class, $value, true);
+            $part = $this->factory->part($this->class, $value, true);
             $items[$part->{$this->discrim}] = $part;
         }
 
@@ -194,6 +188,8 @@ trait AbstractRepositoryTrait
      * @return PromiseInterface<Part>
      *
      * @throws \Exception
+     *
+     * @deprecated 10.38.0 Use `Part->save($reason)` to ensure permissions are checked.
      */
     public function save(Part $part, ?string $reason = null): PromiseInterface
     {
@@ -230,10 +226,9 @@ trait AbstractRepositoryTrait
 
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
-                    $newPart = $this->factory->create($this->class, (array) $response, true);
-                    $newPart->created = true;
+                    $newPart = $this->factory->part($this->class, (array) $response, true);
 
-                    return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+                    return $this->cache->set($newPart->{$this->discrim}, $newPart)->then(fn ($success) => $newPart);
             }
         });
     }
@@ -490,7 +485,15 @@ trait AbstractRepositoryTrait
     public function pushItem($item): self
     {
         if (is_a($item, $this->class)) {
-            $key = $item->{$this->discrim};
+            $key = $item->{$this->discrim} ?? null;
+
+            // A part with no discriminator cannot be addressed later; caching it
+            // would key `items`/`cache` on null (an E_DEPRECATED on PHP >= 8.5)
+            // and let unrelated keyless parts overwrite each other.
+            if ($key === null) {
+                return $this;
+            }
+
             $this->items[$key] = $item;
             $this->cache->set($key, $item);
         }
@@ -578,7 +581,8 @@ trait AbstractRepositoryTrait
      */
     public function filter(callable $callback)
     {
-        $collection = new Collection([], $this->discrim, $this->class);
+        /** @var ExCollectionInterface $collection */
+        $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
@@ -637,20 +641,13 @@ trait AbstractRepositoryTrait
     /**
      * Converts the weak caches to array.
      *
+     * @deprecated 10.42.0 Use `jsonSerialize`
+     *
      * @return array
      */
     public function toArray(bool $assoc = true): array
     {
-        $items = [];
-
-        foreach ($this->items as $offset => $item) {
-            if ($item instanceof WeakReference) {
-                $item = $item->get();
-            }
-            $items[$offset] = $item;
-        }
-
-        return $items;
+        return $this->jsonSerialize($assoc);
     }
 
     /**
@@ -741,9 +738,20 @@ trait AbstractRepositoryTrait
     /**
      * @inheritDoc
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(bool $assoc = true): array
     {
-        return $this->toArray();
+        $items = [];
+
+        foreach ($this->items as $offset => $item) {
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+            $assoc
+                ? $items[$offset] = $item
+                : $items[] = $item;
+        }
+
+        return $items;
     }
 
     /**
@@ -763,6 +771,13 @@ trait AbstractRepositoryTrait
         }
     }
 
+    /**
+     * Exposes the read-only \`discrim\` and \`cache\` properties.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function __get(string $key)
     {
         if (in_array($key, ['discrim', 'cache'])) {

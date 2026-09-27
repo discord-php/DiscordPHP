@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,7 +17,7 @@ namespace Discord\WebSockets;
 /**
  * Contains constants used in intents.
  *
- * @link https://discord.com/developers/docs/topics/gateway#gateway-intents
+ * @link https://docs.discord.com/developers/topics/gateway#gateway-intents
  *
  * @since 5.0.0
  */
@@ -95,6 +96,7 @@ class Intents
      * Guild voice state events.
      *
      * - VOICE_STATE_UPDATE
+     * - VOICE_CHANNEL_EFFECT_SEND
      */
     public const GUILD_VOICE_STATES = (1 << 7);
 
@@ -163,7 +165,7 @@ class Intents
     /**
      * Message content intent (Privileged).
      *
-     * @link https://discord.com/developers/docs/topics/gateway#message-content-intent
+     * @link https://docs.discord.com/developers/topics/gateway#message-content-intent
      * @link https://dis.gd/mcfaq
      *
      * @since 7.3.0
@@ -250,6 +252,17 @@ class Intents
     public static function getDefaultIntents(): int
     {
         return static::getAllIntents() & ~(static::GUILD_MEMBERS | static::GUILD_PRESENCES | static::MESSAGE_CONTENT);
+    }
+
+    /**
+     * Returns an integer value that represents all privileged intents.
+     * Verified apps cannot use Privileged Intents without being approved.
+     *
+     * @return int
+     */
+    public static function getAllPrivilegedIntents(): int
+    {
+        return static::GUILD_MEMBERS | static::GUILD_PRESENCES | static::MESSAGE_CONTENT;
     }
 
     /**

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,13 +14,16 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
-use Discord\Helpers\Collection;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
 use Discord\Repository\ActivityInstanceRepository;
+use Discord\Repository\ApplicationIdentityRepository;
 use Discord\Repository\Monetization\EntitlementRepository;
 use Discord\Repository\Monetization\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
@@ -30,7 +34,7 @@ use function React\Promise\reject;
 /**
  * The OAuth2 application of the bot.
  *
- * @link https://discord.com/developers/docs/resources/application
+ * @link https://docs.discord.com/developers/resources/application
  *
  * @since 7.0.0
  *
@@ -53,7 +57,8 @@ use function React\Promise\reject;
  * @property string|null        $slug                                 If this application is a game sold on Discord, this field will be the URL slug that links to the store page.
  * @property string|null        $cover_image                          The application's default rich presence invite cover image URL.
  * @property string|null        $cover_image_hash                     The application's default rich presence invite cover image hash.
- * @property int                $flags                                The application's public flags.
+ * @property int                $flags                                The application's legacy public flags. The `flags` field is serialized as a number; however, this number will not grow beyond 31 bits.
+ * @property int                $flags_new                            The application's public flags. New flag bits beyond bit 30 will only appear in `flags_new`, a string-serialized integer containing the full set of flag bits.
  * @property int|null           $approximate_guild_count              The application's approximate count of the app's guild membership.
  * @property int|null           $approximate_user_install_count       The approximate count of users that have installed the app.
  * @property int|null           $approximate_user_authorization_count The approximate count of users that have OAuth2 authorizations for the app.
@@ -70,10 +75,11 @@ use function React\Promise\reject;
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
  *
- * @property GlobalCommandRepository    $commands           The application global commands.
- * @property EntitlementRepository      $entitlements       The application entitlements.
- * @property SKURepository              $skus               The application SKUs.
- * @property ActivityInstanceRepository $activity_instances The application activity instances.
+ * @property GlobalCommandRepository       $commands           The application global commands.
+ * @property EntitlementRepository         $entitlements       The application entitlements.
+ * @property SKURepository                 $skus               The application SKUs.
+ * @property ActivityInstanceRepository    $activity_instances The application activity instances.
+ * @property ApplicationIdentityRepository $identities         The external identities users have linked to the application, and their game stats profiles.
  */
 class Application extends Part
 {
@@ -100,6 +106,7 @@ class Application extends Part
         'slug',
         'cover_image',
         'flags',
+        'flags_new',
         'approximate_guild_count',
         'approximate_user_install_count',
         'approximate_user_authorization_count',
@@ -115,18 +122,32 @@ class Application extends Part
         'custom_install_url',
     ];
 
+    /** Indicates if an app uses the Auto Moderation API. */
     public const APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE = (1 << 6);
+    /** Intent required for bots in 100 or more servers to receive `presence_update` events. */
     public const GATEWAY_PRESENCE = (1 << 12);
+    /** Intent required for bots in under 100 servers to receive `presence_update` events, found on the Bot page in your app's settings. */
     public const GATEWAY_PRESENCE_LIMITED = (1 << 13);
+    /** Intent required for bots in 100 or more servers to receive member-related events like `guild_member_add`. */
     public const GATEWAY_GUILD_MEMBERS = (1 << 14);
+    /** Intent required for bots in under 100 servers to receive member-related events like `guild_member_add`, found on the Bot page in your app's settings. */
     public const GATEWAY_GUILD_MEMBERS_LIMITED = (1 << 15);
+    /** Indicates unusual growth of an app that prevents verification. */
     public const VERIFICATION_PENDING_GUILD_LIMIT = (1 << 16);
+    /** Indicates if an app is embedded within the Discord client (currently unavailable publicly). */
     public const EMBEDDED = (1 << 17);
+    /** Intent required for bots in 100 or more servers to receive message content. */
     public const GATEWAY_MESSAGE_CONTENT = (1 << 18);
+    /** 	Intent required for bots in under 100 servers to receive message content, found on the Bot page in your app's settings. */
     public const GATEWAY_MESSAGE_CONTENT_LIMITED = (1 << 19);
+    /** Indicates if an app has registered global application commands. */
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
+    /** Undocumented. */
     public const ACTIVE = (1 << 24);
+
+    /**	App is installable to servers. */
     public const INTEGRATION_TYPE_GUILD_INSTALL = 0;
+    /** App is installable to users. */
     public const INTEGRATION_TYPE_USER_INSTALL = 1;
 
     /**
@@ -137,12 +158,13 @@ class Application extends Part
         'entitlements' => EntitlementRepository::class,
         'skus' => SKURepository::class,
         'activity_instances' => ActivityInstanceRepository::class,
+        'identities' => ApplicationIdentityRepository::class,
     ];
 
     /**
      * Returns a list of application role connection metadata objects for the given application.
      *
-     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
      * @since 10.29.0
      *
@@ -152,7 +174,8 @@ class Application extends Part
     {
         return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id))
             ->then(function ($response) {
-                $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
+                /** @var ExCollectionInterface<ApplicationRoleConnectionMetadata> $collection */
+                $collection = $this->discord->getCollectionClass()::for(ApplicationRoleConnectionMetadata::class);
 
                 foreach ($response as $record) {
                     $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);
@@ -165,9 +188,9 @@ class Application extends Part
     /**
      * Updates and returns a list of application role connection metadata objects for the given application.
      *
-     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
-     * @since v10.29.0
+     * @since 10.29.0
      *
      * @param ApplicationRoleConnectionMetadata[] $data The new metadata records.
      *
@@ -181,7 +204,8 @@ class Application extends Part
 
         return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id), $data)
             ->then(function ($response) {
-                $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
+                /** @var ExCollectionInterface<ApplicationRoleConnectionMetadata> $collection */
+                $collection = $this->discord->getCollectionClass()::for(ApplicationRoleConnectionMetadata::class);
 
                 foreach ($response as $record) {
                     $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);
@@ -219,6 +243,41 @@ class Application extends Part
 
                 return $this->factory->part(ActivityInstance::class, (array) $response, true);
             });
+    }
+
+    /**
+     * Uploads a file for the application to use as an attachment, as an Activity does to share an image.
+     *
+     * Discord describes this endpoint in its OpenAPI description rather than in its documentation.
+     *
+     * @param string      $filepath The file.
+     * @param string|null $filename The name to give it; the file's own name if omitted.
+     *
+     * @throws FileNotFoundException The file does not exist.
+     *
+     * @return PromiseInterface<Attachment>
+     *
+     * @since 10.60.0
+     */
+    public function uploadAttachment(string $filepath, ?string $filename = null): PromiseInterface
+    {
+        if (! is_file($filepath)) {
+            return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
+        }
+
+        $multipart = new Multipart([
+            [
+                'name' => 'file',
+                'filename' => $filename ?? basename($filepath),
+                'content' => file_get_contents($filepath),
+                'headers' => [
+                    'Content-Type' => (function_exists('mime_content_type') ? \mime_content_type($filepath) : false) ?: 'application/octet-stream',
+                ],
+            ],
+        ]);
+
+        return $this->http->post(Endpoint::bind(Endpoint::APPLICATION_ATTACHMENT, $this->id), (string) $multipart, $multipart->getHeaders())
+            ->then(fn ($response) => $this->factory->part(Attachment::class, (array) $response->attachment, true));
     }
 
     /**

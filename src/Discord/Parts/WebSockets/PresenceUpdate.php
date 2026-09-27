@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\WebSockets;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -28,21 +28,30 @@ use Discord\Parts\User\ClientStatus;
  * the WebSocket. It contains information about the users presence such as their
  * status (online/away) and their current game.
  *
+ * If the presence author's Profile Privacy Setting is set to `Friends Only`, or to `Friends & Small Servers Only` in a guild with more than 200 members,
+ * their custom status (activity type `4`) is omitted from `activities` in Presence Update events dispatched to that guild.
+ * This applies to any subscription to the guild's presence, including bots and apps.
+ * Other activity types are not affected by this setting.
+ * @see https://support.discord.com/hc/en-us/articles/38859942749463-Profile-Privacy-Setting-on-Discord
+ *
  * @since 2.1.3
  *
- * @link https://discord.com/developers/docs/topics/gateway-events#presence
+ * @link https://docs.discord.com/developers/events/gateway-events#presence
  *
- * @property      User                                       $user           The user that the presence update affects.
- * @property      string                                     $guild_id       The unique identifier of the guild that the presence update affects.
- * @property-read Guild|null                                 $guild          The guild that the presence update affects.
- * @property      string                                     $status         The updated status of the user.
- * @property      ExCollectionInterface<Activity>|Activity[] $activities     The activities of the user.
- * @property-read Activity                                   $game           The updated game of the user.
- * @property      ClientStatus                               $client_status  Status of the client.
- * @property      string|null                                $desktop_status Status of the user on their desktop client. Null if they are not active on desktop.
- * @property      string|null                                $mobile_status  Status of the user on their mobile client. Null if they are not active on mobile.
- * @property      string|null                                $web_status     Status of the user on their web client. Null if they are not active on web.
+ * @property      User                                       $user            The user that the presence update affects.
+ * @property      string                                     $guild_id        The unique identifier of the guild that the presence update affects.
+ * @property-read Guild|null                                 $guild           The guild that the presence update affects.
+ * @property      string                                     $status          The updated status of the user.
+ * @property      ExCollectionInterface<Activity>|Activity[] $activities      The activities of the user.
+ * @property-read Activity                                   $game            The updated game of the user.
+ * @property      ClientStatus                               $client_status   Status of the client.
+ * @property      string|null                                $desktop_status  Status of the user on their desktop client. Null if they are not active on desktop.
+ * @property      string|null                                $mobile_status   Status of the user on their mobile client. Null if they are not active on mobile.
+ * @property      string|null                                $web_status      Status of the user on their web client. Null if they are not active on web.
+ * @property      string|null                                $vr_status       Status of the user on their VR client. Null if they are not active on VR.
+ * @property      string|null                                $embedded_status Status of the user on an embedded application (Xbox, PlayStation, in-game). Null if they are not active on an embedded application.
  *
+ * @property-read string                             $id     The ID of the user.
  * @property-read Member                             $member The member that the presence update affects.
  * @property-read ExCollectionInterface<Role>|Role[] $roles  Roles that the user has in the guild.
  */
@@ -111,7 +120,7 @@ class PresenceUpdate extends Part
      */
     protected function getGameAttribute(): ?Activity
     {
-        return $this->activities->get('type', Activity::TYPE_GAME);
+        return $this->activities->get('type', Activity::TYPE_PLAYING);
     }
 
     /**
@@ -155,6 +164,28 @@ class PresenceUpdate extends Part
     }
 
     /**
+     * Gets the status of the user on their VR client.
+     *
+     * @return string|null
+     *
+     * @since 10.54.0
+     */
+    protected function getVrStatusAttribute(): ?string
+    {
+        return $this->client_status->vr ?? null;
+    }
+
+    /**
+     * Returns the id attribute.
+     *
+     * @return string The user ID of the member.
+     */
+    protected function getIdAttribute(): string
+    {
+        return $this->user->id;
+    }
+
+    /**
      * Gets the member attribute.
      *
      * @return Member|null
@@ -179,6 +210,6 @@ class PresenceUpdate extends Part
             return $member->roles;
         }
 
-        return Collection::for(Role::class);
+        return $this->discord->getCollectionClass()::for(Role::class);
     }
 }

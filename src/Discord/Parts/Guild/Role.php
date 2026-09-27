@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,15 +14,20 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Repository\Guild\RoleRepository;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role.
  * The role belongs to a guild.
  *
- * @link https://discord.com/developers/docs/topics/permissions#role-object
+ * @link https://docs.discord.com/developers/topics/permissions#role-object
  *
  * @since 2.0.0
  *
@@ -45,8 +51,10 @@ use Stringable;
  */
 class Role extends Part implements Stringable
 {
-    // Flags
-    public const IN_PROMPT = 1 << 0; // Role can be selected by members in an onboarding prompt.
+    /** Role can be selected by members in an onboarding prompt. */
+    public const FLAG_IN_PROMPT = 1 << 0;
+    /** @deprecated 10.36.32 use `Role::FLAG_IN_PROMPT` */
+    public const IN_PROMPT = self::FLAG_IN_PROMPT;
 
     /**
      * @inheritDoc
@@ -69,6 +77,33 @@ class Role extends Part implements Stringable
         // @internal
         'guild_id',
     ];
+
+    /**
+     * Compares this role to another role to determine relative ordering.
+     *
+     * Ordering rules:
+     * - Primary: ascending by position (lower position comes first).
+     * - Tiebreaker: descending by ID (higher ID comes first when positions are equal).
+     *
+     * Returns:
+     * - -1 if this role should come before the given role,
+     * -  0 if both roles are considered equal in ordering,
+     * -  1 if this role should come after the given role.
+     *
+     * @param Role $role The role to compare against.
+     *
+     * @return int Comparison result suitable for use with sorting functions.
+     *
+     * @since 10.40.0
+     */
+    public function comparePosition($role): int
+    {
+        if ($this->position === $role->position) {
+            return $role->id <=> $this->id;
+        }
+
+        return $this->position <=> $role->position;
+    }
 
     /**
      * Gets the colors attribute.
@@ -194,7 +229,7 @@ class Role extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-role-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-role-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -212,7 +247,7 @@ class Role extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-role-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -225,6 +260,54 @@ class Role extends Part implements Stringable
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ]);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return RoleRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): RoleRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->roles;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("The bot does not have permission to manage roles in guild {$this->guild_id}."));
+                }
+            }
+
+            if ($botHighestRole = $guild->roles->getCurrentMemberHighestRole()) {
+                if ($botHighestRole->comparePosition($this) <= 0) {
+                    return reject(new NoPermissionsException("The bot's highest role is not higher than the role {$this->id} in guild {$this->guild_id}."));
+                }
+            }
+
+            return $guild->roles->save($this, $reason);
+        }
+
+        return parent::save($reason);
     }
 
     /**

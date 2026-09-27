@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,6 +17,7 @@ namespace Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\Part;
 
 /**
@@ -23,7 +25,7 @@ use Discord\Parts\Part;
  *
  * @since 10.11.2
  *
- * @link https://discord.com/developers/docs/resources/message#message-reference-structure
+ * @link https://docs.discord.com/developers/resources/message#message-reference-structure
  *
  * @property int|null    $type               Type of reference (0 = DEFAULT, 1 = FORWARD).
  * @property string|null $message_id         ID of the originating message.
@@ -37,7 +39,9 @@ use Discord\Parts\Part;
  */
 class MessageReference extends Part
 {
+    /** A standard reference used by replies. */
     public const TYPE_DEFAULT = 0;
+    /**	Reference used to point to a message at a point in time. */
     public const TYPE_FORWARD = 1;
 
     /**
@@ -97,8 +101,7 @@ class MessageReference extends Part
             }
         }
 
-        // @todo potentially slow
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
             return $channel;
         }
 

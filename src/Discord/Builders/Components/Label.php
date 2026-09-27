@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,15 +21,15 @@ use function Discord\poly_strlen;
  *
  * The description may display above or below the component depending on the platform.
  *
- * @link https://discord.com/developers/docs/components/reference#label
+ * @link https://docs.discord.com/developers/components/reference#label
  *
  * @since 10.19.0
  *
- * @property int                             $type        18 for a label.
- * @property ?string|null                    $id          Optional identifier for component.
- * @property string                          $label       The label text; max 45 characters.
- * @property ?string|null                    $description An optional description text for the label; max 100 characters.
- * @property FileUpload|SelectMenu|TextInput $component   The component within the label.
+ * @property int                                            $type        18 for a label.
+ * @property ?string|null                                   $id          Optional identifier for component.
+ * @property string                                         $label       The label text; max 45 characters.
+ * @property ?string|null                                   $description An optional description text for the label; max 100 characters.
+ * @property TextInput|SelectMenu|FileUpload|Group|Checkbox $component   The component within the label.
  */
 class Label extends Layout
 {
@@ -39,7 +40,7 @@ class Label extends Layout
      *
      * @var int
      */
-    protected $type = Component::TYPE_LABEL;
+    protected $type = ComponentObject::TYPE_LABEL;
 
     /**
      * The text for the label.
@@ -58,16 +59,16 @@ class Label extends Layout
     /**
      * The component associated with the label.
      *
-     * @var FileUpload|SelectMenu|TextInput
+     * @var TextInput|SelectMenu|FileUpload|Group|Checkbox
      */
     protected $component;
 
     /**
      * Creates a new label component.
      *
-     * @param string                          $label       The text for the label.
-     * @param FileUpload|SelectMenu|TextInput $component   The component associated with the label.
-     * @param string|null                     $description Optional description for the label.
+     * @param string                                         $label       The text for the label.
+     * @param TextInput|SelectMenu|FileUpload|Group|Checkbox $component   The component associated with the label.
+     * @param string|null                                    $description Optional description for the label.
      *
      * @return self
      */
@@ -124,9 +125,9 @@ class Label extends Layout
 
     /** Sets The component within the label.
      *
-     * @link https://discord.com/developers/docs/components/reference#label-label-child-components
+     * @link https://docs.discord.com/developers/components/reference#label-label-child-components
      *
-     * @param FileUpload|SelectMenu|TextInput $component The component within the label.
+     * @param TextInput|SelectMenu|FileUpload|Group|Checkbox $component The component within the label.
      *
      * @return self
      */

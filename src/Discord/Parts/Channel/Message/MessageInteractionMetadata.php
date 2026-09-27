@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -24,13 +25,14 @@ use Discord\Parts\User\User;
  *
  * @since 10.11.2
  *
- * @link https://discord.com/developers/docs/resources/message#message-interaction-metadata-object
+ * @link https://docs.discord.com/developers/resources/message#message-interaction-metadata-object
  *
  * @property string                          $id                              ID of the interaction.
  * @property int                             $type                            Type of interaction.
  * @property User                            $user                            User who triggered the interaction.
  * @property array                           $authorizing_integration_owners  IDs for installation context(s) related to the interaction.
  * @property string|null                     $original_response_message_id    ID of the original response message (follow-ups only).
+ * @property string|null                     $name                            Name of the command, including subcommands and subcommand groups, present only on application command interactions. This field is considered unstable and may be removed at any time.
  * @property User|null                       $target_user                     The user the command was run on (user command interactions only).
  * @property string|null                     $target_message_id               The ID of the message the command was run on (message command interactions only).
  * @property string|null                     $interacted_message_id           The ID of the message that contained the interactive component (message component interactions only).
@@ -55,6 +57,7 @@ class MessageInteractionMetadata extends Part
         'user',
         'authorizing_integration_owners',
         'original_response_message_id',
+        'name',
         'target_user',
         'target_message_id',
         'interacted_message_id',
@@ -157,6 +160,11 @@ class MessageInteractionMetadata extends Part
         return $channel->messages->get('id', $this->attributes['interacted_message_id']);
     }
 
+    /**
+     * Gets the `guild` attribute.
+     *
+     * @return ?Guild
+     */
     protected function getGuildAttribute(): ?Guild
     {
         if (! isset($this->attributes['guild_id'])) {
@@ -166,6 +174,11 @@ class MessageInteractionMetadata extends Part
         return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }
 
+    /**
+     * Gets the `channel` attribute.
+     *
+     * @return ?Channel
+     */
     protected function getChannelAttribute(): ?Channel
     {
         if (! isset($this->attributes['channel_id'])) {

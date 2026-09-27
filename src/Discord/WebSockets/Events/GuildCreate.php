@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -19,12 +20,25 @@ use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
+use Discord\WebSockets\Events\Data\GuildCreateData;
 use React\Promise\Deferred;
 
 use function React\Promise\all;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#guild-create
+ * The inner payload is either a guild object or an unavailable guild object.
+ *
+ * This event can be sent in three different scenarios:
+ * 1. When a user is initially connecting, to lazily load and backfill information for all unavailable guilds sent in the Ready event. Guilds that are unavailable due to an outage will send a Guild Delete event.
+ * 2. When a Guild becomes available again to the client.
+ * 3. When the current user joins a new Guild.
+ * During an outage, the guild object in scenarios 1 and 3 may be marked as unavailable.
+ *
+ * If you don't have the `GUILD_PRESENCES` Gateway Intent, or if the guild is over 75k members, it will only send members who are in voice, plus the member for you (the connecting user).
+ * Otherwise, if a guild has over `large_threshold` members (configurable in Gateway Identify), it will only send members who are online, have a role, have a nickname, or are in a voice channel.
+ * Otherwise (if it has under `large_threshold` members), it will send all members.
+ *
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-create
  *
  * @since 2.1.3
  */
@@ -32,6 +46,8 @@ class GuildCreate extends Event
 {
     /**
      * @inheritDoc
+     *
+     * @param GuildCreateData $data
      */
     public function handle($data)
     {
@@ -74,15 +90,6 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $voice_state) {
             $await[] = $guildPart->voice_states->cache->set($voice_state->user_id, $this->factory->part(VoiceStateUpdate::class, (array) $voice_state, true));
-            /** @var ?Channel */
-            if ($voiceChannel = $guildPart->channels->offsetGet($voice_state->channel_id)) {
-                $userId = $voice_state->user_id;
-                $voice_state->guild_id = $data->id;
-                if (! isset($voice_state->member) && isset($rawMembers[$userId])) {
-                    $voice_state->member = $rawMembers[$userId];
-                }
-                $await[] = $voiceChannel->members->cache->set($userId, $voiceChannel->members->create($voice_state, true));
-            }
         }
 
         foreach ($data->threads as $thread) {

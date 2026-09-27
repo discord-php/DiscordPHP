@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,7 +16,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\MessageInteractionMetadata;
@@ -35,12 +35,15 @@ use Discord\Parts\Channel\Message\Activity;
 use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Channel\Message\RoleSubscriptionData;
+use Discord\Parts\Channel\Message\SharedClientTheme;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\ReactionRepository;
+use Discord\Repository\Channel\WebhookMessageRepository;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -51,13 +54,14 @@ use function React\Promise\reject;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @link https://discord.com/developers/docs/resources/message#message-object
+ * @link https://docs.discord.com/developers/resources/message#message-object
  *
  * @since 2.0.0
  *
  * @property      string                                                   $id                     The unique identifier of the message.
  * @property      string                                                   $channel_id             The unique identifier of the channel that the message was sent in.
  * @property-read Channel|Thread                                           $channel                The channel that the message was sent in.
+ * @property      int|null                                                 $channel_type           The type of channel the message was sent in.
  * @property      User|null                                                $author                 The author of the message. Will be a webhook if sent from one.
  * @property-read string|null                                              $user_id                The user id of the author.
  * @property      string                                                   $content                The content of the message if it is a normal message.
@@ -66,9 +70,9 @@ use function React\Promise\reject;
  * @property      bool                                                     $tts                    Whether the message was sent as a text-to-speech message.
  * @property      bool                                                     $mention_everyone       Whether the message contained an @everyone mention.
  * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
- * @property      ExCollectionInterface<Role>|Role[]                       $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      ExCollectionInterface<?Role>|array<string, ?Role>        $mention_roles          A collection of roles that were mentioned in the message.
  * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
- * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects.
+ * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects. This will be empty if the message has the `IS_COMPONENTS_V2` flag (`1 << 15`) set and attachments will instead be included within the `components` field.
  * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
  * @property      string|null                                              $nonce                  A randomly generated string that provides verification for the client. Not required.
  * @property      bool                                                     $pinned                 Whether the message is pinned to the channel.
@@ -91,7 +95,8 @@ use function React\Promise\reject;
  * @property      RoleSubscriptionData|null                                $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  * @property      Resolved|null                                            $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
  * @property      Poll|null                                                $poll                   The poll attached to the message.
- * @property      MessageCall|null                                         $call                   The call associated with the message
+ * @property      MessageCall|null                                         $call                   The call associated with the message.
+ * @property      SharedClientTheme|null                                   $shared_client_theme    The custom client-side theme shared via the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -150,7 +155,8 @@ class Message extends Part
     public const TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM = 39;
     public const TYPE_PURCHASE_NOTIFICATION = 44;
     public const TYPE_POLL_RESULT = 46;
-    public const EMOJI_ADDED = 63;
+    public const TYPE_EMOJI_ADDED = 63;
+    public const TYPE_PREMIUM_GROUP_INVITE = 64;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
@@ -188,7 +194,9 @@ class Message extends Part
     public const REACT_DELETE_ID = 2;
     public const REACT_DELETE_EMOJI = 3;
 
+    /** A standard reference used by replies. */
     public const REFERENCE_DEFAULT = 0;
+    /** Reference used to point to a message at a point in time. */
     public const REFERENCE_FORWARD = 1;
 
     /** This message has been published to subscribed channels (via Channel Following). */
@@ -219,7 +227,7 @@ class Message extends Part
     public const FLAG_HAS_SNAPSHOT = (1 << 14);
     /** @deprecated Use `Message::FLAG_IS_COMPONENTS_V2` instead. */
     public const FLAG_IS_V2_COMPONENTS = (1 << 15);
-    /** Allows you to create fully component-driven messages. */
+    /** Allows you to create fully component-driven messages. Once a message has been sent with this flag, it can't be removed from that message. */
     public const FLAG_IS_COMPONENTS_V2 = (1 << 15);
 
     /**
@@ -228,6 +236,7 @@ class Message extends Part
     protected $fillable = [
         'id',
         'channel_id',
+        'channel_type',
         'author',
         'content',
         'timestamp',
@@ -383,7 +392,8 @@ class Message extends Part
      */
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Channel::class);
+        /** @var ExCollectionInterface<Channel> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -394,7 +404,7 @@ class Message extends Part
         }
 
         foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            $collection->pushItem($this->discord->getChannel($mention_channel->id) ?: $this->factory->part(Channel::class, (array) $mention_channel, true));
+            $collection->pushItem($this->discord->getChannel($mention_channel->id) ?? $this->factory->part(Channel::class, (array) $mention_channel, true));
         }
 
         return $collection;
@@ -465,14 +475,14 @@ class Message extends Part
             }
         }
 
-        // @todo potentially slow
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
             return $channel;
         }
 
-        return $this->factory->part(Channel::class, [
+        return $this->factory->part(DM::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
+            'recipients' => [$this->author],
         ], true);
     }
 
@@ -529,22 +539,28 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return ExCollectionInterface<Role>|Role[] The roles that were mentioned. null role only contains the ID in the collection.
+     * @return ExCollectionInterface<?Role>|array<string, ?Role> The roles that were mentioned. Null role only contains the ID as the key in the collection.
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['mention_roles'])) {
             return $roles;
         }
 
-        $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
+        /** @var array<string> */
+        $mention_roles = $this->attributes['mention_roles'];
 
         if ($guild = $this->guild) {
-            $roles->merge($guild->roles->filter(
-                fn ($role) => in_array($role->id, $this->attributes['mention_roles'])
-            ));
+            foreach ($mention_roles as $roleId) {
+                $roles->set($roleId, $guild->roles->get('id', $roleId));
+            }
+        } else {
+            foreach ($mention_roles as $roleId) {
+                $roles->set($roleId, null);
+            }
         }
 
         return $roles;
@@ -557,10 +573,11 @@ class Message extends Part
      */
     protected function getMentionsAttribute(): ExCollectionInterface
     {
-        $users = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $users */
+        $users = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
-            $users->pushItem($this->discord->users->get('id', $mention->id) ?: $this->factory->part(User::class, (array) $mention, true));
+            $users->pushItem($this->discord->users->get('id', $mention->id) ?? $this->factory->part(User::class, (array) $mention, true));
         }
 
         return $users;
@@ -624,13 +641,7 @@ class Message extends Part
      */
     protected function getEmbedsAttribute(): ExCollectionInterface
     {
-        $embeds = Collection::for(Embed::class, null);
-
-        foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->createOf(Embed::TYPES[$embed->type ?? 0], $embed));
-        }
-
-        return $embeds;
+        return $this->attributeTypedCollectionHelper(Embed::class, 'embeds');
     }
 
     /**
@@ -688,9 +699,8 @@ class Message extends Part
                     $channel = $guild->channels->get('id', $reference->channel_id);
                 }
 
-                // @todo potentially slow
                 if (! $channel && ! isset($this->attributes['referenced_message'])) {
-                    $channel = $this->discord->getChannel($reference->channel_id);
+                    $channel = $this->discord->private_channels->get('id', $reference->channel_id);
                 }
 
                 if ($channel) {
@@ -704,6 +714,11 @@ class Message extends Part
         return $this->attributePartHelper('referenced_message', self::class);
     }
 
+    /**
+     * Gets the `message_reference` attribute.
+     *
+     * @return ?MessageReference
+     */
     protected function getMessageReferenceAttribute(): ?MessageReference
     {
         return $this->attributePartHelper('message_reference', MessageReference::class);
@@ -781,20 +796,7 @@ class Message extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class);
-
-        if (! isset($this->attributes['components'])) {
-            return $components;
-        }
-
-        foreach ($this->attributes['components'] as &$component) {
-            if (! $component instanceof Component) {
-                $component = $this->createOf(Component::TYPES[$component->type ?? 0], $component);
-            }
-            $components->pushItem($component);
-        }
-
-        return $components;
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
     }
 
     /**
@@ -848,6 +850,16 @@ class Message extends Part
     }
 
     /**
+     * Returns the shared_client_theme attribute.
+     *
+     * @return SharedClientTheme|null
+     */
+    protected function getSharedClientThemeAttribute(): ?SharedClientTheme
+    {
+        return $this->attributePartHelper('shared_client_theme', SharedClientTheme::class);
+    }
+
+    /**
      * Returns the message link attribute.
      *
      * @return string|null
@@ -864,7 +876,7 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-from-message
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-from-message
      *
      * @param array       $options                          Thread params.
      * @param string      $options['name']                  The name of the thread.
@@ -872,7 +884,7 @@ class Message extends Part
      * @param ?int|null   $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
      * @param string|null $reason                           Reason for Audit Log.
      *
-     * @throws \RuntimeException      Channel type is not guild text or news.
+     * @throws \RuntimeException      Channel type is not guild text or announcement.
      * @throws NoPermissionsException Missing create_public_threads permission to create or manage_threads permission to set rate_limit_per_user.
      *
      * @return PromiseInterface<Thread>
@@ -911,7 +923,7 @@ class Message extends Part
         $channel = $this->channel;
         if ($channel) {
             if (! in_array($channel->type, [Channel::TYPE_GUILD_TEXT, Channel::TYPE_GUILD_ANNOUNCEMENT, null])) {
-                return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
+                return reject(new \RuntimeException('You can only start threads on guild text channels or announcement channels.'));
             }
 
             $botperms = $channel->getBotPermissions();
@@ -952,7 +964,7 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#create-message
+     * @link https://docs.discord.com/developers/resources/message#create-message
      *
      * @param string|MessageBuilder $message The reply message.
      *
@@ -974,7 +986,7 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels (publish announcement).
      *
-     * @link https://discord.com/developers/docs/resources/message#crosspost-message
+     * @link https://docs.discord.com/developers/resources/message#crosspost-message
      *
      * @throws \RuntimeException      Message has already been crossposted.
      * @throws NoPermissionsException Missing permission:
@@ -1056,7 +1068,7 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#create-reaction
+     * @link https://docs.discord.com/developers/resources/message#create-reaction
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
@@ -1085,8 +1097,8 @@ class Message extends Part
      *
      * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
      *
-     * @link https://discord.com/developers/docs/resources/message#delete-own-reaction
-     * @link https://discord.com/developers/docs/resources/message#delete-user-reaction
+     * @link https://docs.discord.com/developers/resources/message#delete-own-reaction
+     * @link https://docs.discord.com/developers/resources/message#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -1235,7 +1247,7 @@ class Message extends Part
     /**
      * Edits the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#edit-message
+     * @link https://docs.discord.com/developers/resources/message#edit-message
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
@@ -1250,6 +1262,10 @@ class Message extends Part
         });
     }
 
+    /**
+     * Sends the edit request (multipart when the builder carries files) and
+     * resolves with the raw API response.
+     */
     private function _edit(MessageBuilder $message): PromiseInterface
     {
         if ($message->requiresMultipart()) {
@@ -1264,7 +1280,7 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @link https://discord.com/developers/docs/resources/message#delete-message
+     * @link https://docs.discord.com/developers/resources/message#delete-message
      *
      * @param string|null $reason Reason for Audit Log (if supported).
      *
@@ -1303,15 +1319,16 @@ class Message extends Part
      * Creates a reaction collector for the message.
      *
      * @param callable $filter           The filter function. Returns true or false.
+     * @param array    $options          Collector options.
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<ExCollectionInterface<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new Collection([], null, null);
+        $reactions = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([
@@ -1396,7 +1413,7 @@ class Message extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/message#edit-message-jsonform-params
+     * @link https://docs.discord.com/developers/resources/message#edit-message-jsonform-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -1404,6 +1421,61 @@ class Message extends Part
             'content' => $this->content,
             'flags' => $this->flags,
         ];
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MessageRepository|WebhookMessageRepository The repository.
+     */
+    public function getRepository(): MessageRepository|WebhookMessageRepository
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+        if (isset($this->attributes['webhook_id'])) {
+            $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id']);
+            
+            return $webhook->messages;
+        }
+
+        return $channel->messages;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+            if ($botperms = $channel->getBotPermissions()) {
+                if (! $this->created) {
+                    if (! $botperms->send_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
+                    }
+                } elseif ($this->id !== $this->discord->id) {
+                    if (! $botperms->manage_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to manage messages in channel {$channel->id}."));
+                    }
+                }
+            }
+
+            if (isset($this->attributes['webhook_id'])) {
+                if (! $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
+                    return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
+                }
+            }
+
+            return $this->getRepository()->save($this, $reason);
+        }
+
+        return parent::save($reason);
     }
 
     /**

@@ -30,8 +30,8 @@ $discord = new DiscordCommandClient([
 // Create a $browser with same loop as $discord
 $browser = new Browser(null, $discord->getLoop());
 
-$discord->registerCommand('discordstatus', function (Message $message, $params) use ($browser) {
-    coroutine(function (Message $message, $params) use ($browser) {
+$discord->registerCommand('discordstatus', function (Message $message, $params) use ($discord, $browser) {
+    coroutine(function (Message $message, $params) use ($discord, $browser) {
         // Ignore messages from any Bots
         if ($message->author->bot) return;
 
@@ -45,7 +45,7 @@ $discord->registerCommand('discordstatus', function (Message $message, $params) 
             $result = (string) $response->getBody();
 
             // Uncomment to debug result
-            //var_dump($result);
+            $discord->logger->debug('Browser response', ['response' => $result]);
 
             // Parse JSON
             $discordstatus = json_decode($result);
@@ -54,7 +54,7 @@ $discord->registerCommand('discordstatus', function (Message $message, $params) 
             $message->reply('Discord status: ' . $discordstatus->status->description);
         } catch (Exception $e) { // Request failed
             // Uncomment to debug exceptions
-            //var_dump($e);
+            $discord->logger->error('Browser request failed', ['exception' => $e->getMessage()]);
 
             // Send reply about the discord status
             $message->reply('Unable to acesss the Discord status API :(');

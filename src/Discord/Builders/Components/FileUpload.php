@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,15 +17,16 @@ namespace Discord\Builders\Components;
 /**
  * A File Upload is an interactive component that allows users to upload files in modals.
  *
- * @link https://discord.com/developers/docs/components/reference#file-upload
+ * @link https://docs.discord.com/developers/components/reference#file-upload
  *
  * @since 10.21.0
  *
  * @property int        $type       19 for File Upload component.
- * @property string     $custom_id  Developer-defined identifier, max 100 characters.
+ * @property string     $custom_id  ID for the file upload; max 100 characters.
  * @property ?int|null  $min_values Minimum number of files that must be uploaded (defaults to 1); min 0, max 10.
  * @property ?int|null  $max_values Maximum number of files that can be uploaded (defaults to 1); max 10.
- * @property ?bool|null $required   Whether the file upload is required to be filled in a modal (defaults to true).
+ * @property ?bool|null $required   Whether the file upload is required to be filled in a modal (defaults to `true`).
+ * @property ?string[]  $file_types Supported file types for uploaded files.
  */
 class FileUpload extends Interactive
 {
@@ -35,7 +37,7 @@ class FileUpload extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_FILE_UPLOAD;
+    protected $type = ComponentObject::TYPE_FILE_UPLOAD;
 
     /**
      * Minimum number of files that can be uploaded.
@@ -52,6 +54,20 @@ class FileUpload extends Interactive
      * @var int|null
      */
     protected $max_values;
+
+    /**
+     * Whether the file upload is required to be filled in a modal (defaults to `true`).
+     *
+     * @var bool|null
+     */
+    protected $required;
+
+    /**
+     * Supported file types for uploaded files.
+     *
+     * @var ?string[]
+     */
+    protected $file_types;
 
     /**
      * Creates a new file upload.
@@ -82,14 +98,14 @@ class FileUpload extends Interactive
      *
      * @param int|null $min_values Default `1`, minimum `0` and maximum `10`. `null` to set as default.
      *
-     * @throws \LengthException
+     * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
-    public function setMinValues(?int $min_values): self
+    public function setMinValues(?int $min_values = null): self
     {
         if (isset($min_values) && ($min_values < 1 || $min_values > 10)) {
-            throw new \LengthException('Number must be between 0 and 10 inclusive.');
+            throw new \OutOfRangeException('Number must be between 0 and 10 inclusive.');
         }
 
         $this->min_values = $min_values;
@@ -102,14 +118,14 @@ class FileUpload extends Interactive
      *
      * @param int|null $max_values Default `1` and maximum `10`. `null` to set as default.
      *
-     * @throws \LengthException
+     * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
-    public function setMaxValues(?int $max_values): self
+    public function setMaxValues(?int $max_values = null): self
     {
-        if ($max_values && $max_values > 10) {
-            throw new \LengthException('Number must be less than or equal to 10.');
+        if (isset($max_values) && ($max_values < 1 || $max_values > 10)) {
+            throw new \OutOfRangeException('Number must be less than or equal to 10.');
         }
 
         $this->max_values = $max_values;
@@ -122,11 +138,37 @@ class FileUpload extends Interactive
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {
         $this->required = $required;
+
+        return $this;
+    }
+
+    /**
+     * Sets the supported file types for uploaded files. Use image, video, audio, or dot-prefixed extensions like .pdf.
+     *
+     * Discord recommends using the provided file groups. If you are specifying only extensions, you must include .jpg for image uploads, and both .mp4 and .mov for video uploads, due to mobile shenanigans.
+     *
+     * No validation is done to ensure that the file types are valid. You are responsible for checking MIME types and file extensions.
+     *
+     * @param ?string[] $file_types
+     *
+     * @throws \OutOfRangeException You cannot specify more than 10 file types.
+     *
+     * @return self
+     *
+     * @since 10.49.0
+     */
+    public function setFileTypes(?array $file_types = null): self
+    {
+        if (count($file_types ?? []) > 10) {
+            throw new \OutOfRangeException('You cannot specify more than 10 file types.');
+        }
+
+        $this->file_types = $file_types;
 
         return $this;
     }
@@ -151,6 +193,10 @@ class FileUpload extends Interactive
 
         if (isset($this->required)) {
             $content['required'] = $this->required;
+        }
+
+        if (isset($this->file_types)) {
+            $content['file_types'] = $this->file_types;
         }
 
         if (isset($this->id)) {

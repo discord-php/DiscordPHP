@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
+use Discord\Builders\ChannelBuilder;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Channel;
@@ -28,7 +29,7 @@ use Discord\Parts\User\User;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-resolved-data-structure
  *
  * @since 7.0.0
  *
@@ -75,14 +76,15 @@ class Resolved extends Part
             return $this->attributes['users'];
         }
 
-        $collection = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $collection */
+        $collection = $this->discord->getCollectionClass()::for(User::class);
 
         if (! isset($this->attributes['users'])) {
             return $collection;
         }
 
         foreach ($this->attributes['users'] as $snowflake => $user) {
-            $collection->pushItem($this->discord->users->get('id', $snowflake) ?: $this->factory->part(User::class, (array) $user, true));
+            $collection->pushItem($this->discord->users->get('id', $snowflake) ?? $this->factory->part(User::class, (array) $user, true));
         }
 
         $this->attributes['users'] = $collection;
@@ -103,7 +105,8 @@ class Resolved extends Part
             return $this->attributes['members'];
         }
 
-        $collection = Collection::for(Member::class);
+        /** @var ExCollectionInterface<Member> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
             return $collection;
@@ -138,7 +141,8 @@ class Resolved extends Part
             return $this->attributes['roles'];
         }
 
-        $collection = Collection::for(Role::class);
+        /** @var ExCollectionInterface<Role> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Role::class);
 
         if (! isset($this->attributes['roles'])) {
             return $collection;
@@ -174,7 +178,8 @@ class Resolved extends Part
             return $this->attributes['channels'];
         }
 
-        $collection = new Collection();
+        /** @var ExCollectionInterface $collection */
+        $collection = new ($this->discord->getCollectionClass());
 
         if (! isset($this->attributes['channels'])) {
             return $collection;
@@ -186,11 +191,7 @@ class Resolved extends Part
             }
 
             if (! isset($channelPart)) {
-                if (in_array($channel->type, [Channel::TYPE_ANNOUNCEMENT_THREAD, Channel::TYPE_PRIVATE_THREAD, Channel::TYPE_PUBLIC_THREAD])) {
-                    $channelPart = $this->factory->part(Thread::class, (array) $channel + ['guild_id' => $this->guild_id], true);
-                } else {
-                    $channelPart = $this->factory->part(Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
-                }
+                $channelPart = $this->factory->part(ChannelBuilder::TYPES[$channel->type] ?? Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
             }
 
             $collection->pushItem($channelPart);
@@ -212,7 +213,8 @@ class Resolved extends Part
             return $this->attributes['messages'];
         }
 
-        $collection = Collection::for(Message::class);
+        /** @var ExCollectionInterface<Message> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
             return $collection;
@@ -243,6 +245,11 @@ class Resolved extends Part
         return $this->attributeCollectionHelper('attachments', Attachment::class);
     }
 
+    /**
+     * Gets the `guild` attribute.
+     *
+     * @return ?Guild
+     */
     protected function getGuildAttribute(): ?Guild
     {
         if (! isset($this->attributes['guild_id'])) {

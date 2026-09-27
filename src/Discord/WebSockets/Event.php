@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,6 +17,7 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
+use Discord\Parts\User\User;
 use Discord\Repository\Guild\MemberRepository;
 use Evenement\EventEmitterTrait;
 
@@ -39,6 +41,8 @@ abstract class Event
     public const GUILD_MEMBERS_CHUNK = 'GUILD_MEMBERS_CHUNK';
     public const INTERACTION_CREATE = 'INTERACTION_CREATE';
     public const USER_UPDATE = 'USER_UPDATE';
+    /** Sent when a request over the gateway, such as Request Guild Members, is rate limited. @since 10.60.0 */
+    public const RATE_LIMITED = 'RATE_LIMITED';
 
     // Guild
     public const GUILD_CREATE = 'GUILD_CREATE';
@@ -65,7 +69,14 @@ abstract class Event
     public const GUILD_SCHEDULED_EVENT_USER_ADD = 'GUILD_SCHEDULED_EVENT_USER_ADD';
     public const GUILD_SCHEDULED_EVENT_USER_REMOVE = 'GUILD_SCHEDULED_EVENT_USER_REMOVE';
 
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE = 'GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE';
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE = 'GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE';
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE = 'GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE';
+
     public const GUILD_INTEGRATIONS_UPDATE = 'GUILD_INTEGRATIONS_UPDATE';
+    public const GUILD_JOIN_REQUEST_CREATE = 'GUILD_JOIN_REQUEST_CREATE';
+    public const GUILD_JOIN_REQUEST_UPDATE = 'GUILD_JOIN_REQUEST_UPDATE';
+    public const GUILD_JOIN_REQUEST_DELETE = 'GUILD_JOIN_REQUEST_DELETE';
     public const INTEGRATION_CREATE = 'INTEGRATION_CREATE';
     public const INTEGRATION_UPDATE = 'INTEGRATION_UPDATE';
     public const INTEGRATION_DELETE = 'INTEGRATION_DELETE';
@@ -85,6 +96,7 @@ abstract class Event
     public const GUILD_SOUNDBOARD_SOUND_CREATE = 'GUILD_SOUNDBOARD_SOUND_CREATE';
     public const GUILD_SOUNDBOARD_SOUND_UPDATE = 'GUILD_SOUNDBOARD_SOUND_UPDATE';
     public const GUILD_SOUNDBOARD_SOUND_DELETE = 'GUILD_SOUNDBOARD_SOUND_DELETE';
+    public const GUILD_SOUNDBOARD_SOUNDS_UPDATE = 'GUILD_SOUNDBOARD_SOUNDS_UPDATE';
     public const SOUNDBOARD_SOUNDS = 'SOUNDBOARD_SOUNDS';
 
     // Channel
@@ -104,6 +116,14 @@ abstract class Event
     // Voice
     public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
     public const VOICE_SERVER_UPDATE = 'VOICE_SERVER_UPDATE';
+    /** Sent when someone sends an emoji reaction or a soundboard sound in a voice channel the bot is in. @since 10.60.0 */
+    public const VOICE_CHANNEL_EFFECT_SEND = 'VOICE_CHANNEL_EFFECT_SEND';
+    /** Sent in response to Request Channel Info (ephemeral channel data). */
+    public const CHANNEL_INFO = 'CHANNEL_INFO';
+    /** Sent when the voice channel status changes. */
+    public const VOICE_CHANNEL_STATUS_UPDATE = 'VOICE_CHANNEL_STATUS_UPDATE';
+    /** Sent when the voice channel start time changes. */
+    public const VOICE_CHANNEL_START_TIME_UPDATE = 'VOICE_CHANNEL_START_TIME_UPDATE';
 
     // Stage Instance
     public const STAGE_INSTANCE_CREATE = 'STAGE_INSTANCE_CREATE';
@@ -126,6 +146,27 @@ abstract class Event
     public const ENTITLEMENT_CREATE = 'ENTITLEMENT_CREATE';
     public const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
     public const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
+
+    // Subscriptions
+    public const SUBSCRIPTION_CREATE = 'SUBSCRIPTION_CREATE';
+    public const SUBSCRIPTION_UPDATE = 'SUBSCRIPTION_UPDATE';
+    public const SUBSCRIPTION_DELETE = 'SUBSCRIPTION_DELETE';
+
+    // Game Server
+    public const GAME_SERVER_UPDATE = 'GAME_SERVER_UPDATE';
+    public const GAME_SERVER_DELETE = 'GAME_SERVER_DELETE';
+
+    // Webhook events, sent to the application's Webhook Events URL rather than the gateway
+    // (see Discord::getWebhookEvents()). The ENTITLEMENT_* events above can arrive both ways.
+    public const APPLICATION_AUTHORIZED = 'APPLICATION_AUTHORIZED';
+    /** For Social SDK apps, the only out-of-game sign that a user's tokens were revoked and their account unmerged. */
+    public const APPLICATION_DEAUTHORIZED = 'APPLICATION_DEAUTHORIZED';
+    public const LOBBY_MESSAGE_CREATE = 'LOBBY_MESSAGE_CREATE';
+    public const LOBBY_MESSAGE_UPDATE = 'LOBBY_MESSAGE_UPDATE';
+    public const LOBBY_MESSAGE_DELETE = 'LOBBY_MESSAGE_DELETE';
+    public const GAME_DIRECT_MESSAGE_CREATE = 'GAME_DIRECT_MESSAGE_CREATE';
+    public const GAME_DIRECT_MESSAGE_UPDATE = 'GAME_DIRECT_MESSAGE_UPDATE';
+    public const GAME_DIRECT_MESSAGE_DELETE = 'GAME_DIRECT_MESSAGE_DELETE';
 
     /**
      * The Discord client instance.
@@ -181,12 +222,28 @@ abstract class Event
      */
     protected function cacheUser(object $userdata): void
     {
-        $users = $this->discord->users;
-        if ($user = $users->get('id', $userdata->id)) {
-            $user->fill((array) $userdata);
-        } else {
-            $users->pushItem($users->create($userdata, true));
+        // Guard against partial payloads with no id — pushing one would key the
+        // repository (and its cache) on null. Also tolerate being handed a
+        // hydrated User part instead of raw gateway data: `(array)` on a Part
+        // yields its internal props, not its attributes, so `create()` would
+        // otherwise build a User with a null id.
+        $id = $userdata->id ?? null;
+        if ($id === null) {
+            return;
         }
+
+        $users = $this->discord->users;
+        $isPart = $userdata instanceof User;
+
+        if ($user = $users->get('id', $id)) {
+            if (! $isPart) {
+                $user->fill((array) $userdata);
+            }
+
+            return;
+        }
+
+        $users->pushItem($isPart ? $userdata : $users->create($userdata, true));
     }
 
     /**
@@ -206,6 +263,9 @@ abstract class Event
         }
     }
 
+    /**
+     * @return array
+     */
     public function __debugInfo(): array
     {
         return [];

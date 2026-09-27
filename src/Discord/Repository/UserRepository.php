@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -72,7 +73,7 @@ class UserRepository extends AbstractRepository
      * Returns the user object of the requester's account.
      * For OAuth2, this requires the identify scope, which will return the object without an email, and optionally the email scope, which returns the object with an email if the user has one.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user
+     * @link https://docs.discord.com/developers/resources/user#get-current-user
      *
      * @return PromiseInterface<User>
      *
@@ -92,7 +93,7 @@ class UserRepository extends AbstractRepository
      * Returns a user object on success.
      * Fires a User Update Gateway event.
      *
-     * @link https://discord.com/developers/docs/resources/user#modify-current-user
+     * @link https://docs.discord.com/developers/resources/user#modify-current-user
      *
      * @param array   $params
      * @param string  $username User's username, if changed may cause the user's discriminator to be randomized.

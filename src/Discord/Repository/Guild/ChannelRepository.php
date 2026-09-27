@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -55,8 +56,9 @@ class ChannelRepository extends AbstractRepository
     /**
      * Attempts to save a channel to the Discord servers.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
      *
+     * @deprecated 10.41.3 use `ChannelBuilder::create($repository)`
      * @since 10.25.0
      *
      * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.
@@ -66,6 +68,25 @@ class ChannelRepository extends AbstractRepository
      * @return PromiseInterface<Channel>
      */
     public function createChannel($guild, $channel, ?string $reason = null): PromiseInterface
+    {
+        return $this->build($guild, $channel, $reason);
+    }
+
+    /**
+     * Attempts to save a channel to the Discord servers.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
+     *
+     * @deprecated 10.41.0 Use `ChannelBuilder::create($repository)`
+     * @since 10.25.0
+     *
+     * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.
+     * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param string|null                   $reason  Reason for Audit Log.
+     *
+     * @return PromiseInterface<Channel>
+     */
+    public function build($guild, $channel, ?string $reason = null): PromiseInterface
     {
         if (! is_string($guild)) {
             $guild = $guild->id;

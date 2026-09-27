@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
@@ -21,17 +21,17 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 
 /**
- * TODO.
+ * Represents a Guild Search result.
  *
- * @link TODO
+ * @link https://docs.discord.com/developers/resources/guild#search-guild-members
  *
- * @property string                                   $analytics_id
- * @property ExCollectionInterface<Message>|Message[] $messages
- * @property bool                                     $doing_deep_historical_index
- * @property int                                      $total_results
- * @property ExCollectionInterface<Thread>|Thread[]   $threads
- * @property ExCollectionInterface<Member>|Member[]   $members
- * @property ?int|null                                $documents_indexed
+ * @property string                                   $analytics_id                The analytics ID for the search query.
+ * @property ExCollectionInterface<Message>|Message[] $messages                    An array of messages that match the query.
+ * @property bool                                     $doing_deep_historical_index The status of the guild's deep historical indexing operation, if any.
+ * @property int                                      $total_results               The total number of results that match the query.
+ * @property ExCollectionInterface<Thread>|Thread[]   $threads                     The threads that contain the returned messages.
+ * @property ExCollectionInterface<Member>|Member[]   $members                     A thread member object for each returned thread the current user has joined.
+ * @property ?int|null                                $documents_indexed           The number of documents that have been indexed during the current index operation, if any.
  */
 class GuildSearch extends Part
 {
@@ -51,31 +51,28 @@ class GuildSearch extends Part
     /**
      * Returns a collection of messages found in the search.
      *
+     * The nested array was used to provide surrounding context to search results. However, surrounding context is no longer returned.
+     *
      * @return ExCollectionInterface<Message>|Message[]
      */
     protected function getMessagesAttribute(): ExCollectionInterface
     {
-        if (isset($this->attributes['messages']) && $this->attributes['messages'] instanceof ExCollectionInterface) {
-            return $this->attributes['messages'];
-        }
-
-        $collection = Collection::for(Message::class);
+        /** @var ExCollectionInterface<Message> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
             return $collection;
         }
 
-        foreach ($this->attributes['messages'] as $snowflake => $message) {
+        foreach ($this->attributes['messages'] as $snowflake => &$message) {
             if ($guild = $this->discord->guilds->get('id', $message->guild_id)) {
                 if ($channel = $guild->channels->get('id', $message->channel_id)) {
-                    $messagePart = $channel->messages->get('id', $snowflake);
+                    $message = $messagePart = $channel->messages->get('id', $snowflake);
                 }
             }
 
-            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message, true));
+            $collection->pushItem($messagePart ?? $message = $this->factory->part(Message::class, (array) $message, true));
         }
-
-        $this->attributes['messages'] = $collection;
 
         return $collection;
     }
@@ -87,28 +84,27 @@ class GuildSearch extends Part
      */
     protected function getMembersAttribute(): ExCollectionInterface
     {
-        if (isset($this->attributes['members']) && $this->attributes['members'] instanceof ExCollectionInterface) {
-            return $this->attributes['members'];
+        /** @var ExCollectionInterface<Member> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Member::class);
+
+        if (! isset($this->attributes['members'])) {
+            return $collection;
         }
 
-        $collection = Collection::for(Member::class);
-
-        foreach ($this->attributes['members'] ?? [] as $snowflake => $member) {
+        foreach ($this->attributes['members'] ?? [] as $snowflake => &$member) {
             if ($guild_id = $member->guild_id) {
                 if ($guild = $this->discord->guilds->get('id', $guild_id)) {
-                    $memberPart = $guild->members->get('id', $snowflake);
+                    $member = $memberPart = $guild->members->get('id', $snowflake);
                 }
             }
 
             if (! isset($memberPart)) {
                 $member->user = $this->attributes['users']->$snowflake;
-                $memberPart = $this->factory->part(Member::class, (array) $member, true);
+                $member = $memberPart = $this->factory->part(Member::class, (array) $member, true);
             }
 
             $collection->pushItem($memberPart);
         }
-
-        $this->attributes['members'] = $collection;
 
         return $collection;
     }

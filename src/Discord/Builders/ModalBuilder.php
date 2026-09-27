@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -23,8 +24,8 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build Modals.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal
- * @link https://discord.com/developers/docs/components/using-modal-components
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-response-object-modal
+ * @link https://docs.discord.com/developers/components/using-modal-components
  *
  * @since 10.19.0
  *
@@ -32,6 +33,8 @@ use function Discord\poly_strlen;
  */
 class ModalBuilder extends Builder implements JsonSerializable
 {
+    use ComponentsTrait;
+
     /**
      * Interaction type.
      *
@@ -54,13 +57,6 @@ class ModalBuilder extends Builder implements JsonSerializable
     protected $title;
 
     /**
-     * Between 1 and 5 (inclusive) components that make up the modal.
-     *
-     * @var ComponentObject[]
-     */
-    protected $components;
-
-    /**
      * Creates a new message builder.
      *
      * @param string            $title
@@ -69,7 +65,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @return static
      */
-    public static function new($title, $custom_id, $components): self
+    public static function new($title, $custom_id, $components): static
     {
         $modal = new self();
 
@@ -87,7 +83,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId(string $custom_id): self
     {
@@ -117,7 +113,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @throws \LengthException Modal title too long.
      *
-     * @return $this
+     * @return self
      */
     public function setTitle(string $title): self
     {
@@ -141,40 +137,22 @@ class ModalBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Sets the components of the modal (Limit 5).
-     *
-     * @param ComponentObject[] $components
-     *
-     * @return $this
-     */
-    public function setComponents(...$components): self
-    {
-        $this->components = [];
-
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
      * Add a component to the modal.
      *
      * Only ActionRow, TextDisplay, and Label components are allowed.
      *
-     * Using ActionRow in modals is now deprecated. Use `Component::Label` as the top level component.
+     * Using ActionRow in modals is now deprecated. Use `ComponentObject::Label` as the top level component.
      *
      * @param ComponentObject $component
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        If the modal has more than 5 components.
      *
-     * @return $this
+     * @return self
      */
-    public function addComponent(ComponentObject $component): self
+    public function addComponent($component): self
     {
-        if (! in_array($component::USAGE, ['Modal'])) {
+        if (! in_array('Modal', $component::USAGE, true)) {
             throw new \InvalidArgumentException('Invalid component type for modals.');
         }
 
@@ -198,7 +176,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @param ComponentObject $component Component to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeComponent($component): self
     {

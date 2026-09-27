@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -15,7 +16,6 @@ namespace Discord\Parts\Channel;
 
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -24,17 +24,20 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
-use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
+use Discord\Repository\Guild\ChannelRepository;
+use Discord\Repository\PrivateChannelRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -46,7 +49,9 @@ use function React\Promise\resolve;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @link https://discord.com/developers/docs/resources/channel#channel-object
+ * @link https://docs.discord.com/developers/resources/channel#channel-object
+ *
+ * @todo Class will be abstract and deprecated for userland in v11.
  *
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
@@ -65,7 +70,7 @@ use function React\Promise\resolve;
  * @property-read User|null                          $recipient                          The first recipient of the DM (DM/group).
  * @property-read string|null                        $recipient_id                       The ID of the recipient (DM).
  * @property      ?string|null                       $icon                               Icon hash of the group DM.
- * @property      string|null                        $application_id                     Application id of the group DM creator if bot-created.
+ * @property      string|null                        $application_id                     Application id associated with the channel. For group DMs, this is the application that created the group.
  * @property      bool|null                          $managed                            For group DM channels: whether the channel is managed by an application via the `gdm.join` OAuth2 scope.
  * @property      ?string|null                       $rtc_region                         Voice region id for the voice channel, automatic when set to null.
  * @property      int|null                           $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
@@ -88,19 +93,49 @@ class Channel extends Part implements Stringable
 {
     use ChannelTrait;
 
+    /** A text channel within a server. */
     public const TYPE_GUILD_TEXT = 0;
+    /** A direct message between users. */
     public const TYPE_DM = 1;
+    /** A voice channel within a server. */
     public const TYPE_GUILD_VOICE = 2;
+    /** A direct message between multiple users. */
     public const TYPE_GROUP_DM = 3;
+
+    /** An organizational category that contains up to 50 channels. */
     public const TYPE_GUILD_CATEGORY = 4;
+    /** A channel that users can follow and crosspost into their own server (formerly news channels). */
     public const TYPE_GUILD_ANNOUNCEMENT = 5;
+    /** A temporary sub-channel within a `GUILD_ANNOUNCEMENT` channel. */
     public const TYPE_ANNOUNCEMENT_THREAD = 10;
+    /** A temporary sub-channel within a `GUILD_TEXT` or `GUILD_FORUM` channel. */
     public const TYPE_PUBLIC_THREAD = 11;
+    /** A temporary sub-channel within a `GUILD_TEXT` channel that is only viewable by those invited and those with the `MANAGE_THREADS` permission. */
     public const TYPE_PRIVATE_THREAD = 12;
+    /** A voice channel for hosting events with an audience. */
     public const TYPE_GUILD_STAGE_VOICE = 13;
+    /** The channel in a hub containing the listed servers. */
     public const TYPE_GUILD_DIRECTORY = 14;
+    /** Channel that can only contain threads. */
     public const TYPE_GUILD_FORUM = 15;
+    /** Channel that can only contain threads, similar to `GUILD_FORUM` channels. */
     public const TYPE_GUILD_MEDIA = 16;
+
+    public const TYPES = [
+        self::TYPE_GUILD_TEXT => GuildText::class,
+        self::TYPE_DM => DM::class,
+        self::TYPE_GUILD_VOICE => GuildVoice::class,
+        self::TYPE_GROUP_DM => GroupDM::class,
+        self::TYPE_GUILD_CATEGORY => GuildCategory::class,
+        self::TYPE_GUILD_ANNOUNCEMENT => GuildAnnouncement::class,
+        self::TYPE_ANNOUNCEMENT_THREAD => AnnouncementThread::class,
+        self::TYPE_PUBLIC_THREAD => PublicThread::class,
+        self::TYPE_PRIVATE_THREAD => PrivateThread::class,
+        self::TYPE_GUILD_STAGE_VOICE => GuildStageVoice::class,
+        self::TYPE_GUILD_DIRECTORY => GuildDirectory::class,
+        self::TYPE_GUILD_FORUM => GuildForum::class,
+        self::TYPE_GUILD_MEDIA => GuildMedia::class,
+    ];
 
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
     public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
@@ -123,19 +158,35 @@ class Channel extends Part implements Stringable
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_FORUM` */
     public const TYPE_FORUM = self::TYPE_GUILD_FORUM;
 
+    /** Discord chooses the quality for optimal performance. */
     public const VIDEO_QUALITY_AUTO = 1;
+    /** 720p. */
     public const VIDEO_QUALITY_FULL = 2;
 
     /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
     public const FLAG_PINNED = (1 << 1);
+    /** Whether a tag is required to be specified when creating a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Tags are specified in the `applied_tags` field. */
     public const FLAG_REQUIRE_TAG = (1 << 4);
+    /** @deprecated 10.51.1 Use `Channel::FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS` */
+    public const HIDE_MEDIA_DOWNLOAD_OPTIONS = self::FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS;
+    /** When set hides the embedded media download options. Available only for media channels. */
+    public const FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
+    /** This channel is a Spoiler Channel i.e. users must opt in to view its contents. Can be set on all textual guild channels and voice channels (not `GUILD_STAGE`). Can only be set if channel's `nsfw` is false. */
+    public const FLAG_IS_SPOILER_CHANNEL = (1 << 21);
 
+    /** Sort forum posts by activity. */
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
+    /**	Sort forum posts by creation time (from most recent to oldest). */
     public const SORT_ORDER_CREATION_DATE = 1;
 
+    /** No default has been set for forum channel. */
     public const FORUM_LAYOUT_NOT_SET = 0;
+    /** Display posts as a list. */
     public const FORUM_LAYOUT_LIST_VIEW = 1;
-    public const FORUM_LAYOUT_GRID_VIEW = 2;
+    /** Display posts as a collection of tiles. */
+    public const FORUM_LAYOUT_GALLERY_VIEW = 2;
+    /** @deprecated 10.36.32 Use `Channel::FORUM_LAYOUT_GALLERY_VIEW` */
+    public const FORUM_LAYOUT_GRID_VIEW = self::FORUM_LAYOUT_GALLERY_VIEW;
 
     /**
      * @inheritDoc
@@ -182,7 +233,6 @@ class Channel extends Part implements Stringable
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
-        'members' => MemberRepository::class,
         'messages' => MessageRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
@@ -231,10 +281,11 @@ class Channel extends Part implements Stringable
      */
     protected function getRecipientsAttribute(): ExCollectionInterface
     {
-        $recipients = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $recipients */
+        $recipients = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
-            $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?: $this->factory->part(User::class, (array) $recipient, true));
+            $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?? $this->factory->part(User::class, (array) $recipient, true));
         }
 
         return $recipients;
@@ -243,7 +294,7 @@ class Channel extends Part implements Stringable
     /**
      * Sets permissions in a channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://docs.discord.com/developers/resources/channel#edit-channel-permissions
      *
      * @param Part        $part   A role or member.
      * @param array       $allow  An array of permissions to allow.
@@ -284,7 +335,7 @@ class Channel extends Part implements Stringable
     /**
      * Sets an overwrite to the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://docs.discord.com/developers/resources/channel#edit-channel-permissions
      *
      * @param Part        $part      A role or member.
      * @param Overwrite   $overwrite An overwrite object.
@@ -600,7 +651,7 @@ class Channel extends Part implements Stringable
                 if (! $voiceChannel = $member->getVoiceChannel()) {
                     return reject(new \RuntimeException('Bot must be connected to a voice channel to send soundboard sounds.'));
                 }
-                if (! $voiceChannel->id === $this->id) {
+                if ($voiceChannel->id !== $this->id) {
                     return reject(new \RuntimeException("Bot must be connected to the voice channel {$this->id} to send it soundboard sounds."));
                 }
                 if ($member->deaf || $member->mute) { // Member can also not be self-muted or suppressed
@@ -628,9 +679,89 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Sets the voice channel status string for this channel.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#set-voice-channel-status
+     *
+     * @param string|null $status The status string to set (up to 500 characters). Use null to clear.
+     * @param string|null $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      If the channel is not voice-based.
+     * @throws NoPermissionsException If the bot lacks the required permissions.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.48.0
+     */
+    public function setVoiceChannelStatus(?string $status = null, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot set a voice channel status on a non-voice channel.'));
+        }
+
+        if ($this->guild !== null) {
+            if ($botperms = $this->getBotPermissions()) {
+                // If the bot is not connected to the voice channel, MANAGE_CHANNELS is required.
+                $connected = false;
+                if ($member = $this->guild->members->get('id', $this->discord->id)) {
+                    if ($voiceChannel = $member->getVoiceChannel()) {
+                        if ($voiceChannel->id === $this->id) {
+                            $connected = true;
+                        }
+                    }
+                }
+
+                if (! $connected && ! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to set the voice channel status for the channel {$this->id}."));
+                }
+
+                if (! $botperms->set_voice_channel_status) {
+                    return reject(new NoPermissionsException("You do not have permission to set the voice channel status for the channel {$this->id}."));
+                }
+            }
+        }
+
+        $payload = ['status' => $status];
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_VOICE_STATUS, $this->id), $payload, $headers);
+    }
+
+    /**
+     * Follow an Announcement Channel to send messages to a target channel.
+     *
+     * Requires the MANAGE_WEBHOOKS permission in the target channel.
+     *
+     * Returns a followed channel object. Fires a Webhooks Update Gateway event for the target channel.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#followed-channel-object
+     *
+     * @param string $webhookChannelId ID of the channel to receive crossposted messages.
+     *
+     * @return PromiseInterface<array{channel: Channel|int, webhook: int}>
+     *
+     * @since 10.46.0
+     */
+    public function follow(string $webhookChannelId): PromiseInterface
+    {
+        $payload = ['webhook_channel_id' => $webhookChannelId];
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_FOLLOW, $this->id), $payload)->then(
+            fn ($response) => [
+                'channel' => $this->discord->getChannel($response->channel_id) ?? $response->channel_id,
+                'webhook' => $response->webhook_id,
+            ]
+        );
+    }
+
+    /**
      * Creates an invite for the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
+     * @link https://docs.discord.com/developers/resources/channel#create-channel-invite
      *
      * @param array       $options                          An array of options. All fields are optional.
      * @param int         $options['max_age']               The time that the invite will be valid in seconds.
@@ -639,7 +770,11 @@ class Channel extends Part implements Stringable
      * @param bool        $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
      * @param int         $options['target_type']           The type of target for this voice channel invite.
      * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
+     * @param string      $options['target_user_ids']       An array of IDs of all users able to see and accept this invite. Max of 1000 IDs.
      * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param object      $options['target_users_file']     (TODO) A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body. Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described. Duplicate user IDs in the file will be ignored.
+     * @param string      $options['payload_json']          JSON-encoded body of non-file params, only for `multipart/form-data` requests.
+     * @param string[]    $options['role_ids']              The role ID(s) for roles in the guild given to the users that accept this invite. Requires the `MANAGE_ROLES` permission and cannot assign roles with higher permissions than the sender.
      * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing create_instant_invite permission.
@@ -656,6 +791,16 @@ class Channel extends Part implements Stringable
             if (! $botperms->create_instant_invite) {
                 return reject(new NoPermissionsException("You do not have permission to create instant invite in the channel {$this->id}."));
             }
+            if (isset($options['role_ids'])) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("You do not have permission to manage roles in the channel {$this->id}."));
+                }
+            }
+        }
+
+        // target_user_ids and target_users_file are mutually exclusive, only one can be sent at a time.
+        if (isset($options['target_user_ids'])) {
+            unset($options['target_users_file']);
         }
 
         $resolver = new OptionsResolver();
@@ -667,17 +812,24 @@ class Channel extends Part implements Stringable
                 'unique',
                 'target_type',
                 'target_user_id',
+                'target_user_ids',
                 'target_application_id',
+                'target_users_file',
+                'payload_json',
+                'role_ids',
             ])
             ->setAllowedTypes('max_age', 'int')
+            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
             ->setAllowedTypes('max_uses', 'int')
+            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100))
             ->setAllowedTypes('temporary', 'bool')
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
+            ->setAllowedTypes('target_user_ids', 'array')
             ->setAllowedTypes('target_application_id', ['string', 'int'])
-            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
-            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100));
+            ->setAllowedTypes('payload_json', 'string')
+            ->setAllowedTypes('role_ids', 'array');
 
         $options = $resolver->resolve($options);
 
@@ -702,7 +854,7 @@ class Channel extends Part implements Stringable
     /**
      * Deletes a given number of messages, in order of time sent.
      *
-     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://docs.discord.com/developers/resources/channel#bulk-delete-messages
      *
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
@@ -728,7 +880,7 @@ class Channel extends Part implements Stringable
      * Deleting a category does not delete its child channels; they will have their parent_id removed and a Channel Update Gateway event will fire for each of them.
      * For Community guilds, the Rules or Guidelines channel and the Community Updates channel cannot be deleted.
      *
-     * @link https://discord.com/developers/docs/resources/channel#deleteclose-channel
+     * @link https://docs.discord.com/developers/resources/channel#deleteclose-channel
      *
      * @param string|null $reason Reason for Audit Log.
      *
@@ -827,11 +979,11 @@ class Channel extends Part implements Stringable
     /**
      * Starts a thread in the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-without-message
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in an announcement channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
@@ -930,7 +1082,7 @@ class Channel extends Part implements Stringable
 
             if ($this->type === self::TYPE_GUILD_ANNOUNCEMENT) {
                 if ($options['private']) {
-                    return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                    return reject(new \RuntimeException('You cannot start a private thread within an announcement channel.'));
                 }
 
                 $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
@@ -985,10 +1137,25 @@ class Channel extends Part implements Stringable
             return $threadPart;
         });
     }
+
+    /**
+     * Gets the members currently in the voice channel.
+     *
+     * @return ExCollectionInterface<Member>|Member[] Members in the voice channel.
+     */
+    public function getMembersAttribute(): ExCollectionInterface
+    {
+        if ($guild = $this->guild) {
+            return $guild->members->filter(fn (Member $member) => $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id)->has($member->id));
+        }
+
+        return $this->discord->getCollectionClass()::for(Member::class, 'id');
+    }
+
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1019,6 +1186,7 @@ class Channel extends Part implements Stringable
                     'nsfw' => $this->nsfw,
                     'default_auto_archive_duration' => $this->default_auto_archive_duration,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1031,6 +1199,7 @@ class Channel extends Part implements Stringable
                     'nsfw' => $this->nsfw,
                     'rtc_region' => $this->rtc_region,
                     'video_quality_mode' => $this->video_quality_mode,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1040,6 +1209,7 @@ class Channel extends Part implements Stringable
                     'parent_id' => $this->parent_id,
                     'nsfw' => $this->nsfw,
                     'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1067,6 +1237,21 @@ class Channel extends Part implements Stringable
                     'default_sort_order' => $this->default_sort_order,
                     'default_forum_layout' => $this->default_forum_layout,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
+                    'flags' => $this->flags,
+                ]);
+                break;
+
+            case self::TYPE_GUILD_MEDIA:
+                $attr += $this->makeOptionalAttributes([
+                    'topic' => $this->topic,
+                    'rate_limit_per_user' => $this->rate_limit_per_user,
+                    'parent_id' => $this->parent_id,
+                    'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                    'default_reaction_emoji' => $this->attributes['default_reaction_emoji'] ?? null,
+                    'available_tags',
+                    'default_sort_order' => $this->default_sort_order,
+                    'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
+                    'flags' => $this->flags,
                 ]);
                 break;
         }
@@ -1077,7 +1262,7 @@ class Channel extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
+     * @link https://docs.discord.com/developers/resources/channel#modify-channel-json-params-guild-channel
      */
     public function getUpdatableAttributes(): array
     {
@@ -1093,6 +1278,7 @@ class Channel extends Part implements Stringable
             'name' => $this->name,
             'position' => $this->position,
             'permission_overwrites' => $this->getPermissionOverwritesAttribute(),
+            'flags' => $this->flags,
         ];
 
         switch ($this->type) {
@@ -1105,6 +1291,7 @@ class Channel extends Part implements Stringable
                 $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
                 $attr += $this->makeOptionalAttributes([
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                    'flags' => $this->flags,
                 ]);
                 break;
 
@@ -1116,6 +1303,9 @@ class Channel extends Part implements Stringable
                 $attr['parent_id'] = $this->parent_id;
                 $attr['rtc_region'] = $this->rtc_region;
                 $attr['video_quality_mode'] = $this->video_quality_mode;
+                $attr += $this->makeOptionalAttributes([
+                    'flags' => $this->flags,
+                ]);
                 break;
 
             case self::TYPE_GUILD_ANNOUNCEMENT:
@@ -1124,6 +1314,9 @@ class Channel extends Part implements Stringable
                 $attr['nsfw'] = $this->nsfw;
                 $attr['parent_id'] = $this->parent_id;
                 $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+                $attr += $this->makeOptionalAttributes([
+                    'flags' => $this->flags,
+                ]);
                 break;
 
             case self::TYPE_GUILD_STAGE_VOICE:
@@ -1137,6 +1330,7 @@ class Channel extends Part implements Stringable
                 break;
 
             case self::TYPE_GUILD_FORUM:
+            case self::TYPE_GUILD_MEDIA:
                 $attr['topic'] = $this->topic;
                 $attr['nsfw'] = $this->nsfw;
                 $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
@@ -1151,9 +1345,61 @@ class Channel extends Part implements Stringable
                     'default_forum_layout' => $this->default_forum_layout,
                 ]);
                 break;
+
+                // @todo Add case self::TYPE_GUILD_MEDIA
         }
 
         return $attr;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ChannelRepository|PrivateChannelRepository The repository.
+     */
+    public function getRepository(): ChannelRepository|PrivateChannelRepository
+    {
+        if (isset($this->attributes['guild_id'])) {
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->channels;
+        }
+
+        return $this->discord->private_channels;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        $repository = $this->getRepository();
+
+        if (isset($this->attributes['guild_id'])) {
+            if ($botperms = $this->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
+                }
+            }
+
+            return $repository->save($this, $reason);
+        } elseif ($this->created && $repository->get('id', $this->id)) {
+            $data = [];
+            if ($this->name) {
+                $data['name'] = $this->name;
+            }
+            if ($this->icon) {
+                $data['icon'] = $this->icon;
+            }
+
+            return $repository->modifyGroupDM($this, $data);
+        }
+
+        return parent::save($reason);
     }
 
     /**

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
+use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
@@ -24,7 +25,7 @@ use function Discord\poly_strlen;
 /**
  * An embed object to be sent with a message.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
  *
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
@@ -42,6 +43,7 @@ use function Discord\poly_strlen;
  * @property-read ?Provider|null                        $provider    The provider of the embed.
  * @property      ?Author|null                          $author      The author of the embed.
  * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
+ * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
  */
 class Embed extends Part
 {
@@ -56,13 +58,23 @@ class Embed extends Part
         self::TYPE_POLL_RESULT => EmbedPollResult::class,
     ];
 
+    /** Generic embed rendered from embed attributes. */
     public const TYPE_RICH = 'rich';
+    /** Image embed. */
     public const TYPE_IMAGE = 'image';
+    /** Video embed. */
     public const TYPE_VIDEO = 'video';
+    /** Animated gif image embed rendered as a video embed. */
     public const TYPE_GIFV = 'gifv';
+    /** Article embed. */
     public const TYPE_ARTICLE = 'article';
+    /** Link embed. */
     public const TYPE_LINK = 'link';
+    /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
+
+    /** This embed is a reply to an activity card and is no longer displayed. */
+    public const FLAG_IS_CONTENT_INVENTORY_ENTRY = 1 << 5;
 
     /**
      * @inheritDoc
@@ -81,6 +93,7 @@ class Embed extends Part
         'provider',
         'author',
         'fields',
+        'flags',
     ];
 
     /**
@@ -203,7 +216,7 @@ class Embed extends Part
             throw new \LengthException('Embed description can not be longer than 4096 characters');
         } else {
             if ($this->exceedsOverallLimit(poly_strlen($description))) {
-                throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['description'] = $description;
@@ -235,7 +248,7 @@ class Embed extends Part
      *
      * @throws \LengthException Embed text too long.
      *
-     * @return $this
+     * @return self
      */
     protected function setTitleAttribute(string $title): self
     {
@@ -244,7 +257,7 @@ class Embed extends Part
         } elseif (poly_strlen($title) > 256) {
             throw new \LengthException('Embed title can not be longer than 256 characters');
         } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         } else {
             $this->attributes['title'] = $title;
         }
@@ -257,7 +270,7 @@ class Embed extends Part
      *
      * @param string $title
      *
-     * @return $this
+     * @return self
      */
     public function setTitle(string $title): self
     {
@@ -273,7 +286,7 @@ class Embed extends Part
      *
      * @param string $type
      *
-     * @return $this
+     * @return self
      */
     public function setType(string $type): self
     {
@@ -287,7 +300,7 @@ class Embed extends Part
      *
      * @param string $description
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(string $description): self
     {
@@ -301,7 +314,7 @@ class Embed extends Part
      *
      * @param mixed $color
      *
-     * @return $this
+     * @return self
      */
     public function setColor($color): self
     {
@@ -317,12 +330,12 @@ class Embed extends Part
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      *
-     * @return $this
+     * @return self
      */
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
-            if (count($this->fields) > 25) {
+            if (count($this->fields) >= 25) {
                 throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
@@ -345,9 +358,9 @@ class Embed extends Part
      *
      * @throws \OverflowException
      *
-     * @return $this
+     * @return self
      */
-    public function addFieldValues(string $name, string $value, bool $inline = false): static
+    public function addFieldValues(string $name, string $value, bool $inline = false): self
     {
         return $this->addField([
             'name' => $name,
@@ -359,14 +372,14 @@ class Embed extends Part
     /**
      * Set the author of this embed.
      *
-     * @param string                 $name    Maximum length is 256 characters.
-     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
-     * @param string|null            $url     The URL to the author, only http(s) URLs are allowed.
+     * @param string                                          $name    Maximum length is 256 characters.
+     * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string|null                                     $url     The URL to the author, only http(s) URLs are allowed.
      *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
-     * @return $this
+     * @return self
      */
     public function setAuthor(string $name, $iconurl = null, ?string $url = null): self
     {
@@ -376,10 +389,10 @@ class Embed extends Part
         } elseif ($length > 256) {
             throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
-        if ($iconurl instanceof Attachment) {
+        if ($iconurl instanceof Attachment || $iconurl instanceof AttachmentRequestBuilder) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
 
@@ -399,13 +412,13 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string                 $text    Maximum length is 2048 characters.
-     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string                                          $text    Maximum length is 2048 characters.
+     * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
      *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
-     * @return $this
+     * @return self
      */
     public function setFooter(string $text, $iconurl = null): self
     {
@@ -415,10 +428,10 @@ class Embed extends Part
         } elseif ($length > 2048) {
             throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
-            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
         }
 
-        if ($iconurl instanceof Attachment) {
+        if ($iconurl instanceof Attachment || $iconurl instanceof AttachmentRequestBuilder) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
 
@@ -435,15 +448,15 @@ class Embed extends Part
     /**
      * Set the image of this embed.
      *
-     * @param string|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
+     * @param string|AttachmentRequestBuilder|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
-     * @return $this
+     * @return self
      */
     public function setImage($url): self
     {
-        if ($url instanceof Attachment) {
+        if ($url instanceof Attachment || $url instanceof AttachmentRequestBuilder) {
             $url = 'attachment://'.$url->filename;
         }
 
@@ -457,15 +470,15 @@ class Embed extends Part
     /**
      * Set the thumbnail of this embed.
      *
-     * @param string|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
+     * @param string|AttachmentRequestBuilder|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
-     * @return $this
+     * @return self
      */
     public function setThumbnail($url): self
     {
-        if ($url instanceof Attachment) {
+        if ($url instanceof Attachment || $url instanceof AttachmentRequestBuilder) {
             $url = 'attachment://'.$url->filename;
         }
 
@@ -483,7 +496,7 @@ class Embed extends Part
      *
      * @throws \Exception
      *
-     * @return $this
+     * @return self
      */
     public function setTimestamp(?int $timestamp = null): self
     {
@@ -497,7 +510,7 @@ class Embed extends Part
      *
      * @param string $url
      *
-     * @return $this
+     * @return self
      */
     public function setURL(string $url): self
     {

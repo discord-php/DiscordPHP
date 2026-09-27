@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -27,7 +28,7 @@ use function Discord\poly_strlen;
  * They can be clicked by users, and send an interaction to your app when
  * clicked.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#buttons
+ * @link https://docs.discord.com/developers/components/reference#button
  *
  * @since 7.0.0
  *
@@ -45,11 +46,17 @@ class Button extends Interactive
 {
     public const USAGE = ['Message'];
 
+    /** The most important or recommended action in a group of options. */
     public const STYLE_PRIMARY = 1;
+    /** Alternative or supporting actions. */
     public const STYLE_SECONDARY = 2;
+    /**	Positive confirmation or completion actions. */
     public const STYLE_SUCCESS = 3;
+    /** An action with irreversible consequences. */
     public const STYLE_DANGER = 4;
+    /** Navigates to a URL. */
     public const STYLE_LINK = 5;
+    /** Purchase. */
     public const STYLE_PREMIUM = 6;
 
     /**
@@ -57,7 +64,7 @@ class Button extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_BUTTON;
+    protected $type = ComponentObject::TYPE_BUTTON;
 
     /**
      * Style of button.
@@ -274,7 +281,7 @@ class Button extends Interactive
      *
      * @throws \InvalidArgumentException
      *
-     * @return $this
+     * @return self
      */
     public function setStyle(int $style): self
     {
@@ -307,7 +314,7 @@ class Button extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setLabel(?string $label): self
     {
@@ -325,7 +332,7 @@ class Button extends Interactive
      *
      * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {
@@ -372,7 +379,7 @@ class Button extends Interactive
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId(?string $custom_id): self
     {
@@ -396,7 +403,7 @@ class Button extends Interactive
      *
      * @throws \LogicException
      *
-     * @return $this
+     * @return self
      */
     public function setSkuId(?string $sku_id): self
     {
@@ -417,7 +424,7 @@ class Button extends Interactive
      * @throws \LogicException
      * @throws \LengthException URL exceeds 512 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setUrl(?string $url): self
     {
@@ -439,7 +446,7 @@ class Button extends Interactive
      *
      * @param bool|null $disabled
      *
-     * @return $this
+     * @return self
      */
     public function setDisabled(?bool $disabled): self
     {
@@ -469,7 +476,7 @@ class Button extends Interactive
      *
      * @throws \LogicException
      *
-     * @return $this
+     * @return self
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
@@ -513,7 +520,7 @@ class Button extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type !== Component::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
+            if ($interaction->data->component_type !== ComponentObject::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
                 return;
             }
 
@@ -544,7 +551,7 @@ class Button extends Interactive
     /**
      * Removes the listener from the button.
      *
-     * @return $this
+     * @return self
      */
     public function removeListener(): self
     {
@@ -663,6 +670,9 @@ class Button extends Interactive
         return $content;
     }
 
+    /**
+     * @return array
+     */
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);
