@@ -13221,6 +13221,11 @@ Search.appendIndex(
             "summary": "Handles\u0020dynamic\u0020get\u0020calls\u0020onto\u0020the\u0020part.",
             "url": "classes/Discord-Parts-PartTrait.html#method___get"
         },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003A__isset\u0028\u0029",
+            "name": "__isset",
+            "summary": "Handles\u0020isset\u0028\u0029\u0020and\u0020empty\u0028\u0029\u0020on\u0020the\u0020part\u0027s\u0020magic\u0020properties.",
+            "url": "classes/Discord-Parts-PartTrait.html#method___isset"
+        },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003A__set\u0028\u0029",
             "name": "__set",
             "summary": "Handles\u0020dynamic\u0020set\u0020calls\u0020onto\u0020the\u0020part.",
