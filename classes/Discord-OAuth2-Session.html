@@ -276,7 +276,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -394,6 +394,14 @@ separately, but shares the bot's driver and connection pool.</p>
 <dd>Returns the user&#039;s role connection for an application. Requires the `role_connections.write` scope.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-Session.html#method_getAuthorization">getAuthorization()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Authorization.html"><abbr title="\Discord\Parts\OAuth\Authorization">Authorization</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns what the user has authorised: the application, the scopes, when the token expires, and the
+user, when the token has the `identify` scope.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-Session.html#method_getConnections">getConnections()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;    </span>
@@ -434,6 +442,21 @@ separately, but shares the bot's driver and connection pool.</p>
                                 &nbsp;: <a href="classes/Discord-OAuth2-AccessToken.html"><abbr title="\Discord\OAuth2\AccessToken">AccessToken</abbr></a>    </span>
 </dt>
 <dd>The user&#039;s token.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-Session.html#method_getUserInfo">getUserInfo()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-UserInfo.html"><abbr title="\Discord\Parts\OAuth\UserInfo">UserInfo</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the user as OpenID Connect describes them. Requires the `openid` scope; the email claims also
+need the `email` scope.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-Session.html#method_setCommandPermissions">setCommandPermissions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a>&gt;    </span>
+</dt>
+<dd>Sets who can use one of an application&#039;s commands in a guild, replacing the permissions it had there.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-Session.html#method_updateApplicationRoleConnection">updateApplicationRoleConnection()</a>
@@ -493,7 +516,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
@@ -530,7 +553,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -567,7 +590,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -604,7 +627,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -641,7 +664,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -683,7 +706,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -747,7 +770,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">259</span>
 
     </aside>
 
@@ -785,7 +808,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">249</span>
 
     </aside>
 
@@ -830,7 +853,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -886,6 +909,66 @@ separately, but shares the bot's driver and connection pool.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getAuthorization">
+        getAuthorization()
+        <a href="classes/Discord-OAuth2-Session.html#method_getAuthorization" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">191</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns what the user has authorised: the application, the scopes, when the token expires, and the
+user, when the token has the `identify` scope.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getAuthorization</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Authorization.html"><abbr title="\Discord\Parts\OAuth\Authorization">Authorization</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getAuthorization_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-Session.html#method_getAuthorization_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/oauth2#get-current-authorization-information"> https://docs.discord.com/developers/topics/oauth2#get-current-authorization-information </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.60.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Authorization.html"><abbr title="\Discord\Parts\OAuth\Authorization">Authorization</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getConnections">
         getConnections()
         <a href="classes/Discord-OAuth2-Session.html#method_getConnections" class="headerlink"><i class="fas fa-link"></i></a>
@@ -894,7 +977,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -946,7 +1029,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -998,7 +1081,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">130</span>
+    <span class="phpdocumentor-element-found-in__line">137</span>
 
     </aside>
 
@@ -1062,7 +1145,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -1101,7 +1184,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -1140,7 +1223,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -1171,6 +1254,168 @@ separately, but shares the bot's driver and connection pool.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getUserInfo">
+        getUserInfo()
+        <a href="classes/Discord-OAuth2-Session.html#method_getUserInfo" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">207</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the user as OpenID Connect describes them. Requires the `openid` scope; the email claims also
+need the `email` scope.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getUserInfo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-UserInfo.html"><abbr title="\Discord\Parts\OAuth\UserInfo">UserInfo</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getUserInfo_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-Session.html#method_getUserInfo_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfo"> https://openid.net/specs/openid-connect-core-1_0.html#UserInfo </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.60.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-UserInfo.html"><abbr title="\Discord\Parts\OAuth\UserInfo">UserInfo</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setCommandPermissions">
+        setCommandPermissions()
+        <a href="classes/Discord-OAuth2-Session.html#method_setCommandPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">231</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets who can use one of an application&#039;s commands in a guild, replacing the permissions it had there.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setCommandPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Command.html"><abbr title="\Discord\Parts\Interactions\Command\Command">Command</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Permission.html"><abbr title="\Discord\Parts\Interactions\Command\Permission">Permission</abbr></a>|array&lt;string|int, mixed&gt;&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permissions</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Discord only accepts this with a user's token that has the <code class="prettyprint">applications.commands.permissions.update</code>
+scope, never a bot's. The user needs the manage_guild and manage_roles permissions in the guild, and
+must be able to use the command themselves.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$guild</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The guild.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$command</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Command.html"><abbr title="\Discord\Parts\Interactions\Command\Command">Command</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The command or its ID; the application's ID sets the default for all its commands.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$permissions</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Permission.html"><abbr title="\Discord\Parts\Interactions\Command\Permission">Permission</abbr></a>|array&lt;string|int, mixed&gt;&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>At most 100, each with <code class="prettyprint">id</code>, <code class="prettyprint">type</code> and <code class="prettyprint">permission</code>.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$application</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The application or its id; the bot's own if omitted.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_setCommandPermissions_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-Session.html#method_setCommandPermissions_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/interactions/application-commands#edit-application-command-permissions"> https://docs.discord.com/developers/interactions/application-commands#edit-application-command-permissions </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.60.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_updateApplicationRoleConnection">
         updateApplicationRoleConnection()
         <a href="classes/Discord-OAuth2-Session.html#method_updateApplicationRoleConnection" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1179,7 +1424,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -1252,7 +1497,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">267</span>
 
     </aside>
 
@@ -1301,7 +1546,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">231</span>
+    <span class="phpdocumentor-element-found-in__line">301</span>
 
     </aside>
 
@@ -1357,7 +1602,7 @@ separately, but shares the bot's driver and connection pool.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/Session.php"><a href="files/src-discord-oauth2-session.html"><abbr title="src/Discord/OAuth2/Session.php">Session.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
@@ -1438,12 +1683,15 @@ separately, but shares the bot's driver and connection pool.</p>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method___debugInfo">__debugInfo()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getApplicationRoleConnection">getApplicationRoleConnection()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getAuthorization">getAuthorization()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getConnections">getConnections()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getCurrentUser">getCurrentUser()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getEntitlements">getEntitlements()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getHttpClient">getHttpClient()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getKey">getKey()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getToken">getToken()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-Session.html#method_getUserInfo">getUserInfo()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-Session.html#method_setCommandPermissions">setCommandPermissions()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_updateApplicationRoleConnection">updateApplicationRoleConnection()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_clientFor">clientFor()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-Session.html#method_collect">collect()</a></li>

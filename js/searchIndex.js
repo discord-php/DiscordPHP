@@ -3141,6 +3141,11 @@ Search.appendIndex(
             "summary": "Handles\u0020dispatch\u0020events\u0020received\u0020by\u0020the\u0020WebSocket.",
             "url": "classes/Discord-Discord.html#method_handleDispatch"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AretryRateLimitedRequest\u0028\u0029",
+            "name": "retryRateLimitedRequest",
+            "summary": "Sends\u0020a\u0020member\u0020request\u0020the\u0020client\u0020made\u0020for\u0020itself\u0020again,\u0020once\u0020Discord\u0027s\u0020rate\u0020limit\u0020allows.",
+            "url": "classes/Discord-Discord.html#method_retryRateLimitedRequest"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AhandleFallbackDispatch\u0028\u0029",
             "name": "handleFallbackDispatch",
             "summary": "Handle\u0020dispatches\u0020that\u0020are\u0020not\u0020registered\u0020in\u0020the\u0020dynamic\u0020handler\nregistry\u0020by\u0020mapping\u0020a\u0020small\u0020set\u0020of\u0020event\u0020names\u0020to\u0020internal\nhandler\u0020methods.",
@@ -5046,6 +5051,21 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020user\u0027s\u0020role\u0020connection\u0020for\u0020an\u0020application.\u0020Requires\u0020the\u0020\u0060role_connections.write\u0060\u0020scope.",
             "url": "classes/Discord-OAuth2-Session.html#method_updateApplicationRoleConnection"
         },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetAuthorization\u0028\u0029",
+            "name": "getAuthorization",
+            "summary": "Returns\u0020what\u0020the\u0020user\u0020has\u0020authorised\u003A\u0020the\u0020application,\u0020the\u0020scopes,\u0020when\u0020the\u0020token\u0020expires,\u0020and\u0020the\nuser,\u0020when\u0020the\u0020token\u0020has\u0020the\u0020\u0060identify\u0060\u0020scope.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getAuthorization"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetUserInfo\u0028\u0029",
+            "name": "getUserInfo",
+            "summary": "Returns\u0020the\u0020user\u0020as\u0020OpenID\u0020Connect\u0020describes\u0020them.\u0020Requires\u0020the\u0020\u0060openid\u0060\u0020scope\u003B\u0020the\u0020email\u0020claims\u0020also\nneed\u0020the\u0020\u0060email\u0060\u0020scope.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getUserInfo"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AsetCommandPermissions\u0028\u0029",
+            "name": "setCommandPermissions",
+            "summary": "Sets\u0020who\u0020can\u0020use\u0020one\u0020of\u0020an\u0020application\u0027s\u0020commands\u0020in\u0020a\u0020guild,\u0020replacing\u0020the\u0020permissions\u0020it\u0020had\u0020there.",
+            "url": "classes/Discord-OAuth2-Session.html#method_setCommandPermissions"
+        },                {
             "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A__get\u0028\u0029",
             "name": "__get",
             "summary": "Exposes\u0020the\u0020read\u002Donly\u0020\u0060lobbies\u0060\u0020repository.",
@@ -5105,6 +5125,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Discord-OAuth2-SessionManager.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003AgetPublicKeys\u0028\u0029",
+            "name": "getPublicKeys",
+            "summary": "Returns\u0020the\u0020public\u0020keys\u0020that\u0020sign\u0020Discord\u0027s\u0020OpenID\u0020Connect\u0020ID\u0020tokens,\u0020as\u0020the\u0020\u0060keys\u0060\u0020of\u0020a\u0020JSON\u0020Web\u0020Key\nSet,\u0020ready\u0020to\u0020give\u0020a\u0020JWT\u0020library\u0020to\u0020verify\u0020an\u0020ID\u0020token\u0020with.\u0020They\u0020need\u0020no\u0020token\u0020to\u0020read.",
+            "url": "classes/Discord-OAuth2-SessionManager.html#method_getPublicKeys"
         },                {
             "fqsen": "\\Discord\\OAuth2\\SessionManager\u003A\u003Aopen\u0028\u0029",
             "name": "open",
@@ -5975,6 +6000,21 @@ Search.appendIndex(
             "name": "GroupDM",
             "summary": "A\u0020direct\u0020message\u0020between\u0020multiple\u0020users.",
             "url": "classes/Discord-Parts-Channel-GroupDM.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GroupDM\u003A\u003AaddRecipient\u0028\u0029",
+            "name": "addRecipient",
+            "summary": "Adds\u0020a\u0020user\u0020to\u0020the\u0020group\u0020DM\u0020with\u0020their\u0020OAuth2\u0020access\u0020token,\u0020which\u0020must\u0020have\u0020the\u0020\u0060gdm.join\u0060\u0020scope\u0020and\ncome\u0020from\u0020the\u0020bot\u0027s\u0020own\u0020application.",
+            "url": "classes/Discord-Parts-Channel-GroupDM.html#method_addRecipient"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GroupDM\u003A\u003AremoveRecipient\u0028\u0029",
+            "name": "removeRecipient",
+            "summary": "Removes\u0020a\u0020user\u0020from\u0020the\u0020group\u0020DM.",
+            "url": "classes/Discord-Parts-Channel-GroupDM.html#method_removeRecipient"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GroupDM\u003A\u003AhasRecipient\u0028\u0029",
+            "name": "hasRecipient",
+            "summary": "Whether\u0020a\u0020user\u0020is\u0020among\u0020the\u0020group\u0020DM\u0027s\u0020recipients.",
+            "url": "classes/Discord-Parts-Channel-GroupDM.html#method_hasRecipient"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildAnnouncement",
             "name": "GuildAnnouncement",
@@ -8106,6 +8146,21 @@ Search.appendIndex(
             "summary": "Edits\u0020a\u0020previously\u002Dsent\u0020webhook\u0020message\u0020from\u0020the\u0020same\u0020token.",
             "url": "classes/Discord-Parts-Channel-Webhook.html#method_updateMessage"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AfetchByToken\u0028\u0029",
+            "name": "fetchByToken",
+            "summary": "Fetches\u0020the\u0020webhook\u0020with\u0020its\u0020token,\u0020which\u0020needs\u0020no\u0020permissions\u003A\u0020only\u0020the\u0020ID\u0020and\u0020token,\u0020as\u0020a\nwebhook\u0027s\u0020URL\u0020gives\u0020them.\u0020Discord\u0020leaves\u0020out\u0020the\u0020\u0060user\u0060\u0020who\u0020made\u0020it.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_fetchByToken"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AupdateByToken\u0028\u0029",
+            "name": "updateByToken",
+            "summary": "Changes\u0020the\u0020webhook\u0027s\u0020name\u0020or\u0020avatar\u0020with\u0020its\u0020token,\u0020which\u0020needs\u0020no\u0020permissions.\u0020Unlike\u0020saving\u0020the\nwebhook,\u0020this\u0020cannot\u0020move\u0020it\u0020to\u0020another\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_updateByToken"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AdeleteByToken\u0028\u0029",
+            "name": "deleteByToken",
+            "summary": "Deletes\u0020the\u0020webhook\u0020with\u0020its\u0020token,\u0020which\u0020needs\u0020no\u0020permissions.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_deleteByToken"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AgetGuildAttribute\u0028\u0029",
             "name": "getGuildAttribute",
             "summary": "Gets\u0020the\u0020guild\u0020the\u0020webhook\u0020belongs\u0020to.",
@@ -9716,6 +9771,16 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020positions\u0020of\u0020a\u0020list\u0020of\u0020given\u0020roles.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_updateRolePositions"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AupdateChannelPositions\u0028\u0029",
+            "name": "updateChannelPositions",
+            "summary": "Moves\u0020channels,\u0020in\u0020one\u0020request\u003A\u0020their\u0020positions,\u0020and\u0020the\u0020category\u0020one\u0020of\u0020them\u0020is\u0020in.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_updateChannelPositions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AupdateIncidentActions\u0028\u0029",
+            "name": "updateIncidentActions",
+            "summary": "Pauses\u0020invites\u0020or\u0020direct\u0020messages\u0020in\u0020the\u0020guild\u0020for\u0020up\u0020to\u002024\u0020hours,\u0020or\u0020resumes\u0020them,\u0020as\u0020the\u0020server\u0027s\nsecurity\u0020actions\u0020do\u0020in\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_updateIncidentActions"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsearchMembers\u0028\u0029",
             "name": "searchMembers",
             "summary": "Returns\u0020a\u0020list\u0020of\u0020guild\u0020member\u0020objects\u0020whose\u0020username\u0020or\u0020nickname\u0020starts\nwith\u0020a\u0020provided\u0020string.",
@@ -10840,6 +10905,31 @@ Search.appendIndex(
             "name": "createException",
             "summary": "Create\u0020an\u0020exception\u0020for\u0020the\u0020guild\u0020scheduled\u0020event\u0027s\u0020recurrence\u0020rule.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_createException"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AcacheException\u0028\u0029",
+            "name": "cacheException",
+            "summary": "Keeps\u0020an\u0020exception\u0020to\u0020the\u0020recurrence\u0020rule\u0020in\u0020the\u0020event,\u0020in\u0020place\u0020of\u0020any\u0020with\u0020the\u0020same\u0020ID.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_cacheException"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AuncacheException\u0028\u0029",
+            "name": "uncacheException",
+            "summary": "Removes\u0020an\u0020exception\u0020to\u0020the\u0020recurrence\u0020rule\u0020from\u0020the\u0020event.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_uncacheException"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AexceptionId\u0028\u0029",
+            "name": "exceptionId",
+            "summary": "An\u0020exception\u0027s\u0020ID,\u0020whether\u0020it\u0020is\u0020a\u0020part\u0020or\u0020still\u0020raw\u0020data.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_exceptionId"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AupdateException\u0028\u0029",
+            "name": "updateException",
+            "summary": "Changes\u0020an\u0020exception\u0020to\u0020the\u0020scheduled\u0020event\u0027s\u0020recurrence\u0020rule\u003A\u0020when\u0020that\u0020occurrence\u0020starts\u0020or\u0020ends,\nor\u0020whether\u0020it\u0020is\u0020skipped.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_updateException"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AdeleteException\u0028\u0029",
+            "name": "deleteException",
+            "summary": "Deletes\u0020an\u0020exception\u0020to\u0020the\u0020scheduled\u0020event\u0027s\u0020recurrence\u0020rule,\u0020so\u0020that\u0020occurrence\u0020happens\u0020as\u0020the\u0020rule\nsays\u0020again.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_deleteException"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetUsers\u0028\u0029",
             "name": "getUsers",
@@ -12476,6 +12566,11 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020serialized\u0020activity\u0020instance,\u0020if\u0020it\u0020exists.",
             "url": "classes/Discord-Parts-OAuth-Application.html#method_getActivityInstance"
         },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AuploadAttachment\u0028\u0029",
+            "name": "uploadAttachment",
+            "summary": "Uploads\u0020a\u0020file\u0020for\u0020the\u0020application\u0020to\u0020use\u0020as\u0020an\u0020attachment,\u0020as\u0020an\u0020Activity\u0020does\u0020to\u0020share\u0020an\u0020image.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_uploadAttachment"
+        },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetIconAttribute\u0028\u0029",
             "name": "getIconAttribute",
             "summary": "Returns\u0020the\u0020application\u0020icon.",
@@ -12676,6 +12771,31 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Authorization",
+            "name": "Authorization",
+            "summary": "What\u0020a\u0020user\u0020has\u0020authorised\u0020an\u0020application\u0020to\u0020do\u0020with\u0020their\u0020OAuth2\u0020token\u003A\u0020the\u0020application,\u0020the\u0020scopes\ngranted,\u0020when\u0020the\u0020token\u0020expires,\u0020and\u0020the\u0020user,\u0020when\u0020the\u0020token\u0020has\u0020the\u0020\u0060identify\u0060\u0020scope.",
+            "url": "classes/Discord-Parts-OAuth-Authorization.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Authorization\u003A\u003AgetApplicationAttribute\u0028\u0029",
+            "name": "getApplicationAttribute",
+            "summary": "Returns\u0020the\u0020application\u0020the\u0020token\u0020was\u0020granted\u0020to.",
+            "url": "classes/Discord-Parts-OAuth-Authorization.html#method_getApplicationAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Authorization\u003A\u003AgetExpiresAttribute\u0028\u0029",
+            "name": "getExpiresAttribute",
+            "summary": "Returns\u0020when\u0020the\u0020token\u0020expires.",
+            "url": "classes/Discord-Parts-OAuth-Authorization.html#method_getExpiresAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Authorization\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020who\u0020granted\u0020the\u0020token,\u0020when\u0020it\u0020has\u0020the\u0020\u0060identify\u0060\u0020scope.",
+            "url": "classes/Discord-Parts-OAuth-Authorization.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Authorization\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-Authorization.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\InstallParams",
             "name": "InstallParams",
             "summary": "Settings\u0020for\u0020the\u0020app\u0027s\u0020default\u0020in\u002Dapp\u0020authorization\u0020link,\u0020if\u0020enabled.",
@@ -12715,6 +12835,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-OAuth-TeamMember.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\UserInfo",
+            "name": "UserInfo",
+            "summary": "A\u0020user\u0020as\u0020OpenID\u0020Connect\u0020describes\u0020them,\u0020from\u0020Discord\u0027s\u0020user\u0020info\u0020endpoint.\u0020It\u0020needs\u0020a\u0020token\u0020with\u0020the\n\u0060openid\u0060\u0020scope\u003B\u0020the\u0020email\u0020claims\u0020also\u0020need\u0020the\u0020\u0060email\u0060\u0020scope.",
+            "url": "classes/Discord-Parts-OAuth-UserInfo.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\UserInfo\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-UserInfo.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Part",
             "name": "Part",
@@ -14871,6 +15001,36 @@ Search.appendIndex(
             "summary": "Attributes\u0020which\u0020are\u0020visible\u0020from\u0020debug\u0020info.",
             "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#property_visible"
         },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\RateLimited",
+            "name": "RateLimited",
+            "summary": "A\u0020request\u0020the\u0020bot\u0020sent\u0020over\u0020the\u0020gateway\u0020that\u0020Discord\u0020rate\u0020limited,\u0020from\u0020the\u0020\u0060RATE_LIMITED\u0060\u0020event\u003A\u0020which\nopcode,\u0020how\u0020long\u0020to\u0020wait\u0020before\u0020sending\u0020it\u0020again,\u0020and\u0020what\u0020the\u0020request\u0020was\u0020for.",
+            "url": "classes/Discord-Parts-WebSockets-RateLimited.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\RateLimited\u003A\u003AgetGuildIdAttribute\u0028\u0029",
+            "name": "getGuildIdAttribute",
+            "summary": "Returns\u0020the\u0020ID\u0020of\u0020the\u0020guild\u0020whose\u0020members\u0020were\u0020requested.",
+            "url": "classes/Discord-Parts-WebSockets-RateLimited.html#method_getGuildIdAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\RateLimited\u003A\u003AgetNonceAttribute\u0028\u0029",
+            "name": "getNonceAttribute",
+            "summary": "Returns\u0020the\u0020nonce\u0020the\u0020members\u0020were\u0020requested\u0020with.",
+            "url": "classes/Discord-Parts-WebSockets-RateLimited.html#method_getNonceAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\RateLimited\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020whose\u0020members\u0020were\u0020requested.",
+            "url": "classes/Discord-Parts-WebSockets-RateLimited.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\RateLimited\u003A\u003AmetaValue\u0028\u0029",
+            "name": "metaValue",
+            "summary": "A\u0020field\u0020of\u0020the\u0020metadata,\u0020as\u0020a\u0020string.",
+            "url": "classes/Discord-Parts-WebSockets-RateLimited.html#method_metaValue"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\RateLimited\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-WebSockets-RateLimited.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\TypingStart",
             "name": "TypingStart",
             "summary": "A\u0020TypingStart\u0020part\u0020is\u0020used\u0020when\u0020the\u0020\u0060TYPING_START\u0060\u0020event\u0020is\u0020fired\u0020on\u0020the\nWebSocket.\u0020It\u0020contains\u0020information\u0020such\u0020as\u0020when\u0020the\u0020event\u0020was\u0020fired\u0020and\u0020then\nchannel\u0020it\u0020was\u0020fired\u0020in.",
@@ -14905,6 +15065,56 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-WebSockets-TypingStart.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect",
+            "name": "VoiceChannelEffect",
+            "summary": "An\u0020emoji\u0020reaction\u0020or\u0020a\u0020soundboard\u0020sound\u0020sent\u0020in\u0020a\u0020voice\u0020channel\u0020the\u0020bot\u0020is\u0020connected\u0020to,\u0020from\u0020the\n\u0060VOICE_CHANNEL_EFFECT_SEND\u0060\u0020event.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020the\u0020effect\u0020was\u0020sent\u0020in.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Returns\u0020the\u0020voice\u0020channel\u0020the\u0020effect\u0020was\u0020sent\u0020in.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020who\u0020sent\u0020the\u0020effect.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AgetMemberAttribute\u0028\u0029",
+            "name": "getMemberAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020who\u0020sent\u0020the\u0020effect,\u0020as\u0020a\u0020member\u0020of\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#method_getMemberAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AgetEmojiAttribute\u0028\u0029",
+            "name": "getEmojiAttribute",
+            "summary": "Returns\u0020the\u0020emoji\u0020sent.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#method_getEmojiAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AgetSoundAttribute\u0028\u0029",
+            "name": "getSoundAttribute",
+            "summary": "Returns\u0020the\u0020soundboard\u0020sound\u0020played\u003A\u0020one\u0020of\u0020the\u0020guild\u0027s,\u0020or\u0020one\u0020of\u0020Discord\u0027s\u0020default\u0020sounds.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#method_getSoundAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AANIMATION_TYPE_PREMIUM",
+            "name": "ANIMATION_TYPE_PREMIUM",
+            "summary": "A\u0020fun\u0020animation,\u0020sent\u0020by\u0020a\u0020Nitro\u0020subscriber.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#constant_ANIMATION_TYPE_PREMIUM"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003AANIMATION_TYPE_BASIC",
+            "name": "ANIMATION_TYPE_BASIC",
+            "summary": "The\u0020standard\u0020animation.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#constant_ANIMATION_TYPE_BASIC"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceChannelEffect\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceChannelEffect.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceServerUpdate",
             "name": "VoiceServerUpdate",
@@ -15195,6 +15405,11 @@ Search.appendIndex(
             "name": "freshen",
             "summary": "Freshens\u0020the\u0020repository\u0020cache.",
             "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#method_freshen"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003AforgetCachedItems\u0028\u0029",
+            "name": "forgetCachedItems",
+            "summary": "Drops\u0020every\u0020cached\u0020part,\u0020before\u0020the\u0020repository\u0020is\u0020refilled\u0020from\u0020a\u0020response\u0020that\u0020lists\u0020all\u0020of\u0020them.",
+            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#method_forgetCachedItems"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003AcacheFreshen\u0028\u0029",
             "name": "cacheFreshen",
@@ -15746,6 +15961,11 @@ Search.appendIndex(
             "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Guild-GuildCommandRepository.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003AputCommands\u0028\u0029",
+            "name": "putCommands",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-GuildCommandRepository.html#method_putCommands"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
@@ -15850,6 +16070,11 @@ Search.appendIndex(
             "name": "MemberRepository",
             "summary": "Contains\u0020members\u0020of\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Adds\u0020a\u0020user\u0020to\u0020the\u0020guild\u0020with\u0020their\u0020OAuth2\u0020access\u0020token,\u0020which\u0020must\u0020have\u0020the\u0020\u0060guilds.join\u0060\u0020scope\u0020and\ncome\u0020from\u0020the\u0020bot\u0027s\u0020own\u0020application.\u0020The\u0020bot\u0020must\u0020be\u0020in\u0020the\u0020guild,\u0020with\u0020the\u0020create_instant_invite\npermission.\u0020A\u0020user\u0020who\u0020is\u0020already\u0020a\u0020member\u0020is\u0020left\u0020as\u0020they\u0020are.",
+            "url": "classes/Discord-Repository-Guild-MemberRepository.html#method_add"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003AgetCurrentUserGuildMember\u0028\u0029",
             "name": "getCurrentUserGuildMember",
@@ -16041,10 +16266,30 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-GuildRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\Interaction\\CommandRepositoryTrait",
+            "name": "CommandRepositoryTrait",
+            "summary": "Replaces\u0020all\u0020of\u0020an\u0020application\u0027s\u0020commands\u0020in\u0020one\u0020request.\u0020Shared\u0020by\u0020the\u0020global\u0020and\u0020guild\u0020command\nrepositories.",
+            "url": "classes/Discord-Repository-Interaction-CommandRepositoryTrait.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Interaction\\CommandRepositoryTrait\u003A\u003AbulkOverwrite\u0028\u0029",
+            "name": "bulkOverwrite",
+            "summary": "Overwrites\u0020the\u0020application\u0027s\u0020commands\u0020with\u0020the\u0020ones\u0020given,\u0020in\u0020a\u0020single\u0020request.",
+            "url": "classes/Discord-Repository-Interaction-CommandRepositoryTrait.html#method_bulkOverwrite"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Interaction\\CommandRepositoryTrait\u003A\u003AputCommands\u0028\u0029",
+            "name": "putCommands",
+            "summary": "Sends\u0020the\u0020complete\u0020list\u0020of\u0020commands,\u0020to\u0020the\u0020route\u0020for\u0020global\u0020commands\u0020or\u0020for\u0020a\u0020guild\u0027s.",
+            "url": "classes/Discord-Repository-Interaction-CommandRepositoryTrait.html#method_putCommands"
+        },                {
             "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository",
             "name": "GlobalCommandRepository",
             "summary": "Contains\u0020application\u0020global\u0020commands.",
             "url": "classes/Discord-Repository-Interaction-GlobalCommandRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository\u003A\u003AputCommands\u0028\u0029",
+            "name": "putCommands",
+            "summary": "",
+            "url": "classes/Discord-Repository-Interaction-GlobalCommandRepository.html#method_putCommands"
         },                {
             "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
@@ -17796,6 +18041,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_USER_UPDATE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ARATE_LIMITED",
+            "name": "RATE_LIMITED",
+            "summary": "Sent\u0020when\u0020a\u0020request\u0020over\u0020the\u0020gateway,\u0020such\u0020as\u0020Request\u0020Guild\u0020Members,\u0020is\u0020rate\u0020limited.",
+            "url": "classes/Discord-WebSockets-Event.html#constant_RATE_LIMITED"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_CREATE",
             "name": "GUILD_CREATE",
             "summary": "",
@@ -18065,6 +18315,11 @@ Search.appendIndex(
             "name": "VOICE_SERVER_UPDATE",
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_VOICE_SERVER_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AVOICE_CHANNEL_EFFECT_SEND",
+            "name": "VOICE_CHANNEL_EFFECT_SEND",
+            "summary": "Sent\u0020when\u0020someone\u0020sends\u0020an\u0020emoji\u0020reaction\u0020or\u0020a\u0020soundboard\u0020sound\u0020in\u0020a\u0020voice\u0020channel\u0020the\u0020bot\u0020is\u0020in.",
+            "url": "classes/Discord-WebSockets-Event.html#constant_VOICE_CHANNEL_EFFECT_SEND"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ACHANNEL_INFO",
             "name": "CHANNEL_INFO",
@@ -19106,6 +19361,16 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-PresenceUpdate.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\RateLimited",
+            "name": "RateLimited",
+            "summary": "A\u0020gateway\u0020request\u0020was\u0020rate\u0020limited.\u0020The\u0020client\u0020retries\u0020its\u0020own\u0020member\u0020requests\u0020by\u0020itself\u003B\u0020this\u0020is\u0020for\nrequests\u0020you\u0020send,\u0020such\u0020as\u0020\u007B\u0040see\u0020\\Discord\\Discord\u003A\u003ArequestGuildMembers\u0028\u0029\u007D.",
+            "url": "classes/Discord-WebSockets-Events-RateLimited.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\RateLimited\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-RateLimited.html#method_handle"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\SoundboardSounds",
             "name": "SoundboardSounds",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
@@ -19155,6 +19420,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-SubscriptionCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionDelete",
+            "name": "SubscriptionDelete",
+            "summary": "A\u0020user\u0027s\u0020subscription\u0020was\u0020deleted.\u0020Discord\u0020does\u0020not\u0020usually\u0020delete\u0020subscriptions\u003B\u0020one\u0020that\u0020ends\u0020is\nupdated\u0020with\u0020its\u0020new\u0020status\u0020instead.",
+            "url": "classes/Discord-WebSockets-Events-SubscriptionDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-SubscriptionDelete.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionUpdate",
             "name": "SubscriptionUpdate",
@@ -19245,6 +19520,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-UserUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelEffectSend",
+            "name": "VoiceChannelEffectSend",
+            "summary": "Someone\u0020sent\u0020an\u0020emoji\u0020reaction\u0020or\u0020a\u0020soundboard\u0020sound\u0020in\u0020a\u0020voice\u0020channel\u0020the\u0020bot\u0020is\u0020connected\u0020to.\u0020Needs\nthe\u0020\u0060GUILD_VOICE_STATES\u0060\u0020intent.",
+            "url": "classes/Discord-WebSockets-Events-VoiceChannelEffectSend.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelEffectSend\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-VoiceChannelEffectSend.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\VoiceChannelStartTimeUpdate",
             "name": "VoiceChannelStartTimeUpdate",

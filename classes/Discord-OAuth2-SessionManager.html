@@ -446,6 +446,14 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
 <dd>Returns a keyed session that is already open, without touching the token store.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-SessionManager.html#method_getPublicKeys">getPublicKeys()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, array&lt;int, array&lt;string, mixed&gt;&gt;&gt;    </span>
+</dt>
+<dd>Returns the public keys that sign Discord&#039;s OpenID Connect ID tokens, as the `keys` of a JSON Web Key
+Set, ready to give a JWT library to verify an ID token with. They need no token to read.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-SessionManager.html#method_open">open()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&gt;    </span>
@@ -871,7 +879,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">341</span>
+    <span class="phpdocumentor-element-found-in__line">359</span>
 
     </aside>
 
@@ -909,7 +917,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -993,7 +1001,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">284</span>
+    <span class="phpdocumentor-element-found-in__line">302</span>
 
     </aside>
 
@@ -1077,7 +1085,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">257</span>
 
     </aside>
 
@@ -1161,7 +1169,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -1212,7 +1220,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -1255,6 +1263,68 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getPublicKeys">
+        getPublicKeys()
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_getPublicKeys" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">85</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the public keys that sign Discord&#039;s OpenID Connect ID tokens, as the `keys` of a JSON Web Key
+Set, ready to give a JWT library to verify an ID token with. They need no token to read.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getPublicKeys</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, array&lt;int, array&lt;string, mixed&gt;&gt;&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Discord describes this endpoint in its OpenAPI description rather than in its documentation.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getPublicKeys_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_getPublicKeys_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://datatracker.ietf.org/doc/html/rfc7517#section-5"> https://datatracker.ietf.org/doc/html/rfc7517#section-5 </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.60.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, array&lt;int, array&lt;string, mixed&gt;&gt;&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_open">
         open()
         <a href="classes/Discord-OAuth2-SessionManager.html#method_open" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1263,7 +1333,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1323,7 +1393,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1387,7 +1457,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
@@ -1442,7 +1512,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">279</span>
 
     </aside>
 
@@ -1517,7 +1587,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">221</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -1581,7 +1651,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">335</span>
+    <span class="phpdocumentor-element-found-in__line">353</span>
 
     </aside>
 
@@ -1620,7 +1690,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">316</span>
 
     </aside>
 
@@ -1676,7 +1746,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">317</span>
+    <span class="phpdocumentor-element-found-in__line">335</span>
 
     </aside>
 
@@ -1761,6 +1831,7 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeExternalToken">exchangeExternalToken()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_forget">forget()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_get">get()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_getPublicKeys">getPublicKeys()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_open">open()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_refresh">refresh()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_resume">resume()</a></li>
