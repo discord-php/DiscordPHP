@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,7 +19,7 @@ use Discord\Builders\ComponentsTrait;
 /**
  * Section components allow you to define up to 3 text display components and add either a thumbnail or button to the right side.
  *
- * @link https://discord.com/developers/docs/components/reference#section
+ * @link https://docs.discord.com/developers/components/reference#section
  *
  * @since 10.5.0
  *
@@ -74,7 +75,7 @@ class Section extends Layout implements Contracts\ComponentV2
      * @throws \InvalidArgumentException Component is not a TextDisplay.
      * @throws \OverflowException        Section exceeds 3 text components.
      *
-     * @return $this
+     * @return self
      */
     public function addComponent($component): self
     {
@@ -103,7 +104,7 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @throws \InvalidArgumentException Component is not a Thumbnail or Button.
      *
-     * @return $this
+     * @return self
      */
     public function setAccessory(ComponentObject $component): self
     {

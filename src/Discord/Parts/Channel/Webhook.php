@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -32,7 +33,7 @@ use function React\Promise\reject;
  *
  * Apps can also subscribe to webhook events (i.e. outgoing webhooks) when events happen in Discord, which is detailed in the Webhook Events documentation.
  *
- * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
+ * @link https://docs.discord.com/developers/resources/webhook#webhook-resource
  *
  * @since 5.0.0
  *
@@ -90,7 +91,7 @@ class Webhook extends Part
     /**
      * Executes the webhook with an array of data.
      *
-     * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
+     * @link https://docs.discord.com/developers/resources/webhook#execute-webhook
      *
      * @param MessageBuilder|array $data
      * @param array                $queryparams                    Query string params to add to the request.
@@ -221,7 +222,7 @@ class Webhook extends Part
     /**
      * Edits a previously-sent webhook message from the same token.
      *
-     * @link https://discord.com/developers/docs/resources/webhook#edit-webhook-message
+     * @link https://docs.discord.com/developers/resources/webhook#edit-webhook-message
      *
      * @param string         $message_id  ID of the message to update.
      * @param MessageBuilder $builder     The new message.
@@ -262,6 +263,88 @@ class Webhook extends Part
 
             return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
         });
+    }
+
+    /**
+     * Fetches the webhook with its token, which needs no permissions: only the ID and token, as a
+     * webhook's URL gives them. Discord leaves out the `user` who made it.
+     *
+     * @link https://docs.discord.com/developers/resources/webhook#get-webhook-with-token
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.60.0
+     */
+    public function fetchByToken(): PromiseInterface
+    {
+        if (! isset($this->attributes['token'])) {
+            return reject(new \LogicException('The webhook has no token to fetch it with.'));
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::WEBHOOK_TOKEN, $this->id, $this->token))
+            ->then(function ($response) {
+                $this->fill((array) $response);
+                $this->created = true;
+
+                return $this;
+            });
+    }
+
+    /**
+     * Changes the webhook's name or avatar with its token, which needs no permissions. Unlike saving the
+     * webhook, this cannot move it to another channel.
+     *
+     * @link https://docs.discord.com/developers/resources/webhook#modify-webhook-with-token
+     *
+     * @param array   $options
+     * @param ?string $options['name']   The default name of the webhook.
+     * @param ?string $options['avatar'] The default avatar, as image data.
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.60.0
+     */
+    public function updateByToken(array $options): PromiseInterface
+    {
+        if (! isset($this->attributes['token'])) {
+            return reject(new \LogicException('The webhook has no token to change it with.'));
+        }
+
+        $payload = array_intersect_key($options, array_flip(['name', 'avatar']));
+
+        if ([] === $payload) {
+            return reject(new \InvalidArgumentException('Give a `name`, an `avatar`, or both.'));
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::WEBHOOK_TOKEN, $this->id, $this->token), $payload)
+            ->then(function ($response) {
+                $this->fill((array) $response);
+
+                return $this;
+            });
+    }
+
+    /**
+     * Deletes the webhook with its token, which needs no permissions.
+     *
+     * @link https://docs.discord.com/developers/resources/webhook#delete-webhook-with-token
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.60.0
+     */
+    public function deleteByToken(): PromiseInterface
+    {
+        if (! isset($this->attributes['token'])) {
+            return reject(new \LogicException('The webhook has no token to delete it with.'));
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::WEBHOOK_TOKEN, $this->id, $this->token))
+            ->then(function () {
+                $this->created = false;
+
+                return $this;
+            });
     }
 
     /**
@@ -357,7 +440,7 @@ class Webhook extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/webhook#create-webhook-json-params
+     * @link https://docs.discord.com/developers/resources/webhook#create-webhook-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -371,7 +454,7 @@ class Webhook extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params
+     * @link https://docs.discord.com/developers/resources/webhook#modify-webhook-json-params
      */
     public function getUpdatableAttributes(): array
     {

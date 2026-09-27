@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -54,7 +55,7 @@ class GuildRepository extends AbstractRepository
     /**
      * Causes the client to leave a guild.
      *
-     * @link https://discord.com/developers/docs/resources/user#leave-guild
+     * @link https://docs.discord.com/developers/resources/user#leave-guild
      *
      * @param Guild|string $guild
      *
@@ -75,7 +76,7 @@ class GuildRepository extends AbstractRepository
      * Returns the guild preview object for the given id. If the bot is not in the guild, then the guild must be discoverable.
      * Rejects with 10004 Unknown Guild if the guild does not exist or the bot is not in the guild and it is not discoverable.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-preview
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-preview
      *
      * @param Guild|string $guild_id
      *
@@ -100,12 +101,19 @@ class GuildRepository extends AbstractRepository
      * This endpoint returns 200 guilds by default, which is the maximum number of guilds a non-bot user can join.
      * Therefore, pagination is not needed for integrations that need to get a list of the users' guilds.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
+     * Accepts a `shard` query param, which returns only the guilds stored in that shard.
+     * Apps using large bot sharding are **required** to pass it — requests without `shard` now return `400 Bad Request`.
+     * Valid values are `0` through `max_concurrency - 1`, using the `max_concurrency` returned by Get Gateway Bot
+     * @see Discord::setGateway()
      *
-     * @param ?string|null $before      Get guilds before this guild ID.
-     * @param ?string|null $after       Get guilds after this guild ID.
-     * @param ?int|null    $limit       Max number of guilds to return (1-200). Defaults to 200.
-     * @param ?bool|null   $with_counts Include approximate member and presence counts in response. Defaults to false.
+     * @link https://docs.discord.com/developers/resources/user#get-current-user-guilds
+     *
+     * @param array        $params                An array of query parameters including 'before', 'after', 'limit', 'shard', and 'with_counts'.
+     * @param ?string|null $params['before']      Get guilds before this guild ID.
+     * @param ?string|null $params['after']       Get guilds after this guild ID.
+     * @param ?int|null    $params['limit']       Max number of guilds to return (1-200). Defaults to 200.
+     * @param ?int|null    $params['shard']       Only return guilds in this shard (0 to max_concurrency - 1). Required for large bot sharding.
+     * @param ?bool|null   $params['with_counts'] Include approximate member and presence counts in response. Defaults to false.
      *
      * @throws \InvalidArgumentException No valid parameters to query.
      *
@@ -115,7 +123,7 @@ class GuildRepository extends AbstractRepository
      */
     public function getCurrentUserGuilds(array $params): PromiseInterface
     {
-        $allowed = ['before', 'after', 'limit', 'with_counts'];
+        $allowed = ['before', 'after', 'limit', 'shard', 'with_counts'];
         $params = array_filter(
             $params,
             fn ($key) => in_array($key, $allowed, true),

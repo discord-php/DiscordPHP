@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -39,7 +40,7 @@ trait ComponentsTrait
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @return $this
+     * @return self
      */
     public function setComponents($components = null)
     {
@@ -58,7 +59,7 @@ trait ComponentsTrait
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @return $this
+     * @return self
      */
     public function addComponents($components)
     {
@@ -79,7 +80,7 @@ trait ComponentsTrait
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @return $this
+     * @return self
      */
     abstract public function addComponent($component);
 }

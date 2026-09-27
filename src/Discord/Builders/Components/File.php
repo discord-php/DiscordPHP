@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,12 +14,13 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Parts\Channel\Attachment;
 
 /**
  * File components allow you to send a file. You can also spoiler it.
  *
- * @link https://discord.com/developers/docs/components/reference#file
+ * @link https://docs.discord.com/developers/components/reference#file
  *
  * @since 10.5.0
  *
@@ -55,11 +57,11 @@ class File extends Content implements Contracts\ComponentV2
     /**
      * Creates a new file component.
      *
-     * @param string|Attachment|null $filename The filename or attachment to reference.
+     * @param string|AttachmentRequestBuilder|Attachment|null $filename The filename or attachment to reference.
      *
      * @return self
      */
-    public static function new(string|Attachment|null $filename = null): self
+    public static function new(string|AttachmentRequestBuilder|Attachment|null $filename = null): self
     {
         $component = new self();
 
@@ -73,13 +75,13 @@ class File extends Content implements Contracts\ComponentV2
     /**
      * Sets the file to be displayed.
      *
-     * @param Attachment|string $filename The filename or attachment to reference.
+     * @param AttachmentRequestBuilder|Attachment|string $filename The filename or attachment to reference.
      *
-     * @return $this
+     * @return self
      */
-    public function setFile(Attachment|string $filename): self
+    public function setFile(AttachmentRequestBuilder|Attachment|string $filename): self
     {
-        if ($filename instanceof Attachment) {
+        if ($filename instanceof Attachment || $filename instanceof AttachmentRequestBuilder) {
             $filename = $filename->filename;
         }
 
@@ -93,7 +95,7 @@ class File extends Content implements Contracts\ComponentV2
      *
      * @param bool|null $spoiler Whether the file is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(?bool $spoiler = true): self
     {

@@ -3,7 +3,8 @@
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,7 +15,6 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\contains;
@@ -25,7 +25,7 @@ use function Discord\normalizePartId;
 use function Discord\poly_strlen;
 use function Discord\studly;
 
-final class FunctionsTest extends TestCase
+final class FunctionsTest extends DiscordTestCase
 {
     public function testContains(): void
     {

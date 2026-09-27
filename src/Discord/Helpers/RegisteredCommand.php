@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,6 +15,8 @@ declare(strict_types=1);
 namespace Discord\Helpers;
 
 use Discord\Discord;
+use Discord\Parts\Interactions\ApplicationCommand;
+use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 
@@ -21,7 +24,7 @@ use Discord\Parts\Interactions\Request\Option;
  * RegisteredCommand represents a command that has been registered with the
  * Discord servers and has a handler to handle when the command is triggered.
  *
- * https://discord.com/developers/docs/interactions/application-commands
+ * https://docs.discord.com/developers/interactions/application-commands
  *
  * @since 7.0.0
  *
@@ -180,7 +183,7 @@ class RegisteredCommand
      *
      * @return static
      */
-    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): static
     {
         if (! is_array($names)) {
             $names = [$names];

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,6 +17,7 @@ namespace Discord\Repository\Interaction;
 use Discord\Http\Endpoint;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains application global commands.
@@ -33,6 +35,8 @@ use Discord\Repository\AbstractRepository;
  */
 class GlobalCommandRepository extends AbstractRepository
 {
+    use CommandRepositoryTrait;
+
     /**
      * @inheritDoc
      */
@@ -48,4 +52,12 @@ class GlobalCommandRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Command::class;
+
+    /**
+     * @inheritDoc
+     */
+    protected function putCommands(array $commands): PromiseInterface
+    {
+        return $this->http->put(Endpoint::bind(Endpoint::GLOBAL_APPLICATION_COMMANDS, $this->vars['application_id']), $commands);
+    }
 }

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,6 +17,7 @@ namespace Discord\Parts\User;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\Sticker;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
 use Discord\Parts\Part;
@@ -24,6 +26,7 @@ use Discord\Repository\GuildRepository;
 use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
+use Discord\Repository\StickerPackRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 
@@ -56,6 +59,7 @@ use function React\Promise\resolve;
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
+ * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
  */
 class Client extends Part
@@ -83,6 +87,7 @@ class Client extends Part
         // internal
         'connections',
         'role_connection',
+        'sticker_packs',
     ];
 
     /**
@@ -94,6 +99,7 @@ class Client extends Part
         'lobbies' => LobbyRepository::class,
         'private_channels' => PrivateChannelRepository::class,
         'sounds' => SoundRepository::class,
+        'sticker_packs' => StickerPackRepository::class,
         'users' => UserRepository::class,
     ];
 
@@ -130,7 +136,7 @@ class Client extends Part
      * Returns a list of connection objects.
      * Requires the connections OAuth2 scope.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
+     * @link https://docs.discord.com/developers/resources/user#get-current-user-guild-member
      *
      * @return PromiseInterface<ExCollectionInterface<Connection>|Connection[]>
      *
@@ -217,6 +223,20 @@ class Client extends Part
     }
 
     /**
+     * Deletes the current application role connection for the user.
+     * Requires an OAuth2 access token with role_connections.write scope for the application specified in the path.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.49.0
+     */
+    public function deleteCurrentApplicationRoleConnection(): PromiseInterface
+    {
+        return $this->http->delete(Endpoint::USER_CURRENT_APPLICATION_ROLE_CONNECTION)
+            ->then(fn () => $this->role_connection = null);
+    }
+
+    /**
      * Gets the current application of the client.
      *
      * @return PromiseInterface<Application>
@@ -234,7 +254,7 @@ class Client extends Part
     /**
      * Updates the current application associated with the bot user.
      *
-     * @link https://discord.com/developers/docs/resources/application#edit-current-application
+     * @link https://docs.discord.com/developers/resources/application#edit-current-application
      *
      * @param array $options Array of fields to update. All fields are optional.
      *
@@ -301,6 +321,31 @@ class Client extends Part
     }
 
     /**
+     * Returns a sticker object for the given sticker ID.
+     *
+     * @param string $sticker_id The ID of the sticker to retrieve.
+     *
+     * @return PromiseInterface<Sticker>
+     *
+     * @link https://docs.discord.com/developers/resources/sticker#get-sticker
+     *
+     * @since 10.60.0 Fetches the sticker when no cached sticker pack holds it, instead of looking the ID up among the packs.
+     * @since 10.47.0 Deprecated in favor of StickerPackRepository::get()
+     * @since 10.46.0
+     */
+    public function getSticker(string $sticker_id): PromiseInterface
+    {
+        foreach ($this->sticker_packs as $pack) {
+            if ($sticker = $pack->stickers->get('id', $sticker_id)) {
+                return resolve($sticker);
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::STICKER, $sticker_id))
+            ->then(fn ($response) => $this->factory->part(Sticker::class, (array) $response, true));
+    }
+
+    /**
      * Saves the client instance.
      *
      * @return PromiseInterface
@@ -313,7 +358,7 @@ class Client extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/user#modify-current-user-json-params
+     * @link https://docs.discord.com/developers/resources/user#modify-current-user-json-params
      */
     public function getUpdatableAttributes(): array
     {

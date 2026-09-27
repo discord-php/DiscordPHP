@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -36,7 +37,7 @@ final class ChannelTest extends DiscordTestCase
                         ->then(fn () => $this->channel()->getPinnedMessages())
                         ->then(function (Collection $messages) use ($message) {
                             $this->assertGreaterThan(0, $messages->count());
-                            $this->assertContains($message->id, $messages->map(fn ($message) => $message->id));
+                            $this->assertTrue(in_array($message->id, $messages->map(fn ($message) => $message->id)->toArray()));
                         })
                 )
                 ->then($resolve, $resolve);
@@ -56,7 +57,7 @@ final class ChannelTest extends DiscordTestCase
                     fn (Message $message) => $this->channel()->pinMessage($message)
                         ->then(fn () => $this->channel()->unpinMessage($message))
                         ->then(fn () => $this->channel()->getPinnedMessages())
-                        ->then(fn (Collection $messages) => $this->assertNotContains($message->id, $messages->map(fn ($message) => $message->id)))
+                        ->then(fn (Collection $messages) => $this->assertFalse(in_array($message->id, $messages->map(fn ($message) => $message->id)->toArray())))
                 )
                 ->then($resolve, $resolve);
         });

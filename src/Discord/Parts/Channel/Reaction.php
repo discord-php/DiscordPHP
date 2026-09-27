@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -30,7 +31,7 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction emoji to a message by members(s).
  *
- * @link https://discord.com/developers/docs/resources/message#reaction-object
+ * @link https://docs.discord.com/developers/resources/message#reaction-object
  *
  * @since 5.0.0
  *
@@ -145,7 +146,7 @@ class Reaction extends Part
      * @param string|null $options['after'] Get users after this user ID.
      * @param int|null    $options['limit'] Max number of users to return (1-100).
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-reactions
+     * @link https://docs.discord.com/developers/resources/channel#get-reactions
      *
      * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */

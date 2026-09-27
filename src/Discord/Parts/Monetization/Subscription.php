@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -26,9 +27,9 @@ use Discord\Parts\Part;
  * The start of a subscription is determined by its ID. When the subscription renews, its current period is updated.
  * If the user cancels the subscription, the subscription will enter the ENDING status and the canceled_at timestamp will reflect the time of the cancellation.
  *
- * @link https://discord.com/developers/docs/monetization/implementing-app-subscriptions
+ * @link https://docs.discord.com/developers/monetization/implementing-app-subscriptions
  *
- * @link https://discord.com/developers/docs/resources/subscription
+ * @link https://docs.discord.com/developers/resources/subscription
  *
  * @since 10.15.0
  *
@@ -48,9 +49,9 @@ class Subscription extends Part
     /** Subscription is active and scheduled to renew. */
     public const STATUS_ACTIVE = 0;
     /** Subscription is active but will not renew. */
-    public const STATUS_ENDING = 1;
+    public const STATUS_INACTIVE = 1;
     /** Subscription is inactive and not being charged. */
-    public const STATUS_INACTIVE = 2;
+    public const STATUS_ENDING = 2;
 
     /**
      * @inheritdoc

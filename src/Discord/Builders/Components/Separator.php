@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -17,7 +18,7 @@ namespace Discord\Builders\Components;
  * Separator components allow you to divide components with a divider.
  * You can make the divider big or small, and make it invisible if needed.
  *
- * @link https://discord.com/developers/docs/components/reference#separator
+ * @link https://docs.discord.com/developers/components/reference#separator
  *
  * @since 10.5.0
  *
@@ -72,7 +73,7 @@ class Separator extends Layout implements Contracts\ComponentV2
      *
      * @param bool|null $divider Whether the separator is a divider.
      *
-     * @return $this
+     * @return self
      */
     public function setDivider(?bool $divider = true): self
     {
@@ -88,7 +89,7 @@ class Separator extends Layout implements Contracts\ComponentV2
      *
      * @throws \InvalidArgumentException Invalid spacing size.
      *
-     * @return $this
+     * @return self
      */
     public function setSpacing(?int $spacing = null): self
     {

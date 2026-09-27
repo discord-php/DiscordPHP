@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,29 +23,35 @@ use Stringable;
 /**
  * The Activity part describes activities the member is undertaking.
  *
- * @link https://discord.com/developers/docs/topics/gateway-events#activity-object
+ * If a user's Profile Privacy Setting is set to `Friends Only`, or to `Friends & Small Servers Only` in a guild with more than 200 members,
+ * their custom status (an Activity object with `type` `4`) is omitted from the `activities` field of Presence Update events dispatched to that guild.
+ * This applies to apps and bots subscribed to the guild's presence.
+ * Other activity types (Playing, Streaming, Listening, Watching, Competing) are not affected by this setting but may be controlled by Activity Sharing settings.
+ * @see https://support.discord.com/hc/en-us/articles/7931156448919-Activity-Sharing-on-Discord-FAQ
+
+ * @link https://docs.discord.com/developers/events/gateway-events#activity-object
  *
  * @since 5.0.0 Renamed from Game to Activity
  * @since 3.2.2
  *
- * @property string                                      $name                The activity's name.
- * @property int                                         $type                Activity type.
- * @property ?string|null                                $url                 Stream url, is validated when type is 1.
- * @property Carbon|null                                 $created_at          Timestamp of when the activity was added to the user's session.
- * @property Timestamps|null                             $timestamps          Unix timestamps for start and/or end of the game.
- * @property string|null                                 $application_id      Application id for the game.
- * @property ?int|null                                   $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
- * @property ?string|null                                $details             What the player is currently doing.
- * @property ?string|null                                $details_url         URL that is linked when clicking on the details text
- * @property ?string|null                                $state               The user's current party status, or text used for a custom status.
- * @property ?string|null                                $state_url           URL that is linked when clicking on the state text.
- * @property Emoji|null                                  $emoji               The emoji used for a custom status.
- * @property Party|null                                  $party               Information for the current party of the player.
- * @property Assets|null                                 $assets              Images for the presence and their hover texts.
- * @property Secrets|null                                $secrets             Secrets for Rich Presence joining and spectating.
- * @property bool|null                                   $instance            Whether or not the activity is an instanced game session.
- * @property int|null                                    $flags               Activity flags `OR`d together, describes what the payload includes.
- * @property ExCollectionInterface<Button>|Button[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
+ * @property string                                       $name                The activity's name.
+ * @property int                                          $type                Activity type.
+ * @property ?string|null                                 $url                 Stream url, is validated when type is 1.
+ * @property Carbon|null                                  $created_at          Timestamp of when the activity was added to the user's session.
+ * @property ?Timestamps|null                             $timestamps          Unix timestamps for start and/or end of the game.
+ * @property ?string|null                                 $application_id      Application id for the game.
+ * @property ?int|null                                    $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
+ * @property ?string|null                                 $details             What the player is currently doing.
+ * @property ?string|null                                 $details_url         URL that is linked when clicking on the details text
+ * @property ?string|null                                 $state               The user's current party status, or text used for a custom status.
+ * @property ?string|null                                 $state_url           URL that is linked when clicking on the state text.
+ * @property ?Emoji|null                                  $emoji               The emoji used for a custom status.
+ * @property ?Party|null                                  $party               Information for the current party of the player.
+ * @property ?Assets|null                                 $assets              Images for the presence and their hover texts.
+ * @property ?Secrets|null                                $secrets             Secrets for Rich Presence joining and spectating.
+ * @property ?bool|null                                   $instance            Whether or not the activity is an instanced game session.
+ * @property ?int|null                                    $flags               Activity flags `OR`d together, describes what the payload includes.
+ * @property ?ExCollectionInterface<Button>|Button[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
  */
 class Activity extends Part implements Stringable
 {

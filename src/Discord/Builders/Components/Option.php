@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,8 +21,10 @@ use function Discord\poly_strlen;
 /**
  * Option for select menu component.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menu-object-select-option-structure
+ * @link https://docs.discord.com/developers/components/reference#select-menu-object-select-option-structure
  *
+ * @todo Deprecate Option in v11.
+ * @since 10.46.0 Use SelectMenuOption instead of Option.
  * @since 7.0.0
  */
 class Option extends Component
@@ -103,7 +106,7 @@ class Option extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(?string $description): self
     {
@@ -121,7 +124,7 @@ class Option extends Component
      *
      * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {
@@ -165,7 +168,7 @@ class Option extends Component
      *
      * @param bool $default
      *
-     * @return $this
+     * @return self
      */
     public function setDefault(bool $default = true): self
     {

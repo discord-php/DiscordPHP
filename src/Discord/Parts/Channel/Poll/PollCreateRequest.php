@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -23,7 +24,7 @@ use function Discord\poly_strlen;
  * It is similar but not exactly identical to the main poll object.
  * The main difference is that the request has duration which eventually becomes expiry.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
+ * @link https://docs.discord.com/developers/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
  * @since 10.0.0
  *
@@ -56,7 +57,7 @@ class PollCreateRequest extends Part
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setQuestion(PollMedia|string $question): self
     {
@@ -80,7 +81,7 @@ class PollCreateRequest extends Part
      *
      * @param PollAnswer[] $answers Each of the answers available in the poll.
      *
-     * @return $this
+     * @return self
      */
     public function setAnswers(array $answers): self
     {
@@ -99,7 +100,7 @@ class PollCreateRequest extends Part
      * @throws \OutOfRangeException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function addAnswer(PollAnswer|PollMedia|array|string $answer): self
     {
@@ -143,7 +144,7 @@ class PollCreateRequest extends Part
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setDuration(?int $duration = null): self
     {
@@ -163,7 +164,7 @@ class PollCreateRequest extends Part
      *
      * @param bool|null $multiselect Whether a user can select multiple answers. Defaults to false.
      *
-     * @return $this
+     * @return self
      */
     public function setAllowMultiselect(?bool $multiselect = null): self
     {
@@ -177,7 +178,7 @@ class PollCreateRequest extends Part
      *
      * @param int|null $type The layout type of the poll.
      *
-     * @return $this
+     * @return self
      */
     protected function setLayoutType(?int $type = null): self
     {

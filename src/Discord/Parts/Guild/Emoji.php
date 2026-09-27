@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -27,15 +28,15 @@ use function React\Promise\reject;
 /**
  * An emoji object represents a custom emoji.
  *
- * @link https://discord.com/developers/docs/resources/emoji
+ * @link https://docs.discord.com/developers/resources/emoji
  *
  * @since 4.0.2
  *
  * @property ?string|null                       $id             The identifier for the emoji.
- * @property ?string|null                       $name           The name of the emoji (can be null only in reaction emoji objects).
+ * @property ?string|null                       $name           The name of the emoji (can be null only in reaction emoji objects). This field can only be `null` in reaction emoji objects.
  * @property ExCollectionInterface<Role>|Role[] $roles          The roles that are all owed to use the emoji.
  * @property User|null                          $user           User that created this emoji.
- * @property bool|null                          $require_colons Whether the emoji requires colons to be triggered.
+ * @property bool|null                          $require_colons Whether the emoji requires colons to be triggered. The field is only set to `false` for synced subscriber emotes when the Twitch Integration is set up.
  * @property bool|null                          $managed        Whether this emoji is managed by a role.
  * @property bool|null                          $animated       Whether the emoji is animated.
  * @property bool|null                          $available      Whether this emoji can be used, may be false due to loss of Server Boosts.
@@ -144,7 +145,7 @@ class Emoji extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params
+     * @link https://docs.discord.com/developers/resources/emoji#modify-guild-emoji-json-params
      */
     public function getUpdatableAttributes(): array
     {

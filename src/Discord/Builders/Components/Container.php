@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -19,7 +20,7 @@ use Discord\Builders\ComponentsTrait;
  * Containers are a new way to group components together.
  * You can also specify an accent color (similar to embeds) and spoiler it.
  *
- * @link https://discord.com/developers/docs/components/reference#container
+ * @link https://docs.discord.com/developers/components/reference#container
  *
  * @since 10.5.0
  *
@@ -103,7 +104,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      *
-     * @return $this
+     * @return self
      */
     public function addComponent($component): self
     {
@@ -125,7 +126,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @param mixed $color Color code for the container.
      *
-     * @return $this
+     * @return self
      */
     public function setAccentColor($color = null): self
     {
@@ -143,7 +144,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @param bool|null $spoiler Whether the container is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(?bool $spoiler = true): self
     {

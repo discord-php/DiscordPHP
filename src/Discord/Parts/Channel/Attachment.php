@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,27 +23,29 @@ use Discord\Parts\User\User;
 /**
  * A message attachment.
  *
- * @link https://discord.com/developers/docs/resources/message#attachment-object
+ * @link https://docs.discord.com/developers/resources/message#attachment-object
  *
  * @since 7.0.0
  *
- * @property string            $id                Attachment ID.
- * @property string            $filename          Name of file attached.
- * @property string|null       $title             The title of the file
- * @property string|null       $description       Description for the file.
- * @property string|null       $content_type      The attachment's media type.
- * @property int               $size              Size of file in bytes.
- * @property string            $url               Source url of file.
- * @property string            $proxy_url         A proxied url of file.
- * @property ?int|null         $height            Height of file (if image).
- * @property ?int|null         $width             Width of file (if image).
- * @property bool|null         $ephemeral         Whether this attachment is ephemeral.
- * @property float|null        $duration_secs     The duration of the audio file (currently for voice messages).
- * @property string|null       $waveform          Base64 encoded bytearray representing a sampled waveform (currently for voice messages).
- * @property int|null          $flags             Attachment flags combined as a bitfield.
- * @property ?User[]|null      $clip_participants Array of user objects. For Clips, array of users who were in the stream.
- * @property ?Carbon|null      $clip_created_at   For Clips, when the clip was created.
- * @property ?Application|null $application       For Clips, the application in the stream, if recognized.
+ * @property string            $id                  Attachment ID.
+ * @property string            $filename            Name of file attached.
+ * @property string|null       $title               The title of the file
+ * @property string|null       $description         Description for the file.
+ * @property string|null       $content_type        The attachment's media type.
+ * @property int               $size                Size of file in bytes.
+ * @property string            $url                 Source url of file.
+ * @property string            $proxy_url           A proxied url of file.
+ * @property ?int|null         $height              Height of file (if image).
+ * @property ?int|null         $width               Width of file (if image).
+ * @property ?string|null      $placeholder         Thumbhash placeholder (if image or video).
+ * @property ?int|null         $placeholder_version Version of the placeholder (if image or video)
+ * @property bool|null         $ephemeral           Whether this attachment is ephemeral.
+ * @property float|null        $duration_secs       The duration of the audio file (currently for voice messages).
+ * @property string|null       $waveform            Base64 encoded bytearray representing a sampled waveform (currently for voice messages).
+ * @property int|null          $flags               Attachment flags combined as a bitfield.
+ * @property ?User[]|null      $clip_participants   Array of user objects. For Clips, array of users who were in the stream.
+ * @property ?Carbon|null      $clip_created_at     For Clips, when the clip was created.
+ * @property ?Application|null $application         For Clips, the application in the stream, if recognized.
  */
 class Attachment extends Part
 {
@@ -71,6 +74,8 @@ class Attachment extends Part
         'proxy_url',
         'height',
         'width',
+        'placeholder',
+        'placeholder_version',
         'ephemeral',
         'duration_secs',
         'waveform',

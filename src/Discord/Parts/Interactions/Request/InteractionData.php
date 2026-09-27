@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,7 +21,7 @@ use Discord\Parts\Part;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-interaction-data
  *
  * @since 7.0.0
  *
@@ -36,7 +37,7 @@ use Discord\Parts\Part;
  * @property string[]|null                                $values         Values selected in a select menu. (Only for Message Component)
  * @property ExCollectionInterface<Component>|Component[] $components     The values submitted by the user. (Only for Modal)
  *
- * @deprecated 10.19.0 Use either `ApplicationCommandData`,`MessageComponentData`, or `ModalSubmitData`
+ * @since 10.19.0 Use either `ApplicationCommandData`,`MessageComponentData`, or `ModalSubmitData`
  */
 class InteractionData extends Part
 {

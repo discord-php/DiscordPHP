@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,7 +21,7 @@ use JsonSerializable;
  *
  * Gateway event payloads have a common structure, but the contents of the associated data (d) varies between the different events.
  *
- * @link https://discord.com/developers/docs/topics/gateway#payloads-gateway-payload-structure
+ * @link https://docs.discord.com/developers/topics/gateway#payloads-gateway-payload-structure
  *
  * @property int         $op Gateway opcode, which indicates the payload type.
  * @property mixed|null  $d  Event data.
@@ -41,6 +42,12 @@ class Payload implements JsonSerializable
     /** @var string|null */
     public $t;
 
+    /**
+     * @param int         $op Gateway opcode.
+     * @param mixed       $d  Event data / payload.
+     * @param int|null    $s  Sequence number (dispatch only).
+     * @param string|null $t  Event name (dispatch only).
+     */
     public function __construct(int $op, $d = null, ?int $s = null, ?string $t = null)
     {
         $this->op = $op;
@@ -49,11 +56,19 @@ class Payload implements JsonSerializable
         $this->t = $t;
     }
 
+    /**
+     * Convenience factory; see {@see __construct()} for the parameters.
+     */
     public static function new(int $op, $d = null, ?int $s = null, ?string $t = null): self
     {
         return new self($op, $d, $s, $t);
     }
 
+    /**
+     * Builds a payload from a decoded gateway frame array (`op`, `d`, `s`, `t`).
+     *
+     * @param array $data
+     */
     public static function fromArray(array $data): self
     {
         $op = $data['op'] ?? 0;
@@ -64,6 +79,9 @@ class Payload implements JsonSerializable
         return new self($op, $d, $s, $t);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         $data['op'] = $this->op;
@@ -78,6 +96,11 @@ class Payload implements JsonSerializable
         return $data;
     }
 
+    /**
+     * Debug representation: the serialised payload with large `d` bodies summarised.
+     *
+     * @return array
+     */
     public function __debugInfo()
     {
         $array = $this->jsonSerialize();
@@ -85,10 +108,10 @@ class Payload implements JsonSerializable
         if (isset($array['d'])) {
             is_array($array['d'])
                 ? (isset($array['d']['token'])
-                    ? $array['d']['token'] = 'xxxxx'
+                    ? $array['d']['token'] = '*****'
                     : null)
                 : (isset($array['d']->token)
-                    ? $array['d']->token = 'xxxxx'
+                    ? $array['d']->token = '*****'
                     : null);
         }
 

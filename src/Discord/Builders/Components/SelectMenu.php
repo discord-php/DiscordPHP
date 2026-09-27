@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -28,7 +29,7 @@ use function Discord\poly_strlen;
  * On desktop, clicking on a select menu opens a dropdown-style UI.
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menus
+ * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
  * @since 10.9.0 Extends Interactive instead of Component
@@ -141,7 +142,7 @@ abstract class SelectMenu extends Interactive
      *
      * @return static
      */
-    public static function new(?string $custom_id = null): self
+    public static function new(?string $custom_id = null): static
     {
         return new static($custom_id);
     }
@@ -154,7 +155,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \InvalidArgumentException
      *
-     * @return string
+     * @return self
      */
     public function setType(int $type): self
     {
@@ -175,7 +176,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \InvalidArgumentException If the select menu type is not `TYPE_STRING_SELECT`.
      *
-     * @return $this
+     * @return self
      */
     public function setOptions(array $options): self
     {
@@ -198,7 +199,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \InvalidArgumentException If the select menu type is not `TYPE_CHANNEL_SELECT`.
      *
-     * @return $this
+     * @return self
      */
     public function setChannelTypes(array $channel_types): self
     {
@@ -218,7 +219,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -231,6 +232,13 @@ abstract class SelectMenu extends Interactive
         return $this;
     }
 
+    /**
+     * Sets the pre-selected default values (auto-populated select menus only).
+     *
+     * @param array|null $default_values
+     *
+     * @throws \InvalidArgumentException When the menu is not a user/role/mentionable/channel select.
+     */
     public function setDefaultValues(?array $default_values): self
     {
         static $allowed_types = [self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
@@ -249,7 +257,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinValues(?int $min_values): self
     {
@@ -269,7 +277,7 @@ abstract class SelectMenu extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValues(?int $max_values): self
     {
@@ -287,7 +295,7 @@ abstract class SelectMenu extends Interactive
      *
      * @param bool|null $disabled
      *
-     * @return $this
+     * @return self
      */
     public function setDisabled(?bool $disabled = true): self
     {
@@ -321,7 +329,7 @@ abstract class SelectMenu extends Interactive
      * @param Discord  $discord  Discord client.
      * @param bool     $oneOff   Whether the listener should be removed after the selection is changed for the first time.
      *
-     * @return $this
+     * @return self
      *
      * @todo setListener callback return for each type.
      */
@@ -405,7 +413,7 @@ abstract class SelectMenu extends Interactive
     /**
      * Removes the listener from the button.
      *
-     * @return $this
+     * @return self
      */
     public function removeListener(): self
     {

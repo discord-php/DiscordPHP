@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -37,7 +38,7 @@ use function React\Promise\all;
  * Otherwise, if a guild has over `large_threshold` members (configurable in Gateway Identify), it will only send members who are online, have a role, have a nickname, or are in a voice channel.
  * Otherwise (if it has under `large_threshold` members), it will send all members.
  *
- * @link https://discord.com/developers/docs/events/gateway-events#guild-create
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-create
  *
  * @since 2.1.3
  */

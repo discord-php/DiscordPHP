@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,8 +15,13 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\OAuth2\AccessToken;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Role;
+use Discord\Parts\Part;
 use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -54,6 +60,58 @@ class MemberRepository extends AbstractRepository
     protected $class = Member::class;
 
     /**
+     * Adds a user to the guild with their OAuth2 access token, which must have the `guilds.join` scope and
+     * come from the bot's own application. The bot must be in the guild, with the create_instant_invite
+     * permission. A user who is already a member is left as they are.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#add-guild-member
+     *
+     * @param User|Member|string  $user             The user to add.
+     * @param AccessToken|string  $access_token     The user's access token.
+     * @param array               $options
+     * @param ?string             $options['nick']  Their nickname. Requires the manage_nicknames permission.
+     * @param ?array<Role|string> $options['roles'] Roles to give them. Requires the manage_roles permission.
+     * @param ?bool               $options['mute']  Whether they are muted in voice channels. Requires the mute_members permission.
+     * @param ?bool               $options['deaf']  Whether they are deafened in voice channels. Requires the deafen_members permission.
+     *
+     * @throws NoPermissionsException Missing create_instant_invite permission.
+     *
+     * @return PromiseInterface<Member> The new member, or the existing one if the user was already in the guild.
+     *
+     * @since 10.60.0
+     */
+    public function add($user, $access_token, array $options = []): PromiseInterface
+    {
+        $user_id = $user instanceof Part ? $user->id : (string) $user;
+
+        $guild = $this->discord->guilds->get('id', $this->vars['guild_id']);
+        if ($botperms = $guild?->getBotPermissions()) {
+            if (! $botperms->create_instant_invite) {
+                return reject(new NoPermissionsException("You do not have permission to add members to the guild {$this->vars['guild_id']}."));
+            }
+        }
+
+        $payload = ['access_token' => $access_token instanceof AccessToken ? $access_token->access_token : (string) $access_token]
+            + array_intersect_key($options, array_flip(['nick', 'roles', 'mute', 'deaf']));
+
+        if (isset($payload['roles'])) {
+            $payload['roles'] = array_map(static fn ($role): string => $role instanceof Role ? $role->id : (string) $role, $payload['roles']);
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->vars['guild_id'], $user_id), $payload)
+            ->then(function ($response) use ($user_id) {
+                // No content means the user was already a member.
+                if (null === $response) {
+                    return $this->fetch($user_id);
+                }
+
+                $member = $this->factory->part(Member::class, array_merge($this->vars, (array) $response), true);
+
+                return $this->cache->set($user_id, $member)->then(fn () => $member);
+            });
+    }
+
+    /**
      * Returns a guild member object for the current user.
      *
      * @param Guild|string $guild
@@ -85,7 +143,7 @@ class MemberRepository extends AbstractRepository
      * Returns a guild member object for the current user.
      * Requires the guilds.members.read OAuth2 scope.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
+     * @link https://docs.discord.com/developers/resources/user#get-current-user-guild-member
      *
      * @param string $guild
      *
@@ -105,7 +163,7 @@ class MemberRepository extends AbstractRepository
     /**
      * Modifies the current member (no validation).
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-current-member-json-params
      *
      * @param Guild|string $guild            The guild or guild ID.
      * @param array        $params           The parameters to modify.
@@ -151,7 +209,7 @@ class MemberRepository extends AbstractRepository
     /**
      * Alias for `$member->delete()`.
      *
-     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member
+     * @link https://docs.discord.com/developers/resources/guild#remove-guild-member
      *
      * @param Member      $member The member to kick.
      * @param string|null $reason Reason for Audit Log.
