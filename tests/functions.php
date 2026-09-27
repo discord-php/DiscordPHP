@@ -16,6 +16,7 @@ use Discord\Discord;
 use Discord\Http\DriverInterface;
 use Discord\Http\Request;
 use Discord\MessageCommandClient;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\NullLogger;
 use React\Http\Message\Response;
 use React\Promise\Deferred;
@@ -86,7 +87,8 @@ function getMockMessageCommandClient(): MessageCommandClient
 /**
  * An HTTP driver that answers from a script instead of the network, and records what it was asked.
  *
- * `$respond` receives the method and URL and returns the decoded response body; `null` answers 204 No Content.
+ * `$respond` receives the method and URL and returns the decoded response body; `null` answers 204 No Content,
+ * and a response is sent as it is.
  */
 function getMockHttpDriver(callable $respond): DriverInterface
 {
@@ -102,7 +104,7 @@ function getMockHttpDriver(callable $respond): DriverInterface
         {
             // The client asks for the gateway as soon as it is built. Leave that
             // unanswered, so it never connects, and out of what tests inspect.
-            if (preg_match('#/gateway(/bot)?$#', $request->getUrl()) === 1) {
+            if (str_ends_with($request->getUrl(), '/gateway/bot')) {
                 return (new Deferred())->promise();
             }
 
@@ -117,6 +119,10 @@ function getMockHttpDriver(callable $respond): DriverInterface
             ];
 
             $body = ($this->respond)($method, $request->getUrl());
+
+            if ($body instanceof ResponseInterface) {
+                return resolve($body);
+            }
 
             return resolve($body === null
                 ? new Response(204)

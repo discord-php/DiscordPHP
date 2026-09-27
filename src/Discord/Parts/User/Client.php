@@ -252,6 +252,26 @@ class Client extends Part
     }
 
     /**
+     * Gets the bot's application through Discord's OAuth2 route, Get Current Bot Application Information.
+     *
+     * {@see self::getCurrentApplication()} reads the same application, with more of its fields.
+     *
+     * @link https://docs.discord.com/developers/topics/oauth2#get-current-bot-application-information
+     *
+     * @return PromiseInterface<Application>
+     *
+     * @since 10.60.0
+     */
+    public function getCurrentBotApplication(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::OAUTH2_APPLICATIONS_ME)->then(function ($response) {
+            $this->application->fill((array) $response);
+
+            return $this->application;
+        });
+    }
+
+    /**
      * Updates the current application associated with the bot user.
      *
      * @link https://docs.discord.com/developers/resources/application#edit-current-application

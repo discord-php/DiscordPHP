@@ -98,6 +98,18 @@ final class OpenApiCheckTest extends TestCase
                     return $this->http->put($endpoint);
                 }
 
+                public function badge($id)
+                {
+                    $endpoint = Endpoint::bind(Endpoint::THING_BADGE, $id);
+
+                    return $this->http->getDriver()->runRequest(new Request(new Deferred(), 'get', $endpoint, ''));
+                }
+
+                public function banner($id)
+                {
+                    return $driver->runRequest(new Request(new Deferred(), 'get', Endpoint::bind(Endpoint::THING_BANNER, $id), ''));
+                }
+
                 /** Its picture, as at Endpoint::THING_DOCUMENTED. */
                 public function image($id)
                 {
@@ -109,6 +121,8 @@ final class OpenApiCheckTest extends TestCase
         $this->assertSame([
             'THINGS' => ['GET', 'POST'],
             'THING_ARCHIVE' => ['GET'],
+            'THING_BADGE' => ['GET'],
+            'THING_BANNER' => ['GET'],
             'THING_IMAGE' => ['?'],
             'THING_MEMBER' => ['DELETE'],
             'THING_OFF' => ['PUT'],

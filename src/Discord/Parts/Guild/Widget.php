@@ -17,10 +17,15 @@ namespace Discord\Parts\Guild;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\Http\Request;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
+use Psr\Http\Message\ResponseInterface;
+use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * A Widget of a Guild.
@@ -136,10 +141,49 @@ class Widget extends Part
     {
         $endpoint = Endpoint::bind(Endpoint::GUILD_WIDGET_IMAGE, $this->id);
 
-        if (in_array(strtolower($style), self::STYLE)) {
-            $endpoint->addQuery('style', $style);
+        return Http::BASE_URL.'/'.self::withStyle($endpoint, $style);
+    }
+
+    /**
+     * Downloads the guild's PNG widget image. Requires no permissions or authentication.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-widget-image
+     *
+     * @param string $style Style of the widget image returned (default 'shield').
+     *
+     * @return PromiseInterface<string> The PNG image's bytes.
+     *
+     * @since 10.60.0
+     */
+    public function getImage(string $style = self::STYLE_SHIELD): PromiseInterface
+    {
+        if (null === $driver = $this->http->getDriver()) {
+            return reject(new \RuntimeException('HTTP driver is missing.'));
         }
 
-        return Http::BASE_URL.'/'.$endpoint;
+        $endpoint = Endpoint::bind(Endpoint::GUILD_WIDGET_IMAGE, $this->id);
+
+        // The HTTP client decodes every response as JSON, so the image is requested through its driver.
+        return $driver->runRequest(new Request(new Deferred(), 'get', self::withStyle($endpoint, $style), '', ['User-Agent' => $this->http->getUserAgent()]))
+            ->then(function (ResponseInterface $response): string {
+                $status = $response->getStatusCode();
+                if ($status < 200 || $status >= 300) {
+                    throw new \RuntimeException("Could not get the widget image of guild {$this->id}: HTTP {$status} {$response->getReasonPhrase()}", $status);
+                }
+
+                return (string) $response->getBody();
+            });
+    }
+
+    /**
+     * Adds the widget image style to its endpoint, when it is one Discord knows.
+     */
+    private static function withStyle(Endpoint $endpoint, string $style): Endpoint
+    {
+        if (in_array(strtolower($style), self::STYLE)) {
+            $endpoint->addQuery('style', strtolower($style));
+        }
+
+        return $endpoint;
     }
 }

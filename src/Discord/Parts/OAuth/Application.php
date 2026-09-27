@@ -162,6 +162,51 @@ class Application extends Part
     ];
 
     /**
+     * Gets the application from Discord by its ID, which must be the bot's own application.
+     *
+     * @link https://docs.discord.com/developers/resources/application#get-current-application
+     *
+     * @return PromiseInterface<static>
+     *
+     * @since 10.60.0
+     */
+    public function fetch(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::APPLICATION, $this->id))
+            ->then(function ($response) {
+                $this->fill((array) $response);
+                $this->created = true;
+
+                return $this;
+            });
+    }
+
+    /**
+     * Edits the application by its ID, which must be the bot's own application.
+     *
+     * The fields are those of Discord's Edit Current Application, such as `description`, `tags`, `flags`,
+     * `interactions_endpoint_url` or `install_params`. `icon` and `cover_image` take image data URIs.
+     *
+     * @link https://docs.discord.com/developers/resources/application#edit-current-application
+     *
+     * @param array $options The fields to change. All are optional.
+     *
+     * @return PromiseInterface<static>
+     *
+     * @since 10.60.0
+     */
+    public function update(array $options): PromiseInterface
+    {
+        return $this->http->patch(Endpoint::bind(Endpoint::APPLICATION, $this->id), $options)
+            ->then(function ($response) {
+                $this->fill((array) $response);
+                $this->created = true;
+
+                return $this;
+            });
+    }
+
+    /**
      * Returns a list of application role connection metadata objects for the given application.
      *
      * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records

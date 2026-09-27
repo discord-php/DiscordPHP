@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Gateway;
 
-use Discord\Parts\Part;
-
 /**
  * An object based on the information in Get Gateway,
  * plus additional metadata that can help during the operation of large or sharded bots.
@@ -30,7 +28,7 @@ use Discord\Parts\Part;
  * @property int               $shards              Recommended number of shards to use when connecting.
  * @property SessionStartLimit $session_start_limit Information on the current session start limit.
  */
-class GetGatewayBot extends Part
+class GetGatewayBot extends GetGateway
 {
     /**
      * @inheritDoc

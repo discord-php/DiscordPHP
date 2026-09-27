@@ -29,6 +29,7 @@ use Discord\OAuth2\TokenStore\ArrayTokenStore;
 use Discord\OAuth2\TokenStore\CacheTokenStore;
 use Discord\OAuth2\TokenStore\TokenStoreInterface;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Gateway\GetGateway;
 use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Gateway\Ready;
@@ -1935,6 +1936,24 @@ class Discord
 
         $this->voiceLoggers[$channel->guild_id] = $this->logger;
         $this->removeListener(Event::VOICE_SERVER_UPDATE, fn () => $this->voiceServerUpdate($vs, $channel, $data, $deferred));
+    }
+
+    /**
+     * Gets the Gateway's WSS URL from Get Gateway.
+     *
+     * The client connects through Get Gateway Bot instead, which also gives the recommended shard count and
+     * the session start limit, and emits it as the `gateway` event.
+     *
+     * @link https://docs.discord.com/developers/events/gateway#get-gateway
+     *
+     * @return PromiseInterface<GetGateway>
+     *
+     * @since 10.60.0
+     */
+    public function getGateway(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::GATEWAY)
+            ->then(fn ($response) => $this->factory->part(GetGateway::class, (array) $response));
     }
 
     /**
