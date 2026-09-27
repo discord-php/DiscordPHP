@@ -46,6 +46,9 @@ use Discord\WebSockets\Events\GuildRoleDelete;
 use Discord\WebSockets\Events\GuildRoleUpdate;
 use Discord\WebSockets\Events\GuildScheduledEventCreate;
 use Discord\WebSockets\Events\GuildScheduledEventDelete;
+use Discord\WebSockets\Events\GuildScheduledEventExceptionCreate;
+use Discord\WebSockets\Events\GuildScheduledEventExceptionDelete;
+use Discord\WebSockets\Events\GuildScheduledEventExceptionUpdate;
 use Discord\WebSockets\Events\GuildScheduledEventUpdate;
 use Discord\WebSockets\Events\GuildScheduledEventUserAdd;
 use Discord\WebSockets\Events\GuildScheduledEventUserRemove;
@@ -197,6 +200,9 @@ class Handlers
         $this->addHandler(Event::GUILD_SCHEDULED_EVENT_DELETE, GuildScheduledEventDelete::class);
         $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_ADD, GuildScheduledEventUserAdd::class);
         $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, GuildScheduledEventUserRemove::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE, GuildScheduledEventExceptionCreate::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE, GuildScheduledEventExceptionUpdate::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE, GuildScheduledEventExceptionDelete::class);
 
         // Thread events
         $this->addHandler(Event::THREAD_CREATE, ThreadCreate::class);
