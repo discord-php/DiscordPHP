@@ -15,9 +15,11 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\EventLoop\StreamSelectLoop;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\contains;
+use function Discord\deferFind;
 use function Discord\escapeMarkdown;
 use function Discord\getColor;
 use function Discord\mentioned;
@@ -198,5 +200,34 @@ final class FunctionsTest extends DiscordTestCase
         foreach ($array as $case) {
             $this->assertEquals($case[1], escapeMarkdown($case[0]));
         }
+    }
+
+    /**
+     * The canceller and the search timer share `$cancelled` by reference. Written as an arrow
+     * function the canceller set its own copy, and a cancelled search ran to the end.
+     */
+    public function testDeferFindStopsWhenCancelled(): void
+    {
+        // A loop of its own, so nothing else scheduled on the global one runs here.
+        $loop = new StreamSelectLoop();
+        $checked = 0;
+        $promise = deferFind(range(1, 100000), function () use (&$checked) {
+            ++$checked;
+
+            return false;
+        }, $loop);
+
+        $reason = null;
+        $promise->then(null, function ($e) use (&$reason) {
+            $reason = $e;
+        });
+
+        $loop->addTimer(0.01, fn () => $promise->cancel());
+        $loop->addTimer(0.25, fn () => $loop->stop());
+        $loop->run();
+
+        $this->assertInstanceOf(RuntimeException::class, $reason);
+        $this->assertSame('deferFind() cancelled', $reason->getMessage());
+        $this->assertLessThan(100000, $checked, 'the search stopped once cancelled');
     }
 }
