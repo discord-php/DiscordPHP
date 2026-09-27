@@ -632,6 +632,24 @@ trait PartTrait
     }
 
     /**
+     * Handles isset() and empty() on the part's magic properties.
+     *
+     * A property is set when reading it gives a value other than null, whether it is
+     * stored, computed by a mutator or a child repository, as for a declared property.
+     * Without this, isset() is false for every attribute and empty() is true.
+     *
+     * @param string $key The attribute key.
+     *
+     * @return bool Whether reading the property gives a value other than null.
+     *
+     * @see Part::getAttribute() This function forwards onto getAttribute.
+     */
+    public function __isset(string $key): bool
+    {
+        return $this->getAttribute($key) !== null;
+    }
+
+    /**
      * Handles dynamic set calls onto the part.
      *
      * @param string $key   The attributes key.
