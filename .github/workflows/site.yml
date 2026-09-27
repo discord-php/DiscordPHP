@@ -1,0 +1,33 @@
+name: Update discordphp.org
+
+# Asks discord-php/DiscordPHP.org to rebuild its route and event maps for the release just published.
+#
+# Sending the dispatch needs the repository secret SITE_DISPATCH_TOKEN: a fine-grained personal access
+# token with discord-php as its resource owner, access to DiscordPHP.org only, and the Contents: Read and
+# write permission. This workflow's own GITHUB_TOKEN cannot start workflows in another repository.
+# Without the secret, nothing fails: the site picks the release up on its daily run instead.
+
+on:
+  release:
+    types: [published]
+
+permissions: {}
+
+jobs:
+  dispatch:
+    name: Ask DiscordPHP.org to rebuild
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Send the dispatch
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::notice::SITE_DISPATCH_TOKEN is not set, so discordphp.org will pick $TAG up on its daily run."
+            exit 0
+          fi
+          gh api repos/discord-php/DiscordPHP.org/dispatches -f event_type=discordphp-release -f "client_payload[tag]=$TAG"
+          echo "Asked DiscordPHP.org to rebuild for $TAG."
