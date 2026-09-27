@@ -928,11 +928,14 @@ class Discord
 
         if ($message->isBinary()) {
             if ($this->zstdDecompressor !== false) {
+                // Each message is one gateway payload but does not end the zstd frame; the
+                // context lives for the whole connection and consumes each message in full.
                 $decompressed = uncompress_add($this->zstdDecompressor, $payload);
-                if ($decompressed !== false) {
+                if ($decompressed === false) {
+                    // Not the payload itself: a GUILD_CREATE can run to megabytes.
+                    $this->logger->error('failed to decompress zstd payload', ['length' => strlen($payload), 'head hex' => bin2hex(substr($payload, 0, 32))]);
+                } elseif ($decompressed !== '') {
                     $this->processWsMessage($decompressed);
-                } else {
-                    $this->logger->error('failed to decompress zstd payload', ['payload' => $payload, 'payload hex' => bin2hex($payload)]);
                 }
             } elseif ($this->zlibDecompressor !== false) {
                 $this->payloadBuffer .= $payload;
@@ -1996,9 +1999,16 @@ class Discord
             'encoding' => $this->encoding,
         ];
 
+        // A fresh context for every connection. One left over from the last could be the
+        // other algorithm's, or be fed frames with compression switched off.
+        $this->zstdDecompressor = $this->zlibDecompressor = false;
+        $this->payloadBuffer = '';
+
         if ($this->useTransportCompression) {
-            // Prefer zstd-stream if available (better compression), fallback to zlib-stream
-            if (extension_loaded('zstd') && ($this->zstdDecompressor = uncompress_init())) {
+            // Prefer zstd-stream if available (better compression), fallback to zlib-stream.
+            // `function_exists()`, not `extension_loaded()`: ext-zstd builds without the
+            // incremental API would pass the latter and then fail here.
+            if (function_exists('zstd_uncompress_init') && ($this->zstdDecompressor = uncompress_init())) {
                 $params['compress'] = 'zstd-stream';
                 $this->logger->debug('using zstd-stream compression');
             } elseif ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
