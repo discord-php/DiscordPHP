@@ -58,6 +58,7 @@ class StickerPack extends Part implements Stringable
         return $this->attributeCollectionHelper('stickers', Sticker::class, 'id');
     }
 
+    /** @return string The sticker pack id. */
     public function __toString(): string
     {
         return $this->id;

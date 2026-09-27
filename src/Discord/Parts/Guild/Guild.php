@@ -35,6 +35,7 @@ use Discord\Repository\Guild\EmojiRepository;
 use Discord\Repository\Guild\InviteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
+use Discord\Repository\Guild\GuildJoinRequestRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Parts\Permissions\RolePermission;
@@ -125,16 +126,21 @@ use function React\Promise\resolve;
  * @property-read bool $feature_creator_store_page                        Guild has enabled the role subscription promo page.
  * @property-read bool $feature_developer_support_server                  Guild has been set as a support server on the App Directory.
  * @property-read bool $feature_discoverable                              Guild is able to be discovered in the directory.
+ * @property-read bool $feature_enhanced_role_colors                      Guild is able to set gradient colors to roles.
  * @property-read bool $feature_featurable                                Guild is able to be featured in the directory.
+ * @property-read bool $feature_guild_tags                                Guild has access to set guild tags.
+ * @property-read bool $feature_guests_enabled                            Guild has access to guest invites.
  * @property-read bool $feature_invites_disabled                          Guild has paused invites, preventing new users from joining.
  * @property-read bool $feature_invite_splash                             Guild has access to set an invite splash background.
  * @property-read bool $feature_member_verification_gate_enabled          Guild has enabled membership screening.
+ * @property-read bool $feature_member_verification_manual_approval       guild requires manual approval of join requests to join.
  * @property-read bool $feature_monetization_enabled                      Guild has enabled monetization.
  * @property-read bool $feature_more_soundboard                           Guild has increased custom soundboard sound slots.
  * @property-read bool $feature_more_stickers                             Guild has increased custom sticker slots.
  * @property-read bool $feature_news                                      Guild has access to create announcement channels.
  * @property-read bool $feature_partnered                                 Guild is partnered.
  * @property-read bool $feature_preview_enabled                           Guild can be previewed before joining via membership screening or the directory.
+ * @property-read bool $feature_prune_requires_admin                      Guild has enabled requiring admin to prune members.
  * @property-read bool $feature_raid_alerts_disabled                      Guild has disabled alerts for join raids in the configured safety alerts channel.
  * @property-read bool $feature_role_icons                                Guild is able to set role icons.
  * @property-read bool $feature_role_subscriptions_available_for_purchase Guild has role subscriptions that can be purchased.
@@ -164,6 +170,7 @@ use function React\Promise\resolve;
  * @property EmojiRepository              $emojis
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property GuildJoinRequestRepository   $join_requests
  * @property MessageRepository            $messages
  * @property RoleRepository               $roles
  * @property SoundRepository              $sounds
@@ -326,6 +333,7 @@ class Guild extends Part
         'feature_invites_disabled',
         'feature_invite_splash',
         'feature_member_verification_gate_enabled',
+        'feature_member_verification_manual_approval',
         'feature_more_soundboard',
         'feature_more_stickers',
         'feature_news',
@@ -364,6 +372,7 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'join_requests' => GuildJoinRequestRepository::class,
         'messages' => MessageRepository::class,
         'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
@@ -820,6 +829,8 @@ class Guild extends Part
     /**
      * Returns the specified user's voice state in the guild.
      *
+     * If the specified user is connected to a voice channel, the current user must have permission to connect to the channel.
+     *
      * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state
      *
      * @param Member|User|string $user The user or user ID.
@@ -843,9 +854,10 @@ class Guild extends Part
      *
      * @link https://docs.discord.com/developers/resources/voice#modify-user-voice-state
      *
-     * @param array        $data
-     * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
-     * @param ?bool|null   $data['suppress']   Toggles the user's suppress state.
+     * @param Member|User|string $user               The user ID.
+     * @param array              $data
+     * @param ?string|null       $data['channel_id'] The ID of the channel the user is currently in.
+     * @param ?bool|null         $data['suppress']   Toggles the user's suppress state.
      *
      * @return PromiseInterface
      */
@@ -1142,12 +1154,12 @@ class Guild extends Part
      *
      * @link https://docs.discord.com/developers/resources/audit-log#get-guild-audit-log
      *
-     * @param array                   $options                An array of options.
-     * @param string|Member|User|null $options['user_id']     filter the log for actions made by a user
-     * @param int|null                $options['action_type'] the type of audit log event
-     * @param string|Entry|null       $options['before']      filter the log before a certain entry id (sort by descending)
-     * @param string|Entry|null       $options['affter']      filter the log after a certain entry id (sort by ascending)
-     * @param int|null                $options['limit']       how many entries are returned (default 50, minimum 1, maximum 100)
+     * @param array                   $queryparams                An array of options.
+     * @param string|Member|User|null $queryparams['user_id']     filter the log for actions made by a user
+     * @param int|null                $queryparams['action_type'] the type of audit log event
+     * @param string|Entry|null       $queryparams['before']      filter the log before a certain entry id (sort by descending)
+     * @param string|Entry|null       $queryparams['after']       filter the log after a certain entry id (sort by ascending)
+     * @param int|null                $queryparams['limit']       how many entries are returned (default 50, minimum 1, maximum 100)
      *
      * @throws NoPermissionsException Missing view_audit_log permission.
      *
@@ -1248,6 +1260,125 @@ class Guild extends Part
     }
 
     /**
+     * Moves channels, in one request: their positions, and the category one of them is in.
+     *
+     * Discord answers with no content and sends a `CHANNEL_UPDATE` for each channel it moved; the cached
+     * channels are updated as soon as the request succeeds, so they are right before those arrive.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-channel-positions
+     *
+     * @param ExCollectionInterface|array $channels Either an associative array where the key is the position
+     *                                              and the value a `Channel` or its ID, as
+     *                                              {@see Guild::updateRolePositions()} takes, e.g.
+     *                                              `[1 => 'channel_id_1', 3 => 'channel_id_3']`; or a list of
+     *                                              arrays with `id` and any of `position`, `parent_id`,
+     *                                              `lock_permissions` and `flags`. At most one entry may
+     *                                              change `parent_id`.
+     *
+     * @throws NoPermissionsException Missing manage_channels permission.
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.60.0
+     */
+    public function updateChannelPositions($channels): PromiseInterface
+    {
+        if ($channels instanceof ExCollectionInterface) {
+            $channels = $channels->jsonSerialize();
+        }
+        if (! is_array($channels)) {
+            return reject(new \InvalidArgumentException('Channels must be an array of Channel instances, channel IDs or arrays with an id.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_channels) {
+                return reject(new NoPermissionsException("You do not have permission to move channels in the guild {$this->id}."));
+            }
+        }
+
+        $payload = [];
+
+        foreach ($channels as $position => $channel) {
+            if (is_array($channel)) {
+                if (($channel['id'] ?? null) instanceof Part) {
+                    $channel['id'] = $channel['id']->id;
+                }
+                if (($channel['parent_id'] ?? null) instanceof Part) {
+                    $channel['parent_id'] = $channel['parent_id']->id;
+                }
+                $payload[] = $channel;
+
+                continue;
+            }
+
+            $payload[] = [
+                'id' => $channel instanceof Part ? $channel->id : (string) $channel,
+                'position' => $position,
+            ];
+        }
+
+        if (count(array_filter($payload, static fn (array $entry): bool => array_key_exists('parent_id', $entry))) > 1) {
+            return reject(new \InvalidArgumentException('Only one channel can move to another category in a single request.'));
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_CHANNELS, $this->id), $payload)
+            ->then(function () use ($payload) {
+                foreach ($payload as $entry) {
+                    if (isset($entry['id']) && $channel = $this->channels->get('id', $entry['id'])) {
+                        $channel->fill(array_intersect_key($entry, array_flip(['position', 'parent_id', 'flags'])));
+                    }
+                }
+
+                return $this;
+            });
+    }
+
+    /**
+     * Pauses invites or direct messages in the guild for up to 24 hours, or resumes them, as the server's
+     * security actions do in the client.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-incident-actions
+     *
+     * @param array                          $options
+     * @param \DateTimeInterface|string|null $options['invites_disabled_until'] When invites resume, at most 24 hours from now; null resumes them now.
+     * @param \DateTimeInterface|string|null $options['dms_disabled_until']     When direct messages resume, at most 24 hours from now; null resumes them now.
+     *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
+     * @return PromiseInterface<IncidentsData> The guild's incident actions as they now are.
+     *
+     * @since 10.60.0
+     */
+    public function updateIncidentActions(array $options): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to change incident actions in the guild {$this->id}."));
+            }
+        }
+
+        $payload = [];
+
+        foreach (['invites_disabled_until', 'dms_disabled_until'] as $action) {
+            if (array_key_exists($action, $options)) {
+                $until = $options[$action];
+                $payload[$action] = $until instanceof \DateTimeInterface ? $until->format(\DateTimeInterface::ATOM) : $until;
+            }
+        }
+
+        if ([] === $payload) {
+            return reject(new \InvalidArgumentException('Give `invites_disabled_until`, `dms_disabled_until`, or both.'));
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_INCIDENT_ACTIONS, $this->id), $payload)
+            ->then(function ($response): IncidentsData {
+                $this->attributes['incidents_data'] = $response;
+
+                return $this->incidents_data;
+            });
+    }
+
+    /**
      * Returns a list of guild member objects whose username or nickname starts
      * with a provided string.
      *
@@ -1309,6 +1440,16 @@ class Guild extends Part
      */
     public function getPruneCount(array $options = []): PromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if ($this->feature_prune_requires_admin) {
+                if (! $botperms->administrator) {
+                    return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
+                }
+            } elseif (! ($botperms->kick_members && $botperms->manage_guild)) {
+                return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
+            }
+        }
+
         $resolver = new OptionsResolver();
         $resolver->setDefined([
             'days',
@@ -1329,12 +1470,6 @@ class Guild extends Part
         });
 
         $options = $resolver->resolve($options);
-
-        if ($botperms = $this->getBotPermissions()) {
-            if (! ($botperms->kick_members && $botperms->manage_guild)) {
-                return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
-            }
-        }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id);
         $endpoint->addQuery('days', $options['days']);
@@ -1364,6 +1499,16 @@ class Guild extends Part
      */
     public function beginPrune(array $options = [], ?string $reason = null): PromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if ($this->feature_prune_requires_admin) {
+                if (! $botperms->administrator) {
+                    return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
+                }
+            } elseif (! ($botperms->kick_members && $botperms->manage_guild)) {
+                return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
+            }
+        }
+
         $resolver = new OptionsResolver();
         $resolver->setDefined([
             'days',
@@ -1386,13 +1531,6 @@ class Guild extends Part
         });
 
         $options = $resolver->resolve($options);
-
-        if ($botperms = $this->getBotPermissions()) {
-            if (! ($botperms->kick_members && $botperms->manage_guild)) {
-                return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
-            }
-        }
-
         $headers = [];
         if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;

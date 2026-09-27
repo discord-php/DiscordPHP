@@ -273,7 +273,7 @@ class Rule extends Part
             return $guild->auto_moderation_rules->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

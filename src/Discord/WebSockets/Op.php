@@ -65,6 +65,8 @@ class Op
     public const OP_HEARTBEAT_ACK = 11;
     /** Request soundboard sounds. */
     public const OP_REQUEST_SOUNDBOARD_SOUNDS = 31;
+    /** Request ephemeral channel data for channels in a guild. */
+    public const OP_REQUEST_CHANNEL_INFO = 43;
 
     /**
      * Voice Opcodes.

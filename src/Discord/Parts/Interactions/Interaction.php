@@ -96,9 +96,9 @@ class Interaction extends Part
     public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
     /** ACK an interaction and edit a response later, the user sees a loading state. */
     public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
-    /** For components, ACK an interaction and edit the original message later; the user does not see a loading state. */
+    /** For components and `MODAL_SUBMIT`, ACK an interaction and edit the original message later; the user does not see a loading state. */
     public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
-    /** For components, edit the message the component was attached to. */
+    /** For components and `MODAL_SUBMIT`, edit the message the component was attached to. */
     public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
     /** Respond to an autocomplete interaction with suggested choices. */
     public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;

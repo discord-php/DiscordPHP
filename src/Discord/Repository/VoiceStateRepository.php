@@ -14,9 +14,12 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Carbon\Carbon;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\PromiseInterface;
@@ -63,7 +66,7 @@ class VoiceStateRepository extends AbstractRepository
      *
      * @link https://docs.discord.com/developers/resources/voice#list-voice-regions
      *
-     * @return PromiseInterface<Collection>
+     * @return PromiseInterface<ExCollectionInterface>
      *
      * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
@@ -128,6 +131,8 @@ class VoiceStateRepository extends AbstractRepository
     /**
      * Returns the specified user's voice state in the guild.
      *
+     * If the specified user is connected to a voice channel, the current user must have permission to connect to the channel.
+     *
      * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state
      *
      * @param Guild|string       $guild The guild or guild ID.
@@ -165,7 +170,7 @@ class VoiceStateRepository extends AbstractRepository
      * @link https://docs.discord.com/developers/resources/voice#modify-user-voice-state
      *
      * @param Guild|string       $guild              The guild or guild ID.
-     * @param Mmeber|User|string $user               The user ID.
+     * @param Member|User|string $user               The user ID.
      * @param array              $data
      * @param ?string|null       $data['channel_id'] The ID of the channel the user is currently in.
      * @param ?bool|null         $data['suppress']   Toggles the user's suppress state.

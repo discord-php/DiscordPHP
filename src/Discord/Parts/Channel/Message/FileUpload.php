@@ -26,9 +26,19 @@ namespace Discord\Parts\Channel\Message;
  * @property ?int|null  $min_values Minimum number of files that must be uploaded (defaults to 1); min 0, max 10.
  * @property ?int|null  $max_values Maximum number of files that can be uploaded (defaults to 1); max 10.
  * @property ?bool|null $required   Whether the file upload is required to be filled in a modal (defaults to true).
+ * @property ?string[]  $file_types Supported file types for uploaded files.
  */
 class FileUpload extends Interactive
 {
+    /** Supported file types. */
+    public const SUPPORTED_FILE_TYPES = ['image', 'video', 'audio'];
+    /** Natively supported image file extensions. Subject to change. */
+    public const SUPPORTED_IMAGE_EXTENSIONS = ['.png', '.gif', '.jpg', '.jpeg', '.jfif', '.webp', '.avif'];
+    /** Natively supported video file extensions. Subject to change. */
+    public const SUPPORTED_VIDEO_EXTENSIONS = ['.mp4', '.mov', '.qt', '.webm'];
+    /** Natively supported audio file extensions. Subject to change. */
+    public const SUPPORTED_AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wav', '.ogg', '.opus', '.flac'];
+
     /**
      * @inheritDoc
      */
@@ -38,5 +48,6 @@ class FileUpload extends Interactive
         'min_values',
         'max_values',
         'required',
+        'file_types',
     ];
 }

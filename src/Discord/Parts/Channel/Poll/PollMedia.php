@@ -44,7 +44,7 @@ class PollMedia extends Part
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setText(?string $text): self
     {
@@ -58,7 +58,7 @@ class PollMedia extends Part
      *
      * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {

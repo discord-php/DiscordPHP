@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Discord\Repository;
 
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\GameDirectMessage;
+use Discord\Parts\User\User;
 use Discord\Http\Endpoint;
 use React\Promise\PromiseInterface;
 
@@ -77,5 +79,26 @@ class PrivateChannelRepository extends AbstractRepository
         }
 
         return $this->http->patch(EndPoint::bind(Endpoint::CHANNEL, $channel), $params);
+    }
+
+    /**
+     * Sets the moderation metadata on a direct message sent during a Social SDK session, which is delivered to the players' clients.
+     *
+     * @link https://docs.discord.com/developers/discord-social-sdk/how-to/integrate-moderation#applying-moderation-decisions
+     *
+     * @param User|string              $user1    One user in the DM, or their id.
+     * @param User|string              $user2    The other user, or their id; the order does not matter.
+     * @param GameDirectMessage|string $message  The message or its id.
+     * @param array                    $metadata Up to 5 free-form string key/value pairs describing the decision, e.g. `['action' => 'hide', 'reason' => 'toxicity']`.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.59.0
+     */
+    public function updateGameDirectMessageModerationMetadata($user1, $user2, $message, array $metadata): PromiseInterface
+    {
+        [$user1, $user2, $message] = array_map(static fn ($part) => is_string($part) ? $part : $part->id, [$user1, $user2, $message]);
+
+        return $this->http->put(Endpoint::bind(Endpoint::PARTNER_SDK_DMS_MESSAGE_MODERATION_METADATA, $user1, $user2, $message), $metadata);
     }
 }

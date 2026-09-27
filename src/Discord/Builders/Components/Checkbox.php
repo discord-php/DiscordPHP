@@ -74,7 +74,7 @@ class Checkbox extends Interactive
      *
      * @param bool|null $value Whether the checkbox is checked or not.
      *
-     * @return $this
+     * @return self
      */
     public function setValue(?bool $value = null): self
     {
@@ -93,6 +93,9 @@ class Checkbox extends Interactive
         return $this->value ?? null;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         $content = [

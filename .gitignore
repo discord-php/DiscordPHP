@@ -19,6 +19,10 @@ composer.lock
 /build
 .phpdoc
 
+# phpDocumentor toolchain, installed by the docs workflow via
+# composer create-project discord-php/phpdoc-tool
+/phpdoc-tool
+
 # php-cs-fixer
 .php_cs.cache
 .php_cs

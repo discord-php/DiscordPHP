@@ -16,6 +16,7 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
+use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
@@ -87,7 +88,7 @@ class Member extends Part implements Stringable
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);
     /** Member is exempt from guild verification requirements. */
     public const FLAGS_BYPASSES_VERIFICATION = (1 << 2);
-    /** Member has started onboarding, */
+    /** Member has started onboarding. */
     public const FLAGS_STARTED_ONBOARDING = (1 << 3);
     /** Member is a guest and can only access the voice channel they were invited to. */
     public const FLAGS_IS_GUEST = (1 << 4);
@@ -160,8 +161,8 @@ class Member extends Part implements Stringable
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason               Reason of the Ban.
      *
-     * @throws \RuntimeException      Member has no `$guild`.
-     * @throws NoPermissionsException Missing `ban_members` permission.
+     * @throws PartRequestFailedException Member has no `$guild`.
+     * @throws NoPermissionsException     Missing `ban_members` permission.
      *
      * @return PromiseInterface<Ban>
      */
@@ -169,7 +170,7 @@ class Member extends Part implements Stringable
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($daysToDeleteMessages, $reason) {
             if (null === $guild) {
-                return reject(new \RuntimeException('Member has no Guild Part'));
+                return reject(new PartRequestFailedException('Member has no Guild Part'));
             }
 
             if ($botperms = $guild->getBotPermissions()) {
@@ -187,8 +188,8 @@ class Member extends Part implements Stringable
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException      Member has no `$guild`.
-     * @throws NoPermissionsException Missing `kick_members` permission.
+     * @throws PartRequestFailedException Member has no `$guild`.
+     * @throws NoPermissionsException     Missing `kick_members` permission.
      *
      * @return PromiseInterface<self>
      */
@@ -196,7 +197,7 @@ class Member extends Part implements Stringable
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
             if (null === $guild) {
-                return new \RuntimeException('Member has no Guild Part');
+                return reject(new PartRequestFailedException('Member has no Guild Part'));
             }
 
             if ($botperms = $guild->getBotPermissions()) {
@@ -284,8 +285,8 @@ class Member extends Part implements Stringable
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
-     * @throws NoPermissionsException Missing manage_roles permission.
+     * @throws PartRequestFailedException Member already has role.
+     * @throws NoPermissionsException     Missing manage_roles permission.
      *
      * @return PromiseInterface
      */
@@ -297,7 +298,7 @@ class Member extends Part implements Stringable
 
         // We don't want a double up on roles
         if (in_array($role, (array) $this->attributes['roles'])) {
-            return reject(new \RuntimeException('Member already has role.'));
+            return reject(new PartRequestFailedException('Member already has role.'));
         }
 
         if ($guild = $this->guild) {
@@ -432,7 +433,7 @@ class Member extends Part implements Stringable
      * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
      * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
-     * @throws \RuntimeException
+     * @throws PartRequestFailedException Member had no user part.
      *
      * @return PromiseInterface<Message>
      */
@@ -442,7 +443,7 @@ class Member extends Part implements Stringable
             return $user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
         }
 
-        return reject(new \RuntimeException('Member had no user part.'));
+        return reject(new PartRequestFailedException('Member had no user part.'));
     }
 
     /**
@@ -1039,7 +1040,7 @@ class Member extends Part implements Stringable
     public function save(?string $reason = null): PromiseInterface
     {
         if (! isset($this->attributes['guild_id'])) {
-            return parent::save();
+            return parent::save($reason);
         }
 
         /** @var Guild */

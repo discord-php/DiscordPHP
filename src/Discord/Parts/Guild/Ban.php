@@ -131,7 +131,7 @@ class Ban extends Part
             return $guild->bans->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

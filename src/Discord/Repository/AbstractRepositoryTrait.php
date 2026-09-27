@@ -116,17 +116,30 @@ trait AbstractRepositoryTrait
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            foreach ($this->items as $offset => $value) {
-                if ($value === null) {
-                    unset($this->items[$offset]);
-                } elseif (! ($this->items[$offset] instanceof WeakReference)) {
-                    $this->items[$offset] = WeakReference::create($value);
-                }
-                $this->cache->delete($offset);
-            }
+            $this->forgetCachedItems();
 
             return $this->cacheFreshen($response);
         });
+    }
+
+    /**
+     * Drops every cached part, before the repository is refilled from a response that lists all of them.
+     *
+     * Parts still referenced elsewhere are kept as weak references, so they are reused if the response
+     * names them again.
+     *
+     * @since 10.60.0
+     */
+    protected function forgetCachedItems(): void
+    {
+        foreach ($this->items as $offset => $value) {
+            if ($value === null) {
+                unset($this->items[$offset]);
+            } elseif (! ($this->items[$offset] instanceof WeakReference)) {
+                $this->items[$offset] = WeakReference::create($value);
+            }
+            $this->cache->delete($offset);
+        }
     }
 
     /**
@@ -472,7 +485,15 @@ trait AbstractRepositoryTrait
     public function pushItem($item): self
     {
         if (is_a($item, $this->class)) {
-            $key = $item->{$this->discrim};
+            $key = $item->{$this->discrim} ?? null;
+
+            // A part with no discriminator cannot be addressed later; caching it
+            // would key `items`/`cache` on null (an E_DEPRECATED on PHP >= 8.5)
+            // and let unrelated keyless parts overwrite each other.
+            if ($key === null) {
+                return $this;
+            }
+
             $this->items[$key] = $item;
             $this->cache->set($key, $item);
         }
@@ -750,6 +771,13 @@ trait AbstractRepositoryTrait
         }
     }
 
+    /**
+     * Exposes the read-only \`discrim\` and \`cache\` properties.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function __get(string $key)
     {
         if (in_array($key, ['discrim', 'cache'])) {

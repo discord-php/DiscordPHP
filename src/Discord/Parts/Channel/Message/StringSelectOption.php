@@ -43,6 +43,11 @@ class StringSelectOption extends Part
         'default',
     ];
 
+    /**
+     * Gets the `emoji` attribute.
+     *
+     * @return Emoji
+     */
     protected function getEmojiAttribute(): Emoji
     {
         return $this->attributePartHelper('emoji', Emoji::class);

@@ -51,7 +51,7 @@ class StringSelect extends SelectMenu
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {
@@ -71,7 +71,7 @@ class StringSelect extends SelectMenu
      * @throws \OverflowException
      * @throws \UnexpectedValueException
      *
-     * @return $this
+     * @return self
      */
     public function addOption(Option $option): self
     {
@@ -101,7 +101,7 @@ class StringSelect extends SelectMenu
      *
      * @param Option $option Option to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeOption(Option $option): self
     {

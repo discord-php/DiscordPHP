@@ -72,7 +72,7 @@ class CheckboxGroup extends Group
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setMinValues(?int $min_values = null): self
     {
@@ -102,7 +102,7 @@ class CheckboxGroup extends Group
      *
      * @throws \OutOfRangeException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValues(?int $max_values = null): self
     {

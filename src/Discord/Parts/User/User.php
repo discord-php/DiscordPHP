@@ -52,7 +52,7 @@ use function React\Promise\resolve;
  * @property      bool|null                  $verified               Whether the user is verified.
  * @property      ?string|null               $email                  User email.
  * @property      int|null                   $flags                  User flags.
- * @property      int|null                   $premium_type           Type of nitro subscription.
+ * @property      int|null                   $premium_type           Type of nitro subscription. Will return 0 for applications that have not been approved for the `identify.premium` scope.
  * @property      int|null                   $public_flags           Public flags on the user.
  * @property-read string|null                $avatar_decoration      The user's avatar decoration URL.
  * @property-read string|null                $avatar_decoration_hash The user's avatar decoration hash.
@@ -392,7 +392,7 @@ class User extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return UserRepositor The repository.
+     * @return UserRepository The repository.
      */
     public function getRepository(): UserRepository
     {

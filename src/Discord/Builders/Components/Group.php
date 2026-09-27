@@ -48,7 +48,7 @@ abstract class Group extends Interactive
      *
      * @param GroupOption[] $options List of GroupOption objects.
      *
-     * @return $this
+     * @return self
      */
     public function setOptions(array $options = []): self
     {
@@ -67,7 +67,7 @@ abstract class Group extends Interactive
      * @throws \OverflowException
      * @throws \UnexpectedValueException
      *
-     * @return $this
+     * @return self
      */
     public function addOption($option): self
     {
@@ -93,7 +93,7 @@ abstract class Group extends Interactive
      *
      * @param GroupOption $option Option to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeOption($option): self
     {
@@ -119,7 +119,7 @@ abstract class Group extends Interactive
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {

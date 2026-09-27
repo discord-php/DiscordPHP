@@ -49,9 +49,9 @@ class Subscription extends Part
     /** Subscription is active and scheduled to renew. */
     public const STATUS_ACTIVE = 0;
     /** Subscription is active but will not renew. */
-    public const STATUS_ENDING = 1;
+    public const STATUS_INACTIVE = 1;
     /** Subscription is inactive and not being charged. */
-    public const STATUS_INACTIVE = 2;
+    public const STATUS_ENDING = 2;
 
     /**
      * @inheritdoc

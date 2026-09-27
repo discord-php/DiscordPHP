@@ -27,6 +27,9 @@ use Discord\WebSockets\Event;
  */
 class ThreadDelete extends Event
 {
+    /**
+     * @inheritDoc
+     */
     public function handle($data)
     {
         $threadPart = null;

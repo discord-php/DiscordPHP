@@ -186,7 +186,7 @@ class VoiceStateUpdate extends Part
             return $guild->voice_states->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

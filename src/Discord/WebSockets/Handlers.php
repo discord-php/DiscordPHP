@@ -14,7 +14,9 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets;
 
+use Discord\WebSockets\Events\ApplicationAuthorized;
 use Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate;
+use Discord\WebSockets\Events\ApplicationDeauthorized;
 use Discord\WebSockets\Events\AutoModerationActionExecution;
 use Discord\WebSockets\Events\AutoModerationRuleCreate;
 use Discord\WebSockets\Events\AutoModerationRuleDelete;
@@ -26,6 +28,9 @@ use Discord\WebSockets\Events\ChannelUpdate;
 use Discord\WebSockets\Events\EntitlementCreate;
 use Discord\WebSockets\Events\EntitlementDelete;
 use Discord\WebSockets\Events\EntitlementUpdate;
+use Discord\WebSockets\Events\GameDirectMessageCreate;
+use Discord\WebSockets\Events\GameDirectMessageDelete;
+use Discord\WebSockets\Events\GameDirectMessageUpdate;
 use Discord\WebSockets\Events\GuildAuditLogEntryCreate;
 use Discord\WebSockets\Events\GuildBanAdd;
 use Discord\WebSockets\Events\GuildBanRemove;
@@ -47,14 +52,21 @@ use Discord\WebSockets\Events\GuildScheduledEventUserRemove;
 use Discord\WebSockets\Events\GuildSoundboardSoundCreate;
 use Discord\WebSockets\Events\GuildSoundboardSoundDelete;
 use Discord\WebSockets\Events\GuildSoundboardSoundUpdate;
+use Discord\WebSockets\Events\GuildSoundboardSoundsUpdate;
 use Discord\WebSockets\Events\GuildStickersUpdate;
 use Discord\WebSockets\Events\GuildUpdate;
+use Discord\WebSockets\Events\GuildJoinRequestCreate;
+use Discord\WebSockets\Events\GuildJoinRequestUpdate;
+use Discord\WebSockets\Events\GuildJoinRequestDelete;
 use Discord\WebSockets\Events\IntegrationCreate;
 use Discord\WebSockets\Events\IntegrationDelete;
 use Discord\WebSockets\Events\IntegrationUpdate;
 use Discord\WebSockets\Events\InteractionCreate;
 use Discord\WebSockets\Events\InviteCreate;
 use Discord\WebSockets\Events\InviteDelete;
+use Discord\WebSockets\Events\LobbyMessageCreate;
+use Discord\WebSockets\Events\LobbyMessageDelete;
+use Discord\WebSockets\Events\LobbyMessageUpdate;
 use Discord\WebSockets\Events\MessageCreate;
 use Discord\WebSockets\Events\MessageDelete;
 use Discord\WebSockets\Events\MessageDeleteBulk;
@@ -66,10 +78,14 @@ use Discord\WebSockets\Events\MessageReactionRemoveAll;
 use Discord\WebSockets\Events\MessageReactionRemoveEmoji;
 use Discord\WebSockets\Events\MessageUpdate;
 use Discord\WebSockets\Events\PresenceUpdate;
+use Discord\WebSockets\Events\RateLimited;
 use Discord\WebSockets\Events\SoundboardSounds;
 use Discord\WebSockets\Events\StageInstanceCreate;
 use Discord\WebSockets\Events\StageInstanceDelete;
 use Discord\WebSockets\Events\StageInstanceUpdate;
+use Discord\WebSockets\Events\SubscriptionCreate;
+use Discord\WebSockets\Events\SubscriptionDelete;
+use Discord\WebSockets\Events\SubscriptionUpdate;
 use Discord\WebSockets\Events\ThreadCreate;
 use Discord\WebSockets\Events\ThreadDelete;
 use Discord\WebSockets\Events\ThreadListSync;
@@ -78,8 +94,12 @@ use Discord\WebSockets\Events\ThreadMemberUpdate;
 use Discord\WebSockets\Events\ThreadUpdate;
 use Discord\WebSockets\Events\TypingStart;
 use Discord\WebSockets\Events\UserUpdate;
+use Discord\WebSockets\Events\VoiceChannelEffectSend;
 use Discord\WebSockets\Events\VoiceServerUpdate;
 use Discord\WebSockets\Events\VoiceStateUpdate;
+use Discord\WebSockets\Events\ChannelInfo;
+use Discord\WebSockets\Events\VoiceChannelStartTimeUpdate;
+use Discord\WebSockets\Events\VoiceChannelStatusUpdate;
 use Discord\WebSockets\Events\WebhooksUpdate;
 
 /**
@@ -121,6 +141,11 @@ class Handlers
         $this->addHandler(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, ApplicationCommandPermissionsUpdate::class);
         $this->addHandler(Event::GUILD_AUDIT_LOG_ENTRY_CREATE, GuildAuditLogEntryCreate::class);
 
+        // Guild join request handlers
+        $this->addHandler(Event::GUILD_JOIN_REQUEST_CREATE, GuildJoinRequestCreate::class);
+        $this->addHandler(Event::GUILD_JOIN_REQUEST_UPDATE, GuildJoinRequestUpdate::class);
+        $this->addHandler(Event::GUILD_JOIN_REQUEST_DELETE, GuildJoinRequestDelete::class);
+
         // Invite handlers
         $this->addHandler(Event::INVITE_CREATE, InviteCreate::class);
         $this->addHandler(Event::INVITE_DELETE, InviteDelete::class);
@@ -130,6 +155,9 @@ class Handlers
         $this->addHandler(Event::CHANNEL_UPDATE, ChannelUpdate::class);
         $this->addHandler(Event::CHANNEL_DELETE, ChannelDelete::class);
         $this->addHandler(Event::CHANNEL_PINS_UPDATE, ChannelPinsUpdate::class);
+        $this->addHandler(Event::CHANNEL_INFO, ChannelInfo::class);
+        $this->addHandler(Event::VOICE_CHANNEL_STATUS_UPDATE, VoiceChannelStatusUpdate::class);
+        $this->addHandler(Event::VOICE_CHANNEL_START_TIME_UPDATE, VoiceChannelStartTimeUpdate::class);
 
         // Ban Event handlers
         $this->addHandler(Event::GUILD_BAN_ADD, GuildBanAdd::class);
@@ -193,12 +221,32 @@ class Handlers
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_CREATE, GuildSoundboardSoundCreate::class);
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_UPDATE, GuildSoundboardSoundUpdate::class);
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_DELETE, GuildSoundboardSoundDelete::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUNDS_UPDATE, GuildSoundboardSoundsUpdate::class);
         $this->addHandler(Event::SOUNDBOARD_SOUNDS, SoundboardSounds::class);
+        $this->addHandler(Event::VOICE_CHANNEL_EFFECT_SEND, VoiceChannelEffectSend::class);
 
         // Entitlements Event Handlers
         $this->addHandler(Event::ENTITLEMENT_CREATE, EntitlementCreate::class);
         $this->addHandler(Event::ENTITLEMENT_UPDATE, EntitlementUpdate::class);
         $this->addHandler(Event::ENTITLEMENT_DELETE, EntitlementDelete::class);
+
+        // Subscriptions Event Handlers
+        $this->addHandler(Event::SUBSCRIPTION_CREATE, SubscriptionCreate::class);
+        $this->addHandler(Event::SUBSCRIPTION_UPDATE, SubscriptionUpdate::class);
+        $this->addHandler(Event::SUBSCRIPTION_DELETE, SubscriptionDelete::class);
+
+        // Gateway Event Handlers
+        $this->addHandler(Event::RATE_LIMITED, RateLimited::class);
+
+        // Webhook Event Handlers, run for events the WebhookEventReceiver delivers
+        $this->addHandler(Event::APPLICATION_AUTHORIZED, ApplicationAuthorized::class);
+        $this->addHandler(Event::APPLICATION_DEAUTHORIZED, ApplicationDeauthorized::class);
+        $this->addHandler(Event::LOBBY_MESSAGE_CREATE, LobbyMessageCreate::class);
+        $this->addHandler(Event::LOBBY_MESSAGE_UPDATE, LobbyMessageUpdate::class);
+        $this->addHandler(Event::LOBBY_MESSAGE_DELETE, LobbyMessageDelete::class);
+        $this->addHandler(Event::GAME_DIRECT_MESSAGE_CREATE, GameDirectMessageCreate::class);
+        $this->addHandler(Event::GAME_DIRECT_MESSAGE_UPDATE, GameDirectMessageUpdate::class);
+        $this->addHandler(Event::GAME_DIRECT_MESSAGE_DELETE, GameDirectMessageDelete::class);
     }
 
     /**

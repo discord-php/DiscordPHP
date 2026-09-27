@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Parts\Channel\Attachment;
 
 /**
@@ -56,11 +57,11 @@ class File extends Content implements Contracts\ComponentV2
     /**
      * Creates a new file component.
      *
-     * @param string|Attachment|null $filename The filename or attachment to reference.
+     * @param string|AttachmentRequestBuilder|Attachment|null $filename The filename or attachment to reference.
      *
      * @return self
      */
-    public static function new(string|Attachment|null $filename = null): self
+    public static function new(string|AttachmentRequestBuilder|Attachment|null $filename = null): self
     {
         $component = new self();
 
@@ -74,13 +75,13 @@ class File extends Content implements Contracts\ComponentV2
     /**
      * Sets the file to be displayed.
      *
-     * @param Attachment|string $filename The filename or attachment to reference.
+     * @param AttachmentRequestBuilder|Attachment|string $filename The filename or attachment to reference.
      *
-     * @return $this
+     * @return self
      */
-    public function setFile(Attachment|string $filename): self
+    public function setFile(AttachmentRequestBuilder|Attachment|string $filename): self
     {
-        if ($filename instanceof Attachment) {
+        if ($filename instanceof Attachment || $filename instanceof AttachmentRequestBuilder) {
             $filename = $filename->filename;
         }
 
@@ -94,7 +95,7 @@ class File extends Content implements Contracts\ComponentV2
      *
      * @param bool|null $spoiler Whether the file is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(?bool $spoiler = true): self
     {
