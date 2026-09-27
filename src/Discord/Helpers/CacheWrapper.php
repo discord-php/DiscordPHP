@@ -101,6 +101,7 @@ class CacheWrapper
         }
     }
 
+    /** Detaches the periodic sweep listener from the client. */
     public function __destruct()
     {
         $this->discord->removeListener('heartbeat-ack', [$this, 'sweep']);
@@ -510,6 +511,13 @@ class CacheWrapper
         return $pruning;
     }
 
+    /**
+     * Exposes the read-only \`config\` property.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
     public function __get(string $name)
     {
         if ($name === 'config') {

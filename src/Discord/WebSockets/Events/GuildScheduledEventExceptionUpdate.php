@@ -38,17 +38,17 @@ class GuildScheduledEventExceptionUpdate extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?ScheduledEvent */
-            if ($oldScheduledEvent = yield $guild->guild_scheduled_events->cacheGet($data->id)) {
-                /** @var ScheduledEventException */
-                if ($oldScheduledEventException = $oldScheduledEvent->guild_scheduled_event_exceptions->get('event_exception_id', $scheduledEventExceptionPart->event_exception_id)) {
+            if ($scheduledEvent = yield $guild->guild_scheduled_events->cacheGet($data->event_id)) {
+                /** @var ?ScheduledEventException */
+                if ($oldScheduledEventException = $scheduledEvent->guild_scheduled_event_exceptions->get('event_exception_id', $scheduledEventExceptionPart->event_exception_id)) {
                     // Swap
                     $scheduledEventExceptionPart = $oldScheduledEventException;
                     $oldScheduledEventException = clone $oldScheduledEventException;
 
                     $scheduledEventExceptionPart->fill((array) $data);
-                    
-                    $guild->guild_scheduled_event_exceptions->set($scheduledEventExceptionPart->event_exception_id, $scheduledEventExceptionPart);
                 }
+
+                $scheduledEvent->cacheException($scheduledEventExceptionPart);
             }
         }
 

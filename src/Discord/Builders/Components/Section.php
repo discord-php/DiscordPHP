@@ -75,7 +75,7 @@ class Section extends Layout implements Contracts\ComponentV2
      * @throws \InvalidArgumentException Component is not a TextDisplay.
      * @throws \OverflowException        Section exceeds 3 text components.
      *
-     * @return $this
+     * @return self
      */
     public function addComponent($component): self
     {
@@ -104,7 +104,7 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @throws \InvalidArgumentException Component is not a Thumbnail or Button.
      *
-     * @return $this
+     * @return self
      */
     public function setAccessory(ComponentObject $component): self
     {

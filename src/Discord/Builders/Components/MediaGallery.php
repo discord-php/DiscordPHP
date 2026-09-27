@@ -63,7 +63,7 @@ class MediaGallery extends Content implements Contracts\ComponentV2
      * @throws \OverflowException Gallery exceeds 10 items.
      * @throws \LengthException   Description exceeds 1024 characters.
      *
-     * @return $this
+     * @return self
      */
     public function addItem(MediaGalleryItem|string $item, ?string $description = null, bool $spoiler = false): self
     {

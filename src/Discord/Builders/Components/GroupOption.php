@@ -19,6 +19,8 @@ use function Discord\poly_strlen;
 /**
  * List of options to render within a Group.
  *
+ * @link https://docs.discord.com/developers/components/reference#radio-group-option-structure
+ *
  * @since 10.46.0
  *
  * @property string       $value       Dev-defined value of the option; max 100 characters.
@@ -56,6 +58,10 @@ class GroupOption extends Component
      */
     protected $default;
 
+    /**
+     * @param string $value The option value (1-100 characters).
+     * @param string $label The option label shown to the user (1-100 characters).
+     */
     public function __construct(string $value, string $label)
     {
         $this->setValue($value);
@@ -155,7 +161,7 @@ class GroupOption extends Component
      *
      * @param bool|null $default
      *
-     * @return $this
+     * @return self
      */
     public function setDefault(?bool $default = true): self
     {

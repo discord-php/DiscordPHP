@@ -134,7 +134,7 @@ class TextInput extends Interactive
      *
      * @throws \InvalidArgumentException
      *
-     * @return $this
+     * @return self
      */
     public function setStyle(int $style): self
     {
@@ -156,7 +156,7 @@ class TextInput extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setLabel(?string $label = null): self
     {
@@ -176,7 +176,7 @@ class TextInput extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinLength(?int $min_length): self
     {
@@ -196,7 +196,7 @@ class TextInput extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -216,7 +216,7 @@ class TextInput extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -234,7 +234,7 @@ class TextInput extends Interactive
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {
@@ -250,7 +250,7 @@ class TextInput extends Interactive
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setValue(?string $value): self
     {

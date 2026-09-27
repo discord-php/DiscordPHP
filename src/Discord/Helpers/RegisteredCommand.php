@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Discord\Helpers;
 
 use Discord\Discord;
+use Discord\Parts\Interactions\ApplicationCommand;
+use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 
@@ -181,7 +183,7 @@ class RegisteredCommand
      *
      * @return static
      */
-    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): static
     {
         if (! is_array($names)) {
             $names = [$names];

@@ -28,6 +28,12 @@ use Discord\Parts\User\ClientStatus;
  * the WebSocket. It contains information about the users presence such as their
  * status (online/away) and their current game.
  *
+ * If the presence author's Profile Privacy Setting is set to `Friends Only`, or to `Friends & Small Servers Only` in a guild with more than 200 members,
+ * their custom status (activity type `4`) is omitted from `activities` in Presence Update events dispatched to that guild.
+ * This applies to any subscription to the guild's presence, including bots and apps.
+ * Other activity types are not affected by this setting.
+ * @see https://support.discord.com/hc/en-us/articles/38859942749463-Profile-Privacy-Setting-on-Discord
+ *
  * @since 2.1.3
  *
  * @link https://docs.discord.com/developers/events/gateway-events#presence
@@ -42,6 +48,7 @@ use Discord\Parts\User\ClientStatus;
  * @property      string|null                                $desktop_status  Status of the user on their desktop client. Null if they are not active on desktop.
  * @property      string|null                                $mobile_status   Status of the user on their mobile client. Null if they are not active on mobile.
  * @property      string|null                                $web_status      Status of the user on their web client. Null if they are not active on web.
+ * @property      string|null                                $vr_status       Status of the user on their VR client. Null if they are not active on VR.
  * @property      string|null                                $embedded_status Status of the user on an embedded application (Xbox, PlayStation, in-game). Null if they are not active on an embedded application.
  *
  * @property-read string                             $id     The ID of the user.
@@ -154,6 +161,18 @@ class PresenceUpdate extends Part
     protected function getWebStatusAttribute(): ?string
     {
         return $this->client_status->web ?? null;
+    }
+
+    /**
+     * Gets the status of the user on their VR client.
+     *
+     * @return string|null
+     *
+     * @since 10.54.0
+     */
+    protected function getVrStatusAttribute(): ?string
+    {
+        return $this->client_status->vr ?? null;
     }
 
     /**

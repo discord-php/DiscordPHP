@@ -43,7 +43,7 @@ class UserSelect extends SelectMenu
      *
      * @param bool|null $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {

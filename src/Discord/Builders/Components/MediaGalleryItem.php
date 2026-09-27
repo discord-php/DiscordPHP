@@ -96,7 +96,7 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @param UnfurledMediaItem|string $media Media item or URL of the media item.
      *
-     * @return $this
+     * @return self
      */
     public function setMedia(UnfurledMediaItem|string $media): self
     {
@@ -126,7 +126,7 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @throws \LengthException Description exceeds 1024 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(?string $description): self
     {
@@ -154,7 +154,7 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @param bool $spoiler Whether the media item is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(bool $spoiler = true): self
     {

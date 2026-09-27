@@ -65,8 +65,7 @@ trait PartTrait
      *
      * @param string|null $reason The reason for the audit log, if supported.
      *
-     * @throws \Exception             If the part does not support saving.
-     * @throws NoPermissionsException Missing permission.
+     * @throws \Exception If the part does not support saving.
      *
      * @return PromiseInterface<Part> Resolves with the saved part.
      */
@@ -268,6 +267,7 @@ trait PartTrait
         return serialize($this->getRawAttributes());
     }
 
+    /** The raw attributes, for PHP native serialization. */
     public function __serialize(): array
     {
         return $this->getRawAttributes();
@@ -289,6 +289,11 @@ trait PartTrait
         }
     }
 
+    /**
+     * Restores attributes from PHP native unserialization.
+     *
+     * @param array $data
+     */
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -370,6 +375,8 @@ trait PartTrait
 
     /**
      * Returns the updatable attributes.
+     *
+     * To be used with fields that can be changed after a part has already been created.
      *
      * @return array
      */
@@ -466,8 +473,7 @@ trait PartTrait
     /**
      * Helps with getting ISO8601 timestamp attributes.
      *
-     * @param string $key   The attribute key.
-     * @param string $class The attribute class.
+     * @param string $key The attribute key.
      *
      * @throws \Exception
      *
@@ -538,7 +544,7 @@ trait PartTrait
 
         foreach ($this->attributes[$key] as &$part) {
             if (! $part instanceof $class) {
-                $part = $this->createOf($class::TYPES[$part->type ?? 0], $part);
+                $part = $this->createOf($class::TYPES[$part->type ?? $part->component_type ?? $part->field_type ?? 0], $part);
             }
             $collection->pushItem($part);
         }

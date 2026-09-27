@@ -292,7 +292,7 @@ class GuildTemplate extends Part implements Stringable
             return $guild->templates->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

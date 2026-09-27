@@ -23,8 +23,8 @@ use JsonSerializable;
  *
  * @link https://docs.discord.com/developers/components/reference#what-is-a-component
  *
+ * @since 10.9.0 Use `ComponentObject` instead.
  * @since 7.0.0
- * @deprecated 10.9.0 Use `ComponentObject` instead.
  */
 abstract class Component extends Builder implements JsonSerializable
 {

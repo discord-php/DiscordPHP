@@ -20,6 +20,7 @@ use Discord\Discord;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
@@ -408,7 +409,6 @@ trait ChannelTrait
      *
      * @param Message     $message The message to pin.
      * @param string|null $reason  Reason for Audit Log.
-     * @param array       $options Additional options.
      *
      * @throws NoPermissionsException Missing pin_messages or manage_messages permission.
      * @throws \RuntimeException

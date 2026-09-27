@@ -41,6 +41,11 @@ class Label extends Layout
         'component',
     ];
 
+    /**
+     * Gets the `component` attribute.
+     *
+     * @return Component
+     */
     public function getComponentAttribute(): Component
     {
         return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);

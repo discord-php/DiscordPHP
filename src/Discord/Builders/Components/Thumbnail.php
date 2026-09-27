@@ -81,7 +81,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @param UnfurledMediaItem|string $url URL of the media item.
      *
-     * @return $this
+     * @return self
      */
     public function setMedia(UnfurledMediaItem|string $media): self
     {
@@ -101,7 +101,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @throws \LengthException Description exceeds 1024 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(?string $description = null): self
     {
@@ -119,7 +119,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @param bool $spoiler Whether the thumbnail is a spoiler.
      *
-     * @return $this
+     * @return self
      */
     public function setSpoiler(?bool $spoiler = true): self
     {

@@ -14,9 +14,8 @@ declare(strict_types=1);
 
 use Discord\Builders\Components\Label;
 use Discord\Builders\ModalBuilder;
-use PHPUnit\Framework\TestCase;
 
-final class ModalBuilderTest extends TestCase
+final class ModalBuilderTest extends DiscordTestCase
 {
     public function testNew()
     {

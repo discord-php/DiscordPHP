@@ -54,7 +54,7 @@ class ChannelSelect extends SelectMenu
      *
      * @param ?int[] $channel_types Array of channel types.
      *
-     * @return $this
+     * @return self
      */
     public function setChannelTypes(?array $channel_types = null): self
     {
@@ -78,7 +78,7 @@ class ChannelSelect extends SelectMenu
      *
      * @param ?bool $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(?bool $required = null): self
     {

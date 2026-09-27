@@ -171,6 +171,12 @@ class Entry extends Part
     public const HOME_SETTINGS_CREATE = 190;
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
+    /** @deprecated use `VOICE_CHANNEL_STATUS_CREATE` */
+    public const VOICE_CHANNEL_STATUS_UPDATE = self::VOICE_CHANNEL_STATUS_CREATE;
+    /** A voice channel status was updated by a user. */
+    public const VOICE_CHANNEL_STATUS_CREATE = 192;
+    /** A voice channel status was deleted by a user. */
+    public const VOICE_CHANNEL_STATUS_DELETE = 193;
     /** Guild Scheduled Event Exception was created */
     public const GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE = 200;
     /** Guild Scheduled Event Exception was updated */

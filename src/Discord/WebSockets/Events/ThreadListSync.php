@@ -28,6 +28,9 @@ use Discord\WebSockets\Event;
  */
 class ThreadListSync extends Event
 {
+    /**
+     * @inheritDoc
+     */
     public function handle($data)
     {
         /** @var ExCollectionInterface<Thread> $threadParts */

@@ -17,6 +17,7 @@ namespace Discord\Repository\Interaction;
 use Discord\Http\Endpoint;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains application global commands.
@@ -34,6 +35,8 @@ use Discord\Repository\AbstractRepository;
  */
 class GlobalCommandRepository extends AbstractRepository
 {
+    use CommandRepositoryTrait;
+
     /**
      * @inheritDoc
      */
@@ -49,4 +52,12 @@ class GlobalCommandRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Command::class;
+
+    /**
+     * @inheritDoc
+     */
+    protected function putCommands(array $commands): PromiseInterface
+    {
+        return $this->http->put(Endpoint::bind(Endpoint::GLOBAL_APPLICATION_COMMANDS, $this->vars['application_id']), $commands);
+    }
 }

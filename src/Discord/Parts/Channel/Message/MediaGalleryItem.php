@@ -36,6 +36,11 @@ class MediaGalleryItem extends Part
         'spoiler',
     ];
 
+    /**
+     * Gets the `media` attribute.
+     *
+     * @return UnfurledMediaItem
+     */
     protected function getMediaAttribute(): UnfurledMediaItem
     {
         return $this->attributePartHelper('media', UnfurledMediaItem::class);

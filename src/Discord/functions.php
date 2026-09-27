@@ -29,6 +29,8 @@ use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\Options;
 
+use function React\Promise\resolve;
+
 /**
  * The HTML Color Table.
  *
@@ -336,6 +338,73 @@ function nowait(PromiseInterface $promiseInterface)
     });
 
     return $resolved;
+}
+
+/**
+ * Converts a generator to a promise, allowing for easier asynchronous code.
+ *
+ * @param \Generator $generator The generator to convert.
+ *
+ * @return PromiseInterface A promise that resolves when the generator is complete.
+ *
+ * @since 10.49.0
+ */
+function promiseFromGenerator(\Generator $generator): PromiseInterface
+{
+    return new Promise(function ($resolve, $reject) use ($generator) {
+        promiseFromGeneratorStep($generator, false, null, $resolve, $reject);
+    });
+}
+
+/**
+ * Internal step handler for generator -> promise conversion.
+ *
+ * @internal
+ */
+function promiseFromGeneratorStep(\Generator $generator, bool $started, $send, $resolve, $reject): void
+{
+    try {
+        if (! $started) {
+            // Only attempt to start the generator once
+            $generator->rewind();
+            $started = true;
+        } else {
+            $generator->send($send);
+        }
+    } catch (\Throwable $e) {
+        $reject($e);
+
+        return;
+    }
+
+    if (! $generator->valid()) {
+        try {
+            $resolve(method_exists($generator, 'getReturn') ? $generator->getReturn() : null);
+        } catch (\Throwable $e) {
+            $reject($e);
+        }
+
+        return;
+    }
+
+    try {
+        $yielded = $generator->current();
+    } catch (\Throwable $e) {
+        $reject($e);
+
+        return;
+    }
+
+    $promise = $yielded instanceof PromiseInterface
+        ? $yielded
+        : resolve($yielded);
+
+    $promise->then(
+        function ($v) use ($generator, $resolve, $reject) {
+            promiseFromGeneratorStep($generator, true, $v, $resolve, $reject);
+        },
+        $reject
+    );
 }
 
 /**

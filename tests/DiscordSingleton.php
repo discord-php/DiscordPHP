@@ -26,7 +26,11 @@ class DiscordSingleton
     public static function get()
     {
         if (! self::$discord) {
-            self::new();
+            if (getenv('DISCORD_TOKEN') === false || getenv('DISCORD_TOKEN') === '') {
+                self::$discord = getMockDiscord();
+            } else {
+                self::new();
+            }
         }
 
         return self::$discord;

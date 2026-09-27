@@ -51,6 +51,7 @@ final class LegacyCacheWrapper extends CacheWrapper
         $this->prefix = '';
     }
 
+    /** No-op; the legacy wrapper holds no external listeners to detach. */
     public function __destruct()
     {
     }
