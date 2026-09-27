@@ -84,7 +84,7 @@ $discord = new Discord([
 //      | Intents::MESSAGE_CONTENT, // Note: MESSAGE_CONTENT is privileged, see https://dis.gd/mcfaq
 ]);
 
-$discord->on('ready', function (Discord $discord) {
+$discord->on('init', function (Discord $discord) {
     $discord->logger->info("Bot is ready!");
 
     // Listen for messages.

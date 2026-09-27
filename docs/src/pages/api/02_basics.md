@@ -112,10 +112,10 @@ The following options should only be used by large bots that require sharding. I
 
 <hr>
 
-Gateway events should be registered inside the `ready` event, which is emitted once when the bot first starts and has connected to the gateway.
+Gateway events should be registered inside the `init` event, which is emitted once when the bot first starts and has connected to the gateway.
 
 ```php
-$discord->on('ready', function (Discord $discord) {
+$discord->on('init', function (Discord $discord) {
 ```
 
 To register an event we use the `$discord->on(...)` function, which registers a handler.
