@@ -245,7 +245,15 @@ class Reaction extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        return $this->attributePartHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
+        $emoji = $this->attributePartHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
+
+        // `setIdAttribute()` builds the Emoji as soon as `id` is filled, and `fill()` walks
+        // `$fillable` in order: the guild comes later, so pass it on once it is known.
+        if ($emoji !== null && $emoji->guild_id === null && $this->guild_id !== null) {
+            $emoji->guild_id = $this->guild_id;
+        }
+
+        return $emoji;
     }
 
     /**
