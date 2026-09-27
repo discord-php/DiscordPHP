@@ -327,12 +327,22 @@ class Client extends Part
      *
      * @return PromiseInterface<Sticker>
      *
+     * @link https://docs.discord.com/developers/resources/sticker#get-sticker
+     *
+     * @since 10.60.0 Fetches the sticker when no cached sticker pack holds it, instead of looking the ID up among the packs.
      * @since 10.47.0 Deprecated in favor of StickerPackRepository::get()
      * @since 10.46.0
      */
     public function getSticker(string $sticker_id): PromiseInterface
     {
-        return resolve($this->sticker_packs->get('id', $sticker_id));
+        foreach ($this->sticker_packs as $pack) {
+            if ($sticker = $pack->stickers->get('id', $sticker_id)) {
+                return resolve($sticker);
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::STICKER, $sticker_id))
+            ->then(fn ($response) => $this->factory->part(Sticker::class, (array) $response, true));
     }
 
     /**

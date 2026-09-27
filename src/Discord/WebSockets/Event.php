@@ -41,6 +41,8 @@ abstract class Event
     public const GUILD_MEMBERS_CHUNK = 'GUILD_MEMBERS_CHUNK';
     public const INTERACTION_CREATE = 'INTERACTION_CREATE';
     public const USER_UPDATE = 'USER_UPDATE';
+    /** Sent when a request over the gateway, such as Request Guild Members, is rate limited. @since 10.60.0 */
+    public const RATE_LIMITED = 'RATE_LIMITED';
 
     // Guild
     public const GUILD_CREATE = 'GUILD_CREATE';
@@ -114,6 +116,8 @@ abstract class Event
     // Voice
     public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
     public const VOICE_SERVER_UPDATE = 'VOICE_SERVER_UPDATE';
+    /** Sent when someone sends an emoji reaction or a soundboard sound in a voice channel the bot is in. @since 10.60.0 */
+    public const VOICE_CHANNEL_EFFECT_SEND = 'VOICE_CHANNEL_EFFECT_SEND';
     /** Sent in response to Request Channel Info (ephemeral channel data). */
     public const CHANNEL_INFO = 'CHANNEL_INFO';
     /** Sent when the voice channel status changes. */

@@ -18,8 +18,15 @@ use Discord\Discord;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\Parts\Guild\CommandPermissions;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Interactions\Command\Command;
+use Discord\Parts\Interactions\Command\Permission;
 use Discord\Parts\Monetization\Entitlement;
 use Discord\Parts\OAuth\Application;
+use Discord\Parts\OAuth\Authorization;
+use Discord\Parts\OAuth\UserInfo;
+use Discord\Parts\Part;
 use Discord\Parts\User\ApplicationRoleConnection;
 use Discord\Parts\User\Connection;
 use Discord\Parts\User\User;
@@ -172,6 +179,69 @@ class Session
     }
 
     /**
+     * Returns what the user has authorised: the application, the scopes, when the token expires, and the
+     * user, when the token has the `identify` scope.
+     *
+     * @link https://docs.discord.com/developers/topics/oauth2#get-current-authorization-information
+     *
+     * @return PromiseInterface<Authorization>
+     *
+     * @since 10.60.0
+     */
+    public function getAuthorization(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::OAUTH2_ME)
+            ->then(fn ($response) => $this->discord->getFactory()->part(Authorization::class, (array) $response, true));
+    }
+
+    /**
+     * Returns the user as OpenID Connect describes them. Requires the `openid` scope; the email claims also
+     * need the `email` scope.
+     *
+     * @link https://openid.net/specs/openid-connect-core-1_0.html#UserInfo
+     *
+     * @return PromiseInterface<UserInfo>
+     *
+     * @since 10.60.0
+     */
+    public function getUserInfo(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::OAUTH2_USERINFO)
+            ->then(fn ($response) => $this->discord->getFactory()->part(UserInfo::class, (array) $response, true));
+    }
+
+    /**
+     * Sets who can use one of an application's commands in a guild, replacing the permissions it had there.
+     *
+     * Discord only accepts this with a user's token that has the `applications.commands.permissions.update`
+     * scope, never a bot's. The user needs the manage_guild and manage_roles permissions in the guild, and
+     * must be able to use the command themselves.
+     *
+     * @link https://docs.discord.com/developers/interactions/application-commands#edit-application-command-permissions
+     *
+     * @param Guild|string            $guild       The guild.
+     * @param Command|string          $command     The command or its ID; the application's ID sets the default for all its commands.
+     * @param array<Permission|array> $permissions At most 100, each with `id`, `type` and `permission`.
+     * @param Application|string|null $application The application or its id; the bot's own if omitted.
+     *
+     * @return PromiseInterface<CommandPermissions>
+     *
+     * @since 10.60.0
+     */
+    public function setCommandPermissions($guild, $command, array $permissions, $application = null): PromiseInterface
+    {
+        $guild_id = $guild instanceof Part ? $guild->id : (string) $guild;
+        $command_id = $command instanceof Part ? $command->id : (string) $command;
+        $permissions = array_map(
+            static fn ($permission): array => $permission instanceof Part ? $permission->getRawAttributes() : (array) $permission,
+            $permissions,
+        );
+
+        return $this->forApplication($application, fn (string $id) => $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS, $id, $guild_id, $command_id), ['permissions' => $permissions])
+            ->then(fn ($response) => $this->discord->getFactory()->part(CommandPermissions::class, (array) $response, true)));
+    }
+
+    /**
      * Exposes the read-only `lobbies` repository.
      *
      * @return mixed
@@ -202,7 +272,7 @@ class Session
     /**
      * Runs a request for an application given as a part or an id, or for the bot's own.
      *
-     * @param Application|string|null          $application
+     * @param Application|string|null            $application
      * @param callable(string): PromiseInterface $request     Given the application id.
      *
      * @return PromiseInterface

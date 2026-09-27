@@ -28,6 +28,20 @@ $discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Dis
 });
 ```
 
+### Voice Channel Effect Send
+
+Called with a `VoiceChannelEffect` object when someone sends an emoji reaction or a soundboard sound in a voice channel the bot is connected to.
+
+```php
+// use Discord\Parts\WebSockets\VoiceChannelEffect;
+
+$discord->on(Event::VOICE_CHANNEL_EFFECT_SEND, function (VoiceChannelEffect $effect, Discord $discord) {
+    // $effect->emoji is the emoji sent, $effect->sound the soundboard sound, when one was played.
+});
+```
+
+Requires the `Intents::GUILD_VOICE_STATES` intent.
+
 ---
 
 ## Voice Channel Status and Start Time

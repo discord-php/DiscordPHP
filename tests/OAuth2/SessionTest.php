@@ -16,6 +16,9 @@ use Discord\Discord;
 use Discord\OAuth2\AccessToken;
 use Discord\OAuth2\Session;
 use Discord\Parts\Channel\Invite;
+use Discord\Parts\Guild\CommandPermissions;
+use Discord\Parts\OAuth\Authorization;
+use Discord\Parts\OAuth\UserInfo;
 use Discord\Parts\Lobby\Lobby;
 use Discord\Parts\Lobby\Message;
 use Discord\Parts\Monetization\Entitlement;
@@ -161,6 +164,63 @@ final class SessionTest extends DiscordTestCase
      *
      * @return array{0: Session, 1: object, 2: Discord}
      */
+    public function testTheAuthorizationIsDescribed()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$session, $driver] = $this->sessionWith(fn () => [
+                'application' => ['id' => '7', 'name' => 'Game'],
+                'scopes' => ['identify', 'openid'],
+                'expires' => '2026-10-03T00:00:00+00:00',
+                'user' => ['id' => '5', 'username' => 'player', 'discriminator' => '0'],
+            ]);
+
+            $session->getAuthorization()
+                ->then(function (Authorization $authorization) use ($driver) {
+                    $this->assertStringEndsWith('/oauth2/@me', $driver->requests[0]['url']);
+                    $this->assertSame('Bearer player-token', $driver->requests[0]['headers']['Authorization']);
+                    $this->assertSame('Game', $authorization->application->name);
+                    $this->assertSame(['identify', 'openid'], $authorization->scopes);
+                    $this->assertSame('2026-10-03', $authorization->expires->format('Y-m-d'));
+                    $this->assertSame('player', $authorization->user->username);
+                })
+                ->then($resolve, $resolve);
+        });
+    }
+
+    public function testOpenIdConnectDescribesTheUser()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$session, $driver] = $this->sessionWith(fn () => ['sub' => '5', 'preferred_username' => 'player', 'email' => 'player@example.com', 'email_verified' => true]);
+
+            $session->getUserInfo()
+                ->then(function (UserInfo $info) use ($driver) {
+                    $this->assertStringEndsWith('/oauth2/userinfo', $driver->requests[0]['url']);
+                    $this->assertSame('Bearer player-token', $driver->requests[0]['headers']['Authorization']);
+                    $this->assertSame('5', $info->sub);
+                    $this->assertTrue($info->email_verified);
+                })
+                ->then($resolve, $resolve);
+        });
+    }
+
+    public function testCommandPermissionsAreSetWithTheUsersToken()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$session, $driver, $mock] = $this->sessionWith(fn () => ['id' => '50', 'application_id' => '7', 'guild_id' => '10', 'permissions' => [['id' => '30', 'type' => 1, 'permission' => true]]]);
+            $mock->application = $mock->getFactory()->part(Application::class, ['id' => '7'], true);
+
+            $session->setCommandPermissions('10', '50', [['id' => '30', 'type' => 1, 'permission' => true]])
+                ->then(function (CommandPermissions $permissions) use ($driver) {
+                    $this->assertSame('PUT', $driver->requests[0]['method']);
+                    $this->assertStringEndsWith('/applications/7/guilds/10/commands/50/permissions', $driver->requests[0]['url']);
+                    $this->assertSame('Bearer player-token', $driver->requests[0]['headers']['Authorization'], 'Discord refuses a bot token here');
+                    $this->assertSame(['permissions' => [['id' => '30', 'type' => 1, 'permission' => true]]], $driver->requests[0]['content']);
+                    $this->assertSame('50', $permissions->id);
+                })
+                ->then($resolve, $resolve);
+        });
+    }
+
     private function sessionWith(callable $respond): array
     {
         $mock = getMockDiscord();

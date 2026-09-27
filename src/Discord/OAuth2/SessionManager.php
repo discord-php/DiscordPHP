@@ -71,6 +71,24 @@ class SessionManager
     }
 
     /**
+     * Returns the public keys that sign Discord's OpenID Connect ID tokens, as the `keys` of a JSON Web Key
+     * Set, ready to give a JWT library to verify an ID token with. They need no token to read.
+     *
+     * Discord describes this endpoint in its OpenAPI description rather than in its documentation.
+     *
+     * @link https://datatracker.ietf.org/doc/html/rfc7517#section-5
+     *
+     * @return PromiseInterface<list<array<string, mixed>>>
+     *
+     * @since 10.60.0
+     */
+    public function getPublicKeys(): PromiseInterface
+    {
+        return $this->discord->getHttpClient()->get(Endpoint::OAUTH2_KEYS)
+            ->then(fn ($response): array => json_decode(json_encode($response->keys ?? [], JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR));
+    }
+
+    /**
      * Opens a session with a token, storing it under `$key` if one is given.
      *
      * @param AccessToken|object|array $token A token, or a token response from Discord.

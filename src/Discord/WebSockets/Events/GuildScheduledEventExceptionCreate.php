@@ -16,6 +16,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Guild\ScheduledEventException;
 
 /**
@@ -35,8 +36,9 @@ class GuildScheduledEventExceptionCreate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($scheduledEventExceptionPart->guild_id)) {
-            if ($event = $guild->guild_scheduled_events->get($scheduledEventExceptionPart->event_id)) {
-                $event->guild_scheduled_event_exceptions->set($scheduledEventExceptionPart->event_exception_id, $scheduledEventExceptionPart);
+            /** @var ?ScheduledEvent */
+            if ($event = yield $guild->guild_scheduled_events->cacheGet($scheduledEventExceptionPart->event_id)) {
+                $event->cacheException($scheduledEventExceptionPart);
             }
         }
 

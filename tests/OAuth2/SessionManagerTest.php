@@ -167,6 +167,21 @@ final class SessionManagerTest extends DiscordTestCase
      *
      * @return array{0: SessionManager, 1: object, 2: ArrayTokenStore}
      */
+    public function testThePublicKeysComeAsAKeySet()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$manager, $driver] = $this->managerWith(fn () => ['keys' => [['kty' => 'RSA', 'kid' => 'k1', 'alg' => 'RS256', 'use' => 'sig', 'n' => 'abc', 'e' => 'AQAB']]]);
+
+            $manager->getPublicKeys()
+                ->then(function (array $keys) use ($driver) {
+                    $this->assertSame('GET', $driver->requests[0]['method']);
+                    $this->assertStringEndsWith('/oauth2/keys', $driver->requests[0]['url']);
+                    $this->assertSame([['kty' => 'RSA', 'kid' => 'k1', 'alg' => 'RS256', 'use' => 'sig', 'n' => 'abc', 'e' => 'AQAB']], $keys);
+                })
+                ->then($resolve, $resolve);
+        });
+    }
+
     private function managerWith(callable $respond, ?string $clientSecret = 'secret', int $limit = SessionManager::DEFAULT_LIMIT): array
     {
         $mock = getMockDiscord();
