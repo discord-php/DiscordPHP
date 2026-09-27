@@ -62,6 +62,13 @@ final class TransportCompressionTest extends DiscordTestCase
             /** @var list<string> */
             public array $seen = [];
 
+            public function connectWs(): void
+            {
+                // Only the decoding is under test. A real connection would never identify, since
+                // processWsMessage() below only records, so the gateway would drop it and the
+                // client reconnect for good, keeping the event loop and the test run alive.
+            }
+
             protected function processWsMessage(string $data): void
             {
                 $this->seen[] = $data;
