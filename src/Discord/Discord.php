@@ -1948,7 +1948,7 @@ class Discord
      *
      * @return PromiseInterface<GetGateway>
      *
-     * @since 10.60.0
+     * @since 10.64.0
      */
     public function getGateway(): PromiseInterface
     {

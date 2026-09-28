@@ -23,7 +23,7 @@ use Discord\Parts\Part;
  *
  * @link https://docs.discord.com/developers/events/gateway#get-gateway
  *
- * @since 10.60.0
+ * @since 10.64.0
  *
  * @property string $url WSS URL that can be used for connecting to the Gateway.
  */

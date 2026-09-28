@@ -260,7 +260,7 @@ class Client extends Part
      *
      * @return PromiseInterface<Application>
      *
-     * @since 10.60.0
+     * @since 10.64.0
      */
     public function getCurrentBotApplication(): PromiseInterface
     {

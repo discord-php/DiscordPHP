@@ -153,7 +153,7 @@ class Widget extends Part
      *
      * @return PromiseInterface<string> The PNG image's bytes.
      *
-     * @since 10.60.0
+     * @since 10.64.0
      */
     public function getImage(string $style = self::STYLE_SHIELD): PromiseInterface
     {

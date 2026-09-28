@@ -168,7 +168,7 @@ class Application extends Part
      *
      * @return PromiseInterface<static>
      *
-     * @since 10.60.0
+     * @since 10.64.0
      */
     public function fetch(): PromiseInterface
     {
@@ -193,7 +193,7 @@ class Application extends Part
      *
      * @return PromiseInterface<static>
      *
-     * @since 10.60.0
+     * @since 10.64.0
      */
     public function update(array $options): PromiseInterface
     {
