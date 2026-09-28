@@ -329,6 +329,7 @@ class Embed extends Part
      * @param Field|array $fields
      *
      * @throws \OverflowException Embed exceeds 25 fields.
+     * @throws \LengthException   A field name is over 256 characters, a value over 1024, or the embed's text over 6000.
      *
      * @return self
      */
@@ -341,6 +342,21 @@ class Embed extends Part
 
             if ($field instanceof Field) {
                 $field = $field->getRawAttributes();
+            }
+
+            $nameLength = poly_strlen((string) ($field['name'] ?? ''));
+            $valueLength = poly_strlen((string) ($field['value'] ?? ''));
+
+            if ($nameLength > 256) {
+                throw new \LengthException('Embed field name can not be longer than 256 characters.');
+            }
+
+            if ($valueLength > 1024) {
+                throw new \LengthException('Embed field value can not be longer than 1024 characters.');
+            }
+
+            if ($this->exceedsOverallLimit($nameLength + $valueLength)) {
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
 
             $this->attributes['fields'][] = $field;
@@ -357,6 +373,7 @@ class Embed extends Part
      * @param bool   $inline Whether this field gets shown with other inline fields on one line.
      *
      * @throws \OverflowException
+     * @throws \LengthException
      *
      * @return self
      */
