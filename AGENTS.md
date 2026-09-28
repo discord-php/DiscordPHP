@@ -354,7 +354,7 @@ When you need an example worth imitating, start here:
 | accept the live spec and today's gaps as the baseline | `composer openapi:update` |
 | docs build | `cd docs && yarn install && yarn build` |
 
-Integration tests expect `.env` values for `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME`.
+Integration tests expect `.env` values for `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME`. Without `DISCORD_TOKEN` the suite runs offline: tests that answer requests with `getMockHttpDriver()` run, and only those that call `$this->channel()` skip. `.github/workflows/tests.yml` runs it that way on every push and pull request; `unit.yml` runs it live, by hand.
 
 ## Final rule
 
