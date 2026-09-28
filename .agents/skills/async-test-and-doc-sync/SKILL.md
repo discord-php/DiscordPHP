@@ -72,7 +72,9 @@ Example: `tests/Builders/ModalBuilderTest.php` uses `$this->expectException(\Log
 
 Use `wait()` and return the `wait()` call when the test must interact with real Discord infrastructure — sending/editing/deleting messages, pinning, creating invites, fetching message history, verifying embed hydration, or testing repository `fetch()`/`freshen()` against live API.
 
-These tests require `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME` in `.env` or environment. `DiscordSingleton` shares a single connected client across the suite. Tests `markTestSkipped` if credentials are missing.
+These tests require `DISCORD_TOKEN`, `TEST_CHANNEL`, and `TEST_CHANNEL_NAME` in `.env` or environment. `DiscordSingleton` shares a single connected client across the suite. Reach the live channel only through `$this->channel()`: it skips the test when there is no token, so the rest of the class still runs offline. A test that needs Discord some other way should check `self::isLive()` and skip itself.
+
+A test that sends a request should not need Discord at all: set `getMockHttpDriver()` on a `getMockDiscord()` client and assert on the requests it records, as `tests/Parts/Guild/GuildRequestsTest.php` does. Those run in CI on every push and pull request (`.github/workflows/tests.yml`).
 
 ### The `getMockDiscord()` factory
 
@@ -211,7 +213,7 @@ Docs should **not** change when:
 
 ### Integration test environment
 
-Integration tests require `.env` or shell variables: `DISCORD_TOKEN` (bot token), `TEST_CHANNEL` (channel ID), `TEST_CHANNEL_NAME` (channel name). When absent, `DiscordSingleton` falls back to `getMockDiscord()` and integration tests skip.
+Integration tests require `.env` or shell variables: `DISCORD_TOKEN` (bot token), `TEST_CHANNEL` (channel ID), `TEST_CHANNEL_NAME` (channel name). When absent, `DiscordSingleton` falls back to `getMockDiscord()`, the tests that use `$this->channel()` skip, and every other test runs.
 
 ### Running subsets
 

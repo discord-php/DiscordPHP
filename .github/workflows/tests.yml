@@ -1,0 +1,88 @@
+name: Tests
+
+# Runs on every push and pull request, without Discord: the tests answer requests with a mock HTTP
+# driver (getMockHttpDriver() in tests/functions.php), and the few that need the live test channel
+# skip themselves. unit.yml runs the whole suite against Discord, by hand, with the bot's secrets.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        # The dev dependencies (Pest 4, and PHPUnit 12 through it) need PHP 8.3; syntax-check covers 8.1 and 8.2.
+        php: ['8.3', '8.4', '8.5']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: zlib, mbstring
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run PHPUnit
+        # An empty token keeps the suite offline even if a secret is ever exposed to this workflow.
+        env:
+          DISCORD_TOKEN: ''
+        run: vendor/bin/phpunit
+
+  syntax:
+    name: Syntax (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        # The oldest versions composer.json allows, where the test tools cannot be installed.
+        php: ['8.1', '8.2']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Check that every source file parses
+        # Prints only the files that fail; pipefail (from `shell: bash`) keeps the failure.
+        shell: bash
+        run: find src -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l -d display_errors=1 | { grep -v '^No syntax errors detected' || true; }
+
+  style:
+    name: Code style
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run php-cs-fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff

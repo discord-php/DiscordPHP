@@ -41,6 +41,12 @@ if (file_exists($envPath)) {
     }
 }
 
+// ReactPHP runs the event loop once more when PHP exits, if it was never run. The test clients have
+// pending work that never finishes (a mock client keeps trying to reach the gateway), so that last
+// run would never return and the test run would hang after its results. Registered before anything
+// asks for the loop, so it runs first. Tests that need the loop run it themselves through wait().
+register_shutdown_function(static fn () => React\EventLoop\Loop::stop());
+
 include __DIR__.'/functions.php';
 include __DIR__.'/DiscordSingleton.php';
 include __DIR__.'/DiscordTestCase.php';

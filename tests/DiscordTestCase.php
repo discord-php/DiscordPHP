@@ -24,8 +24,22 @@ class DiscordTestCase extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        set_rejection_handler(function (\Throwable $e): void {
-        });
+        // The clients the tests build send requests of their own, such as for the gateway, and
+        // nothing waits on those. React calls the rejection handler once and then unsets it, so
+        // this one sets itself again each time.
+        $ignore = static function (\Throwable $e) use (&$ignore): void {
+            set_rejection_handler($ignore);
+        };
+        set_rejection_handler($ignore);
+
+        self::$channel = null;
+
+        // Without a token, wait() runs on a mock client that never connects: tests that answer
+        // requests with getMockHttpDriver() run as usual, and those that need the live test
+        // channel skip themselves through channel().
+        if (! self::isLive()) {
+            return;
+        }
 
         /** @var Channel|null $channel */
         try {
@@ -48,8 +62,23 @@ class DiscordTestCase extends TestCase
         self::$channel = $channel;
     }
 
+    /**
+     * The live test channel. Skips the test when there is none, as when DISCORD_TOKEN is not set.
+     */
     protected function channel()
     {
+        if (null === self::$channel) {
+            $this->markTestSkipped('Needs a live connection to Discord: set DISCORD_TOKEN and TEST_CHANNEL.');
+        }
+
         return self::$channel;
+    }
+
+    /**
+     * Whether the tests run against Discord itself, with a bot token, rather than a mock client.
+     */
+    protected static function isLive(): bool
+    {
+        return ! in_array(getenv('DISCORD_TOKEN'), [false, ''], true);
     }
 }

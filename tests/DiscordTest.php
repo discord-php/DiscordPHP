@@ -18,6 +18,10 @@ final class DiscordTest extends DiscordTestCase
 {
     public function testCheckEnvVariablesPresent()
     {
+        if (! self::isLive()) {
+            $this->markTestSkipped('The live tests are off: DISCORD_TOKEN is not set.');
+        }
+
         if (file_exists(__DIR__.'/../.env')) {
             $envFile = file_get_contents(__DIR__.'/../.env');
             $lines = explode("\n", $envFile);
