@@ -299,7 +299,7 @@
                 <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a></span>
                                                                 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
@@ -457,7 +457,7 @@ within the class. If it does, it calls that method with the provided arguments.<
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Monetization-EntitlementRepository.html#method_createTestEntitlement">createTestEntitlement()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;    </span>
 </dt>
 <dd>Creates a test entitlement to a given SKU for a given guild or user. Discord will act as though that user or guild has entitlement to your premium offering.</dd>
 
@@ -529,7 +529,7 @@ where the callback returns `true` when given the part.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Monetization-EntitlementRepository.html#method_getEntitlements">getEntitlements()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;&gt;&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;&gt;&gt;    </span>
 </dt>
 <dd>Returns all entitlements for a given app, active and expired.</dd>
 
@@ -769,7 +769,7 @@ where the callback returns `true` when given the part.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$class</span>
-     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Monetization\Entitlement::class</span></code>
+     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Application\Entitlement::class</span></code>
 
     
     
@@ -1347,7 +1347,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">consume</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entitlement</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">consume</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entitlement</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1357,7 +1357,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$entitlement</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>|string</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -1485,7 +1485,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">createTestEntitlement</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">createTestEntitlement</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1526,7 +1526,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -1626,7 +1626,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">deleteTestEntitlement</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entitlement</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">deleteTestEntitlement</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$entitlement</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1636,7 +1636,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$entitlement</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>|string</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The entitlement or entitlement ID to delete.</p>
@@ -2117,7 +2117,7 @@ where the callback returns `true` when given the part.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getEntitlements</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;&gt;&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getEntitlements</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;&gt;&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2162,7 +2162,7 @@ where the callback returns `true` when given the part.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;&gt;&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;&gt;&gt;</span>
             </section>
 
 </article>

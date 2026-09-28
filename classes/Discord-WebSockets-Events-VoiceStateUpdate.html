@@ -280,7 +280,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/VoiceStateUpdate.php"><a href="files/src-discord-websockets-events-voicestateupdate.html"><abbr title="src/Discord/WebSockets/Events/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -997,6 +997,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>Cache User repository from Event data.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-WebSockets-Events-VoiceStateUpdate.html#method_updateVoiceSession">updateVoiceSession()</a>
+    <span>
+                                &nbsp;: <abbr title="\Generator">Generator</abbr>    </span>
+</dt>
+<dd>Records the bot&#039;s own voice session in the guild, or removes it when the bot has left voice there.</dd>
 
     </dl>
 
@@ -4166,7 +4173,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/VoiceStateUpdate.php"><a href="files/src-discord-websockets-events-voicestateupdate.html"><abbr title="src/Discord/WebSockets/Events/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -4347,6 +4354,74 @@
     
     
 </article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_updateVoiceSession">
+        updateVoiceSession()
+        <a href="classes/Discord-WebSockets-Events-VoiceStateUpdate.html#method_updateVoiceSession" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/VoiceStateUpdate.php"><a href="files/src-discord-websockets-events-voicestateupdate.html"><abbr title="src/Discord/WebSockets/Events/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Records the bot&#039;s own voice session in the guild, or removes it when the bot has left voice there.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">updateVoiceSession</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Other users' voice states are not the bot's sessions.</p>
+<p>Done whether or not the guild is cached: the voice client needs the session either way.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$data</span>
+                : <span class="phpdocumentor-argument-list__argument__type">object</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The voice state payload.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_updateVoiceSession_tags">
+        Tags
+        <a href="classes/Discord-WebSockets-Events-VoiceStateUpdate.html#method_updateVoiceSession_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.66.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span>
+            </section>
+
+</article>
             </section>
 
         
@@ -4486,6 +4561,7 @@
                                             <li class=""><a href="classes/Discord-WebSockets-Events-VoiceStateUpdate.html#method_handle">handle()</a></li>
                                             <li class=""><a href="classes/Discord-WebSockets-Event.html#method_cacheMember">cacheMember()</a></li>
                                             <li class=""><a href="classes/Discord-WebSockets-Event.html#method_cacheUser">cacheUser()</a></li>
+                                            <li class=""><a href="classes/Discord-WebSockets-Events-VoiceStateUpdate.html#method_updateVoiceSession">updateVoiceSession()</a></li>
                                     </ul>
             </li>
                     </ul>

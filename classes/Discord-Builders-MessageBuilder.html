@@ -426,7 +426,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#property_poll">$poll</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null            </span>
 </dt>
 <dd>The poll for the message.</dd>
 
@@ -566,7 +566,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_create">create()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>    </span>
 </dt>
 <dd>Creates the message in the given repository.</dd>
 
@@ -643,7 +643,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_getForward">getForward()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null    </span>
 </dt>
 <dd>Retrieves the forwarded message associated with this builder, if any.</dd>
 
@@ -671,14 +671,14 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_getPoll">getPoll()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null    </span>
 </dt>
 <dd>Returns the poll of the message.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_getReplyTo">getReplyTo()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null    </span>
 </dt>
 <dd>Retrieves the message that this builder is set to reply to, if any.</dd>
 
@@ -1419,7 +1419,7 @@ be sent via multipart request, i.e. contains files.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$poll</span>
     </code>
 
@@ -1899,7 +1899,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addAttachment</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Builders-AttachmentRequestBuilder.html"><abbr title="\Discord\Builders\AttachmentRequestBuilder">AttachmentRequestBuilder</abbr></a>|<a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>|string|int&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$attachments</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">addAttachment</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Builders-AttachmentRequestBuilder.html"><abbr title="\Discord\Builders\AttachmentRequestBuilder">AttachmentRequestBuilder</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-Attachment.html"><abbr title="\Discord\Parts\Channel\Message\Attachment">Attachment</abbr></a>|string|int&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$attachments</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1909,7 +1909,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$attachments</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Builders-AttachmentRequestBuilder.html"><abbr title="\Discord\Builders\AttachmentRequestBuilder">AttachmentRequestBuilder</abbr></a>|<a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>|string|int</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Builders-AttachmentRequestBuilder.html"><abbr title="\Discord\Builders\AttachmentRequestBuilder">AttachmentRequestBuilder</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-Attachment.html"><abbr title="\Discord\Parts\Channel\Message\Attachment">Attachment</abbr></a>|string|int</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Attachment objects or IDs to add</p>
@@ -2103,7 +2103,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addEmbed</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$embeds</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">addEmbed</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$embeds</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2113,7 +2113,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$embeds</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -2486,7 +2486,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a>|<a href="classes/Discord-Repository-PrivateChannelRepository.html"><abbr title="\Discord\Repository\PrivateChannelRepository">PrivateChannelRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a>|<a href="classes/Discord-Repository-PrivateChannelRepository.html"><abbr title="\Discord\Repository\PrivateChannelRepository">PrivateChannelRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repository</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2523,7 +2523,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a></span>
             </section>
 
 </article>
@@ -2951,7 +2951,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getForward</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getForward</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2964,7 +2964,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span>
             </section>
 
 </article>
@@ -3144,7 +3144,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPoll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getPoll</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3157,7 +3157,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span>
             </section>
 
 </article>
@@ -3183,7 +3183,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getReplyTo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getReplyTo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3196,7 +3196,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span>
             </section>
 
 </article>
@@ -3960,7 +3960,7 @@ be sent via multipart request, i.e. contains files.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setEmbeds</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>&gt;|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embeds</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setEmbeds</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Embed">Embed</abbr></a>&gt;|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embeds</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3970,7 +3970,7 @@ be sent via multipart request, i.e. contains files.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$embeds</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>&gt;|array&lt;string|int, mixed&gt;</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Embed">Embed</abbr></a>&gt;|array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -4177,7 +4177,7 @@ that message will be returned and no new message will be created.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setForward</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fail_if_not_exists</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setForward</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fail_if_not_exists</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4187,7 +4187,7 @@ that message will be returned and no new message will be created.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$message</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -4383,7 +4383,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMessageReference</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message-MessageReference.html"><abbr title="\Discord\Parts\Channel\Message\MessageReference">MessageReference</abbr></a>|<a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message_reference</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><a href="classes/Discord-Parts-Channel-Message-MessageReference.html#constant_TYPE_DEFAULT"><abbr title="\Discord\Parts\Channel\Message\MessageReference::TYPE_DEFAULT">MessageReference::TYPE_DEFAULT</abbr></a></span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fail_if_not_exists</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setMessageReference</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message-MessageReference.html"><abbr title="\Discord\Parts\Channel\Message\MessageReference">MessageReference</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message_reference</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><a href="classes/Discord-Parts-Channel-Message-MessageReference.html#constant_TYPE_DEFAULT"><abbr title="\Discord\Parts\Channel\Message\MessageReference::TYPE_DEFAULT">MessageReference::TYPE_DEFAULT</abbr></a></span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fail_if_not_exists</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4393,7 +4393,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$message_reference</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message-MessageReference.html"><abbr title="\Discord\Parts\Channel\Message\MessageReference">MessageReference</abbr></a>|<a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message-MessageReference.html"><abbr title="\Discord\Parts\Channel\Message\MessageReference">MessageReference</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -4540,7 +4540,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setPoll</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$poll</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setPoll</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$poll</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4550,7 +4550,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$poll</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Message\Poll\PollCreateRequest">PollCreateRequest</abbr></a>|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -4589,7 +4589,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setReplyTo</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fail_if_not_exists</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setReplyTo</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">?bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fail_if_not_exists</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4599,7 +4599,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$message</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Channel-Message-Message.html"><abbr title="\Discord\Parts\Channel\Message\Message">Message</abbr></a>|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 

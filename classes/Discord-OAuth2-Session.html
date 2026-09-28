@@ -418,7 +418,7 @@ user, when the token has the `identify` scope.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-Session.html#method_getEntitlements">getEntitlements()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;&gt;    </span>
 </dt>
 <dd>Returns the user&#039;s entitlements for an application.</dd>
 
@@ -454,7 +454,7 @@ need the `email` scope.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-Session.html#method_setCommandPermissions">setCommandPermissions()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a>&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Command-CommandPermissions.html"><abbr title="\Discord\Parts\Application\Command\CommandPermissions">CommandPermissions</abbr></a>&gt;    </span>
 </dt>
 <dd>Sets who can use one of an application&#039;s commands in a guild, replacing the permissions it had there.</dd>
 
@@ -861,7 +861,7 @@ need the `email` scope.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getApplicationRoleConnection</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getApplicationRoleConnection</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -871,7 +871,7 @@ need the `email` scope.</dd>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$application</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The application or its id; the bot's own if omitted.</p>
@@ -1089,7 +1089,7 @@ user, when the token has the `identify` scope.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getEntitlements</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getEntitlements</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1099,7 +1099,7 @@ user, when the token has the `identify` scope.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$application</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The application or its id; the bot's own if omitted.</p>
@@ -1127,7 +1127,7 @@ user, when the token has the `identify` scope.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Monetization-Entitlement.html"><abbr title="\Discord\Parts\Monetization\Entitlement">Entitlement</abbr></a>&gt;&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Application-Entitlement.html"><abbr title="\Discord\Parts\Application\Entitlement">Entitlement</abbr></a>&gt;&gt;</span>
             </section>
 
 </article>
@@ -1330,7 +1330,7 @@ need the `email` scope.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setCommandPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Command.html"><abbr title="\Discord\Parts\Interactions\Command\Command">Command</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Permission.html"><abbr title="\Discord\Parts\Interactions\Command\Permission">Permission</abbr></a>|array&lt;string|int, mixed&gt;&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permissions</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">setCommandPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Command-Command.html"><abbr title="\Discord\Parts\Application\Command\Command">Command</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Application-Command-Permission.html"><abbr title="\Discord\Parts\Application\Command\Permission">Permission</abbr></a>|array&lt;string|int, mixed&gt;&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permissions</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Command-CommandPermissions.html"><abbr title="\Discord\Parts\Application\Command\CommandPermissions">CommandPermissions</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1353,7 +1353,7 @@ must be able to use the command themselves.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$command</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Interactions-Command-Command.html"><abbr title="\Discord\Parts\Interactions\Command\Command">Command</abbr></a>|string</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Command-Command.html"><abbr title="\Discord\Parts\Application\Command\Command">Command</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The command or its ID; the application's ID sets the default for all its commands.</p>
@@ -1362,7 +1362,7 @@ must be able to use the command themselves.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$permissions</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Command-Permission.html"><abbr title="\Discord\Parts\Interactions\Command\Permission">Permission</abbr></a>|array&lt;string|int, mixed&gt;&gt;</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Parts-Application-Command-Permission.html"><abbr title="\Discord\Parts\Application\Command\Permission">Permission</abbr></a>|array&lt;string|int, mixed&gt;&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>At most 100, each with <code class="prettyprint">id</code>, <code class="prettyprint">type</code> and <code class="prettyprint">permission</code>.</p>
@@ -1371,7 +1371,7 @@ must be able to use the command themselves.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$application</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The application or its id; the bot's own if omitted.</p>
@@ -1406,7 +1406,7 @@ must be able to use the command themselves.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Application-Command-CommandPermissions.html"><abbr title="\Discord\Parts\Application\Command\CommandPermissions">CommandPermissions</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -1432,7 +1432,7 @@ must be able to use the command themselves.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">updateApplicationRoleConnection</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">?array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">updateApplicationRoleConnection</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">?array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1451,7 +1451,7 @@ must be able to use the command themselves.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$application</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The application or its id; the bot's own if omitted.</p>
@@ -1610,7 +1610,7 @@ must be able to use the command themselves.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">forApplication</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">callable(string): <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">forApplication</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$application</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">callable(string): <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1620,7 +1620,7 @@ must be able to use the command themselves.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$application</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|string|null</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Application-Application.html"><abbr title="\Discord\Parts\Application\Application">Application</abbr></a>|string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
