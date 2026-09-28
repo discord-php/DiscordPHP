@@ -22,7 +22,6 @@ use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
-use stdClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\normalizePartId;
@@ -104,8 +103,8 @@ class Reaction extends Part
      */
     protected function setIdAttribute(string $value): void
     {
-        if (! isset($this->attributes['emoji'])) {
-            $this->attributes['emoji'] = new stdClass();
+        if ($this->emoji === null) {
+            $this->attributes['emoji'] = $this->factory->part(Emoji::class, ['guild_id' => $this->guild_id], true);
         }
 
         $colonDelimiter = explode(':', $value);
@@ -246,7 +245,15 @@ class Reaction extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        return $this->attributePartHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
+        $emoji = $this->attributePartHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
+
+        // `setIdAttribute()` builds the Emoji as soon as `id` is filled, and `fill()` walks
+        // `$fillable` in order: the guild comes later, so pass it on once it is known.
+        if ($emoji !== null && $emoji->guild_id === null && $this->guild_id !== null) {
+            $emoji->guild_id = $this->guild_id;
+        }
+
+        return $emoji;
     }
 
     /**
