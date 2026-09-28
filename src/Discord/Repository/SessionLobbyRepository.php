@@ -78,11 +78,11 @@ class SessionLobbyRepository extends AbstractRepository
      *
      * @link https://docs.discord.com/developers/resources/lobby#create-or-join-lobby
      *
-     * @param string  $secret                       Identifies the lobby within the application.
-     * @param array   $data
-     * @param ?int    $data['idle_timeout_seconds'] Seconds to wait before shutting down the lobby after it becomes idle, between 5 and 604800 (7 days).
-     * @param ?array  $data['lobby_metadata']       String key/value pairs to set on the lobby, replacing what it had. The max total length is 1000.
-     * @param ?array  $data['member_metadata']      String key/value pairs to set on the player's lobby member. The max total length is 1000.
+     * @param string $secret                       Identifies the lobby within the application.
+     * @param array  $data
+     * @param ?int   $data['idle_timeout_seconds'] Seconds to wait before shutting down the lobby after it becomes idle, between 5 and 604800 (7 days).
+     * @param ?array $data['lobby_metadata']       String key/value pairs to set on the lobby, replacing what it had. The max total length is 1000.
+     * @param ?array $data['member_metadata']      String key/value pairs to set on the player's lobby member. The max total length is 1000.
      *
      * @return PromiseInterface<Lobby>
      */

@@ -26,20 +26,20 @@ use React\Promise\PromiseInterface;
  *
  * @link https://docs.discord.com/developers/resources/lobby#lobby-message-object
  *
- * @property      string       $id                  The id of the message.
- * @property      int          $type                The message type.
- * @property      string       $content             The message content.
- * @property      string       $lobby_id            The id of the lobby this message was sent to.
- * @property      string       $channel_id          Equal to `lobby_id`; included for compatibility with the messages interface.
- * @property      User         $author              The user who sent the message.
- * @property      ?array|null  $lobby_member        Contains the author's lobby member `additional_name`, when they have one.
- * @property      ?array|null  $metadata            Dispatch-only metadata sent with the message.
- * @property      ?array|null  $moderation_metadata Moderation metadata set with {@see \Discord\Repository\LobbyRepository::updateMessageModerationMetadata()}.
- * @property      int          $flags               Message flags combined as a bitfield.
- * @property      string       $application_id      The application that sent the message.
- * @property      Carbon|null  $timestamp           When the message was sent; sent with `LOBBY_MESSAGE_UPDATE`.
- * @property      Carbon|null  $edited_timestamp    When the message was last edited; sent with `LOBBY_MESSAGE_UPDATE`.
- * @property-read Lobby|null   $lobby               The lobby, when it is cached.
+ * @property      string      $id                  The id of the message.
+ * @property      int         $type                The message type.
+ * @property      string      $content             The message content.
+ * @property      string      $lobby_id            The id of the lobby this message was sent to.
+ * @property      string      $channel_id          Equal to `lobby_id`; included for compatibility with the messages interface.
+ * @property      User        $author              The user who sent the message.
+ * @property      ?array|null $lobby_member        Contains the author's lobby member `additional_name`, when they have one.
+ * @property      ?array|null $metadata            Dispatch-only metadata sent with the message.
+ * @property      ?array|null $moderation_metadata Moderation metadata set with {@see \Discord\Repository\LobbyRepository::updateMessageModerationMetadata()}.
+ * @property      int         $flags               Message flags combined as a bitfield.
+ * @property      string      $application_id      The application that sent the message.
+ * @property      Carbon|null $timestamp           When the message was sent; sent with `LOBBY_MESSAGE_UPDATE`.
+ * @property      Carbon|null $edited_timestamp    When the message was last edited; sent with `LOBBY_MESSAGE_UPDATE`.
+ * @property-read Lobby|null  $lobby               The lobby, when it is cached.
  */
 class Message extends Part
 {

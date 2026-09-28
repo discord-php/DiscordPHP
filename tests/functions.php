@@ -92,7 +92,7 @@ function getMockMessageCommandClient(): MessageCommandClient
  */
 function getMockHttpDriver(callable $respond): DriverInterface
 {
-    return new class ($respond) implements DriverInterface {
+    return new class($respond) implements DriverInterface {
         /** @var array<int, array{method: string, url: string, content: mixed, raw: string, headers: array<string, string>}> */
         public array $requests = [];
 

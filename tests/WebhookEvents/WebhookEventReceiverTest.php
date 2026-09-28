@@ -231,7 +231,7 @@ final class WebhookEventReceiverTest extends DiscordTestCase
     private function receiver(): array
     {
         $mock = $this->client();
-        $dispatched = new class () {
+        $dispatched = new class() {
             public array $packets = [];
         };
 

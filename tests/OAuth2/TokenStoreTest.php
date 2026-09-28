@@ -94,7 +94,7 @@ final class TokenStoreTest extends DiscordTestCase
      */
     private function psr16(): CacheInterface
     {
-        return new class () implements CacheInterface {
+        return new class() implements CacheInterface {
             public array $items = [];
 
             public bool $fail = false;
