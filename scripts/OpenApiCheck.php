@@ -47,6 +47,9 @@ final class OpenApiCheck
 
     private const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 
+    /** A request built for the HTTP driver, whose second argument is its method. */
+    private const DRIVER_REQUEST = "/new\\s+Request\\s*\\([^;,]*,\\s*'(get|post|put|patch|delete)'/i";
+
     /**
      * Runs the check, printing a report, and returns the exit status: 0 when there is nothing new since
      * the baseline, 1 when there is, and 2 when the check could not run.
@@ -698,6 +701,11 @@ final class OpenApiCheck
             return [strtoupper(end($calls[1]))];
         }
 
+        // A request run through the HTTP driver itself, for a response that is not JSON: new Request($deferred, 'get', …).
+        if (preg_match(self::DRIVER_REQUEST, $statement, $request)) {
+            return [strtoupper($request[1])];
+        }
+
         if (preg_match('/^\s*(\$\w+)\s*=/', $statement, $assigned)) {
             // Only as far as the next method, which may reuse the name for another endpoint.
             $after = substr($source, $offset, 4000);
@@ -706,8 +714,9 @@ final class OpenApiCheck
             }
 
             // The variable may be wrapped on the way, as in ->get(Endpoint::bind((string) $endpoint, …)).
-            if (preg_match_all('/->(get|post|put|patch|delete)\s*\([^;]{0,160}?'.preg_quote($assigned[1], '/').'\b/i', $after, $sent)) {
-                return array_values(array_unique(array_map('strtoupper', $sent[1])));
+            // Or a request run through the driver: new Request($deferred, 'get', $endpoint, …).
+            if (preg_match_all('/(?:->(get|post|put|patch|delete)\s*\(|new\s+Request\s*\([^;,]*,\s*\'(get|post|put|patch|delete)\'\s*,)[^;]{0,160}?'.preg_quote($assigned[1], '/').'\b/i', $after, $sent)) {
+                return array_values(array_unique(array_map('strtoupper', array_filter([...$sent[1], ...$sent[2]]))));
             }
         }
 
