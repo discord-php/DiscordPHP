@@ -74,7 +74,8 @@ class RegisteredCommand
      * @param Discord       $discord
      * @param string        $name
      * @param callable|null $callback
-     * @param callable|null $autocomplete_callback Callback returning list of auto complete suggestions
+     * @param callable|null $autocomplete_callback Callback returning list of auto complete suggestions, called with the
+     *                                             interaction and the focused option: `fn (Interaction $interaction, ?Option $option)`.
      */
     public function __construct(Discord $discord, string $name, ?callable $callback = null, ?callable $autocomplete_callback = null)
     {
@@ -123,11 +124,12 @@ class RegisteredCommand
      * executes the callback, if given.
      *
      * @param ApplicationCommand|ApplicationCommandAutocomplete $interaction
-     * @param Option                                            $option      The option value for the current autocomplete request
+     * @param Option|null                                       $option      The focused option being autocompleted, handed to the
+     *                                                                       callback as its second argument. Since 10.65.0.
      *
      * @return bool Whether the command successfully executed.
      */
-    public function suggest(Interaction $interaction, Option $option): bool
+    public function suggest(Interaction $interaction, ?Option $option = null): bool
     {
         if (is_callable($this->autocomplete_callback)) {
             $choice = ($this->autocomplete_callback)($interaction, $option);
