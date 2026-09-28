@@ -65,8 +65,11 @@ class DiscordSingleton
 
         $e = null;
 
-        $timer = $discord->getLoop()->addTimer(10, function () use (&$e) {
+        // Stop the loop too: run() only returns once it stops, and 'ready' never comes
+        // when the token, intents or network are wrong.
+        $timer = $discord->getLoop()->addTimer(10, function () use ($discord, &$e) {
             $e = new Exception('Timed out trying to connect to Discord.');
+            $discord->getLoop()->stop();
         });
 
         $discord->on('ready', function (Discord $discord) use ($timer) {
@@ -101,8 +104,11 @@ class DiscordSingleton
 
         $e = null;
 
-        $timer = $discord->getLoop()->addTimer(10, function () use (&$e) {
+        // Stop the loop too: run() only returns once it stops, and 'ready' never comes
+        // when the token, intents or network are wrong.
+        $timer = $discord->getLoop()->addTimer(10, function () use ($discord, &$e) {
             $e = new Exception('Timed out trying to connect to Discord.');
+            $discord->getLoop()->stop();
         });
 
         $discord->on('ready', function (Discord $discord) use ($timer) {
