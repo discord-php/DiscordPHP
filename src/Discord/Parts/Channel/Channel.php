@@ -88,6 +88,9 @@ use function React\Promise\resolve;
  * @property ThreadRepository        $threads         Threads that belong to the channel.
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
+ *
+ * @phpstan-property ExCollectionInterface<User> $recipients
+ * @phpstan-property ExCollectionInterface<Tag>  $available_tags
  */
 class Channel extends Part implements Stringable
 {

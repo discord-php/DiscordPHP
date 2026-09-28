@@ -42,6 +42,13 @@ use Discord\Parts\User\User;
  *
  * @property      string|null $guild_id ID of the guild internally passed from Interaction.
  * @property-read ?Guild|null $guild    The guild the interaction was sent in.
+ *
+ * @phpstan-property ExCollectionInterface<User>           $users
+ * @phpstan-property ExCollectionInterface<Member>         $members
+ * @phpstan-property ExCollectionInterface<Role>           $roles
+ * @phpstan-property ExCollectionInterface<Message>        $messages
+ * @phpstan-property ExCollectionInterface<Attachment>     $attachments
+ * @phpstan-property ExCollectionInterface<Channel|Thread> $channels
  */
 class Resolved extends Part
 {

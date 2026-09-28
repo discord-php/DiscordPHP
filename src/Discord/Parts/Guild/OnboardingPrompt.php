@@ -34,6 +34,8 @@ use Discord\Parts\Part;
  *
  * @property-read string|null $guild_id The ID of the guild.
  * @property-read Guild|null  $guild    The guild.
+ *
+ * @phpstan-property ExCollectionInterface<OnboardingPromptOption> $options
  */
 class OnboardingPrompt extends Part
 {

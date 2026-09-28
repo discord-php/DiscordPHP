@@ -43,6 +43,9 @@ use function React\Promise\reject;
  * @property      int                                      $presence_count Number of online members in this guild.
  *
  * @property-read string $image
+ *
+ * @phpstan-property ExCollectionInterface<Channel> $channels
+ * @phpstan-property ExCollectionInterface<Member>  $members
  */
 class Widget extends Part
 {

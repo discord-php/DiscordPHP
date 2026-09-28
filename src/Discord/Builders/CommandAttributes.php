@@ -44,6 +44,8 @@ use function Discord\poly_strlen;
  * @property ?bool                                   $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
  * @property ?int[]|null                             $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
  * @property ?int|null                               $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
+ *
+ * @phpstan-property ?ExCollectionInterface<Option> $options
  */
 trait CommandAttributes
 {

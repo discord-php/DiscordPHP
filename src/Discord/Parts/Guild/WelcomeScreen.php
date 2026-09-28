@@ -26,6 +26,8 @@ use Discord\Parts\Part;
  *
  * @property ?string                                                $description      The server description shown in the welcome screen.
  * @property ExCollectionInterface<WelcomeChannel>|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
+ *
+ * @phpstan-property ExCollectionInterface<WelcomeChannel> $welcome_channels
  */
 class WelcomeScreen extends Part
 {

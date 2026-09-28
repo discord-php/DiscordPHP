@@ -44,6 +44,8 @@ use Discord\Parts\Part;
  * @property string|null                                                $tag                        Tag of the guild.
  * @property ExCollectionInterface<GuildTraitObject>|GuildTraitObject[] $traits                     Traits of the guild.
  * @property int                                                        $visibility                 Visibility level of the guild.
+ *
+ * @phpstan-property ExCollectionInterface<GuildTraitObject> $traits
  */
 class Profile extends Part
 {

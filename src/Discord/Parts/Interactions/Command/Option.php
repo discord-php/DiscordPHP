@@ -42,6 +42,9 @@ use function Discord\poly_strlen;
  * @property int|null                               $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
  * @property bool|null                              $autocomplete              Enable autocomplete interactions for this option.
  * @property string[]|null                          $file_types                If the option is an ATTACHMENT type, the attachment types shown will be restricted to these types.
+ *
+ * @phpstan-property ExCollectionInterface<Choice> $choices
+ * @phpstan-property ExCollectionInterface<Option> $options
  */
 class Option extends Part
 {

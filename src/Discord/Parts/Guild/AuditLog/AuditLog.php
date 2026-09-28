@@ -44,6 +44,15 @@ use ReflectionClass;
  *
  * @property      string     $guild_id
  * @property-read Guild|null $guild
+ *
+ * @phpstan-property ExCollectionInterface<Command>        $application_commands
+ * @phpstan-property ExCollectionInterface<Entry>          $audit_log_entries
+ * @phpstan-property ExCollectionInterface<Rule>           $auto_moderation_rules
+ * @phpstan-property ExCollectionInterface<ScheduledEvent> $guild_scheduled_events
+ * @phpstan-property ExCollectionInterface<Integration>    $integrations
+ * @phpstan-property ExCollectionInterface<Thread>         $threads
+ * @phpstan-property ExCollectionInterface<User>           $users
+ * @phpstan-property ExCollectionInterface<Webhook>        $webhooks
  */
 class AuditLog extends Part
 {

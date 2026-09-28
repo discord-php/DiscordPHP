@@ -29,6 +29,8 @@ use Discord\Parts\Part;
  * @property string|int|float|bool|null             $value   Value of the option resulting from user input.
  * @property ExCollectionInterface<Option>|Option[] $options Present if this option is a group or subcommand.
  * @property bool|null                              $focused `true` if this option is the currently focused option for autocomplete.
+ *
+ * @phpstan-property ExCollectionInterface<Option> $options
  */
 class Option extends Part
 {

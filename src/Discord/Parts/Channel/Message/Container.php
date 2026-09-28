@@ -28,6 +28,8 @@ namespace Discord\Parts\Channel\Message;
  * @property ExCollectionInterface<Component>|Component[] $components   Components of the type action row, text display, section, media gallery, separator, or file.
  * @property int|null                                     $accent_color Color for the accent on the container as RGB from 0x000000 to 0xFFFFFF.
  * @property bool|null                                    $spoiler      Whether the container should be a spoiler (or blurred out). Defaults to false.
+ *
+ * @phpstan-property ExCollectionInterface<Component> $components
  */
 class Container extends Layout
 {

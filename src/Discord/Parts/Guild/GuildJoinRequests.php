@@ -24,6 +24,8 @@ use Discord\Parts\Part;
  *
  * @property int                                                        $total               Number of join requests with the given status (when returned).
  * @property ExCollectionInterface<GuildJoinRequest>|GuildJoinRequest[] $guild_join_requests Array of join request objects.
+ *
+ * @phpstan-property ExCollectionInterface<GuildJoinRequest> $guild_join_requests
  */
 class GuildJoinRequests extends Part
 {

@@ -52,6 +52,8 @@ use Stringable;
  * @property ?bool|null                                   $instance            Whether or not the activity is an instanced game session.
  * @property ?int|null                                    $flags               Activity flags `OR`d together, describes what the payload includes.
  * @property ?ExCollectionInterface<Button>|Button[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
+ *
+ * @phpstan-property ExCollectionInterface<Button>|null $buttons
  */
 class Activity extends Part implements Stringable
 {

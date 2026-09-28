@@ -61,6 +61,8 @@ use function React\Promise\resolve;
  * @property SoundRepository          $sounds
  * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
+ *
+ * @phpstan-property ExCollectionInterface<Connection>|null $connections
  */
 class Client extends Part
 {

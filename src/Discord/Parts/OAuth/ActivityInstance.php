@@ -32,6 +32,8 @@ use React\Promise\PromiseInterface;
  * @property string                             $launch_id      Unique identifier for the launch.
  * @property ActivityLocation                   $location       Location the instance is running in.
  * @property ExCollectionInterface<User>|User[] $users          IDs of the Users currently connected to the instance.
+ *
+ * @phpstan-property ExCollectionInterface<User> $users
  */
 class ActivityInstance extends Part
 {

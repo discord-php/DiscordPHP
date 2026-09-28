@@ -35,6 +35,8 @@ use React\Promise\PromiseInterface;
  * @property      array|null                             $metadata       Dictionary of string key/value pairs. The max total length is 1000.
  * @property      ExCollectionInterface<Member>|Member[] $members        Members of the lobby.
  * @property-read Channel|null                           $linked_channel The guild channel linked to the lobby.
+ *
+ * @phpstan-property ExCollectionInterface<Member> $members
  */
 class Lobby extends Part
 {
