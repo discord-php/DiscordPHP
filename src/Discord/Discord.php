@@ -47,6 +47,7 @@ use Discord\Parts\User\Client;
 use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceServerUpdate;
+use Discord\Parts\WebSockets\VoiceSession;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\AbstractRepository;
 use Discord\Repository\EmojiRepository;
@@ -56,6 +57,7 @@ use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\StickerPackRepository;
 use Discord\Repository\UserRepository;
+use Discord\Repository\VoiceSessionRepository;
 use Discord\Voice\Manager;
 use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
@@ -115,6 +117,7 @@ use function Zstd\uncompress_add;
  * @property SoundRepository          $sounds
  * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
+ * @property VoiceSessionRepository   $voice_sessions   The bot's voice session in each guild it is connected to voice in.
  *
  * @property-read SessionManager $sessions Users' OAuth2 sessions: acting as a player, and provisional accounts.
  */
@@ -261,13 +264,6 @@ class Discord
      * @var string Session ID.
      */
     protected $sessionId;
-
-    /**
-     * An array of guild IDs paired to their voice session IDs.
-     *
-     * @var string[] Voice Sessions.
-     */
-    public array $voice_sessions = [];
 
     /**
      * An array of large guilds that need to be requested for members.
@@ -1874,7 +1870,10 @@ class Discord
         if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice state update isn't for our guild.
         }
-        $this->voice_sessions[$channel->guild_id] = $vs->session_id;
+        $session = $this->voice_sessions->get('guild_id', $channel->guild_id)
+            ?? $this->factory->part(VoiceSession::class, ['guild_id' => $channel->guild_id], true);
+        $session->session_id = $vs->session_id;
+        $this->voice_sessions->cache->set($channel->guild_id, $session);
         $this->removeListener(Event::VOICE_STATE_UPDATE, fn () => $this->voiceStateUpdate($vs, $channel, $data));
     }
 
