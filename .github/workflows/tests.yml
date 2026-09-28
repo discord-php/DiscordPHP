@@ -64,9 +64,11 @@ jobs:
           coverage: none
 
       - name: Check that every source file parses
-        # Prints only the files that fail; pipefail (from `shell: bash`) keeps the failure.
+        # Prints only the files that fail, all of them: php -l exits 255 on a parse error, which would
+        # make xargs stop at the first, so each failure exits 1 instead. pipefail (from `shell: bash`)
+        # keeps the failure.
         shell: bash
-        run: find src -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l -d display_errors=1 | { grep -v '^No syntax errors detected' || true; }
+        run: find src -name '*.php' -print0 | xargs -0 -n 1 -P 4 sh -c 'php -l -d display_errors=1 "$0" || exit 1' | { grep -v '^No syntax errors detected' || true; }
 
   style:
     name: Code style
