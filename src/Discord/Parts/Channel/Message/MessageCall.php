@@ -30,6 +30,8 @@ use Discord\Parts\User\User;
  * @property ?Carbon|null $ended_timestamp Time when the call ended (ISO8601 timestamp), or null if ongoing.
  *
  * @property-read ExCollectionInterface<User>|User[] $users Array of user objects that participated in the call.
+ *
+ * @phpstan-property-read ExCollectionInterface<User> $users
  */
 class MessageCall extends Part
 {

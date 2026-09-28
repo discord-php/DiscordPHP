@@ -44,6 +44,8 @@ use function Discord\poly_strlen;
  * @property      ?Author|null                          $author      The author of the embed.
  * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
  * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
+ *
+ * @phpstan-property ?ExCollectionInterface<Field> $fields
  */
 class Embed extends Part
 {

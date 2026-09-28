@@ -31,6 +31,8 @@ use Discord\Parts\Part;
  * @property int                                                        $mode                Current mode of onboarding
  *
  * @property-read Guild|null $guild The guild.
+ *
+ * @phpstan-property ExCollectionInterface<OnboardingPrompt> $prompts
  */
 class Onboarding extends Part
 {

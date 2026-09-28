@@ -44,6 +44,8 @@ use Discord\Parts\Part;
  * @property int|null                                                   $max_length  Maximum input length for a text input. (Text Inputs)
  * @property bool|null                                                  $required    Whether this component is required to be filled; defaults to `true` (Text Inputs)
  * @property string|null                                                $value       Value for this component. (Text Inputs)
+ *
+ * @phpstan-property ExCollectionInterface<MessageComponent> $components
  */
 class Component extends Part
 {

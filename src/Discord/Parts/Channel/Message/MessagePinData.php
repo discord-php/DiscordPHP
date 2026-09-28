@@ -26,6 +26,8 @@ use Discord\Parts\Part;
  *
  * @property ExCollectionInterface<MessagePin>|MessagePin[] $items
  * @property bool                                           $has_more
+ *
+ * @phpstan-property ExCollectionInterface<MessagePin> $items
  */
 class MessagePinData extends Part
 {

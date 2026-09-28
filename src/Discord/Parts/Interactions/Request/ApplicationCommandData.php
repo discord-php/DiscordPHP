@@ -30,6 +30,8 @@ use Discord\Helpers\ExCollectionInterface;
  * @property ?ExCollectionInterface<Option>|Option[] $options   Params and values from the user.
  * @property ?string|null                            $guild_id  ID of the guild the command is registered to.
  * @property ?string|null                            $target_id ID of the user or message targeted by a user or message command.
+ *
+ * @phpstan-property ?ExCollectionInterface<Option> $options
  */
 class ApplicationCommandData extends InteractionData
 {

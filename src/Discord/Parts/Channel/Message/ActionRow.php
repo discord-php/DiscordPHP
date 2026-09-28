@@ -32,6 +32,8 @@ namespace Discord\Parts\Channel\Message;
  * @property int                                          $type       1 for action row component
  * @property string|null                                  $id         Optional identifier for component
  * @property ExCollectionInterface<Component>|Component[] $components Up to 5 interactive button components or a single select component
+ *
+ * @phpstan-property ExCollectionInterface<Component> $components
  */
 class ActionRow extends Layout
 {

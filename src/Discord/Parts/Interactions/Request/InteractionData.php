@@ -38,6 +38,9 @@ use Discord\Parts\Part;
  * @property ExCollectionInterface<Component>|Component[] $components     The values submitted by the user. (Only for Modal)
  *
  * @since 10.19.0 Use either `ApplicationCommandData`,`MessageComponentData`, or `ModalSubmitData`
+ *
+ * @phpstan-property ExCollectionInterface<Option>    $options
+ * @phpstan-property ExCollectionInterface<Component> $components
  */
 class InteractionData extends Part
 {

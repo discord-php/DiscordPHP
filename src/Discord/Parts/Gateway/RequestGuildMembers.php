@@ -35,6 +35,8 @@ use Discord\Parts\User\User;
  *
  * @property-read ?Guild                             $guild The guild to get members for.
  * @property-read ExCollectionInterface<User>|User[] $users The users of the `user_ids`.
+ *
+ * @phpstan-property-read ExCollectionInterface<User> $users
  */
 class RequestGuildMembers extends Part
 {

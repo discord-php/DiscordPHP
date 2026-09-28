@@ -28,6 +28,8 @@ use Discord\Helpers\ExCollectionInterface;
  * @property int                                                        $type  12 for media gallery component.
  * @property string|null                                                $id    Optional identifier for component.
  * @property ExCollectionInterface<MediaGalleryItem>|MediaGalleryItem[] $items 1 to 10 media gallery items.
+ *
+ * @phpstan-property ExCollectionInterface<MediaGalleryItem> $items
  */
 class MediaGallery extends Content
 {

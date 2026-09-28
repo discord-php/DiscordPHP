@@ -35,6 +35,9 @@ use Discord\Parts\Websockets\PresenceUpdate;
  * @property array|null                                             $not_found   When passing an invalid ID to `REQUEST_GUILD_MEMBERS`, it will be returned here.
  * @property ExCollectionInterface<PresenceUpdate>|PresenceUpdate[] $presences   When passing `true` to `REQUEST_GUILD_MEMBERS`, presences of the returned members will be here.
  * @property string|null                                            $nonce       Nonce used in the Guild Members Request.
+ *
+ * @phpstan-property ExCollectionInterface<Member>         $members
+ * @phpstan-property ExCollectionInterface<PresenceUpdate> $presences
  */
 class GuildMembersChunkData extends Part
 {

@@ -63,6 +63,8 @@ use function React\Promise\resolve;
  * @property MessageRepository                      $messages   Text channel only - messages sent in the channel or thread.
  *
  * @property Discord $discord The Discord client instance.
+ *
+ * @phpstan-property ExCollectionInterface<Member> $members
  */
 trait ChannelTrait
 {

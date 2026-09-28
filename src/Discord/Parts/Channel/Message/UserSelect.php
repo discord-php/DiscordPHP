@@ -37,6 +37,8 @@ use Discord\Helpers\ExCollectionInterface;
  * @property bool|null                                          $disabled       Whether select menu is disabled (defaults to false).
  *
  * @property-read string[]|null $values IDs of the selected users. (Only included in the response).
+ *
+ * @phpstan-property ExCollectionInterface<DefaultValue> $default_values
  */
 class UserSelect extends SelectMenu
 {

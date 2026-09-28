@@ -27,6 +27,8 @@ use Discord\Parts\Channel\Message\Component;
  * @property string                                       $custom_id  Custom ID the component was created for.
  * @property ExCollectionInterface<Component>|Component[] $components Values submitted by the user.
  * @property Resolved|null                                $resolved   Resolved entities from selected options.
+ *
+ * @phpstan-property ExCollectionInterface<Component> $components
  */
 class ModalSubmitData extends InteractionData
 {
