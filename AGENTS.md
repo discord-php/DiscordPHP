@@ -111,6 +111,7 @@ Semantic rules:
 - a payload that is an existing part's object plus a few fields gets a subclass of that part, which merges only its extra keys into the inherited `$fillable`
 - a subclass's override declares the narrowest return type it can truly return (PHP return types are covariant), and every path must honour it. For example, `GameDirectMessage::getChannelAttribute()` returns `Channel` where `Message`'s returns `Part`, because a game DM's channel can never be a `Thread`
 - inherited methods that can never work in a subclass's context return a rejected promise (`\BadMethodCallException`) instead of sending a request Discord will refuse. See `part-model-maintainer` for all three
+- parts live under the namespace of the API route they come from: a message, its attachments, reactions and embeds are under `Parts\Channel\Message` because they come from `/channels/{channel.id}/messages`. A part that moves keeps its old name working through a `class_alias()` at the end of `src/Discord/functions.php`, which Composer loads eagerly, so `instanceof`, type hints and cached (serialised) data with the old name still work
 
 ### Repositories
 
@@ -311,7 +312,7 @@ When you need an example worth imitating, start here:
 - Base part mechanics: `src/Discord/Parts/Part.php`, `src/Discord/Parts/PartTrait.php`
 - Rich part model: `src/Discord/Parts/Guild/Guild.php`
 - Channel/resource semantics: `src/Discord/Parts/Channel/Channel.php`
-- Message semantics and repository binding: `src/Discord/Parts/Channel/Message.php`
+- Message semantics and repository binding: `src/Discord/Parts/Channel/Message/Message.php`
 - Repository baseline: `src/Discord/Repository/AbstractRepository.php`, `src/Discord/Repository/AbstractRepositoryTrait.php`
 - Simple repo specialization: `src/Discord/Repository/Channel/MessageRepository.php`
 - Rich repo specialization: `src/Discord/Repository/GuildRepository.php`

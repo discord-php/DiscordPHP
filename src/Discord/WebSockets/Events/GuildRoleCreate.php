@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Guild\Role;
+use Discord\Parts\Guild\Role\Role;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 

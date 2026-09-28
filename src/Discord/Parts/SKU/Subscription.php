@@ -1,0 +1,102 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is a part of the DiscordPHP project.
+ *
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
+namespace Discord\Parts\SKU;
+
+use Carbon\Carbon;
+use Discord\Parts\Part;
+use Discord\Parts\Application\SKU;
+
+/**
+ * Subscriptions in Discord represent a user making recurring payments for at least one SKU over an ongoing period.
+ *
+ * Subscription status should not be used to grant perks.
+ * Use entitlements as an indication of whether a user should have access to a specific SKU.
+ * See the guide on Implementing App Subscriptions for more information.
+ *
+ * The start of a subscription is determined by its ID. When the subscription renews, its current period is updated.
+ * If the user cancels the subscription, the subscription will enter the ENDING status and the canceled_at timestamp will reflect the time of the cancellation.
+ *
+ * @link https://docs.discord.com/developers/monetization/implementing-app-subscriptions
+ *
+ * @link https://docs.discord.com/developers/resources/subscription
+ *
+ * @since 10.15.0
+ *
+ * @property string       $id                   ID of the subscription.
+ * @property string       $user_id              ID of the user who is subscribed.
+ * @property array        $sku_ids              List of SKUs subscribed to.
+ * @property array        $entitlement_ids      List of entitlements granted for this subscription.
+ * @property ?array|null  $renewal_sku_ids      List of SKUs that this user will be subscribed to at renewal.
+ * @property Carbon       $current_period_start Start of the current subscription period.
+ * @property Carbon       $current_period_end   End of the current subscription period.
+ * @property int          $status               Current status of the subscription.
+ * @property ?Carbon|null $canceled_at          When the subscription was canceled.
+ * @property string|null  $country              ISO3166-1 alpha-2 country code of the payment source used to purchase the subscription. Missing unless queried with a private OAuth scope.
+ */
+class Subscription extends Part
+{
+    /** Subscription is active and scheduled to renew. */
+    public const STATUS_ACTIVE = 0;
+    /** Subscription is active but will not renew. */
+    public const STATUS_INACTIVE = 1;
+    /** Subscription is inactive and not being charged. */
+    public const STATUS_ENDING = 2;
+
+    /**
+     * @inheritdoc
+     */
+    protected $fillable = [
+        'id',
+        'user_id',
+        'sku_ids',
+        'entitlement_ids',
+        'renewal_sku_ids',
+        'current_period_start',
+        'current_period_end',
+        'status',
+        'canceled_at',
+        'country',
+    ];
+
+    /**
+     * Get the start of the current subscription period as a Carbon instance.
+     *
+     * @return Carbon|null
+     */
+    protected function getCurrentPeriodStartAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('current_period_start');
+    }
+
+    /**
+     * Get the end of the current subscription period as a Carbon instance.
+     *
+     * @return Carbon|null
+     */
+    protected function getCurrentPeriodEndAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('current_period_end');
+    }
+
+    /**
+     * Get the canceled_at timestamp as a Carbon instance.
+     *
+     * @return Carbon|null
+     */
+    protected function getCanceledAtAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('canceled_at');
+    }
+}

@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\User;
 
 use Discord\Parts\Part;
-use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
+use Discord\Parts\Application\ApplicationRoleConnectionMetadata;
 
 /**
  * The role connection object that an application has attached to a user.

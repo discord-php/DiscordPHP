@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\ScheduledEvent;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEvent;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;

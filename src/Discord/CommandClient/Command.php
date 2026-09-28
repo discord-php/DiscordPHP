@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\CommandClient;
 
 use Discord\DiscordCommandClient;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 
 /**
  * A message based command that the Command Client will listen for.

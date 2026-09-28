@@ -18,10 +18,10 @@ use Discord\OAuth2\AccessToken;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\IncidentsData;
-use Discord\Parts\Guild\Role;
-use Discord\Parts\Guild\ScheduledEvent;
-use Discord\Parts\Guild\ScheduledEventException;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Role\Role;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEvent;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEventException;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Repository\Guild\MemberRepository;
 
 /**

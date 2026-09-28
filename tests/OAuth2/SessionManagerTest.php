@@ -17,7 +17,7 @@ use Discord\OAuth2\AccessToken;
 use Discord\OAuth2\Session;
 use Discord\OAuth2\SessionManager;
 use Discord\OAuth2\TokenStore\ArrayTokenStore;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Application;
 
 final class SessionManagerTest extends DiscordTestCase
 {

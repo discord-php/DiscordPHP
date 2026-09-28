@@ -1,0 +1,629 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is a part of the DiscordPHP project.
+ *
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
+namespace Discord\Parts\Channel\Message\Embed;
+
+use Carbon\Carbon;
+use Discord\Builders\AttachmentRequestBuilder;
+use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Channel\Message\Attachment;
+use Discord\Parts\Part;
+
+use function Discord\poly_strlen;
+
+/**
+ * An embed object to be sent with a message.
+ *
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
+ *
+ * @since 4.0.3
+ * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
+ *
+ * @property      ?string|null                          $title       The title of the embed.
+ * @property-read ?string|null                          $type        The type of the embed (always "rich" for webhook embeds).
+ * @property      ?string|null                          $description A description of the embed.
+ * @property      ?string|null                          $url         The URL of the embed.
+ * @property      ?Carbon|null                          $timestamp   A timestamp of the embed.
+ * @property      ?int|null                             $color       The color of the embed.
+ * @property      ?Footer|null                          $footer      The footer of the embed.
+ * @property      ?Image|null                           $image       The image of the embed.
+ * @property      ?Thumbnail|null                       $thumbnail   The thumbnail of the embed.
+ * @property-read ?Video|null                           $video       The video of the embed.
+ * @property-read ?Provider|null                        $provider    The provider of the embed.
+ * @property      ?Author|null                          $author      The author of the embed.
+ * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
+ * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
+ *
+ * @phpstan-property ?ExCollectionInterface<Field> $fields
+ */
+class Embed extends Part
+{
+    public const TYPES = [
+        0 => Embed::class, // Fallback for unknown types
+        self::TYPE_RICH => EmbedRich::class,
+        self::TYPE_IMAGE => EmbedImage::class,
+        self::TYPE_VIDEO => EmbedVideo::class,
+        self::TYPE_GIFV => EmbedGifv::class,
+        self::TYPE_ARTICLE => EmbedArticle::class,
+        self::TYPE_LINK => EmbedLink::class,
+        self::TYPE_POLL_RESULT => EmbedPollResult::class,
+    ];
+
+    /** Generic embed rendered from embed attributes. */
+    public const TYPE_RICH = 'rich';
+    /** Image embed. */
+    public const TYPE_IMAGE = 'image';
+    /** Video embed. */
+    public const TYPE_VIDEO = 'video';
+    /** Animated gif image embed rendered as a video embed. */
+    public const TYPE_GIFV = 'gifv';
+    /** Article embed. */
+    public const TYPE_ARTICLE = 'article';
+    /** Link embed. */
+    public const TYPE_LINK = 'link';
+    /** Poll result embed. */
+    public const TYPE_POLL_RESULT = 'poll_result';
+
+    /** This embed is a reply to an activity card and is no longer displayed. */
+    public const FLAG_IS_CONTENT_INVENTORY_ENTRY = 1 << 5;
+
+    /**
+     * @inheritDoc
+     */
+    protected $fillable = [
+        'title',
+        'type',
+        'description',
+        'url',
+        'timestamp',
+        'color',
+        'footer',
+        'image',
+        'thumbnail',
+        'video',
+        'provider',
+        'author',
+        'fields',
+        'flags',
+    ];
+
+    /**
+     * Gets the timestamp attribute.
+     *
+     * @return Carbon|null The timestamp attribute.
+     *
+     * @throws \Exception
+     */
+    protected function getTimestampAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('timestamp');
+    }
+
+    /**
+     * Gets the footer attribute.
+     *
+     * @return Footer|null The footer attribute.
+     */
+    protected function getFooterAttribute(): ?Footer
+    {
+        return $this->attributePartHelper('footer', Footer::class);
+    }
+
+    /**
+     * Gets the image attribute.
+     *
+     * @return Image|null The image attribute.
+     */
+    protected function getImageAttribute(): ?Image
+    {
+        return $this->attributePartHelper('image', Image::class);
+    }
+
+    /**
+     * Gets the thumbnail attribute.
+     *
+     * @return Thumbnail|null The thumbnail attribute.
+     */
+    protected function getThumbnailAttribute(): ?Thumbnail
+    {
+        return $this->attributePartHelper('thumbnail', Thumbnail::class);
+    }
+
+    /**
+     * Gets the video attribute.
+     *
+     * @return Video|null The video attribute.
+     */
+    protected function getVideoAttribute(): ?Video
+    {
+        return $this->attributePartHelper('video', Video::class);
+    }
+
+    /**
+     * Gets the provider attribute.
+     *
+     * @return Provider|null The provider attribute.
+     */
+    protected function getProviderAttribute(): ?Provider
+    {
+        return $this->attributePartHelper('provider', Provider::class);
+    }
+
+    /**
+     * Gets the author attribute.
+     *
+     * @return Author|null The author attribute.
+     */
+    protected function getAuthorAttribute(): ?Author
+    {
+        return $this->attributePartHelper('author', Author::class);
+    }
+
+    /**
+     * Gets the fields attribute.
+     *
+     * @return ExCollectionInterface<Field>|Field[]
+     */
+    protected function getFieldsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('fields', Field::class, 'name');
+    }
+
+    /**
+     * Sets the fields attribute.
+     *
+     * @param Field[] ...$fields
+     */
+    protected function setFieldsAttribute($fields): void
+    {
+        $this->attributes['fields'] = [];
+        $this->addField(...$fields);
+    }
+
+    /**
+     * Sets the color of this embed.
+     *
+     * @param mixed $color
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function setColorAttribute($color): void
+    {
+        $this->attributes['color'] = $this->resolveColor($color);
+    }
+
+    /**
+     * Sets the description of this embed.
+     *
+     * @param string $description Maximum length is 4096 characters.
+     *
+     * @throws \LengthException Embed text too long.
+     */
+    protected function setDescriptionAttribute($description): void
+    {
+        if (poly_strlen($description) === 0) {
+            $this->attributes['description'] = null;
+        } elseif (poly_strlen($description) > 4096) {
+            throw new \LengthException('Embed description can not be longer than 4096 characters');
+        } else {
+            if ($this->exceedsOverallLimit(poly_strlen($description))) {
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
+            }
+
+            $this->attributes['description'] = $description;
+        }
+    }
+
+    /**
+     * Sets the type of the embed.
+     *
+     * @deprecated 10.0.0 Type `rich` will always be used in API.
+     *
+     * @param string $type
+     *
+     * @throws \InvalidArgumentException Invalid embed type.
+     */
+    protected function setTypeAttribute($type): void
+    {
+        if (! in_array($type, $this->getEmbedTypes())) {
+            throw new \InvalidArgumentException('Given type "'.$type.'" is not a valid embed type.');
+        }
+
+        $this->attributes['type'] = $type;
+    }
+
+    /**
+     * Set the title of this embed.
+     *
+     * @param string $title Maximum length is 256 characters.
+     *
+     * @throws \LengthException Embed text too long.
+     *
+     * @return self
+     */
+    protected function setTitleAttribute(string $title): self
+    {
+        if (poly_strlen($title) === 0) {
+            $this->attributes['title'] = null;
+        } elseif (poly_strlen($title) > 256) {
+            throw new \LengthException('Embed title can not be longer than 256 characters');
+        } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
+        } else {
+            $this->attributes['title'] = $title;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets the title of the embed.
+     *
+     * @param string $title
+     *
+     * @return self
+     */
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Sets the type of the embed.
+     *
+     * @deprecated 10.0.0 Type `rich` will always be used in API.
+     *
+     * @param string $type
+     *
+     * @return self
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Sets the description of the embed.
+     *
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Sets the color of the embed.
+     *
+     * @param mixed $color
+     *
+     * @return self
+     */
+    public function setColor($color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Adds a field to the embed.
+     *
+     * @param Field|array $fields
+     *
+     * @throws \OverflowException Embed exceeds 25 fields.
+     * @throws \LengthException   A field name is over 256 characters, a value over 1024, or the embed's text over 6000.
+     *
+     * @return self
+     */
+    public function addField(...$fields): self
+    {
+        foreach ($fields as $field) {
+            if (count($this->fields) >= 25) {
+                throw new \OverflowException('Embeds can not have more than 25 fields.');
+            }
+
+            if ($field instanceof Field) {
+                $field = $field->getRawAttributes();
+            }
+
+            $nameLength = poly_strlen((string) ($field['name'] ?? ''));
+            $valueLength = poly_strlen((string) ($field['value'] ?? ''));
+
+            if ($nameLength > 256) {
+                throw new \LengthException('Embed field name can not be longer than 256 characters.');
+            }
+
+            if ($valueLength > 1024) {
+                throw new \LengthException('Embed field value can not be longer than 1024 characters.');
+            }
+
+            if ($this->exceedsOverallLimit($nameLength + $valueLength)) {
+                throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
+            }
+
+            $this->attributes['fields'][] = $field;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds a field to the embed with values.
+     *
+     * @param string $name   Maximum length is 256 characters.
+     * @param string $value  Maximum length is 1024 characters.
+     * @param bool   $inline Whether this field gets shown with other inline fields on one line.
+     *
+     * @throws \OverflowException
+     * @throws \LengthException
+     *
+     * @return self
+     */
+    public function addFieldValues(string $name, string $value, bool $inline = false): self
+    {
+        return $this->addField([
+            'name' => $name,
+            'value' => $value,
+            'inline' => $inline,
+        ]);
+    }
+
+    /**
+     * Set the author of this embed.
+     *
+     * @param string                                          $name    Maximum length is 256 characters.
+     * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string|null                                     $url     The URL to the author, only http(s) URLs are allowed.
+     *
+     * @throws \LengthException          Embed text too long.
+     * @throws \InvalidArgumentException Invalid scheme provided.
+     *
+     * @return self
+     */
+    public function setAuthor(string $name, $iconurl = null, ?string $url = null): self
+    {
+        $length = poly_strlen($name);
+        if ($length === 0) {
+            $this->author = null;
+        } elseif ($length > 256) {
+            throw new \LengthException('Author name can not be longer than 256 characters.');
+        } elseif ($this->exceedsOverallLimit($length)) {
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
+        }
+
+        if ($iconurl instanceof Attachment || $iconurl instanceof AttachmentRequestBuilder) {
+            $iconurl = 'attachment://'.$iconurl->filename;
+        }
+
+        $this->ensureValidUrl($iconurl);
+
+        $this->ensureValidUrl($url, ['http', 'https']);
+
+        $this->author = [
+            'name' => $name,
+            'icon_url' => $iconurl,
+            'url' => $url,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Set the footer of this embed.
+     *
+     * @param string                                          $text    Maximum length is 2048 characters.
+     * @param string|AttachmentRequestBuilder|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     *
+     * @throws \LengthException          Embed text too long.
+     * @throws \InvalidArgumentException Invalid scheme provided.
+     *
+     * @return self
+     */
+    public function setFooter(string $text, $iconurl = null): self
+    {
+        $length = poly_strlen($text);
+        if ($length === 0) {
+            $this->footer = null;
+        } elseif ($length > 2048) {
+            throw new \LengthException('Footer text can not be longer than 2048 characters.');
+        } elseif ($this->exceedsOverallLimit($length)) {
+            throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
+        }
+
+        if ($iconurl instanceof Attachment || $iconurl instanceof AttachmentRequestBuilder) {
+            $iconurl = 'attachment://'.$iconurl->filename;
+        }
+
+        $this->ensureValidUrl($iconurl);
+
+        $this->footer = [
+            'text' => $text,
+            'icon_url' => $iconurl,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Set the image of this embed.
+     *
+     * @param string|AttachmentRequestBuilder|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
+     *
+     * @throws \InvalidArgumentException Invalid scheme provided.
+     *
+     * @return self
+     */
+    public function setImage($url): self
+    {
+        if ($url instanceof Attachment || $url instanceof AttachmentRequestBuilder) {
+            $url = 'attachment://'.$url->filename;
+        }
+
+        $this->ensureValidUrl($url);
+
+        $this->image = ['url' => $url];
+
+        return $this;
+    }
+
+    /**
+     * Set the thumbnail of this embed.
+     *
+     * @param string|AttachmentRequestBuilder|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
+     *
+     * @throws \InvalidArgumentException Invalid scheme provided.
+     *
+     * @return self
+     */
+    public function setThumbnail($url): self
+    {
+        if ($url instanceof Attachment || $url instanceof AttachmentRequestBuilder) {
+            $url = 'attachment://'.$url->filename;
+        }
+
+        $this->ensureValidUrl($url);
+
+        $this->thumbnail = ['url' => $url];
+
+        return $this;
+    }
+
+    /**
+     * Set the timestamp of this embed.
+     *
+     * @param int|null $timestamp
+     *
+     * @throws \Exception
+     *
+     * @return self
+     */
+    public function setTimestamp(?int $timestamp = null): self
+    {
+        $this->timestamp = Carbon::parse($timestamp)->format('c');
+
+        return $this;
+    }
+
+    /**
+     * Set the URL of this embed.
+     *
+     * @param string $url
+     *
+     * @return self
+     */
+    public function setURL(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Ensures a URL is valid for use in embeds.
+     *
+     * @param ?string $url
+     * @param array   $allowed Allowed URL scheme
+     *
+     * @throws \DomainException
+     */
+    protected function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment']): void
+    {
+        if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
+            throw new \DomainException('URL scheme only supports '.implode(', ', $allowed));
+        }
+    }
+
+    /**
+     * Checks to see if adding a property has put us over Discord's 6000
+     * characters overall limit.
+     *
+     * @param int $addition
+     *
+     * @return bool
+     */
+    protected function exceedsOverallLimit(int $addition): bool
+    {
+        $total = (
+            poly_strlen(($this->title ?? '')) +
+            poly_strlen(($this->description ?? '')) +
+            poly_strlen(($this->footer['text'] ?? '')) +
+            poly_strlen(($this->author['name'] ?? '')) +
+            $addition
+        );
+
+        foreach ($this->fields as $field) {
+            $total += poly_strlen($field['name']);
+            $total += poly_strlen($field['value']);
+        }
+
+        return ($total > 6000);
+    }
+
+    /**
+     * Resolves a color to an integer.
+     *
+     * @param array|int|string $color
+     *
+     * @throws \InvalidArgumentException `$color` cannot be resolved
+     *
+     * @return int
+     */
+    protected static function resolveColor($color): int
+    {
+        if (is_numeric($color)) {
+            $color = (int) $color;
+        }
+
+        if (is_int($color)) {
+            return $color;
+        }
+
+        if (! is_array($color)) {
+            return hexdec((str_replace('#', '', (string) $color)));
+        }
+
+        if (count($color) < 1) {
+            throw new \InvalidArgumentException('Color "'.var_export($color, true).'" is not resolvable');
+        }
+
+        return (($color[0] << 16) + (($color[1] ?? 0) << 8) + ($color[2] ?? 0));
+    }
+
+    /**
+     * Returns all possible embed types.
+     *
+     * @return array
+     */
+    private static function getEmbedTypes(): array
+    {
+        return [
+            self::TYPE_RICH,
+            self::TYPE_IMAGE,
+            self::TYPE_VIDEO,
+            self::TYPE_GIFV,
+            self::TYPE_ARTICLE,
+            self::TYPE_LINK,
+            self::TYPE_POLL_RESULT,
+        ];
+    }
+}

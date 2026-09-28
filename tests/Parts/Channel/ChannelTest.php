@@ -16,8 +16,8 @@ use Discord\Builders\MessageBuilder;
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\Invite\Invite;
 
 /**
  * @covers \Discord\Parts\Channel\Channel

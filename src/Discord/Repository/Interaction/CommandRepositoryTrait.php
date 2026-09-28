@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Interaction;
 
 use Discord\Builders\CommandBuilder;
-use Discord\Parts\Interactions\Command\Command;
+use Discord\Parts\Application\Command\Command;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;

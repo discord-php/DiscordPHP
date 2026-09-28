@@ -16,8 +16,8 @@ namespace Discord\Repository\Channel;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
-use Discord\Parts\Thread\Thread;
-use Discord\Parts\User\Member;
+use Discord\Parts\Channel\Thread\Thread;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 

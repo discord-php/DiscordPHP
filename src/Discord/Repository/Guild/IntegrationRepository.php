@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\Integration;
+use Discord\Parts\Guild\Integration\Integration;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 

@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\GuildJoinRequest;
+use Discord\Parts\Guild\JoinRequest\GuildJoinRequest;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\GuildJoinRequestDeleteData;
 

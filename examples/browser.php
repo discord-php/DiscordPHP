@@ -16,7 +16,7 @@ include __DIR__.'/../vendor/autoload.php';
 // Import classes, install a LSP such as Intelephense to auto complete imports
 
 use Discord\DiscordCommandClient;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Psr\Http\Message\ResponseInterface;
 use React\Http\Browser;
 

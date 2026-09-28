@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Monetization\Entitlement;
+use Discord\Parts\Application\Entitlement;
 use Discord\WebSockets\Event;
 
 /**

@@ -15,12 +15,12 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events\Data;
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\StageInstance;
+use Discord\Parts\StageInstance\StageInstance;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\ScheduledEvent;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEvent;
 use Discord\Parts\Guild\Sound;
-use Discord\Parts\Thread\Thread;
-use Discord\Parts\User\Member;
+use Discord\Parts\Channel\Thread\Thread;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 

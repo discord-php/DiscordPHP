@@ -15,15 +15,15 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\CommandPermissions;
+use Discord\Parts\Application\Command\CommandPermissions;
 use Discord\Repository\AbstractRepository;
 
 /**
  * Contains permission overwrites for application guild commands.
  *
  * @see CommandPermissions
- * @see \Discord\Parts\Interactions\Command\Command
- * @see \Discord\Parts\Interactions\Command\Permission
+ * @see \Discord\Parts\Application\Command\Command
+ * @see \Discord\Parts\Application\Command\Permission
  *
  * @since 10.0.0 Refactored from OverwriteRepository to CommandPermissionsRepository
  * @since 7.0.0

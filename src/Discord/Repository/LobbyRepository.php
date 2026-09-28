@@ -16,11 +16,11 @@ namespace Discord\Repository;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Invite\Invite;
 use Discord\Parts\Lobby\Lobby;
 use Discord\Parts\Lobby\Member;
 use Discord\Parts\Lobby\Message;
-use Discord\Parts\User\Member as UserMember;
+use Discord\Parts\Guild\Member\Member as UserMember;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 

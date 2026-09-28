@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Channel;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Reaction;
+use Discord\Parts\Channel\Message\Reaction;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
@@ -23,7 +23,7 @@ use React\Promise\PromiseInterface;
  * Contains reactions on a message.
  *
  * @see Reaction
- * @see \Discord\Parts\Channel\Message
+ * @see \Discord\Parts\Channel\Message\Message
  *
  * @since 5.1.0
  *

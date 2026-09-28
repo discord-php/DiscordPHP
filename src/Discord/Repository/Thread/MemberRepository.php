@@ -15,14 +15,14 @@ declare(strict_types=1);
 namespace Discord\Repository\Thread;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Thread\Member;
+use Discord\Parts\Channel\Thread\Member;
 use Discord\Repository\AbstractRepository;
 
 /**
  * Contains members of a thread.
  *
  * @see Member
- * @see \Discord\Parts\Thread\Thread
+ * @see \Discord\Parts\Channel\Thread\Thread
  *
  * @since 7.0.0
  *

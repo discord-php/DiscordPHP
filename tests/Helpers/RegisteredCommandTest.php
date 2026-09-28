@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Discord\Helpers\RegisteredCommand;
 use Discord\Parts\Interactions\Interaction;
-use Discord\Parts\Interactions\Command\Option as CommandOption;
+use Discord\Parts\Application\Command\Option as CommandOption;
 use Discord\Parts\Interactions\Request\Option;
 use Discord\WebSockets\Events\InteractionCreate;
 

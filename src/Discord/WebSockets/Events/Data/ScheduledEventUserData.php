@@ -16,13 +16,13 @@ namespace Discord\WebSockets\Events\Data;
 
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 
 /**
  * Sent when a user has subscribed or unsubscribed to a guild scheduled event.
  *
- * @see Discord\Parts\Guild\ScheduledEventUser
+ * @see Discord\Parts\Guild\ScheduledEvent\ScheduledEventUser
  *
  * @link https://docs.discord.com/developers/events/gateway-events.mdx#guild-scheduled-event-user-add-event-fields
  *

@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
-use Discord\Parts\Interactions\Command\Command;
-use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\Application\Command\Command;
+use Discord\Parts\Application\Command\Option;
 use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 use JsonSerializable;

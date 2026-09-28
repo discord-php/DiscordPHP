@@ -16,9 +16,9 @@ namespace Discord\Parts\Lobby;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Invite\Invite;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member as UserMember;
+use Discord\Parts\Guild\Member\Member as UserMember;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 

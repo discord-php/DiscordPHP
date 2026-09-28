@@ -16,12 +16,12 @@ namespace Discord\Parts\WebSockets;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Parts\Thread\Thread;
-use Discord\Parts\User\Member;
+use Discord\Parts\Channel\Thread\Thread;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 

@@ -16,14 +16,14 @@ namespace Discord\Parts\Interactions\Request;
 
 use Discord\Builders\ChannelBuilder;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Channel\Attachment;
+use Discord\Parts\Channel\Message\Attachment;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
+use Discord\Parts\Guild\Role\Role;
 use Discord\Parts\Part;
-use Discord\Parts\Thread\Thread;
-use Discord\Parts\User\Member;
+use Discord\Parts\Channel\Thread\Thread;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 
 /**

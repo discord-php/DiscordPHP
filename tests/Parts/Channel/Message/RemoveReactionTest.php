@@ -13,13 +13,13 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 
 final class RemoveReactionTest extends DiscordTestCase
 {
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteAllReactions
+     * @covers \Discord\Parts\Channel\Message\Message::deleteAllReactions
      */
     public function testDeleteAllReactions()
     {
@@ -38,7 +38,7 @@ final class RemoveReactionTest extends DiscordTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteOwnReaction
+     * @covers \Discord\Parts\Channel\Message\Message::deleteOwnReaction
      */
     public function testDeleteSelfReaction()
     {
@@ -54,7 +54,7 @@ final class RemoveReactionTest extends DiscordTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteUserReaction
+     * @covers \Discord\Parts\Channel\Message\Message::deleteUserReaction
      */
     public function testDeleteReactionOfUser()
     {
@@ -70,7 +70,7 @@ final class RemoveReactionTest extends DiscordTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteEmojiReactions
+     * @covers \Discord\Parts\Channel\Message\Message::deleteEmojiReactions
      */
     public function testDeleteAllReactionsForEmoji()
     {

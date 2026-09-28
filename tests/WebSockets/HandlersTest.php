@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 use Discord\Discord;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\ScheduledEvent;
-use Discord\Parts\Guild\ScheduledEventException;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEvent;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEventException;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildScheduledEventExceptionCreate;
 use Discord\WebSockets\Events\GuildScheduledEventExceptionDelete;

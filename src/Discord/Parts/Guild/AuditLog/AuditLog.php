@@ -15,14 +15,14 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild\AuditLog;
 
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Channel\Webhook;
+use Discord\Parts\Webhook\Webhook;
 use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Integration;
-use Discord\Parts\Guild\ScheduledEvent;
-use Discord\Parts\Interactions\Command\Command;
+use Discord\Parts\Guild\Integration\Integration;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEvent;
+use Discord\Parts\Application\Command\Command;
 use Discord\Parts\Part;
-use Discord\Parts\Thread\Thread;
+use Discord\Parts\Channel\Thread\Thread;
 use Discord\Parts\User\User;
 use ReflectionClass;
 

@@ -74,7 +74,7 @@ DiscordPHP is installed using [Composer](https://getcomposer.org).
 include __DIR__.'/vendor/autoload.php';
 
 use Discord\Discord;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Event;
 

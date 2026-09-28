@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Discord\Builders\CommandBuilder;
 use Discord\Discord;
-use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\Application\Command\Option;
 
 final class CommandNameTest extends DiscordTestCase
 {

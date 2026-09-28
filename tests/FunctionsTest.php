@@ -11,9 +11,9 @@
  */
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Guild\Role;
-use Discord\Parts\User\Member;
+use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\Guild\Role\Role;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\StreamSelectLoop;
 use Symfony\Component\OptionsResolver\OptionsResolver;

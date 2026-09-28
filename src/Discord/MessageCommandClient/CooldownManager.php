@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\MessageCommandClient;
 
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 
 class CooldownManager
 {

@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 use Discord\Builders\AttachmentRequestBuilder;
-use Discord\Parts\Channel\Attachment;
+use Discord\Parts\Channel\Message\Attachment;
 use JsonSerializable;
 
 /**

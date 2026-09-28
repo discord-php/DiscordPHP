@@ -110,7 +110,7 @@ $discord->on(Event::THREAD_LIST_SYNC, function (Collection $threads, Discord $di
 Called with a Thread `Member` object when the thread member for the current Bot is updated.
 
 ```php
-// use Discord\Parts\Thread\Member;
+// use Discord\Parts\Channel\Thread\Member;
 
 $discord->on(Event::THREAD_MEMBER_UPDATE, function (Member $threadMember, Discord $discord) {
     // ...

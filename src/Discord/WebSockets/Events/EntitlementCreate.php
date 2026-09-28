@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Parts\Monetization\Entitlement;
+use Discord\Parts\Application\Entitlement;
 
 /**
  * @link https://docs.discord.com/developers/events/gateway-events#entitlement-create

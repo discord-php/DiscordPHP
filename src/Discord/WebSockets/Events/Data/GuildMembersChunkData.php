@@ -16,7 +16,7 @@ namespace Discord\WebSockets\Events\Data;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\Websockets\PresenceUpdate;
 
 /**

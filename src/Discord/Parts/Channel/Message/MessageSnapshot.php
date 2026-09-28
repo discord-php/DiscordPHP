@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
 /**

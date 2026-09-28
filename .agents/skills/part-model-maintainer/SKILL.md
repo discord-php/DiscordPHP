@@ -29,10 +29,10 @@ Keep `Part` classes as the canonical in-memory representation of Discord resourc
 3. Representative concrete parts for the family you are touching:
    - `src/Discord/Parts/Guild/Guild.php`
    - `src/Discord/Parts/Channel/Channel.php`
-   - `src/Discord/Parts/Channel/Message.php`
+   - `src/Discord/Parts/Channel/Message/Message.php`
    - `src/Discord/Parts/User/User.php`
-   - `src/Discord/Parts/User/Member.php`
-   - `src/Discord/Parts/Thread/Thread.php`
+   - `src/Discord/Parts/Guild/Member/Member.php`
+   - `src/Discord/Parts/Channel/Thread/Thread.php`
    - `src/Discord/Parts/Interactions/Interaction.php`
 4. The owning repository for the part
 5. Gateway events that hydrate or update the part

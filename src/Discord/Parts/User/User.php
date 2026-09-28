@@ -18,13 +18,14 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
+use Discord\Parts\Guild\Member\Member;
 
 use function React\Promise\resolve;
 

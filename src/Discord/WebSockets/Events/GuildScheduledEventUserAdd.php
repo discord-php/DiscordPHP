@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Guild\ScheduledEventUser;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEventUser;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\ScheduledEventUserData;

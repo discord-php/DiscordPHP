@@ -16,7 +16,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Integration;
+use Discord\Parts\Guild\Integration\Integration;
 
 /**
  * @link https://docs.discord.com/developers/events/gateway-events#integration-create

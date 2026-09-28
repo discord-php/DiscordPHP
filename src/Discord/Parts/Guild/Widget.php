@@ -20,7 +20,7 @@ use Discord\Http\Http;
 use Discord\Http\Request;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Psr\Http\Message\ResponseInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
