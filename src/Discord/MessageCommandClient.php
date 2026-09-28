@@ -304,7 +304,9 @@ class MessageCommandClient extends Discord
      */
     protected function removePrefixFromContent(string $content, string $prefix): ?string
     {
-        static $hasMbString = function_exists('mb_strlen') && function_exists('mb_substr');
+        // A static initialiser must be a constant expression before PHP 8.3.
+        static $hasMbString = null;
+        $hasMbString ??= function_exists('mb_strlen') && function_exists('mb_substr');
 
         if ($hasMbString) {
             $len = mb_strlen($prefix);
