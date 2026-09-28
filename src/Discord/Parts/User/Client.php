@@ -28,6 +28,7 @@ use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\StickerPackRepository;
 use Discord\Repository\UserRepository;
+use Discord\Repository\VoiceSessionRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\resolve;
@@ -61,6 +62,7 @@ use function React\Promise\resolve;
  * @property SoundRepository          $sounds
  * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
+ * @property VoiceSessionRepository   $voice_sessions
  *
  * @phpstan-property ExCollectionInterface<Connection>|null $connections
  */
@@ -103,6 +105,7 @@ class Client extends Part
         'sounds' => SoundRepository::class,
         'sticker_packs' => StickerPackRepository::class,
         'users' => UserRepository::class,
+        'voice_sessions' => VoiceSessionRepository::class,
     ];
 
     /**
