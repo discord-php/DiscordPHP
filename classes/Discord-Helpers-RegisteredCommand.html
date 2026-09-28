@@ -669,7 +669,7 @@ executes the callback, if given.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -712,7 +712,8 @@ Discord servers and has a handler to handle when the command is triggered.</p>
                 : <span class="phpdocumentor-argument-list__argument__type">callable|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Callback returning list of auto complete suggestions</p>
+                    <section class="phpdocumentor-description"><p>Callback returning list of auto complete suggestions, called with the
+interaction and the focused option: <code class="prettyprint">fn (Interaction $interaction, ?Option $option)</code>.</p>
 </section>
 
             </dd>
@@ -738,7 +739,7 @@ Discord servers and has a handler to handle when the command is triggered.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -815,7 +816,7 @@ Discord servers and has a handler to handle when the command is triggered.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -876,7 +877,7 @@ executes the callback, if given.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -915,7 +916,7 @@ executes the callback, if given.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -964,7 +965,7 @@ executes the callback, if given.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
@@ -1003,7 +1004,7 @@ executes the callback, if given.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
     </aside>
 
@@ -1048,7 +1049,7 @@ executes the callback, if given.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -1093,7 +1094,7 @@ executes the callback, if given.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1102,7 +1103,7 @@ executes the callback, if given.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">suggest</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-ApplicationCommand.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommand">ApplicationCommand</abbr></a>|<a href="classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommandAutocomplete">ApplicationCommandAutocomplete</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$interaction</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">suggest</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-ApplicationCommand.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommand">ApplicationCommand</abbr></a>|<a href="classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html"><abbr title="\Discord\Parts\Interactions\ApplicationCommandAutocomplete">ApplicationCommandAutocomplete</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$interaction</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1116,6 +1117,16 @@ executes the callback, if given.</p>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$option</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The focused option being autocompleted, handed to the
+callback as its second argument. Since 10.65.0.</p>
+</section>
+
             </dd>
             </dl>
 
