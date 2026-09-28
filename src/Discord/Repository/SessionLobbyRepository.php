@@ -19,7 +19,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\OAuth2\Session;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Invite\Invite;
 use Discord\Parts\Lobby\Lobby;
 use Discord\Parts\Lobby\Message;
 use React\Promise\PromiseInterface;

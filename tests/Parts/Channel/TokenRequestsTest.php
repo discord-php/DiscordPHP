@@ -17,9 +17,9 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\OAuth2\AccessToken;
 use Discord\Parts\Channel\Message\Attachment;
 use Discord\Parts\Channel\GroupDM;
-use Discord\Parts\Channel\Webhook;
+use Discord\Parts\Webhook\Webhook;
 use Discord\Parts\Guild\Sticker;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Application;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\User;
 

@@ -18,7 +18,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
+use Discord\Parts\Guild\Role\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Discord\Repository\Guild\AutoModerationRuleRepository;

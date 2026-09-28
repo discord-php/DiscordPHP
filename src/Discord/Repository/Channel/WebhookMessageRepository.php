@@ -23,7 +23,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @see Message
  * @see \Discord\Parts\Channel\Channel
- * @see \Discord\Parts\Channel\Webhook
+ * @see \Discord\Parts\Webhook\Webhook
  *
  * @since 7.2.0
  *

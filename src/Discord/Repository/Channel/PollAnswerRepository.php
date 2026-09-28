@@ -15,14 +15,14 @@ declare(strict_types=1);
 namespace Discord\Repository\Channel;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Poll\PollAnswer;
+use Discord\Parts\Channel\Message\Poll\PollAnswer;
 use Discord\Repository\AbstractRepository;
 
 /**
  * Contains poll answers on a poll in a message.
  *
  * @see PollAnswer
- * @see \Discord\Parts\Channel\Poll
+ * @see \Discord\Parts\Channel\Message\Poll\Poll
  * @see \Discord\Parts\Channel\Message\Message
  *
  * @since 10.0.0

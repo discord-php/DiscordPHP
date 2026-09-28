@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Parts\Guild\CommandPermissions;
+use Discord\Parts\Application\Command\CommandPermissions;
 use Discord\Parts\Guild\Guild;
 
 /**

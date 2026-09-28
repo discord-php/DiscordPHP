@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Channel;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Webhook;
+use Discord\Parts\Webhook\Webhook;
 use Discord\Repository\AbstractRepository;
 
 /**

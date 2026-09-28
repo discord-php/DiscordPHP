@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Invite\Invite;
 use Discord\Repository\AbstractRepository;
 
 /**

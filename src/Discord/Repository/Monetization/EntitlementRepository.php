@@ -17,9 +17,9 @@ namespace Discord\Repository\Monetization;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Monetization\Entitlement;
-use Discord\Parts\OAuth\Application;
-use Discord\Parts\User\Member;
+use Discord\Parts\Application\Entitlement;
+use Discord\Parts\Application\Application;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
@@ -28,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Contains all entitlements for a given app, active and expired.
  *
- * @see \Discord\Parts\Monetization\Entitlement
+ * @see \Discord\Parts\Application\Entitlement
  * @see \Discord\Parts\User\Client
  *
  * @since 10.15.0

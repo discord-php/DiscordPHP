@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Monetization\SKU;
-use Discord\Parts\Monetization\Subscription;
+use Discord\Parts\Application\SKU;
+use Discord\Parts\SKU\Subscription;
 use Discord\WebSockets\Event;
 
 /**

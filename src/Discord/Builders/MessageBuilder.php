@@ -26,7 +26,7 @@ use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Channel\Message\SharedClientTheme;
-use Discord\Parts\Channel\Poll\PollCreateRequest as Poll;
+use Discord\Parts\Channel\Message\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use Discord\Repository\Channel\MessageRepository;

@@ -22,6 +22,8 @@ use Discord\Repository\EmojiRepository;
 use Discord\Repository\Guild\EmojiRepository as GuildEmojiRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
+use Discord\Parts\Guild\Role\Role;
+use Discord\Parts\Guild\Integration\Integration;
 
 use function React\Promise\reject;
 

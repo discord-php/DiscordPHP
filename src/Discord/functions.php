@@ -17,10 +17,10 @@ namespace Discord;
 use ArrayIterator;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\Message;
-use Discord\Parts\Guild\Role;
+use Discord\Parts\Guild\Role\Role;
 use Discord\Parts\Part;
-use Discord\Parts\Thread\Thread;
-use Discord\Parts\User\Member;
+use Discord\Parts\Channel\Thread\Thread;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
@@ -411,7 +411,7 @@ function promiseFromGeneratorStep(\Generator $generator, bool $started, $send, $
  * File namespaces that were changed in new versions are aliased.
  */
 class_alias(\Discord\Repository\Channel\StageInstanceRepository::class, '\Discord\Repository\Guild\StageInstanceRepository'); // @since 10.0.0
-class_alias(\Discord\Parts\Guild\CommandPermissions::class, '\Discord\Parts\Interactions\Command\Overwrite'); // @since 10.0.0
+class_alias(\Discord\Parts\Application\Command\CommandPermissions::class, '\Discord\Parts\Interactions\Command\Overwrite'); // @since 10.0.0
 class_alias(\Discord\Repository\Guild\CommandPermissionsRepository::class, '\Discord\Repository\Guild\OverwriteRepository'); // @since 10.0.0
 
 // Parts moved to follow the API routes they come from (#943): messages, their attachments, reactions and embeds.
@@ -434,3 +434,70 @@ class_alias(\Discord\Parts\Channel\Message\Embed\Image::class, '\Discord\Parts\E
 class_alias(\Discord\Parts\Channel\Message\Embed\Provider::class, '\Discord\Parts\Embed\Provider'); // @since 10.65.0
 class_alias(\Discord\Parts\Channel\Message\Embed\Thumbnail::class, '\Discord\Parts\Embed\Thumbnail'); // @since 10.65.0
 class_alias(\Discord\Parts\Channel\Message\Embed\Video::class, '\Discord\Parts\Embed\Video'); // @since 10.65.0
+
+// Parts moved to follow the API routes they come from (#943), in a second round: polls, threads, invites, webhooks,
+// stage instances, and guild and application sub-resources.
+class_alias(\Discord\Parts\Channel\Thread\AnnouncementThread::class, '\Discord\Parts\Channel\AnnouncementThread'); // @since 10.65.0
+class_alias(\Discord\Parts\Invite\Invite::class, '\Discord\Parts\Channel\Invite'); // @since 10.65.0
+class_alias(\Discord\Parts\Invite\InviteJobStatus::class, '\Discord\Parts\Channel\InviteJobStatus'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\Poll::class, '\Discord\Parts\Channel\Poll'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\PollCreateRequest::class, '\Discord\Parts\Channel\Poll\Poll'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\PollAnswer::class, '\Discord\Parts\Channel\Poll\PollAnswer'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\PollAnswerCount::class, '\Discord\Parts\Channel\Poll\PollAnswerCount'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\PollCreateRequest::class, '\Discord\Parts\Channel\Poll\PollCreateRequest'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\PollMedia::class, '\Discord\Parts\Channel\Poll\PollMedia'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Poll\PollResults::class, '\Discord\Parts\Channel\Poll\PollResults'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Thread\PrivateThread::class, '\Discord\Parts\Channel\PrivateThread'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Thread\PublicThread::class, '\Discord\Parts\Channel\PublicThread'); // @since 10.65.0
+class_alias(\Discord\Parts\StageInstance\StageInstance::class, '\Discord\Parts\Channel\StageInstance'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Thread\ThreadMetadata::class, '\Discord\Parts\Channel\ThreadMetadata'); // @since 10.65.0
+class_alias(\Discord\Parts\Webhook\Webhook::class, '\Discord\Parts\Channel\Webhook'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Integration\Account::class, '\Discord\Parts\Guild\Account'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Role\Colors::class, '\Discord\Parts\Guild\Colors'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Command\CommandPermissions::class, '\Discord\Parts\Guild\CommandPermissions'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\ScheduledEvent\EntityMetadata::class, '\Discord\Parts\Guild\EntityMetadata'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\FormFieldResponse::class, '\Discord\Parts\Guild\FormFieldResponse'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\GuildJoinRequest::class, '\Discord\Parts\Guild\GuildJoinRequest'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\GuildJoinRequests::class, '\Discord\Parts\Guild\GuildJoinRequests'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Member\GuildSearch::class, '\Discord\Parts\Guild\GuildSearch'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Integration\Integration::class, '\Discord\Parts\Guild\Integration'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\MultipleChoiceFormFieldResponse::class, '\Discord\Parts\Guild\MultipleChoiceFormFieldResponse'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\NewMemberWelcome\NewMemberAction::class, '\Discord\Parts\Guild\NewMemberAction'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Onboarding\Onboarding::class, '\Discord\Parts\Guild\Onboarding'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Onboarding\OnboardingPrompt::class, '\Discord\Parts\Guild\OnboardingPrompt'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Onboarding\OnboardingPromptOption::class, '\Discord\Parts\Guild\OnboardingPromptOption'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\ParagraphFormFieldResponse::class, '\Discord\Parts\Guild\ParagraphFormFieldResponse'); // @since 10.65.0
+class_alias(\Discord\Parts\Invite\Profile::class, '\Discord\Parts\Guild\Profile'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\ScheduledEvent\RecurrenceRule::class, '\Discord\Parts\Guild\RecurrenceRule'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\NewMemberWelcome\ResourceChannel::class, '\Discord\Parts\Guild\ResourceChannel'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Role\Role::class, '\Discord\Parts\Guild\Role'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Role\RoleTags::class, '\Discord\Parts\Guild\RoleTags'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\ScheduledEvent\ScheduledEvent::class, '\Discord\Parts\Guild\ScheduledEvent'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\ScheduledEvent\ScheduledEventException::class, '\Discord\Parts\Guild\ScheduledEventException'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\ScheduledEvent\ScheduledEventUser::class, '\Discord\Parts\Guild\ScheduledEventUser'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\NewMemberWelcome\ServerGuide::class, '\Discord\Parts\Guild\ServerGuide'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\TermsFormFieldResponse::class, '\Discord\Parts\Guild\TermsFormFieldResponse'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\JoinRequest\TextInputFormFieldResponse::class, '\Discord\Parts\Guild\TextInputFormFieldResponse'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\WelcomeScreen\WelcomeChannel::class, '\Discord\Parts\Guild\WelcomeChannel'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\NewMemberWelcome\WelcomeMessage::class, '\Discord\Parts\Guild\WelcomeMessage'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\WelcomeScreen\WelcomeScreen::class, '\Discord\Parts\Guild\WelcomeScreen'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Command\Choice::class, '\Discord\Parts\Interactions\Command\Choice'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Command\Command::class, '\Discord\Parts\Interactions\Command\Command'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Command\Option::class, '\Discord\Parts\Interactions\Command\Option'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Command\Permission::class, '\Discord\Parts\Interactions\Command\Permission'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Entitlement::class, '\Discord\Parts\Monetization\Entitlement'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\SKU::class, '\Discord\Parts\Monetization\SKU'); // @since 10.65.0
+class_alias(\Discord\Parts\SKU\Subscription::class, '\Discord\Parts\Monetization\Subscription'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\ActivityInstance\ActivityInstance::class, '\Discord\Parts\OAuth\ActivityInstance'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\ActivityInstance\ActivityLocation::class, '\Discord\Parts\OAuth\ActivityLocation'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Application::class, '\Discord\Parts\OAuth\Application'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Identity\ApplicationIdentity::class, '\Discord\Parts\OAuth\ApplicationIdentity'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Identity\ApplicationIdentityProfile::class, '\Discord\Parts\OAuth\ApplicationIdentityProfile'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\ApplicationRoleConnectionMetadata::class, '\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\InstallParams::class, '\Discord\Parts\OAuth\InstallParams'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Team\Team::class, '\Discord\Parts\OAuth\Team'); // @since 10.65.0
+class_alias(\Discord\Parts\Application\Team\TeamMember::class, '\Discord\Parts\OAuth\TeamMember'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Thread\Member::class, '\Discord\Parts\Thread\Member'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Thread\Thread::class, '\Discord\Parts\Thread\Thread'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Thread\ThreadSearch::class, '\Discord\Parts\Thread\ThreadSearch'); // @since 10.65.0
+class_alias(\Discord\Parts\Guild\Member\Member::class, '\Discord\Parts\User\Member'); // @since 10.65.0

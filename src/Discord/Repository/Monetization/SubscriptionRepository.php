@@ -16,8 +16,8 @@ namespace Discord\Repository\Monetization;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
-use Discord\Parts\Monetization\Subscription;
-use Discord\Parts\User\Member;
+use Discord\Parts\SKU\Subscription;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Contains all Subscriptions for a given SKU.
  *
- * @see \Discord\Parts\Monetization\Subscription
+ * @see \Discord\Parts\SKU\Subscription
  *
  * @since 10.15.0
  */

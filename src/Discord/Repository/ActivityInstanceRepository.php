@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\OAuth\ActivityInstance;
+use Discord\Parts\Application\ActivityInstance\ActivityInstance;
 
 /**
  * Contains activity instances of an application.

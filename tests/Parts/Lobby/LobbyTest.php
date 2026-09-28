@@ -13,7 +13,7 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Invite\Invite;
 use Discord\Parts\Lobby\Lobby;
 use Discord\Parts\Lobby\Member;
 use Discord\Parts\Lobby\Message;

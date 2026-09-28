@@ -17,6 +17,7 @@ namespace Discord\Parts\OAuth;
 use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Parts\Application\Application;
 
 /**
  * What a user has authorised an application to do with their OAuth2 token: the application, the scopes

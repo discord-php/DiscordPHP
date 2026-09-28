@@ -9,7 +9,7 @@ Subscription events arrive when a user subscribes to one of your application's S
 Called with a `Subscription` object when a user subscribes.
 
 ```php
-// use Discord\Parts\Monetization\Subscription;
+// use Discord\Parts\SKU\Subscription;
 
 $discord->on(Event::SUBSCRIPTION_CREATE, function (Subscription $subscription, Discord $discord) {
     // ...

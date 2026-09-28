@@ -16,8 +16,8 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\ScheduledEvent;
-use Discord\Parts\Guild\ScheduledEventException;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEvent;
+use Discord\Parts\Guild\ScheduledEvent\ScheduledEventException;
 
 /**
  * @link https://docs.discord.com/developers/events/gateway-events#guild-scheduled-event-exception-update

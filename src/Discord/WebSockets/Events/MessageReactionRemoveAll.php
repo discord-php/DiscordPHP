@@ -19,7 +19,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Thread\Thread;
+use Discord\Parts\Channel\Thread\Thread;
 
 /**
  * @link https://docs.discord.com/developers/events/gateway-events#message-reaction-remove-all

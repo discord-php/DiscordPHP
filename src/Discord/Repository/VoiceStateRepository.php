@@ -19,7 +19,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\PromiseInterface;

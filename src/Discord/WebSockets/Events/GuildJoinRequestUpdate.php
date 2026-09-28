@@ -17,7 +17,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\GuildJoinRequestUpdateData;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\GuildJoinRequest;
+use Discord\Parts\Guild\JoinRequest\GuildJoinRequest;
 
 /**
  * Sent when a join request is updated, such as when a user submits a request they had already started, or when a request is approved or rejected.

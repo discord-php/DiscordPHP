@@ -1,0 +1,246 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is a part of the DiscordPHP project.
+ *
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
+namespace Discord\Parts\Application\Command;
+
+use Discord\Builders\CommandAttributes;
+use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Part;
+use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Interaction\GlobalCommandRepository;
+use React\Promise\PromiseInterface;
+use Stringable;
+
+/**
+ * Represents a command registered on the Discord servers.
+ *
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-structure
+ *
+ * @since 7.0.0
+ *
+ * @property      string      $id             The unique identifier of the command.
+ * @property      string      $application_id The unique identifier of the parent Application that made the command, if made by one.
+ * @property      string|null $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
+ * @property-read Guild|null  $guild          The guild that the command belongs to. Null if global.
+ * @property      string      $version        Autoincrementing version identifier updated during substantial record changes.
+ */
+class Command extends Part implements Stringable
+{
+    use CommandAttributes;
+
+    /** Slash commands; a text-based command that shows up when a user types / */
+    public const CHAT_INPUT = 1;
+    /** A UI-based command that shows up when you right click or tap on a user */
+    public const USER = 2;
+    /** A UI-based command that shows up when you right click or tap on a message */
+    public const MESSAGE = 3;
+    /** A UI-based command that represents the primary way to invoke an app's Activity */
+    public const PRIMARY_ENTRY_POINT = 4;
+    /** The app handles the interaction using an interaction token */
+    public const APP_HANDLER = 1;
+    /** Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app */
+    public const DISCORD_LAUNCH_ACTIVITY = 2;
+
+    /**
+     * @inheritDoc
+     */
+    protected $fillable = [
+        'id',
+        'type',
+        'application_id',
+        'guild_id',
+        'name',
+        'name_localizations',
+        'description',
+        'description_localizations',
+        'options',
+        'default_member_permissions',
+        'dm_permission',
+        'default_permission',
+        'nsfw',
+        'integration_types',
+        'contexts',
+        'version',
+        'handler',
+    ];
+
+    /**
+     * Gets the application id attribute.
+     *
+     * @return string Application ID of this Bot if not set.
+     */
+    protected function getApplicationIdAttribute(): string
+    {
+        if (! isset($this->attributes['application_id'])) {
+            return $this->discord->application->id;
+        }
+
+        return $this->attributes['application_id'];
+    }
+
+    /**
+     * Gets the options attribute.
+     *
+     * @return ExCollectionInterface<Option>|Option[] A collection of options.
+     */
+    protected function getOptionsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
+    }
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null The guild attribute. `null` for global command.
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @link https://docs.discord.com/developers/interactions/application-commands#create-global-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#create-guild-application-command-json-params
+     */
+    public function getCreatableAttributes(): array
+    {
+        $attr = [
+            'name' => $this->name,
+        ];
+
+        $attr += $this->makeOptionalAttributes([
+            'name_localizations' => $this->name_localizations,
+            'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
+            'options',
+            'default_member_permissions' => $this->default_member_permissions,
+            'default_permission' => $this->default_permission,
+            'type' => $this->type,
+            'nsfw' => $this->nsfw,
+            'integration_types',
+            'handler' => $this->handler,
+
+            // Guild command might omit these fillables
+            'dm_permission' => $this->dm_permission,
+            'contexts',
+        ]);
+
+        return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @link https://docs.discord.com/developers/interactions/application-commands#edit-global-application-command-json-params
+     */
+    public function getUpdatableAttributes(): array
+    {
+        $attr = $this->makeOptionalAttributes([
+            'name' => $this->name,
+            'name_localizations' => $this->name_localizations,
+            'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
+            'options',
+            'default_member_permissions' => $this->default_member_permissions,
+            'default_permission' => $this->default_permission,
+            'nsfw' => $this->nsfw,
+            'integration_types',
+            'handler' => $this->handler,
+        ]);
+
+        if ($this->guild_id !== null) {
+            $attr += $this->makeOptionalAttributes([
+                'dm_permission' => $this->dm_permission,
+                'contexts',
+            ]);
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return GuildCommandRepository|GlobalCommandRepository The repository.
+     */
+    public function getRepository(): GuildCommandRepository|GlobalCommandRepository
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->commands;
+        }
+
+        return $this->discord->application->commands;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->getRepository()->save($this, $reason);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'guild_id' => $this->guild_id,
+            'application_id' => $this->application_id,
+            'command_id' => $this->id,
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Returns a formatted mention of the command.
+     *
+     * @return string A formatted mention of the command.
+     */
+    public function __toString(): string
+    {
+        return "</{$this->name}:{$this->id}>";
+    }
+}

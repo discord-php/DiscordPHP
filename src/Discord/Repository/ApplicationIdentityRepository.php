@@ -16,8 +16,8 @@ namespace Discord\Repository;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
-use Discord\Parts\OAuth\ApplicationIdentity;
-use Discord\Parts\OAuth\ApplicationIdentityProfile;
+use Discord\Parts\Application\Identity\ApplicationIdentity;
+use Discord\Parts\Application\Identity\ApplicationIdentityProfile;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
@@ -32,7 +32,7 @@ use function React\Promise\reject;
  * look them up by user or by external id instead.
  *
  * @see ApplicationIdentity
- * @see \Discord\Parts\OAuth\Application
+ * @see \Discord\Parts\Application\Application
  *
  * @since 10.59.0
  *

@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Channel;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\StageInstance;
+use Discord\Parts\StageInstance\StageInstance;
 use Discord\Repository\AbstractRepository;
 
 /**

@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Interactions\Command\Command;
-use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\Application\Command\Command;
+use Discord\Parts\Application\Command\Option;
 use Discord\Parts\Interactions\Interaction;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Application;
 
 use function Discord\poly_strlen;
 
@@ -26,7 +26,7 @@ use function Discord\poly_strlen;
  * Application Command attributes.
  *
  * @see \Discord\Builders\CommandBuilder
- * @see \Discord\Parts\Interactions\Command\Command
+ * @see \Discord\Parts\Application\Command\Command
  *
  * @since 7.1.0
  *

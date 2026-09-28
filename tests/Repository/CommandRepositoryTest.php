@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 use Discord\Builders\CommandBuilder;
 use Discord\Discord;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Application;
 use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 

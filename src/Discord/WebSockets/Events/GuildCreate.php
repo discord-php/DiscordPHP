@@ -16,7 +16,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Parts\WebSockets\VoiceStateUpdate;

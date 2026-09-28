@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\WebSockets;
 
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 

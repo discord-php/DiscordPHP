@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Interaction;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Interactions\Command\Command;
+use Discord\Parts\Application\Command\Command;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 

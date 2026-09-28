@@ -16,7 +16,7 @@ namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Message\Message;
-use Discord\Parts\Guild\GuildSearch;
+use Discord\Parts\Guild\Member\GuildSearch;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
@@ -33,7 +33,7 @@ use function React\Promise\reject;
  *
  * Additionally, when messages are actively being created or deleted, the `total_results` field may not be accurate.
  *
- * @see \Discord\Parts\Guild\GuildSearch
+ * @see \Discord\Parts\Guild\Member\GuildSearch
  *
  * @since 10.19.0
  *

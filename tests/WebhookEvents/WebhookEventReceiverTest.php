@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 use Discord\Discord;
 use Discord\Parts\Lobby\Message;
-use Discord\Parts\Monetization\Entitlement;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Entitlement;
+use Discord\Parts\Application\Application;
 use Discord\WebhookEvents\Signature;
 use Discord\WebhookEvents\WebhookEventReceiver;
 use Discord\WebSockets\Event;

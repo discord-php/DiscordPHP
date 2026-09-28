@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Thread\Thread;
+use Discord\Parts\Channel\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**

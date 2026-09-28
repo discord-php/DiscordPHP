@@ -16,7 +16,7 @@ namespace Discord\Parts\Channel\Message;
 
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 

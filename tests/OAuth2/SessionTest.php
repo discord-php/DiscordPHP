@@ -15,14 +15,14 @@ declare(strict_types=1);
 use Discord\Discord;
 use Discord\OAuth2\AccessToken;
 use Discord\OAuth2\Session;
-use Discord\Parts\Channel\Invite;
-use Discord\Parts\Guild\CommandPermissions;
+use Discord\Parts\Invite\Invite;
+use Discord\Parts\Application\Command\CommandPermissions;
 use Discord\Parts\OAuth\Authorization;
 use Discord\Parts\OAuth\UserInfo;
 use Discord\Parts\Lobby\Lobby;
 use Discord\Parts\Lobby\Message;
-use Discord\Parts\Monetization\Entitlement;
-use Discord\Parts\OAuth\Application;
+use Discord\Parts\Application\Entitlement;
+use Discord\Parts\Application\Application;
 use Discord\Parts\User\User;
 
 final class SessionTest extends DiscordTestCase

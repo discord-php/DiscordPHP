@@ -16,7 +16,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Invite;
+use Discord\Parts\Invite\Invite;
 use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Events\Data\InviteDeleteData;
 

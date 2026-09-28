@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\AutoModeration\Action;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 
 /**

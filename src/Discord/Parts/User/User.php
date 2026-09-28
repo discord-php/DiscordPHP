@@ -25,6 +25,7 @@ use Discord\Parts\Part;
 use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
+use Discord\Parts\Guild\Member\Member;
 
 use function React\Promise\resolve;
 

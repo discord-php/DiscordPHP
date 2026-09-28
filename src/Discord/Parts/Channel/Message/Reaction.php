@@ -19,7 +19,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Parts\Thread\Thread;
+use Discord\Parts\Channel\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -16,7 +16,7 @@ namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Ban;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;

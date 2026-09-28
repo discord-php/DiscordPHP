@@ -25,7 +25,7 @@ use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Permissions\RolePermission;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;

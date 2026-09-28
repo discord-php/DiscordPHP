@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Interactions\Command\Command;
+use Discord\Parts\Application\Command\Command;
 use Discord\Repository\AbstractRepository;
 use Discord\Repository\Interaction\CommandRepositoryTrait;
 use React\Promise\PromiseInterface;

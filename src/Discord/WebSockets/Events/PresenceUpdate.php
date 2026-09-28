@@ -17,7 +17,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 
 /**
  * @link https://docs.discord.com/developers/events/gateway-events#presence-update

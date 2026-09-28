@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\GuildJoinRequests;
-use Discord\Parts\Guild\GuildJoinRequest;
+use Discord\Parts\Guild\JoinRequest\GuildJoinRequests;
+use Discord\Parts\Guild\JoinRequest\GuildJoinRequest;
 use Discord\Parts\Guild\Guild;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;

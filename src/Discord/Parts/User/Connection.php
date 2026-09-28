@@ -16,7 +16,7 @@ namespace Discord\Parts\User;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
-use Discord\Parts\Guild\Integration;
+use Discord\Parts\Guild\Integration\Integration;
 
 /**
  * The connection object that a user has attached.

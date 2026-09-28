@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Monetization;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Monetization\SKU;
+use Discord\Parts\Application\SKU;
 use Discord\Repository\AbstractRepository;
 
 /**
@@ -25,7 +25,7 @@ use Discord\Repository\AbstractRepository;
  *
  * For integration and testing entitlements for Subscriptions, you should use the SKU with type: 5.
  *
- * @see \Discord\Parts\Monetization\SKU
+ * @see \Discord\Parts\Application\SKU
  * @see \Discord\Parts\User\Client
  *
  * @since 10.15.0

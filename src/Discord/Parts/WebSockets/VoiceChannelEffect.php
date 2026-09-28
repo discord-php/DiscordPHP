@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sound;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 
 /**
