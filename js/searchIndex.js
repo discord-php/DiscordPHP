@@ -15211,6 +15211,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020channel\u0020attribute.",
             "url": "classes/Discord-Parts-WebSockets-VoiceSession.html#method_getChannelAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceSession\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Gets\u0020the\u0020string\u0020representation\u0020of\u0020the\u0020voice\u0020session.",
+            "url": "classes/Discord-Parts-WebSockets-VoiceSession.html#method___toString"
+        },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceSession\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
