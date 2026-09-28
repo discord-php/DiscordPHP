@@ -103,6 +103,56 @@ See [examples folder](examples) for more.
 
 Documentation for the latest version can be found [here](//discord-php.github.io/DiscordPHP/guide). Community contributed tutorials can be found on the [wiki](//github.com/discord-php/DiscordPHP/wiki).
 
+## Discord's documentation in your editor (MCP)
+
+Discord serves its developer documentation as an [MCP server](https://modelcontextprotocol.io) at `https://docs.discord.com/mcp`. Connected to your editor's AI assistant, it lets the assistant search and read Discord's current documentation (gateway events, REST routes, voice, interactions and the change log) while it works on your bot, instead of relying on what the model remembers. The server is public and read-only: there is nothing to install, and no sign-in or token.
+
+It provides three tools:
+
+- `search_documentation_discord` searches the documentation.
+- `query_docs_filesystem_documentation_discord` reads pages directly, with commands such as `tree / -L 2`, `cat /developers/topics/voice-connections.mdx` or `rg -i "seq_ack" /developers`.
+- `submit_feedback` reports a page that is wrong or out of date to Discord's documentation team.
+
+### VS Code Insiders
+
+The same steps work in VS Code: use `code` instead of `code-insiders`, and the VS Code install link. It is Chat, in agent mode, that calls the tools.
+
+1. Add the server in whichever way suits you. Each one adds a server named `discord-docs`.
+   - **Install link:** [![Install in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Install_discord--docs-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=discord-docs&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.discord.com%2Fmcp%22%7D&quality=insiders) [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_discord--docs-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=discord-docs&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.discord.com%2Fmcp%22%7D). Your browser asks to open VS Code, which then asks you to confirm.
+   - **Command Palette:** run **MCP: Add Server...**, choose **HTTP**, enter `https://docs.discord.com/mcp`, name it `discord-docs`, and choose **Global** to have it in every workspace.
+   - **Command line**, which adds it to your user profile. On Windows `code-insiders` is a `.cmd` script, so PowerShell (5.1 and 7 alike) and Command Prompt need the quotes inside the JSON escaped:
+     ```powershell
+     # PowerShell
+     code-insiders --add-mcp '{\"name\":\"discord-docs\",\"type\":\"http\",\"url\":\"https://docs.discord.com/mcp\"}'
+     ```
+     ```bat
+     :: Command Prompt
+     code-insiders --add-mcp "{\"name\":\"discord-docs\",\"type\":\"http\",\"url\":\"https://docs.discord.com/mcp\"}"
+     ```
+     ```bash
+     # bash or zsh: Linux, macOS, WSL, Git Bash
+     code-insiders --add-mcp '{"name":"discord-docs","type":"http","url":"https://docs.discord.com/mcp"}'
+     ```
+   - **By hand:** run **MCP: Open User Configuration**, or create `.vscode/mcp.json` in your project to share the server with everyone working on it, and add:
+     ```json
+     {
+         "servers": {
+             "discord-docs": {
+                 "type": "http",
+                 "url": "https://docs.discord.com/mcp"
+             }
+         }
+     }
+     ```
+2. Open the Chat view and switch to **Agent** mode.
+3. VS Code starts the server the first time a request needs it. To start it yourself, select **Start** above `discord-docs` in `mcp.json`, or run **MCP: List Servers**. Confirm that you trust the server if VS Code asks.
+4. Select **Configure Tools** in the chat input. `discord-docs` should be listed with its three tools, enabled.
+5. Ask away, for example: *"Using Discord's documentation, what does a voice gateway Resume need since voice gateway version 8?"* To make sure a prompt uses the server, type `#` in the chat input and pick `discord-docs` or one of its tools.
+
+If the tools don't appear, run **MCP: List Servers**, choose `discord-docs` and select **Show Output** to see why. VS Code has to be able to reach `https://docs.discord.com` over HTTPS.
+
+Other editors and agents that support MCP over HTTP use the same URL. For example, in Claude Code: `claude mcp add --transport http discord-docs https://docs.discord.com/mcp`.
+
 ## Contributing
 
 We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). Please run php-cs-fixer before opening a pull request by running `composer run-script cs`.
