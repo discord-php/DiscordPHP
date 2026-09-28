@@ -72,7 +72,7 @@ class GuildJoinRequestRepository extends AbstractRepository
      */
     public function freshen(array $queryparams = []): PromiseInterface
     {
-        $resolver = new OptionsResolver()
+        $resolver = (new OptionsResolver())
             ->setDefined(['status', 'limit', 'before', 'after'])
             ->setAllowedTypes('status', 'string')
             ->setAllowedTypes('limit', 'int')
