@@ -1069,9 +1069,7 @@ class Discord
     {
         $this->logger->error('failed to connect to websocket, retry in 5 seconds', ['e' => $e->getMessage()]);
 
-        $this->loop->addTimer(5, function () {
-            $this->connectWs();
-        });
+        $this->loop->addTimer(5, fn () => $this->connectWs());
     }
 
     /**
@@ -1721,9 +1719,7 @@ class Discord
                 $this->logger->debug('session data received', ['session' => $session]);
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
-                    $this->loop->addTimer($session['reset_after'] / 1000, function () {
-                        $this->connectWs();
-                    });
+                    $this->loop->addTimer($session['reset_after'] / 1000, fn () => $this->connectWs());
 
                     return;
                 }
