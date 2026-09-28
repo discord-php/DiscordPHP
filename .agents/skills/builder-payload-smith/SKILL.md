@@ -68,6 +68,8 @@ Builder property access uses property-level mutators like:
 
 Not part-style `getContentAttribute()`. Keep that distinction.
 
+From outside the builder, `$builder->content`, `isset($builder->content)` and `??` all go through `getContent()`: a property is set when its getter returns non-null, and a property with no getter is never set. Declare every property a builder stores. An undeclared one makes `$this->x = ...` inside `setX()` re-enter `__set()` and create a deprecated dynamic property, and makes `isset($this->x)` go through `__isset()`.
+
 ### `new()` factory
 
 Most builders expose `new()` for userland ergonomics. Preserve pattern when adding new top-level builders.

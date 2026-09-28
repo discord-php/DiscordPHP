@@ -42,6 +42,24 @@ class CheckboxGroup extends Group
     protected $type = ComponentObject::TYPE_CHECKBOX_GROUP;
 
     /**
+     * Minimum number of items that must be chosen.
+     *
+     * Default 1, minimum 0, maximum 10.
+     *
+     * @var int|null
+     */
+    protected $min_values;
+
+    /**
+     * Maximum number of items that can be chosen.
+     *
+     * Default the number of options, minimum 1, maximum 10.
+     *
+     * @var int|null
+     */
+    protected $max_values;
+
+    /**
      * Creates a new checkbox group.
      *
      * @param string|null $custom_id custom ID of the checkbox group. If not given, a UUID will be used.
