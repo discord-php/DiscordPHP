@@ -901,6 +901,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-CheckboxGroup.html#property_type"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003A\u0024min_values",
+            "name": "min_values",
+            "summary": "Minimum\u0020number\u0020of\u0020items\u0020that\u0020must\u0020be\u0020chosen.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#property_min_values"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003A\u0024max_values",
+            "name": "max_values",
+            "summary": "Maximum\u0020number\u0020of\u0020items\u0020that\u0020can\u0020be\u0020chosen.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#property_max_values"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroupOption",
             "name": "CheckboxGroupOption",
             "summary": "List\u0020of\u0020options\u0020to\u0020render\u0020within\u0020a\u0020Checkbox\u0020Group.",
@@ -4200,6 +4210,11 @@ Search.appendIndex(
             "name": "__get",
             "summary": "Handles\u0020dynamic\u0020get\u0020calls\u0020onto\u0020the\u0020part.",
             "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___get"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003A__isset\u0028\u0029",
+            "name": "__isset",
+            "summary": "Handles\u0020dynamic\u0020isset\u0028\u0029\u0020and\u0020empty\u0028\u0029\u0020calls\u0020onto\u0020the\u0020part.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___isset"
         },                {
             "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003A__set\u0028\u0029",
             "name": "__set",
@@ -12953,7 +12968,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\PartInterface\u003A\u003AoffsetExists\u0028\u0029",
             "name": "offsetExists",
-            "summary": "Whether\u0020the\u0020attribute\u0020at\u0020\u0060\u0024key\u0060\u0020is\u0020set\u0020\u0028ArrayAccess\u0029.",
+            "summary": "Whether\u0020reading\u0020the\u0020attribute\u0020at\u0020\u0060\u0024key\u0060\u0020yields\u0020a\u0020non\u002Dnull\u0020value\u0020\u0028ArrayAccess\u0029.",
             "url": "classes/Discord-Parts-PartInterface.html#method_offsetExists"
         },                {
             "fqsen": "\\Discord\\Parts\\PartInterface\u003A\u003AoffsetSet\u0028\u0029",
@@ -13040,6 +13055,11 @@ Search.appendIndex(
             "name": "__get",
             "summary": "Magic\u0020getter\u0020for\u0020an\u0020attribute\u0020or\u0020accessor\u0020mutator.",
             "url": "classes/Discord-Parts-PartInterface.html#method___get"
+        },                {
+            "fqsen": "\\Discord\\Parts\\PartInterface\u003A\u003A__isset\u0028\u0029",
+            "name": "__isset",
+            "summary": "Whether\u0020reading\u0020the\u0020attribute\u0020or\u0020accessor\u0020mutator\u0020yields\u0020a\u0020non\u002Dnull\u0020value.",
+            "url": "classes/Discord-Parts-PartInterface.html#method___isset"
         },                {
             "fqsen": "\\Discord\\Parts\\PartInterface\u003A\u003A__set\u0028\u0029",
             "name": "__set",

@@ -279,6 +279,19 @@ echo $message-&gt;content;
 // or
 echo $message[&#039;content&#039;];</code></pre>
 
+            
+    <p><code>isset()</code>
+ and <code>empty()</code>
+ read an attribute the same way, so they agree with <code>??</code>
+. An attribute is set when reading it gives a non-null value. That includes computed properties such as <code>$message-&gt;guild</code>
+, which is only set while the guild is cached. Because of this, <code>Collection::get()</code>
+ can find parts by any attribute, not only the discriminator:</p>
+
+            <pre><code class="language-php">isset($message-&gt;content); // true once the message has content
+isset($message-&gt;guild);   // true when the guild is cached
+
+$input = $components-&gt;get(&#039;custom_id&#039;, &#039;instructions&#039;);</code></pre>
+
             <section class="section " id="filling-a-part-with-data">
             <h2>Filling a part with data</h2>
 

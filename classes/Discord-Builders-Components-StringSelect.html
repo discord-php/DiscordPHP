@@ -633,6 +633,13 @@ number of default values must be in the range defined by min_values and max_valu
 <dd>Handles dynamic get calls onto the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___isset">__isset()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Handles dynamic isset() and empty() calls onto the part.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___set">__set()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -2351,6 +2358,87 @@ number of default values must be in the range defined by min_values and max_valu
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method___isset">
+        __isset()
+        <a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___isset" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/DynamicPropertyMutatorTrait.php"><a href="files/src-discord-helpers-dynamicpropertymutatortrait.html"><abbr title="src/Discord/Helpers/DynamicPropertyMutatorTrait.php">DynamicPropertyMutatorTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">134</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Handles dynamic isset() and empty() calls onto the part.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">__isset</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>A property is set when reading it yields a non-null value, which is the
+contract <code class="prettyprint">??</code> already has: only properties with a get mutator can be set.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$key</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attributes key.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method___isset_tags">
+        Tags
+        <a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___isset_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                                                    
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Helpers\self::getProperty()">self::getProperty()</abbr></span>
+                                                                    <section class="phpdocumentor-description"><p>This function forwards onto getProperty.</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Whether reading the property yields a non-null value.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method___set">
         __set()
         <a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___set" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2359,7 +2447,7 @@ number of default values must be in the range defined by min_values and max_valu
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/DynamicPropertyMutatorTrait.php"><a href="files/src-discord-helpers-dynamicpropertymutatortrait.html"><abbr title="src/Discord/Helpers/DynamicPropertyMutatorTrait.php">DynamicPropertyMutatorTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
@@ -4430,6 +4518,7 @@ as we may move it outside this class in future.</p>
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___get">__get()</a></li>
+                                            <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___isset">__isset()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-StringSelect.html#method_addOption">addOption()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Builder.html#method_fromPart">fromPart()</a></li>
