@@ -110,6 +110,15 @@ use function React\Promise\reject;
  * @property-read string|null $link     Returns a link to the message.
  *
  * @property ReactionRepository $reactions Collection of reactions on the message.
+ *
+ * @phpstan-property ExCollectionInterface<User>            $mentions
+ * @phpstan-property ExCollectionInterface<Channel>         $mention_channels
+ * @phpstan-property ExCollectionInterface<Attachment>      $attachments
+ * @phpstan-property ExCollectionInterface<Embed>           $embeds
+ * @phpstan-property ExCollectionInterface<MessageSnapshot> $message_snapshots
+ * @phpstan-property ExCollectionInterface<Component>       $components
+ * @phpstan-property ExCollectionInterface<Sticker>         $sticker_items
+ * @phpstan-property ExCollectionInterface<?Role>           $mention_roles
  */
 class Message extends Part
 {

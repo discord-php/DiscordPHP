@@ -56,6 +56,8 @@ use function React\Promise\reject;
  * @property-read string|null                                                              $image_hash                       The cover image hash of the scheduled event.
  * @property      RecurrenceRule|null                                                      $recurrence_rule                  The definition for how often this event should recur.
  * @property      ExCollectionInterface<ScheduledEventException>|ScheduledEventException[] $guild_scheduled_event_exceptions The exceptions to the recurrence rule of the guild scheduled event.
+ *
+ * @phpstan-property ExCollectionInterface<ScheduledEventException> $guild_scheduled_event_exceptions
  */
 class ScheduledEvent extends Part
 {

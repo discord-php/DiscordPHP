@@ -43,6 +43,8 @@ use Discord\Helpers\ExCollectionInterface;
  * @property-read ?string|null                         $poll_fields['victor_answer_emoji_id']       ID for an emoji associated with the winning answer (optional)
  * @property-read ?string|null                         $poll_fields['victor_answer_emoji_name']     Name of an emoji associated with the winning answer (optional)
  * @property-read ?bool|null                           $poll_fields['victor_answer_emoji_animated'] If an emoji associated with the winning answer is animated (optional)
+ *
+ * @phpstan-property ExCollectionInterface<Field> $fields
  */
 class EmbedPollResult extends Embed
 {

@@ -54,6 +54,9 @@ use Discord\Parts\User\ClientStatus;
  * @property-read string                             $id     The ID of the user.
  * @property-read Member                             $member The member that the presence update affects.
  * @property-read ExCollectionInterface<Role>|Role[] $roles  Roles that the user has in the guild.
+ *
+ * @phpstan-property      ExCollectionInterface<Activity> $activities
+ * @phpstan-property-read ExCollectionInterface<Role>     $roles
  */
 class PresenceUpdate extends Part
 {

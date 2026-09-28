@@ -32,6 +32,8 @@ use Discord\Parts\Guild\Guild;
  * @property      string                                         $guild_id       The id of the guild.
  * @property-read Guild|null                                     $guild
  * @property      ExCollectionInterface<Permission>|Permission[] $permissions    The permissions for the command in the guild.
+ *
+ * @phpstan-property ExCollectionInterface<Permission> $permissions
  */
 class CommandPermissions extends Part
 {

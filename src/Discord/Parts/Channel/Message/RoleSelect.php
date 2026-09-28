@@ -35,6 +35,8 @@ namespace Discord\Parts\Channel\Message;
  * @property bool|null                                          $disabled       Whether select menu is disabled (defaults to false).
  *
  * @property-read string[]|null $values IDs of the selected roles. (Only included in the response).
+ *
+ * @phpstan-property ExCollectionInterface<DefaultValue> $default_values
  */
 class RoleSelect extends SelectMenu
 {

@@ -34,6 +34,9 @@ use Discord\Parts\Guild\Guild;
  * @property ExCollectionInterface<ResourceChannel>|ResourceChannel[] $resource_channels  Read-only channels that provide resources for new members (max 7).
  *
  * @property-read Guild|null $guild The guild associated with the server guide.
+ *
+ * @phpstan-property ExCollectionInterface<NewMemberAction> $new_member_actions
+ * @phpstan-property ExCollectionInterface<ResourceChannel> $resource_channels
  */
 class ServerGuide extends Part
 {

@@ -84,6 +84,9 @@ use function React\Promise\reject;
  * @property      ClientStatus                               $client_status Current client status.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ *
+ * @phpstan-property ExCollectionInterface<Role>     $roles
+ * @phpstan-property ExCollectionInterface<Activity> $activities
  */
 class Member extends Part implements Stringable
 {

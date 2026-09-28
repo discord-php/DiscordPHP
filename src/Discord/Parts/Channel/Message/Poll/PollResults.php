@@ -26,6 +26,8 @@ use Discord\Parts\Part;
  *
  * @property bool                                                     $is_finalized  Whether the votes have been precisely counted
  * @property ExCollectionInterface<PollAnswerCount>|PollAnswerCount[] $answer_counts The counts for each answer
+ *
+ * @phpstan-property ExCollectionInterface<PollAnswerCount> $answer_counts
  */
 class PollResults extends Part
 {

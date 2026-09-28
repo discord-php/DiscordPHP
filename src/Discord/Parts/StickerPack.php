@@ -32,6 +32,8 @@ use Stringable;
  * @property ?string|null                             $cover_sticker_id The id of the sticker used as the pack cover, if any.
  * @property string                                   $description      The description of the sticker pack.
  * @property ?string|null                             $banner_asset_id  The id of the pack's banner asset, if any.
+ *
+ * @phpstan-property ExCollectionInterface<Sticker> $stickers
  */
 class StickerPack extends Part implements Stringable
 {

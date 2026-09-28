@@ -51,6 +51,10 @@ use function React\Promise\reject;
  * @property      bool                                     $enabled          Whether the rule is enabled.
  * @property      ExCollectionInterface<Role>|Role[]       $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
  * @property      ExCollectionInterface<Channel>|Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ *
+ * @phpstan-property ExCollectionInterface<Action>  $actions
+ * @phpstan-property ExCollectionInterface<Role>    $exempt_roles
+ * @phpstan-property ExCollectionInterface<Channel> $exempt_channels
  */
 class Rule extends Part
 {

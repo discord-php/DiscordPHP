@@ -38,6 +38,8 @@ use Discord\Helpers\ExCollectionInterface;
  * @property bool|null                                                      $disabled    Whether select menu is disabled (defaults to false). Using in a modal will result in an error.
  *
  * @property-read string[]|null $values The text of the selected options. (Only included in the response).
+ *
+ * @phpstan-property ExCollectionInterface<StringSelectOption> $options
  */
 class StringSelect extends SelectMenu
 {

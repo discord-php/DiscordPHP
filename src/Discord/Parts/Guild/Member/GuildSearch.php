@@ -32,6 +32,10 @@ use Discord\Parts\Guild\Guild;
  * @property ExCollectionInterface<Thread>|Thread[]   $threads                     The threads that contain the returned messages.
  * @property ExCollectionInterface<Member>|Member[]   $members                     A thread member object for each returned thread the current user has joined.
  * @property ?int|null                                $documents_indexed           The number of documents that have been indexed during the current index operation, if any.
+ *
+ * @phpstan-property ExCollectionInterface<Message> $messages
+ * @phpstan-property ExCollectionInterface<Thread>  $threads
+ * @phpstan-property ExCollectionInterface<Member>  $members
  */
 class GuildSearch extends Part
 {

@@ -27,6 +27,8 @@ namespace Discord\Parts\Channel\Message;
  * @property int|null                                         $id         Optional identifier for component.
  * @property ExCollectionInterface<TextDisplay>|TextDisplay[] $components One to three text components.
  * @property Thumbnail|Button                                 $accessory  A thumbnail or a button component, with a future possibility of adding more compatible components.
+ *
+ * @phpstan-property ExCollectionInterface<TextDisplay> $components
  */
 class Section extends Layout
 {

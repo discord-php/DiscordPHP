@@ -29,6 +29,8 @@ use Discord\Parts\Part;
  * @property ExCollectionInterface<TeamMember>|TeamMember[] $members       Members of the team (array of team member objects).
  * @property string                                         $name          Name of the team.
  * @property string                                         $owner_user_id User ID of the current team owner.
+ *
+ * @phpstan-property ExCollectionInterface<TeamMember> $members
  */
 class Team extends Part
 {

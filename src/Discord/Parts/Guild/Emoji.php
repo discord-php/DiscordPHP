@@ -45,6 +45,8 @@ use function React\Promise\reject;
  *
  * @property      string|null $guild_id The identifier of the guild that owns the emoji.
  * @property-read Guild|null  $guild    The guild that owns the emoji.
+ *
+ * @phpstan-property ExCollectionInterface<Role> $roles
  */
 class Emoji extends Part implements Stringable
 {
