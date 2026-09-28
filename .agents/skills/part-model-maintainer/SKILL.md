@@ -108,6 +108,10 @@ Resolution order matters:
 
 This is why magic properties can expose both repositories and computed values. Preserve this behavior when adding convenience fields.
 
+### `__isset()` / `offsetExists()`
+
+Both return `getAttribute($key) !== null`, so `isset()`, `empty()` and `??` agree with `__get()`. Repositories and mutators count, and a computed relation such as `guild` is set only while it resolves. `Collection::get($attr, $value)` relies on this to match parts by any attribute. Inside a part, `isset($this->guild_id)` reads through the mutator too; use `isset($this->attributes['x'])` only when you mean the raw payload key. Do not call `isset($this->x)` from `getXAttribute()` itself: PHP's recursion guard makes that inner check false.
+
 ### `setAttribute()` / `__set()`
 
 Setter mutator first, then raw write only if key is fillable. This protects parts from accidental shape drift. Do not bypass it by writing stray protected properties for true resource state.

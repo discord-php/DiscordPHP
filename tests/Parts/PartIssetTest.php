@@ -17,6 +17,7 @@ use Discord\Parts\Channel\Message\TextInput;
 use Discord\Parts\Gateway\Identify;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\WebSockets\TypingStart;
 use Discord\Repository\Guild\MemberRepository;
 
 /**
@@ -69,6 +70,38 @@ final class PartIssetTest extends DiscordTestCase
 
             $this->assertSame('Shorter', $components->get('custom_id', 'instructions')?->value);
             $this->assertNull($components->get('custom_id', 'missing'));
+
+            $resolve();
+        });
+    }
+
+    public function testArrayAccessAgreesWithIsset()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $part = $this->part(getMockDiscord(), ['name' => 'val']);
+
+            $this->assertTrue(isset($part['name']));
+            $this->assertTrue(isset($part['shout']), 'a mutator counts');
+            $this->assertSame('VAL', $part['shout'] ?? null);
+            $this->assertFalse(isset($part['nothing']));
+
+            $resolve();
+        });
+    }
+
+    public function testAComputedRelationIsSetOnlyWhileItResolves()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $mock = getMockDiscord();
+            $typing = $mock->getFactory()->part(TypingStart::class, ['channel_id' => '20', 'guild_id' => '10', 'user_id' => '30', 'timestamp' => 1700000000], true);
+
+            $this->assertFalse(isset($typing->guild), 'the guild is not cached');
+
+            $mock->guilds->pushItem($mock->getFactory()->part(Guild::class, ['id' => '10'], true));
+
+            $this->assertTrue(isset($typing->guild));
+            $this->assertTrue(isset($typing['guild']));
+            $this->assertSame('10', $typing->guild->id);
 
             $resolve();
         });

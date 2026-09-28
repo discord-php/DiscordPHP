@@ -119,6 +119,24 @@ trait DynamicPropertyMutatorTrait
     }
 
     /**
+     * Handles dynamic isset() and empty() calls onto the part.
+     *
+     * A property is set when reading it yields a non-null value, which is the
+     * contract `??` already has: only properties with a get mutator can be set.
+     *
+     * @param string $key The attributes key.
+     *
+     * @return bool Whether reading the property yields a non-null value.
+     *
+     * @throws \Exception
+     * @see self::getProperty() This function forwards onto getProperty.
+     */
+    public function __isset(string $key): bool
+    {
+        return $this->getProperty($key) !== null;
+    }
+
+    /**
      * Handles dynamic set calls onto the part.
      *
      * @param string $key   The attributes key.

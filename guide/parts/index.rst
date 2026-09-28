@@ -36,6 +36,15 @@ Part attributes can be accessed similar to an object or like an array:
    // or
    echo $message['content'];
 
+``isset()`` and ``empty()`` read an attribute the same way, so they agree with ``??``. An attribute is set when reading it gives a non-null value. That includes computed properties such as ``$message->guild``, which is only set while the guild is cached. Because of this, ``Collection::get()`` can find parts by any attribute, not only the discriminator:
+
+.. code:: php
+
+   isset($message->content); // true once the message has content
+   isset($message->guild);   // true when the guild is cached
+
+   $input = $components->get('custom_id', 'instructions');
+
 Filling a part with data
 ========================
 

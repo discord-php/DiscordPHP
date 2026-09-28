@@ -227,11 +227,13 @@ trait PartTrait
      *
      * @param string $key The attribute key.
      *
-     * @return bool Whether the offset exists.
+     * @return bool Whether reading the offset gives a value other than null.
+     *
+     * @see Part::__isset() This function has the same semantics as __isset.
      */
     public function offsetExists($key): bool
     {
-        return isset($this->attributes[$key]);
+        return $this->getAttribute($key) !== null;
     }
 
     /**

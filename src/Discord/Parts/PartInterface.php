@@ -58,7 +58,7 @@ interface PartInterface
     #[\ReturnTypeWillChange]
     public function offsetGet($key);
 
-    /** Whether the attribute at `$key` is set (ArrayAccess). */
+    /** Whether reading the attribute at `$key` yields a non-null value (ArrayAccess). */
     public function offsetExists($key): bool;
 
     /** Sets the attribute at `$key` (ArrayAccess). */
@@ -115,6 +115,9 @@ interface PartInterface
 
     /** Magic getter for an attribute or accessor mutator. */
     public function __get(string $key);
+
+    /** Whether reading the attribute or accessor mutator yields a non-null value. */
+    public function __isset(string $key): bool;
 
     /** Magic setter for an attribute or mutator. */
     public function __set(string $key, $value): void;
