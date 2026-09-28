@@ -12098,7 +12098,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Ping\u003A\u003AgetDataAttribute\u0028\u0029",
             "name": "getDataAttribute",
-            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction.",
+            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction\u003A\u0020a\u0020ping\u0020has\u0020none.",
             "url": "classes/Discord-Parts-Interactions-Ping.html#method_getDataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Ping\u003A\u003A\u0024type",
