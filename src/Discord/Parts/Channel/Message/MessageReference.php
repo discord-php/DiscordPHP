@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\Part;

@@ -22,7 +22,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Channel\Message\Component;

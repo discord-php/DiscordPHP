@@ -12,7 +12,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Channel\Message;
 
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;

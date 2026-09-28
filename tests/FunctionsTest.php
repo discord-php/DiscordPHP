@@ -11,7 +11,7 @@
  */
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;

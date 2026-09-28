@@ -14,12 +14,12 @@ declare(strict_types=1);
 
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 
 final class MessageTest extends DiscordTestCase
 {
     /**
-     * @covers \Discord\Parts\Channel\Message::getMentionChannelsAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getMentionChannelsAttribute
      */
     public function testCanMentionChannel()
     {
@@ -35,7 +35,7 @@ final class MessageTest extends DiscordTestCase
     }
 
     /**
-     * @covers \Discord\Parts\Channel\Message::crosspost
+     * @covers \Discord\Parts\Channel\Message\Message::crosspost
      */
     public function testCanCrosspostMessage()
     {

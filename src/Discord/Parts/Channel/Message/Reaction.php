@@ -12,7 +12,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Channel\Message;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
@@ -23,6 +23,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Discord\Parts\Channel\Channel;
 
 use function Discord\normalizePartId;
 use function React\Promise\resolve;

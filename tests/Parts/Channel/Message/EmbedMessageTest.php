@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Embed\Author;
-use Discord\Parts\Embed\Embed;
-use Discord\Parts\Embed\Footer;
+use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\Channel\Message\Embed\Author;
+use Discord\Parts\Channel\Message\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Footer;
 
 use function Discord\getColor;
 

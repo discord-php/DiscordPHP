@@ -16,8 +16,8 @@ use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\User\User;
 
 final class EmptyMessageTest extends DiscordTestCase
@@ -44,7 +44,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @depends testCanSendMessage
-     * @covers \Discord\Parts\Channel\Message::reply
+     * @covers \Discord\Parts\Channel\Message\Message::reply
      */
     public function testCanReplyToMessage()
     {
@@ -88,11 +88,11 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @depends testCanSendMessage
-     * @covers \Discord\Parts\Channel\Message::getCrosspostedAttribute
-     * @covers \Discord\Parts\Channel\Message::getIsCrosspostAttribute
-     * @covers \Discord\Parts\Channel\Message::getSuppressEmbedsAttribute
-     * @covers \Discord\Parts\Channel\Message::getSourceMessageDeletedAttribute
-     * @covers \Discord\Parts\Channel\Message::getUrgentAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getCrosspostedAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getIsCrosspostAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getSuppressEmbedsAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getSourceMessageDeletedAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getUrgentAttribute
      */
     public function testCheckMessageFlagsFalse()
     {
@@ -111,7 +111,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @depends testCanSendMessage
-     * @covers \Discord\Parts\Channel\Message::getChannelAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getChannelAttribute
      */
     public function testChannelAttribute()
     {
@@ -127,10 +127,10 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @depends testCanSendMessage
-     * @covers \Discord\Parts\Channel\Message::getMentionsAttribute
-     * @covers \Discord\Parts\Channel\Message::getMentionRolesAttribute
-     * @covers \Discord\Parts\Channel\Message::getMentionChannelsAttribute
-     * @covers \Discord\Parts\Channel\Message::getEmbedsAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getMentionsAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getMentionRolesAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getMentionChannelsAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getEmbedsAttribute
      */
     public function testCollectionsEmpty()
     {
@@ -158,7 +158,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @depends testCanSendMessage
-     * @covers \Discord\Parts\Channel\Message::getAuthorAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getAuthorAttribute
      */
     public function testAuthorAttribute()
     {
@@ -173,7 +173,7 @@ final class EmptyMessageTest extends DiscordTestCase
     }
 
     /**
-     * @covers \Discord\Parts\Channel\Message::getEditedTimestampAttribute
+     * @covers \Discord\Parts\Channel\Message\Message::getEditedTimestampAttribute
      */
     public function testEditedTimestampAttribute()
     {
@@ -191,7 +191,7 @@ final class EmptyMessageTest extends DiscordTestCase
     }
 
     /**
-     * @covers \Discord\Parts\Channel\Message::delayedReply
+     * @covers \Discord\Parts\Channel\Message\Message::delayedReply
      */
     public function testDelayedReply()
     {
@@ -214,7 +214,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::react
+     * @covers \Discord\Parts\Channel\Message\Message::react
      */
     public function testCanReactWithString()
     {
@@ -227,7 +227,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @depends testCanSendMessage
-     * @covers \Discord\Parts\Channel\Message::addEmbed
+     * @covers \Discord\Parts\Channel\Message\Message::addEmbed
      */
     public function testCanAddEmbed()
     {
@@ -248,7 +248,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $this->assertEquals('Test embed', $embed->title);
                     $this->assertEquals(1, $embed->fields->count());
 
-                    /** @var \Discord\Parts\Embed\Field */
+                    /** @var \Discord\Parts\Channel\Message\Embed\Field */
                     $field = $embed->fields->first();
                     $this->assertEquals('Field name', $field->name);
                     $this->assertEquals('Field value', $field->value);
@@ -274,7 +274,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::delete
+     * @covers \Discord\Parts\Channel\Message\Message::delete
      */
     public function testCanDeleteMessageThroughPart()
     {

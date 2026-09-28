@@ -41,6 +41,7 @@ use Discord\Repository\PrivateChannelRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Discord\Parts\Channel\Message\Message;
 
 use function Discord\nowait;
 use function React\Promise\reject;

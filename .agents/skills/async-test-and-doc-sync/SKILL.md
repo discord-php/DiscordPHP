@@ -34,7 +34,7 @@ Keep tests, PHPDoc, and long-form documentation synchronized with the public beh
    - `tests/CollectionsTest.php`
 6. Representative integration tests:
    - `tests/Parts/Channel/ChannelTest.php`
-   - `tests/Parts/Embed/EmbedTest.php`
+   - `tests/Parts/Channel/Message/Embed/EmbedTest.php`
    - `tests/Parts/Channel/Message/MessageTest.php`
 7. `guide/` — long-form RST documentation for parts, events, builders
 8. `docs/` — Gatsby site source for published documentation

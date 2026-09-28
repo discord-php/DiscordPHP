@@ -18,7 +18,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Attachment;
+use Discord\Parts\Channel\Message\Attachment;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;

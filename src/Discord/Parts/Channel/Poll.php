@@ -22,6 +22,7 @@ use Discord\Parts\Channel\Poll\PollResults;
 use Discord\Parts\Part;
 use Discord\Repository\Channel\PollAnswerRepository;
 use React\Promise\PromiseInterface;
+use Discord\Parts\Channel\Message\Message;
 
 /**
  * A message poll.

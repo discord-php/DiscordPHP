@@ -12,8 +12,8 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-use Discord\Parts\Embed\Embed;
-use Discord\Parts\Embed\Field;
+use Discord\Parts\Channel\Message\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Field;
 
 /**
  * Discord's embed field limits are enforced when a field is added, rather than by a 400 from Discord.

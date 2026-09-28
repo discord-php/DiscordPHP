@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;

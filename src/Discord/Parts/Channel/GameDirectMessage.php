@@ -16,8 +16,9 @@ namespace Discord\Parts\Channel;
 
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use React\Promise\PromiseInterface;
+use Discord\Parts\Channel\Message\Message;
 
 use function React\Promise\reject;
 

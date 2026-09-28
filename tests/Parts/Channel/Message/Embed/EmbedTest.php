@@ -11,11 +11,11 @@
  */
 
 use Discord\Discord;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Embed\Author;
-use Discord\Parts\Embed\Embed;
-use Discord\Parts\Embed\Thumbnail;
-use Discord\Parts\Embed\Video;
+use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\Channel\Message\Embed\Author;
+use Discord\Parts\Channel\Message\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Thumbnail;
+use Discord\Parts\Channel\Message\Embed\Video;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;

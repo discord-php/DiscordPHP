@@ -16,7 +16,7 @@ namespace Discord;
 
 use ArrayIterator;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
@@ -413,3 +413,24 @@ function promiseFromGeneratorStep(\Generator $generator, bool $started, $send, $
 class_alias(\Discord\Repository\Channel\StageInstanceRepository::class, '\Discord\Repository\Guild\StageInstanceRepository'); // @since 10.0.0
 class_alias(\Discord\Parts\Guild\CommandPermissions::class, '\Discord\Parts\Interactions\Command\Overwrite'); // @since 10.0.0
 class_alias(\Discord\Repository\Guild\CommandPermissionsRepository::class, '\Discord\Repository\Guild\OverwriteRepository'); // @since 10.0.0
+
+// Parts moved to follow the API routes they come from (#943): messages, their attachments, reactions and embeds.
+class_alias(\Discord\Parts\Channel\Message\Attachment::class, '\Discord\Parts\Channel\Attachment'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Message::class, '\Discord\Parts\Channel\Message'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Reaction::class, '\Discord\Parts\Channel\Reaction'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\ReactionCountDetails::class, '\Discord\Parts\Channel\ReactionCountDetails'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Author::class, '\Discord\Parts\Embed\Author'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Embed::class, '\Discord\Parts\Embed\Embed'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedArticle::class, '\Discord\Parts\Embed\EmbedArticle'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedGifv::class, '\Discord\Parts\Embed\EmbedGifv'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedImage::class, '\Discord\Parts\Embed\EmbedImage'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedLink::class, '\Discord\Parts\Embed\EmbedLink'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedPollResult::class, '\Discord\Parts\Embed\EmbedPollResult'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedRich::class, '\Discord\Parts\Embed\EmbedRich'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\EmbedVideo::class, '\Discord\Parts\Embed\EmbedVideo'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Field::class, '\Discord\Parts\Embed\Field'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Footer::class, '\Discord\Parts\Embed\Footer'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Image::class, '\Discord\Parts\Embed\Image'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Provider::class, '\Discord\Parts\Embed\Provider'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Thumbnail::class, '\Discord\Parts\Embed\Thumbnail'); // @since 10.65.0
+class_alias(\Discord\Parts\Channel\Message\Embed\Video::class, '\Discord\Parts\Embed\Video'); // @since 10.65.0

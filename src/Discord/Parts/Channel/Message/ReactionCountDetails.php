@@ -12,27 +12,27 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Embed;
+namespace Discord\Parts\Channel\Message;
 
 use Discord\Parts\Part;
 
 /**
- * The provider of an embed object.
+ * The reaction count details object contains a breakdown of normal and super reaction counts for the associated emoji.
  *
- * @link https://docs.discord.com/developers/resources/message#embed-object-embed-provider-structure
+ * @link https://docs.discord.com/developers/resources/message#reaction-count-details-object
  *
- * @since 10.19.0
+ * @since 10.36.29
  *
- * @property ?string|null $name The name of the provider.
- * @property ?string|null $url  The URL of the provider.
+ * @property int $burst  Count of super reactions.
+ * @property int $normal Count of normal reactions.
  */
-class Provider extends Part
+class ReactionCountDetails extends Part
 {
     /**
      * @inheritDoc
      */
     protected $fillable = [
-        'name',
-        'url',
+        'burst',
+        'normal',
     ];
 }

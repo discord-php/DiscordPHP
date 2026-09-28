@@ -16,7 +16,7 @@ namespace Discord\Parts\WebSockets;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;

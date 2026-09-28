@@ -18,8 +18,8 @@ use Discord\Builders\MessageBuilder;
 use Discord\MessageCommandClient\BuiltCommand;
 use Discord\MessageCommandClient\CommandRegistry;
 use Discord\MessageCommandClient\Command;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 

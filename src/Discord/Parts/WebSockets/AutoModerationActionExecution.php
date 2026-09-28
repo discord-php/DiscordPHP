@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\WebSockets;
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Guild\AutoModeration\Action;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;

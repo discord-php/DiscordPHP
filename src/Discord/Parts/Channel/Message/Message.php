@@ -12,15 +12,12 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Channel\Message;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Channel\Message\Component;
-use Discord\Parts\Channel\Message\MessageInteractionMetadata;
-use Discord\Parts\Channel\Message\MessageSnapshot;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\OAuth\Application;
@@ -31,11 +28,6 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
-use Discord\Parts\Channel\Message\Activity;
-use Discord\Parts\Channel\Message\MessageCall;
-use Discord\Parts\Channel\Message\MessageReference;
-use Discord\Parts\Channel\Message\RoleSubscriptionData;
-use Discord\Parts\Channel\Message\SharedClientTheme;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
@@ -48,6 +40,9 @@ use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\DM;
+use Discord\Parts\Channel\Poll;
 
 use function React\Promise\reject;
 

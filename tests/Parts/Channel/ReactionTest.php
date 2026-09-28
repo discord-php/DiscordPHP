@@ -12,7 +12,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-use Discord\Parts\Channel\Reaction;
+use Discord\Parts\Channel\Message\Reaction;
 use Discord\Parts\Guild\Emoji;
 
 /**

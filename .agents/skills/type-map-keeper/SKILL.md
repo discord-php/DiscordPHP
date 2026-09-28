@@ -32,7 +32,7 @@ Keep type maps as the single source of truth for polymorphic dispatch:
 
 1. `src/Discord/Parts/Channel/Channel.php` — `Channel::TYPES` and `TYPE_*` constants, deprecated aliases
 2. `src/Discord/Parts/Interactions/Interaction.php` — `Interaction::TYPES` and `TYPE_*` constants
-3. `src/Discord/Parts/Embed/Embed.php` — `Embed::TYPES` with string-keyed discriminators
+3. `src/Discord/Parts/Channel/Message/Embed/Embed.php` — `Embed::TYPES` with string-keyed discriminators
 4. `src/Discord/Parts/Channel/Message/Component.php` — inbound `Component::TYPES` map
 5. `src/Discord/Builders/Components/ComponentObject.php` — outbound `ComponentObject::TYPES` and `TYPE_*` constants
 6. `src/Discord/Parts/PartTrait.php` — `attributeTypedCollectionHelper()` at line ~530, `createOf()` at line ~429

@@ -12,12 +12,12 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Embed;
+namespace Discord\Parts\Channel\Message\Embed;
 
 use Carbon\Carbon;
 use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Channel\Attachment;
+use Discord\Parts\Channel\Message\Attachment;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;

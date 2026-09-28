@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\MessageCommandClient;
 
 use Discord\MessageCommandClient;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 

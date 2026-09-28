@@ -22,7 +22,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Message\MessagePinData;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\User\Member;
@@ -33,6 +33,7 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
+use Discord\Parts\Channel\Message\Message;
 
 use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;

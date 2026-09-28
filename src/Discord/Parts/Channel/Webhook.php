@@ -25,6 +25,7 @@ use Discord\Repository\Channel\WebhookMessageRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Discord\Parts\Channel\Message\Message;
 
 use function React\Promise\reject;
 

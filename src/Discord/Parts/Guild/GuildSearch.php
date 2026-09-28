@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;

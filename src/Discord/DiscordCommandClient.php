@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Discord;
 
 use Discord\CommandClient\Command;
-use Discord\Parts\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**

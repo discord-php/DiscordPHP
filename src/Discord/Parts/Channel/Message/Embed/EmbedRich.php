@@ -12,9 +12,9 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Embed;
+namespace Discord\Parts\Channel\Message\Embed;
 
-class EmbedGifv extends Embed
+class EmbedRich extends Embed
 {
-    public const TYPE = self::TYPE_GIFV;
+    public const TYPE = self::TYPE_RICH;
 }

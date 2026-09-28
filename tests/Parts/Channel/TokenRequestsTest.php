@@ -15,7 +15,7 @@ declare(strict_types=1);
 use Discord\Discord;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\OAuth2\AccessToken;
-use Discord\Parts\Channel\Attachment;
+use Discord\Parts\Channel\Message\Attachment;
 use Discord\Parts\Channel\GroupDM;
 use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\Sticker;

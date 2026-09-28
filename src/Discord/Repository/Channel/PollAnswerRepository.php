@@ -23,7 +23,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @see PollAnswer
  * @see \Discord\Parts\Channel\Poll
- * @see \Discord\Parts\Channel\Message
+ * @see \Discord\Parts\Channel\Message\Message
  *
  * @since 10.0.0
  *
