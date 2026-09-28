@@ -649,6 +649,13 @@
 <dd>Gets the current application of the client.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-User-Client.html#method_getCurrentBotApplication">getCurrentBotApplication()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>&gt;    </span>
+</dt>
+<dd>Gets the bot&#039;s application through Discord&#039;s OAuth2 route, Get Current Bot Application Information.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection">getCurrentUserApplicationRoleConnection()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;    </span>
@@ -3081,6 +3088,67 @@ Without this, isset() is false for every attribute and empty() is true.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getCurrentBotApplication">
+        getCurrentBotApplication()
+        <a href="classes/Discord-Parts-User-Client.html#method_getCurrentBotApplication" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">265</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the bot&#039;s application through Discord&#039;s OAuth2 route, Get Current Bot Application Information.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCurrentBotApplication</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p><abbr title="\Discord\Parts\User\self::getCurrentApplication()">self::getCurrentApplication()</abbr> reads the same application, with more of its fields.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getCurrentBotApplication_tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Client.html#method_getCurrentBotApplication_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/oauth2#get-current-bot-application-information"> https://docs.discord.com/developers/topics/oauth2#get-current-bot-application-information </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.64.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getCurrentUserApplicationRoleConnection">
         getCurrentUserApplicationRoleConnection()
         <a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3420,7 +3488,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">379</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 
     </aside>
 
@@ -3472,7 +3540,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">336</span>
+    <span class="phpdocumentor-element-found-in__line">356</span>
 
     </aside>
 
@@ -3555,7 +3623,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">363</span>
+    <span class="phpdocumentor-element-found-in__line">383</span>
 
     </aside>
 
@@ -3991,7 +4059,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">373</span>
 
     </aside>
 
@@ -4083,7 +4151,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">292</span>
+    <span class="phpdocumentor-element-found-in__line">312</span>
 
     </aside>
 
@@ -4217,7 +4285,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">263</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -4994,7 +5062,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">330</span>
 
     </aside>
 
@@ -5036,7 +5104,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">338</span>
 
     </aside>
 
@@ -5078,7 +5146,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -5358,6 +5426,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentApplication">getCurrentApplication()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentBotApplication">getCurrentBotApplication()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection">getCurrentUserApplicationRoleConnection()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserConnections">getCurrentUserConnections()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>

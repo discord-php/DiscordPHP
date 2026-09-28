@@ -251,12 +251,12 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-guild.html">Guild</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-gateway.html">Gateway</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Widget
+    GetGateway
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -278,20 +278,22 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Gateway/GetGateway.php"><a href="files/src-discord-parts-gateway-getgateway.html"><abbr title="src/Discord/Parts/Gateway/GetGateway.php">GetGateway.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">A Widget of a Guild.</p>
+            <p class="phpdocumentor-summary">The Gateway&#039;s WSS URL, from Get Gateway, which needs no authentication.</p>
 
 
+    <section class="phpdocumentor-description"><p>The URL rarely changes, so it can be cached for a long time.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Guild-Widget.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Gateway-GetGateway.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -299,13 +301,13 @@
                 <span class="phpdocumentor-tag__name">link</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/guild#guild-widget-object"> https://docs.discord.com/developers/resources/guild#guild-widget-object </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway#get-gateway"> https://docs.discord.com/developers/events/gateway#get-gateway </a>
                                     </dd>
                                 <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">since</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                            <span class="phpdocumentor-tag-link">10.64.0</span>
                                                                                                         
                                     </dd>
                         </dl>
@@ -314,7 +316,7 @@
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Guild-Widget.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Gateway-GetGateway.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -324,70 +326,14 @@
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/Discord-Parts-Guild-Widget.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE">STYLE</a>
-    <span>
-        &nbsp;: mixed&nbsp;= [self::STYLE_SHIELD, self::STYLE_BANNER1, self:...                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER1">STYLE_BANNER1</a>
-    <span>
-        &nbsp;: mixed&nbsp;= &#039;banner1&#039;                            </span>
-</dt>
-<dd>Large image with guild icon, name and online count. &quot;POWERED BY DISCORD&quot; as the footer of the widget.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER2">STYLE_BANNER2</a>
-    <span>
-        &nbsp;: mixed&nbsp;= &#039;banner2&#039;                            </span>
-</dt>
-<dd>* Smaller widget style with guild icon, name and online count. Split on the right with Discord logo.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER3">STYLE_BANNER3</a>
-    <span>
-        &nbsp;: mixed&nbsp;= &#039;banner3&#039;                            </span>
-</dt>
-<dd>Large image with guild icon, name and online count. In the footer, Discord logo on the left and &quot;Chat Now&quot; on the right.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER4">STYLE_BANNER4</a>
-    <span>
-        &nbsp;: mixed&nbsp;= &#039;banner4&#039;                            </span>
-</dt>
-<dd>Large Discord logo at the top of the widget. Guild icon, name and online
-count in the middle portion of the widget and a &quot;JOIN MY SERVER&quot; button
-at the bottom.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_SHIELD">STYLE_SHIELD</a>
-    <span>
-        &nbsp;: mixed&nbsp;= &#039;shield&#039;                            </span>
-</dt>
-<dd>Shield style widget with Discord icon and guild members online count.</dd>
-
-    </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Guild-Widget.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Gateway-GetGateway.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_channels">$channels</a>
-    <span>
-                        &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
@@ -396,53 +342,17 @@ at the bottom.</dd>
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_guild">$guild</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_id">$id</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_image">$image</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_instant_invite">$instant_invite</a>
-    <span>
-                        &nbsp;: ?string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_members">$members</a>
-    <span>
-                        &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_name">$name</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_presence_count">$presence_count</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="-deprecated" href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a>
     <span>
                         &nbsp;: mixed            </span>
 </dt>
 <dd>Custom script data.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Gateway-GetGateway.html#property_url">$url</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a>
@@ -466,7 +376,7 @@ at the bottom.</dd>
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Gateway-GetGateway.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -511,7 +421,7 @@ at the bottom.</dd>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Guild-Widget.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Gateway-GetGateway.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -572,11 +482,11 @@ at the bottom.</dd>
 <dd>Restores attributes from PHP native unserialization.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_fetch">fetch()</a>
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;    </span>
 </dt>
-<dd>Fetches the full Part from the Discord API and refills it in place.</dd>
+<dd>Fetches any missing information about the part from Discord&#039;s servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a>
@@ -605,21 +515,6 @@ at the bottom.</dd>
                                 &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>    </span>
 </dt>
 <dd>Get the Discord instance that owns this Part.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_getImage">getImage()</a>
-    <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, string&gt;    </span>
-</dt>
-<dd>Downloads the guild&#039;s PNG widget image. Requires no permissions or authentication.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_getImageAttribute">getImageAttribute()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Returns a PNG image widget for the guild. Requires no permissions or
-authentication.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes">getPublicAttributes()</a>
@@ -778,27 +673,6 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_getChannelsAttribute">getChannelsAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;    </span>
-</dt>
-<dd>Returns the channels attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_getGuildAttribute">getGuildAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
-</dt>
-<dd>Returns the guild attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_getMembersAttribute">getMembersAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;    </span>
-</dt>
-<dd>Returns the members attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -819,259 +693,19 @@ JSON. Used for JsonSerializable.</dd>
 </dt>
 <dd>Converts a string to studlyCase.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-Guild-Widget.html#method_withStyle">withStyle()</a>
-    <span>
-                                &nbsp;: <abbr title="\Discord\Http\Endpoint">Endpoint</abbr>    </span>
-</dt>
-<dd>Adds the widget image style to its endpoint, when it is one Discord knows.</dd>
-
     </dl>
 
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Discord-Parts-Guild-Widget.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STYLE">
-        STYLE
-        <a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">80</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STYLE</span>
-    = <span class="phpdocumentor-signature__default-value">[self::STYLE_SHIELD, self::STYLE_BANNER1, self::STYLE_BANNER2, self::STYLE_BANNER3, self::STYLE_BANNER4]</span>
-</code>
-
-
-    
-    
-    
-
-        
-    </article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STYLE_BANNER1">
-        STYLE_BANNER1
-        <a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER1" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">65</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Large image with guild icon, name and online count. &quot;POWERED BY DISCORD&quot; as the footer of the widget.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STYLE_BANNER1</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;banner1&#039;</span>
-</code>
-
-
-    
-    
-    
-
-        
-    </article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STYLE_BANNER2">
-        STYLE_BANNER2
-        <a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER2" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">68</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">* Smaller widget style with guild icon, name and online count. Split on the right with Discord logo.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STYLE_BANNER2</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;banner2&#039;</span>
-</code>
-
-
-    
-    
-    
-
-        
-    </article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STYLE_BANNER3">
-        STYLE_BANNER3
-        <a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER3" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">71</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Large image with guild icon, name and online count. In the footer, Discord logo on the left and &quot;Chat Now&quot; on the right.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STYLE_BANNER3</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;banner3&#039;</span>
-</code>
-
-
-    
-    
-    
-
-        
-    </article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STYLE_BANNER4">
-        STYLE_BANNER4
-        <a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER4" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">78</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Large Discord logo at the top of the widget. Guild icon, name and online
-count in the middle portion of the widget and a &quot;JOIN MY SERVER&quot; button
-at the bottom.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STYLE_BANNER4</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;banner4&#039;</span>
-</code>
-
-
-    
-    
-    
-
-        
-    </article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STYLE_SHIELD">
-        STYLE_SHIELD
-        <a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_SHIELD" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">62</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Shield style widget with Discord icon and guild members online count.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STYLE_SHIELD</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;shield&#039;</span>
-</code>
-
-
-    
-    
-    
-
-        
-    </article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Guild-Widget.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Gateway-GetGateway.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_channels">
-        $channels
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_channels" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$channels</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Voice and stage channels which are accessible by @everyone.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -1117,277 +751,6 @@ at the bottom.</p>
             phpdocumentor-element
             -property
             -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild">
-        $guild
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$guild</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_id">
-        $id
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild id.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_image">
-        $image
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_image" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$image</span>
-    </code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_instant_invite">
-        $instant_invite
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_instant_invite" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">?string</span>
-    <span class="phpdocumentor-signature__name">$instant_invite</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Instant invite for the guilds specified widget invite channel.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_members">
-        $members
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_members" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$members</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Special widget user objects that includes users presence (Limit 100).</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_name">
-        $name
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$name</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild name (2-100 characters).</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_presence_count">
-        $presence_count
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_presence_count" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$presence_count</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Number of online members in this guild.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
                         -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
@@ -1421,6 +784,45 @@ at the bottom.</p>
     </code>
 
         <section class="phpdocumentor-description"><p>Used for storing custom information, used by end products.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_url">
+        $url
+        <a href="classes/Discord-Parts-Gateway-GetGateway.html#property_url" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Gateway/GetGateway.php"><a href="files/src-discord-parts-gateway-getgateway.html"><abbr title="src/Discord/Parts/Gateway/GetGateway.php">GetGateway.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$url</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>WSS URL that can be used for connecting to the Gateway.</p>
 </section>
 
     
@@ -1559,15 +961,15 @@ at the bottom.</p>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Gateway-GetGateway.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Gateway/GetGateway.php"><a href="files/src-discord-parts-gateway-getgateway.html"><abbr title="src/Discord/Parts/Gateway/GetGateway.php">GetGateway.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -1578,7 +980,7 @@ at the bottom.</p>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;name&#039;, &#039;instant_invite&#039;, &#039;channels&#039;, &#039;members&#039;, &#039;presence_count&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;url&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1587,7 +989,7 @@ at the bottom.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="property_fillable_tags">
         Tags
-        <a href="classes/Discord-Parts-Guild-Widget.html#property_fillable_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Gateway-GetGateway.html#property_fillable_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -1804,7 +1206,7 @@ at the bottom.</p>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Guild-Widget.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Gateway-GetGateway.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -2294,21 +1696,21 @@ Without this, isset() is false for every attribute and empty() is true.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_fetch">
         fetch()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_fetch" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_fetch" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Fetches the full Part from the Discord API and refills it in place.</p>
+        <p class="phpdocumentor-summary">Fetches any missing information about the part from Discord&#039;s servers.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2318,15 +1720,18 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="method_fetch_tags">
         Tags
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_fetch_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_fetch_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">inheritDoc</span>
+                <span class="phpdocumentor-tag__name">throws</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>The part is not fetchable.</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -2334,7 +1739,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span>
             </section>
 
 </article>
@@ -2531,133 +1936,6 @@ Without this, isset() is false for every attribute and empty() is true.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getImage">
-        getImage()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_getImage" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">158</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Downloads the guild&#039;s PNG widget image. Requires no permissions or authentication.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getImage</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><abbr title="\self::STYLE_SHIELD">self::STYLE_SHIELD</abbr></span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, string&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$style</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string</span>
-                 = <span class="phpdocumentor-argument-list__argument__default-value"><abbr title="\self::STYLE_SHIELD">self::STYLE_SHIELD</abbr></span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Style of the widget image returned (default 'shield').</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="method_getImage_tags">
-        Tags
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_getImage_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">link</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/guild#get-guild-widget-image"> https://docs.discord.com/developers/resources/guild#get-guild-widget-image </a>
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.64.0</span>
-                                                                                                        
-                                    </dd>
-                        </dl>
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, string&gt;</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The PNG image's bytes.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getImageAttribute">
-        getImageAttribute()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_getImageAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">140</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns a PNG image widget for the guild. Requires no permissions or
-authentication.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getImageAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><abbr title="\self::STYLE_SHIELD">self::STYLE_SHIELD</abbr></span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$style</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string</span>
-                 = <span class="phpdocumentor-argument-list__argument__default-value"><abbr title="\self::STYLE_SHIELD">self::STYLE_SHIELD</abbr></span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Style of the widget image returned (default 'shield').</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
             </section>
 
 </article>
@@ -4039,131 +3317,6 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getChannelsAttribute">
-        getChannelsAttribute()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_getChannelsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">117</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the channels attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getChannelsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>A collection of channels.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
-        getGuildAttribute()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">107</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the guild attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getMembersAttribute">
-        getMembersAttribute()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_getMembersAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">127</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the members attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getMembersAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>&gt;</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>A collection of members.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_makeOptionalAttributes">
         makeOptionalAttributes()
         <a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4337,62 +3490,6 @@ static as we may move it outside this class in future.</p>
             </section>
 
 </article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_withStyle">
-        withStyle()
-        <a href="classes/Discord-Parts-Guild-Widget.html#method_withStyle" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Widget.php"><a href="files/src-discord-parts-guild-widget.html"><abbr title="src/Discord/Parts/Guild/Widget.php">Widget.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">181</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Adds the widget image style to its endpoint, when it is one Discord knows.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">withStyle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Discord\Http\Endpoint">Endpoint</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$endpoint</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Http\Endpoint">Endpoint</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$endpoint</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Discord\Http\Endpoint">Endpoint</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$style</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Http\Endpoint">Endpoint</abbr></span>
-            </section>
-
-</article>
             </section>
 
         
@@ -4407,40 +3504,21 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Parts-Guild-Widget.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-Parts-Guild-Widget.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Guild-Widget.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Gateway-GetGateway.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Gateway-GetGateway.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE">STYLE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER1">STYLE_BANNER1</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER2">STYLE_BANNER2</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER3">STYLE_BANNER3</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER4">STYLE_BANNER4</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#constant_STYLE_SHIELD">STYLE_SHIELD</a></li>
-                                            </ul>
-                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_channels">$channels</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_id">$id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_image">$image</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_instant_invite">$instant_invite</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_members">$members</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_name">$name</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_presence_count">$presence_count</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Gateway-GetGateway.html#property_url">$url</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Gateway-GetGateway.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -4460,13 +3538,11 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_fetch">fetch()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_getImage">getImage()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_getImageAttribute">getImageAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes">getPublicAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRawAttributes">getRawAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRepository">getRepository()</a></li>
@@ -4489,13 +3565,9 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_getChannelsAttribute">getChannelsAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_getGuildAttribute">getGuildAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_getMembersAttribute">getMembersAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Widget.html#method_withStyle">withStyle()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -4515,7 +3587,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Guild-Widget.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Gateway-GetGateway.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

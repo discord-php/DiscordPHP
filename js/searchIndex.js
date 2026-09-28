@@ -3301,6 +3301,11 @@ Search.appendIndex(
             "summary": "Handles\u0020voice\u0020server\u0020update\u0020events.",
             "url": "classes/Discord-Discord.html#method_voiceServerUpdate"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AgetGateway\u0028\u0029",
+            "name": "getGateway",
+            "summary": "Gets\u0020the\u0020Gateway\u0027s\u0020WSS\u0020URL\u0020from\u0020Get\u0020Gateway.",
+            "url": "classes/Discord-Discord.html#method_getGateway"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AsetGateway\u0028\u0029",
             "name": "setGateway",
             "summary": "Retrieves\u0020and\u0020sets\u0020the\u0020gateway\u0020URL\u0020for\u0020the\u0020client.",
@@ -8626,6 +8631,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Embed-Video.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\GetGateway",
+            "name": "GetGateway",
+            "summary": "The\u0020Gateway\u0027s\u0020WSS\u0020URL,\u0020from\u0020Get\u0020Gateway,\u0020which\u0020needs\u0020no\u0020authentication.",
+            "url": "classes/Discord-Parts-Gateway-GetGateway.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\GetGateway\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-GetGateway.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Gateway\\GetGatewayBot",
             "name": "GetGatewayBot",
             "summary": "An\u0020object\u0020based\u0020on\u0020the\u0020information\u0020in\u0020Get\u0020Gateway,\nplus\u0020additional\u0020metadata\u0020that\u0020can\u0020help\u0020during\u0020the\u0020operation\u0020of\u0020large\u0020or\u0020sharded\u0020bots.",
@@ -11391,6 +11406,16 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020PNG\u0020image\u0020widget\u0020for\u0020the\u0020guild.\u0020Requires\u0020no\u0020permissions\u0020or\nauthentication.",
             "url": "classes/Discord-Parts-Guild-Widget.html#method_getImageAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003AgetImage\u0028\u0029",
+            "name": "getImage",
+            "summary": "Downloads\u0020the\u0020guild\u0027s\u0020PNG\u0020widget\u0020image.\u0020Requires\u0020no\u0020permissions\u0020or\u0020authentication.",
+            "url": "classes/Discord-Parts-Guild-Widget.html#method_getImage"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003AwithStyle\u0028\u0029",
+            "name": "withStyle",
+            "summary": "Adds\u0020the\u0020widget\u0020image\u0020style\u0020to\u0020its\u0020endpoint,\u0020when\u0020it\u0020is\u0020one\u0020Discord\u0020knows.",
+            "url": "classes/Discord-Parts-Guild-Widget.html#method_withStyle"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_SHIELD",
             "name": "STYLE_SHIELD",
             "summary": "Shield\u0020style\u0020widget\u0020with\u0020Discord\u0020icon\u0020and\u0020guild\u0020members\u0020online\u0020count.",
@@ -12570,6 +12595,16 @@ Search.appendIndex(
             "name": "Application",
             "summary": "The\u0020OAuth2\u0020application\u0020of\u0020the\u0020bot.",
             "url": "classes/Discord-Parts-OAuth-Application.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003Afetch\u0028\u0029",
+            "name": "fetch",
+            "summary": "Gets\u0020the\u0020application\u0020from\u0020Discord\u0020by\u0020its\u0020ID,\u0020which\u0020must\u0020be\u0020the\u0020bot\u0027s\u0020own\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_fetch"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Edits\u0020the\u0020application\u0020by\u0020its\u0020ID,\u0020which\u0020must\u0020be\u0020the\u0020bot\u0027s\u0020own\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_update"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetApplicationRoleConnectionMetadataRecords\u0028\u0029",
             "name": "getApplicationRoleConnectionMetadataRecords",
@@ -14110,6 +14145,11 @@ Search.appendIndex(
             "name": "getCurrentApplication",
             "summary": "Gets\u0020the\u0020current\u0020application\u0020of\u0020the\u0020client.",
             "url": "classes/Discord-Parts-User-Client.html#method_getCurrentApplication"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetCurrentBotApplication\u0028\u0029",
+            "name": "getCurrentBotApplication",
+            "summary": "Gets\u0020the\u0020bot\u0027s\u0020application\u0020through\u0020Discord\u0027s\u0020OAuth2\u0020route,\u0020Get\u0020Current\u0020Bot\u0020Application\u0020Information.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getCurrentBotApplication"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AupdateCurrentApplication\u0028\u0029",
             "name": "updateCurrentApplication",

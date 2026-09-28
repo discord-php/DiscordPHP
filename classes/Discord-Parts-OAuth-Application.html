@@ -812,11 +812,11 @@
 <dd>Restores attributes from PHP native unserialization.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a>
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#method_fetch">fetch()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;    </span>
 </dt>
-<dd>Fetches any missing information about the part from Discord&#039;s servers.</dd>
+<dd>Gets the application from Discord by its ID, which must be the bot&#039;s own application.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a>
@@ -980,6 +980,13 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Unserializes some data and stores it. Used for Serializable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#method_update">update()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;    </span>
+</dt>
+<dd>Edits the application by its ID, which must be the bot&#039;s own application.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords">updateApplicationRoleConnectionMetadataRecords()</a>
@@ -4061,17 +4068,17 @@ Without this, isset() is false for every attribute and empty() is true.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_fetch">
         fetch()
-        <a href="classes/Discord-Parts-PartTrait.html#method_fetch" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_fetch" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Fetches any missing information about the part from Discord&#039;s servers.</p>
+        <p class="phpdocumentor-summary">Gets the application from Discord by its ID, which must be the bot&#039;s own application.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -4085,18 +4092,22 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="method_fetch_tags">
         Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_fetch_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_fetch_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">throws</span>
+                <span class="phpdocumentor-tag__name">link</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
-                                                                                        <section class="phpdocumentor-description"><p>The part is not fetchable.</p>
-</section>
-
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/application#get-current-application"> https://docs.discord.com/developers/resources/application#get-current-application </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.64.0</span>
+                                                                                                        
                                     </dd>
                         </dl>
 
@@ -4183,7 +4194,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 
@@ -4252,7 +4263,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -4372,7 +4383,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">369</span>
+    <span class="phpdocumentor-element-found-in__line">414</span>
 
     </aside>
 
@@ -4514,7 +4525,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">291</span>
+    <span class="phpdocumentor-element-found-in__line">336</span>
 
     </aside>
 
@@ -4578,7 +4589,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">410</span>
+    <span class="phpdocumentor-element-found-in__line">455</span>
 
     </aside>
 
@@ -4799,7 +4810,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">422</span>
+    <span class="phpdocumentor-element-found-in__line">467</span>
 
     </aside>
 
@@ -5439,6 +5450,80 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_update">
+        update()
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_update" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">198</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Edits the application by its ID, which must be the bot&#039;s own application.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">update</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>The fields are those of Discord's Edit Current Application, such as <code class="prettyprint">description</code>, <code class="prettyprint">tags</code>, <code class="prettyprint">flags</code>,
+<code class="prettyprint">interactions_endpoint_url</code> or <code class="prettyprint">install_params</code>. <code class="prettyprint">icon</code> and <code class="prettyprint">cover_image</code> take image data URIs.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$options</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The fields to change. All are optional.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_update_tags">
+        Tags
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_update_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/application#edit-current-application"> https://docs.discord.com/developers/resources/application#edit-current-application </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.64.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_updateApplicationRoleConnectionMetadataRecords">
         updateApplicationRoleConnectionMetadataRecords()
         <a href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5447,7 +5532,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">199</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
@@ -5522,7 +5607,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">262</span>
+    <span class="phpdocumentor-element-found-in__line">307</span>
 
     </aside>
 
@@ -6172,7 +6257,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">320</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
@@ -6215,7 +6300,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">388</span>
+    <span class="phpdocumentor-element-found-in__line">433</span>
 
     </aside>
 
@@ -6258,7 +6343,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">355</span>
 
     </aside>
 
@@ -6301,7 +6386,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">398</span>
+    <span class="phpdocumentor-element-found-in__line">443</span>
 
     </aside>
 
@@ -6344,7 +6429,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">338</span>
+    <span class="phpdocumentor-element-found-in__line">383</span>
 
     </aside>
 
@@ -6387,7 +6472,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">356</span>
+    <span class="phpdocumentor-element-found-in__line">401</span>
 
     </aside>
 
@@ -6701,7 +6786,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_getActivityInstance">getActivityInstance()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_getApplicationRoleConnectionMetadataRecords">getApplicationRoleConnectionMetadataRecords()</a></li>
@@ -6725,6 +6810,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_save">save()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_update">update()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords">updateApplicationRoleConnectionMetadataRecords()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_uploadAttachment">uploadAttachment()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
