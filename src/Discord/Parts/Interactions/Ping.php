@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
+use Discord\Parts\Interactions\Request\InteractionData;
+
 /**
  * @since 10.19.0
  *
@@ -29,9 +31,9 @@ class Ping extends Interaction
     protected $type = Interaction::TYPE_PING;
 
     /**
-     * Returns the data associated with the interaction.
+     * Returns the data associated with the interaction: a ping has none.
      */
-    protected function getDataAttribute(): null
+    protected function getDataAttribute(): ?InteractionData
     {
         return null;
     }
