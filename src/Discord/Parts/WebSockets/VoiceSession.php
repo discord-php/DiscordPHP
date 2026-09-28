@@ -102,4 +102,14 @@ class VoiceSession extends Part
 
         return $this->discord->getChannel($this->attributes['channel_id']);
     }
+
+    /**
+     * Gets the string representation of the voice session.
+     * 
+     * @return string The session ID as a string.
+     */
+    public function __toString(): string
+    {
+        return (string) $this->session_id;
+    }
 }
