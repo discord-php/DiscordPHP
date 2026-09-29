@@ -51,6 +51,8 @@ class Entry extends Part
     public const CHANNEL_OVERWRITE_UPDATE = 14;
     /** Permission overwrite was deleted from a channel. */
     public const CHANNEL_OVERWRITE_DELETE = 15;
+    /** Channel positions were updated. */
+    public const CHANNEL_POSITION_UPDATE = 16;
     /** Member was removed from server. */
     public const MEMBER_KICK = 20;
     /** Members were pruned from server. */
@@ -75,6 +77,8 @@ class Entry extends Part
     public const ROLE_UPDATE = 31;
     /** Role was deleted. */
     public const ROLE_DELETE = 32;
+    /** Role positions were updated. */
+    public const ROLE_POSITION_UPDATE = 35;
     /** Server invite was created. */
     public const INVITE_CREATE = 40;
     /** Server invite was updated. */
