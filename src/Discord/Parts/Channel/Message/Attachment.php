@@ -34,12 +34,12 @@ use Discord\Parts\User\User;
  * @property string|null       $content_type        The attachment's media type.
  * @property int               $size                Size of file in bytes.
  * @property string            $url                 Source url of file.
- * @property string            $proxy_url           A proxied url of file.
+ * @property string            $proxy_url           A proxied url of file. Supports images and videos (which have a defined `width` and `height`) as well as audio files, which are passed through unmodified. For all other attachment types, the proxy returns a `415: Unsupported Media Type` error.
  * @property ?int|null         $height              Height of file (if image).
  * @property ?int|null         $width               Width of file (if image).
  * @property ?string|null      $placeholder         Thumbhash placeholder (if image or video).
  * @property ?int|null         $placeholder_version Version of the placeholder (if image or video)
- * @property bool|null         $ephemeral           Whether this attachment is ephemeral.
+ * @property bool|null         $ephemeral           Whether this attachment is ephemeral. Ephemeral attachments will automatically be removed after a set period of time. Ephemeral attachments on messages are guaranteed to be available as long as the message itself exists.
  * @property float|null        $duration_secs       The duration of the audio file (currently for voice messages).
  * @property string|null       $waveform            Base64 encoded bytearray representing a sampled waveform (currently for voice messages).
  * @property int|null          $flags               Attachment flags combined as a bitfield.

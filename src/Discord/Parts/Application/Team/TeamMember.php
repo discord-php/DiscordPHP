@@ -26,7 +26,7 @@ use Discord\Parts\User\User;
  *
  * @property int    $membership_state User's membership state on the team (1 = Invited, 2 = Accepted).
  * @property string $team_id          ID of the parent team of which they are a member.
- * @property User   $user             Partial user object (avatar, discriminator, ID, username).
+ * @property User   $user             User object of the team member.
  * @property string $role             Role of the team member (Owner, Admin, Developer, or Read-only).
  */
 class TeamMember extends Part
