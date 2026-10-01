@@ -24,6 +24,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Contains bans for users of a guild.
+ * 
+ * `GET` requires either the `BAN_MEMBERS` or `VIEW_AUDIT_LOG` permission.
  *
  * @see Ban
  * @see \Discord\Parts\Guild\Guild
