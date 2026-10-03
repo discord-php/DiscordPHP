@@ -115,6 +115,28 @@ final class SessionTest extends DiscordTestCase
         });
     }
 
+    public function testChannelMessagesAreReadWithTheUsersToken()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$session, $driver] = $this->sessionWith(fn () => [['id' => '9', 'content' => 'gg', 'channel_id' => '99']]);
+
+            $session->getChannelMessages('99', ['limit' => 10, 'before' => '50'])
+                ->then(function ($messages) use ($driver, $session) {
+                    $this->assertStringEndsWith('/channels/99/messages?limit=10&before=50', $driver->requests[0]['url']);
+                    $this->assertSame($session->getToken()->authorization(), $driver->requests[0]['headers']['Authorization']);
+                    $this->assertInstanceOf(\Discord\Parts\Channel\Message\Message::class, $messages->first());
+                })
+                ->then(function () use ($session, $driver) {
+                    return $session->getChannelMessages('99', ['before' => '1', 'after' => '2'])->then(
+                        fn () => $this->fail('before and after cannot be combined'),
+                        fn (\Throwable $e) => $this->assertInstanceOf(\RangeException::class, $e)
+                    );
+                })
+                ->then(fn () => $this->assertCount(1, $driver->requests))
+                ->then($resolve, $resolve);
+        });
+    }
+
     public function testThePlayerInvitesThemself()
     {
         return wait(function (Discord $discord, $resolve) {
