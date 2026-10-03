@@ -24,6 +24,8 @@ use Discord\Parts\Application\Command\Command;
 use Discord\Parts\Application\Command\Permission;
 use Discord\Parts\Application\Entitlement;
 use Discord\Parts\Application\Application;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\OAuth\Authorization;
 use Discord\Parts\OAuth\UserInfo;
 use Discord\Parts\Part;
@@ -32,6 +34,7 @@ use Discord\Parts\User\Connection;
 use Discord\Parts\User\User;
 use Discord\Repository\SessionLobbyRepository;
 use React\Promise\PromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
 
@@ -239,6 +242,57 @@ class Session
 
         return $this->forApplication($application, fn (string $id) => $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS, $id, $guild_id, $command_id), ['permissions' => $permissions])
             ->then(fn ($response) => $this->discord->getFactory()->part(CommandPermissions::class, (array) $response, true)));
+    }
+
+    /**
+     * Returns a channel's message history as the user, newest first.
+     *
+     * Discord accepts the user's token here when it has the `messages.read` scope and the user can read the
+     * channel's history.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#get-channel-messages
+     *
+     * @param Channel|string      $channel           The channel or its id.
+     * @param array               $options           Array of options.
+     * @param string|Message|null $options['around'] Get messages around this message ID.
+     * @param string|Message|null $options['before'] Get messages before this message ID.
+     * @param string|Message|null $options['after']  Get messages after this message ID.
+     * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
+     *
+     * @return PromiseInterface<ExCollectionInterface<Message>|Message[]>
+     */
+    public function getChannelMessages($channel, array $options = []): PromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['limit' => 50]);
+        $resolver->setDefined(['before', 'after', 'around']);
+        $resolver->setAllowedTypes('before', [Message::class, 'string']);
+        $resolver->setAllowedTypes('after', [Message::class, 'string']);
+        $resolver->setAllowedTypes('around', [Message::class, 'string']);
+        $resolver->setAllowedTypes('limit', 'integer');
+        $resolver->setAllowedValues('limit', fn ($value) => $value >= 1 && $value <= 100);
+
+        try {
+            $options = $resolver->resolve($options);
+        } catch (\Throwable $e) {
+            return reject($e);
+        }
+
+        if (count(array_intersect_key($options, array_flip(['before', 'after', 'around']))) > 1) {
+            return reject(new \RangeException('Can only specify one of before, after and around.'));
+        }
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $channel instanceof Part ? $channel->id : (string) $channel);
+        $endpoint->addQuery('limit', $options['limit']);
+
+        foreach (['before', 'after', 'around'] as $key) {
+            if (isset($options[$key])) {
+                $endpoint->addQuery($key, $options[$key] instanceof Message ? $options[$key]->id : $options[$key]);
+            }
+        }
+
+        return $this->http->get($endpoint)
+            ->then(fn ($response) => $this->collect(Message::class, $response));
     }
 
     /**
