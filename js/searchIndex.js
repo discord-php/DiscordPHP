@@ -5086,6 +5086,11 @@ Search.appendIndex(
             "summary": "Sets\u0020who\u0020can\u0020use\u0020one\u0020of\u0020an\u0020application\u0027s\u0020commands\u0020in\u0020a\u0020guild,\u0020replacing\u0020the\u0020permissions\u0020it\u0020had\u0020there.",
             "url": "classes/Discord-OAuth2-Session.html#method_setCommandPermissions"
         },                {
+            "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003AgetChannelMessages\u0028\u0029",
+            "name": "getChannelMessages",
+            "summary": "Returns\u0020a\u0020channel\u0027s\u0020message\u0020history\u0020as\u0020the\u0020user,\u0020newest\u0020first.",
+            "url": "classes/Discord-OAuth2-Session.html#method_getChannelMessages"
+        },                {
             "fqsen": "\\Discord\\OAuth2\\Session\u003A\u003A__get\u0028\u0029",
             "name": "__get",
             "summary": "Exposes\u0020the\u0020read\u002Donly\u0020\u0060lobbies\u0060\u0020repository.",
@@ -9586,6 +9591,11 @@ Search.appendIndex(
             "summary": "Permission\u0020overwrite\u0020was\u0020deleted\u0020from\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_OVERWRITE_DELETE"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_POSITION_UPDATE",
+            "name": "CHANNEL_POSITION_UPDATE",
+            "summary": "Channel\u0020positions\u0020were\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_POSITION_UPDATE"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_KICK",
             "name": "MEMBER_KICK",
             "summary": "Member\u0020was\u0020removed\u0020from\u0020server.",
@@ -9645,6 +9655,11 @@ Search.appendIndex(
             "name": "ROLE_DELETE",
             "summary": "Role\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ROLE_DELETE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AROLE_POSITION_UPDATE",
+            "name": "ROLE_POSITION_UPDATE",
+            "summary": "Role\u0020positions\u0020were\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ROLE_POSITION_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINVITE_CREATE",
             "name": "INVITE_CREATE",

@@ -1341,7 +1341,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$ephemeral</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether this attachment is ephemeral.</p>
+        <section class="phpdocumentor-description"><p>Whether this attachment is ephemeral. Ephemeral attachments will automatically be removed after a set period of time. Ephemeral attachments on messages are guaranteed to be available as long as the message itself exists.</p>
 </section>
 
     
@@ -1614,7 +1614,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$proxy_url</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>A proxied url of file.</p>
+        <section class="phpdocumentor-description"><p>A proxied url of file. Supports images and videos (which have a defined <code class="prettyprint">width</code> and <code class="prettyprint">height</code>) as well as audio files, which are passed through unmodified. For all other attachment types, the proxy returns a <code class="prettyprint">415: Unsupported Media Type</code> error.</p>
 </section>
 
     
