@@ -342,6 +342,7 @@ class Embed extends Part
                 throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
+            /*
             if ($field instanceof Field) {
                 $field = $field->getRawAttributes();
             }
@@ -360,6 +361,7 @@ class Embed extends Part
             if ($this->exceedsOverallLimit($nameLength + $valueLength)) {
                 throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
+            */
 
             $this->attributes['fields'][] = $field;
         }
