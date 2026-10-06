@@ -42,7 +42,7 @@ class Field extends Part
      * Gets the inline attribute.
      *
      * @return bool The inline attribute.
-     * 
+     *
      * @todo v11 Return bool|null and exclude field from json serialization if null.
      */
     protected function getInlineAttribute(): bool
