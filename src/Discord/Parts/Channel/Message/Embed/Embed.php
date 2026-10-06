@@ -328,7 +328,7 @@ class Embed extends Part
     /**
      * Adds a field to the embed.
      *
-     * @param Field|array $fields
+     * @param Field[] $fields
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      * @throws \LengthException   A field name is over 256 characters, a value over 1024, or the embed's text over 6000.
@@ -342,7 +342,6 @@ class Embed extends Part
                 throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
-            /*
             if ($field instanceof Field) {
                 $field = $field->getRawAttributes();
             }
@@ -361,7 +360,6 @@ class Embed extends Part
             if ($this->exceedsOverallLimit($nameLength + $valueLength)) {
                 throw new \LengthException('Embed text values collectively can not exceed 6000 characters');
             }
-            */
 
             $this->attributes['fields'][] = $field;
         }
@@ -374,20 +372,27 @@ class Embed extends Part
      *
      * @param string $name   Maximum length is 256 characters.
      * @param string $value  Maximum length is 1024 characters.
-     * @param bool   $inline Whether this field gets shown with other inline fields on one line.
+     * @param ?bool  $inline Whether this field gets shown with other inline fields on one line.
      *
      * @throws \OverflowException
      * @throws \LengthException
      *
      * @return self
      */
-    public function addFieldValues(string $name, string $value, bool $inline = false): self
+    public function addFieldValues(string $name, string $value, ?bool $inline = null): self
     {
-        return $this->addField([
+        $field = [
             'name' => $name,
-            'value' => $value,
-            'inline' => $inline,
-        ]);
+            'value' => $value
+        ];
+
+        if ($inline !== null) {
+            $field['inline'] = $inline;
+        }
+
+        $this->factory->part(Field::class, $field);
+
+        return $this->addField($field);
     }
 
     /**
