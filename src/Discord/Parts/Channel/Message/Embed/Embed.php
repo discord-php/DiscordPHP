@@ -370,9 +370,9 @@ class Embed extends Part
     /**
      * Adds a field to the embed with values.
      *
-     * @param string $name   Maximum length is 256 characters.
-     * @param string $value  Maximum length is 1024 characters.
-     * @param ?bool  $inline Whether this field gets shown with other inline fields on one line.
+     * @param string    $name   Maximum length is 256 characters.
+     * @param string    $value  Maximum length is 1024 characters.
+     * @param bool|null $inline Whether this field gets shown with other inline fields on one line.
      *
      * @throws \OverflowException
      * @throws \LengthException
@@ -383,7 +383,7 @@ class Embed extends Part
     {
         $field = [
             'name' => $name,
-            'value' => $value
+            'value' => $value,
         ];
 
         if ($inline !== null) {
