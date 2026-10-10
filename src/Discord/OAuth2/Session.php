@@ -20,6 +20,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Application\Command\CommandPermissions;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Member\GuildSearch;
 use Discord\Parts\Application\Command\Command;
 use Discord\Parts\Application\Command\Permission;
 use Discord\Parts\Application\Entitlement;
@@ -293,6 +294,38 @@ class Session
 
         return $this->http->get($endpoint)
             ->then(fn ($response) => $this->collect(Message::class, $response));
+    }
+
+    /**
+     * Searches a guild's messages as the user.
+     *
+     * Discord's OpenAPI description accepts a user's token here as well as a bot's, without naming the
+     * scope it needs. The user needs the read_message_history permission in the channels searched. Takes
+     * the same query parameters as the guild's `messages` repository.
+     *
+     * @link https://docs.discord.com/developers/resources/message#search-guild-messages
+     *
+     * @param Guild|string $guild       The guild or its id.
+     * @param array        $queryparams Query string params to add to the request, at least one (no validation).
+     *
+     * @see \Discord\Repository\Guild\MessageRepository::freshen() for the query parameters.
+     *
+     * @return PromiseInterface<GuildSearch>
+     */
+    public function searchGuildMessages($guild, array $queryparams): PromiseInterface
+    {
+        if (empty($queryparams)) {
+            return reject(new \InvalidArgumentException('Query parameters are required.'));
+        }
+
+        $endpoint = Endpoint::bind(Endpoint::GUILD_MESSAGES_SEARCH, $guild instanceof Part ? $guild->id : (string) $guild);
+
+        foreach ($queryparams as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        return $this->http->get($endpoint)
+            ->then(fn ($response) => $this->discord->getFactory()->part(GuildSearch::class, (array) $response, true));
     }
 
     /**

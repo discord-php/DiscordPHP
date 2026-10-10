@@ -1,7 +1,7 @@
 {
-    "spec": "https://github.com/discord/discord-api-spec/blob/9426d3c1d4b103484283d7feb568f2ef142712de/specs/openapi_preview.json",
-    "commit": "9426d3c1d4b103484283d7feb568f2ef142712de",
-    "date": "2026-10-02",
+    "spec": "https://github.com/discord/discord-api-spec/blob/1ff2dee3677fabef7b49f942bbae93d06c0c9f2c/specs/openapi_preview.json",
+    "commit": "1ff2dee3677fabef7b49f942bbae93d06c0c9f2c",
+    "date": "2026-10-08",
     "unimplemented": {
         "GET /channels/{channel_id}/pins": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
         "PUT /channels/{channel_id}/pins/{message_id}": "Deprecated. DiscordPHP pins through the /channels/{channel_id}/messages/pins routes that replace it.",
