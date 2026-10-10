@@ -40,7 +40,7 @@ jobs:
           yarn build
           sudo mv public/* ../build
       - name: Publish docs
-        uses: JamesIves/github-pages-deploy-action@v4.8.0
+        uses: JamesIves/github-pages-deploy-action@v4.9.0
         with:
           token: ${{ github.token }}
           branch: gh-pages
