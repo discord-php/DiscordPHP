@@ -209,6 +209,92 @@ final class OpenApiCheckTest extends TestCase
         $this->assertStringContainsString("Not sent by DiscordPHP, and new since the baseline (1)\n  GET /channels/{channel_id}/messages  list_messages  (Endpoint::CHANNEL_MESSAGES is only sent POST)", $report);
     }
 
+    public function testWhatOnlyThePreviewDescribesIsMarked()
+    {
+        $baseline = $this->spec();
+        $stable = $this->spec();
+        $stable['components']['schemas']['MessageResponse']['properties']['pinned'] = ['type' => 'boolean'];
+        $preview = $stable;
+        $preview['paths']['/guilds/{guild_id}/messages/search']['get'] = ['operationId' => 'search_guild_messages', 'responses' => ['200' => ['description' => 'ok']]];
+        $preview['paths']['/channels/{channel_id}/messages']['get']['parameters'][] = ['name' => 'contents', 'in' => 'query', 'schema' => ['type' => 'string']];
+        $preview['components']['schemas']['ChannelTypes']['oneOf'][] = ['title' => 'GUILD_MEDIA', 'const' => 16];
+        $preview['components']['schemas']['MessageResponse']['properties']['tts'] = ['type' => ['boolean', 'null']];
+        $preview['components']['schemas']['SearchResponse'] = ['type' => 'object', 'properties' => ['total' => ['type' => 'integer']]];
+        unset($preview['components']['schemas']['MessageCreateRequest']);
+
+        $previewOnly = OpenApiCheck::previewOnly($stable, $preview);
+        $this->assertSame([
+            'GET /guilds/{guild_id}/messages/search',
+            'GET /channels/{channel_id}/messages: query parameter contents',
+            'SearchResponse',
+            'MessageResponse: property tts',
+            'ChannelTypes: value GUILD_MEDIA = 16',
+        ], array_keys($previewOnly), 'what the preview leaves out is not counted as only in the preview');
+
+        // The schema the preview alone has changes too, which is still only in the preview.
+        $later = $preview;
+        $later['components']['schemas']['SearchResponse']['properties']['messages'] = ['type' => 'array'];
+
+        $this->assertSame([
+            '+ GET /guilds/{guild_id}/messages/search  search_guild_messages  [preview only]',
+            '~ GET /channels/{channel_id}/messages: query parameter contents added (string)  [preview only]',
+        ], OpenApiCheck::markPreview(OpenApiCheck::operationChanges(OpenApiCheck::operations($baseline), OpenApiCheck::operations($later)), OpenApiCheck::previewOnly($stable, $later)));
+        $this->assertSame([
+            '+ SearchResponse  [preview only]',
+            '- MessageCreateRequest',
+            '~ MessageResponse: property pinned added (boolean)',
+            '~ MessageResponse: property tts changed from boolean to boolean or null  [preview only]',
+            '~ ChannelTypes: value GUILD_MEDIA = 16 added  [preview only]',
+        ], OpenApiCheck::markPreview(OpenApiCheck::schemaChanges($baseline, $later), OpenApiCheck::previewOnly($stable, $later)));
+    }
+
+    public function testWhatReachesTheStableEditionIsListedSoItsPreviewFlagCanGo()
+    {
+        $before = [
+            'GET /gateway' => '+ GET /gateway  get_gateway',
+            'ChannelTypes: value GUILD_MEDIA = 16' => '~ ChannelTypes: value GUILD_MEDIA = 16 added',
+            'MessageResponse: property tts' => '~ MessageResponse: property tts added (boolean)',
+            'SearchResponse' => '+ SearchResponse',
+            'PollResponse' => '+ PollResponse',
+        ];
+        $after = ['PollResponse' => '+ PollResponse'];
+
+        $this->assertSame(
+            ['GET /gateway', 'ChannelTypes: value GUILD_MEDIA = 16'],
+            OpenApiCheck::promoted($before, $after, ['~ MessageResponse: property tts changed from boolean to string', '- SearchResponse']),
+            'what the preview changed or removed is already reported',
+        );
+    }
+
+    public function testAReportMarksWhatIsOnlyInThePreviewAndSaysNotToRelyOnIt()
+    {
+        $preview = $this->spec();
+        $preview['paths']['/guilds/{guild_id}/messages/search']['get'] = ['operationId' => 'search_guild_messages', 'responses' => ['200' => ['description' => 'ok']]];
+        file_put_contents($this->directory.'/stable.json', json_encode($this->spec()));
+        file_put_contents($this->directory.'/preview.json', json_encode($preview));
+        file_put_contents($this->directory.'/src/Channel.php', '<?php return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $id), $body);');
+        $baseline = $this->directory.'/baseline.json';
+        file_put_contents($baseline, json_encode(['unimplemented' => [
+            'GET /channels/{channel_id}/pins' => 'Deprecated.',
+            'GET /channels/{channel_id}/messages' => 'Not implemented yet.',
+        ]]));
+
+        ob_start();
+        $status = OpenApiCheck::run(['--spec='.$this->directory.'/preview.json', '--stable='.$this->directory.'/stable.json'], $baseline, $this->directory.'/src', $this->directory.'/cache');
+        $report = (string) ob_get_clean();
+
+        $this->assertSame(1, $status, $report);
+        $this->assertStringContainsString('1 of the operations, and 0 other details, are only in the preview, not the stable edition.', $report);
+        $this->assertStringContainsString('GET /guilds/{guild_id}/messages/search  search_guild_messages  (Endpoint::GUILD_MESSAGES_SEARCH is never used)  [preview only]', $report);
+        $this->assertStringContainsString('[preview only] marks what Discord describes only in the preview (specs/openapi_preview.json), not the stable edition (specs/openapi.json). It may change or be removed at any time', $report);
+
+        ob_start();
+        OpenApiCheck::run(['--spec='.$this->directory.'/stable.json'], $baseline, $this->directory.'/src', $this->directory.'/cache');
+        $report = (string) ob_get_clean();
+
+        $this->assertStringNotContainsString('[preview only]', $report, 'without the stable edition, nothing can be told to be only in the preview');
+    }
+
     /**
      * A small spec in the shape of Discord's.
      *
