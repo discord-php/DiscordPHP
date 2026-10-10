@@ -34,7 +34,9 @@ jobs:
       HAS_DISCORD_WEBHOOK: ${{ secrets.OPENAPI_DISCORD_WEBHOOK != '' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

@@ -27,7 +27,9 @@ jobs:
         # The dev dependencies (Pest 4, and PHPUnit 12 through it) need PHP 8.3; syntax-check covers 8.1 and 8.2.
         php: ['8.3', '8.4', '8.5']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -55,7 +57,9 @@ jobs:
         # The oldest versions composer.json allows, where the test tools cannot be installed.
         php: ['8.1', '8.2']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -75,7 +79,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
