@@ -71,6 +71,8 @@ Browse `vendor/discord-php/http/src/Endpoint.php` for available constants. If a 
 
 After implementing an operation, or deciding not to, run `composer openapi:update` and commit the baseline. Record the reason for every gap that remains in its `unimplemented` map. A daily workflow (`.github/workflows/openapi.yml`) runs the same check and opens an issue labelled `openapi` when it finds something new.
 
+The check also reads Discord's stable description (`specs/openapi.json`) at the same commit. Operations, parameters, properties and enum values that only the preview has are marked `[preview only]`; the issue then carries a caution and the `openapi-preview` label. Discord may change or remove them at any time. Anything implemented from them gets `@since X.Y.Z OpenAPI Preview` in its docblock and a sentence saying it is only in Discord's OpenAPI preview and may change or be removed at any time, so users do not rely on it. `composer openapi -- --all` lists everything only in the preview. When the check reports something as now in the stable edition too, remove its preview flag.
+
 ## Collection base class
 
 All repositories extend `Collection` from `discord-php-helpers/collection`. Key behaviors inherited:

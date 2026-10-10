@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Guild;
  *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L34147
  *
- * @since 10.47.0 OpenAPI Preview
+ * @since 10.47.0
  *
  * @property string      $channel_id  The ID of the channel that provides resources for new members.
  * @property string      $title       The title of the resource channel (max 60 characters).

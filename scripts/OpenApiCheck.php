@@ -23,9 +23,12 @@ use Discord\Http\Endpoint;
  * edition, which also covers endpoints that are still being rolled out, and answers three questions:
  *
  * - which operations DiscordPHP never sends a request for;
- * - which routes have no {@see Endpoint} constant in discord-php/http; and
+ * - which routes have no {@see Endpoint} constant in discord-php/http;
  * - what Discord has changed since the commit recorded in the baseline: its endpoints, their parameters
- *   and responses, and the schemas of the objects they carry, down to new enum values.
+ *   and responses, and the schemas of the objects they carry, down to new enum values; and
+ * - which of those are only in the preview, not yet in the stable edition (`specs/openapi.json`). Discord
+ *   may change or remove them at any time, so the report marks each with `[preview only]`, and anything
+ *   DiscordPHP builds on them is flagged as preview in its docblock.
  *
  * The baseline, `scripts/openapi-baseline.json`, also lists the gaps already known, with the reason for
  * each, so that only something new fails the check. `scripts/openapi-check.php` runs it, as
@@ -38,6 +41,12 @@ final class OpenApiCheck
 
     /** The preview edition, within that repository. */
     public const FILE = 'specs/openapi_preview.json';
+
+    /** The stable edition, which leaves out what is still being rolled out. */
+    public const STABLE_FILE = 'specs/openapi.json';
+
+    /** The mark on a line of the report for something only the preview edition describes. */
+    public const PREVIEW_ONLY = '[preview only]';
 
     /** The reason recorded for a gap the baseline has not explained yet. */
     public const UNEXPLAINED = 'Not implemented yet.';
@@ -61,13 +70,15 @@ final class OpenApiCheck
      */
     public static function run(array $arguments, string $baseline, string $source, string $cache): int
     {
-        $options = ['all' => false, 'update' => false, 'spec' => null];
+        $options = ['all' => false, 'update' => false, 'spec' => null, 'stable' => null];
 
         foreach ($arguments as $argument) {
             if ('--all' === $argument || '--update' === $argument) {
                 $options[substr($argument, 2)] = true;
             } elseif (str_starts_with($argument, '--spec=')) {
                 $options['spec'] = substr($argument, 7);
+            } elseif (str_starts_with($argument, '--stable=')) {
+                $options['stable'] = substr($argument, 9);
             } else {
                 fwrite(STDERR, ('--help' === $argument || '-h' === $argument ? '' : "Unknown option {$argument}.\n").self::usage());
 
@@ -75,8 +86,14 @@ final class OpenApiCheck
             }
         }
 
-        if ($options['update'] && null !== $options['spec']) {
-            fwrite(STDERR, "--update records the live spec's commit, so it cannot be used with --spec.\n");
+        if ($options['update'] && (null !== $options['spec'] || null !== $options['stable'])) {
+            fwrite(STDERR, "--update records the live spec's commit, so it cannot be used with --spec or --stable.\n");
+
+            return 2;
+        }
+
+        if (null !== $options['stable'] && null === $options['spec']) {
+            fwrite(STDERR, "--stable is the stable edition to compare a local --spec with; the live check reads its own.\n");
 
             return 2;
         }
@@ -357,6 +374,88 @@ final class OpenApiCheck
     }
 
     /**
+     * What the preview edition describes that the stable one does not: operations and schemas it alone has,
+     * and the parameters, properties and enum values it adds to the ones they share. The preview carries
+     * what Discord is still rolling out, which may change or be removed at any time.
+     *
+     * @param array<string, mixed> $stable  The stable edition.
+     * @param array<string, mixed> $preview The preview edition of the same commit.
+     *
+     * @return array<string, string> The lines {@see OpenApiCheck::operationChanges()} and
+     *                               {@see OpenApiCheck::schemaChanges()} give for the difference, keyed by
+     *                               what each is about, such as `GET /gateway` or `ChannelTypes: value GUILD_MEDIA = 16`.
+     */
+    public static function previewOnly(array $stable, array $preview): array
+    {
+        $lines = [];
+
+        foreach ([...self::operationChanges(self::operations($stable), self::operations($preview)), ...self::schemaChanges($stable, $preview)] as $line) {
+            // A line for something the preview leaves out is about the stable edition, not the preview.
+            if (! str_starts_with($line, '-') && ! str_ends_with($line, ' removed')) {
+                $lines[self::subject($line)] = $line;
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
+     * Marks the lines of a list of changes that are only in the preview edition with `[preview only]`.
+     * A line is, when the preview alone has what it is about, or the operation or schema it belongs to.
+     *
+     * @param list<string>          $lines       From {@see OpenApiCheck::operationChanges()} or {@see OpenApiCheck::schemaChanges()}.
+     * @param array<string, string> $previewOnly From {@see OpenApiCheck::previewOnly()}.
+     *
+     * @return list<string>
+     */
+    public static function markPreview(array $lines, array $previewOnly): array
+    {
+        return array_map(static function (string $line) use ($previewOnly): string {
+            if (str_starts_with($line, '-') || str_ends_with($line, ' removed')) {
+                return $line;
+            }
+
+            $subject = self::subject($line);
+            $owner = explode(': ', $subject, 2)[0];
+            $only = isset($previewOnly[$subject]) || (isset($previewOnly[$owner]) && str_starts_with($previewOnly[$owner], '+'));
+
+            return $only ? "{$line}  ".self::PREVIEW_ONLY : $line;
+        }, $lines);
+    }
+
+    /**
+     * What was only in the preview at the baseline and has since reached the stable edition, unchanged, so
+     * the docblocks that flag it as preview can drop the flag.
+     *
+     * @param array<string, string> $before  {@see OpenApiCheck::previewOnly()} at the baseline.
+     * @param array<string, string> $after   The same now.
+     * @param list<string>          $changes What has changed in the preview since the baseline.
+     *
+     * @return list<string>
+     */
+    public static function promoted(array $before, array $after, array $changes): array
+    {
+        $changed = [];
+        $removed = [];
+        foreach ($changes as $line) {
+            $changed[self::subject($line)] = true;
+            if (str_starts_with($line, '-')) {
+                $removed[self::subject($line)] = true;
+            }
+        }
+
+        $lines = [];
+        foreach (array_keys(array_diff_key($before, $after)) as $subject) {
+            // Changed or removed in the preview as well, which the report already lists.
+            if (! isset($changed[$subject]) && ! isset($removed[explode(': ', $subject, 2)[0]])) {
+                $lines[] = $subject;
+            }
+        }
+
+        return $lines;
+    }
+
+    /**
      * A short description of a schema: the name of the one it refers to, or its type.
      *
      * @param mixed $schema A schema from the spec.
@@ -413,13 +512,22 @@ final class OpenApiCheck
             $latest = null;
             $spec = self::decode((string) file_get_contents($options['spec']), $options['spec']);
             echo "Discord's OpenAPI description, from {$options['spec']}\n";
+
+            if (null !== $options['stable'] && ! is_file($options['stable'])) {
+                throw new \RuntimeException("There is no file {$options['stable']}.");
+            }
+
+            $stable = null === $options['stable'] ? null : self::decode((string) file_get_contents($options['stable']), $options['stable']);
         } else {
             $latest = self::latestCommit();
             $spec = self::spec($latest['sha'], $cache);
+            $stable = self::spec($latest['sha'], $cache, self::STABLE_FILE);
             echo "Discord's OpenAPI description (preview): commit ".substr($latest['sha'], 0, 7)." of {$latest['date']}\n";
         }
 
         $operations = self::operations($spec);
+        $previewOnly = null === $stable ? [] : self::previewOnly($stable, $spec);
+        $previewOperations = null === $stable ? [] : array_diff_key($operations, self::operations($stable));
         $constants = self::endpointConstants();
         $coverage = self::coverage($operations, $constants, self::endpointUses($source));
         $gaps = array_filter($coverage, static fn (array $entry): bool => 'implemented' !== $entry['status']);
@@ -433,9 +541,15 @@ final class OpenApiCheck
             if ($baseline['commit'] !== ($latest['sha'] ?? null)) {
                 $old = self::spec($baseline['commit'], $cache);
                 $changes = [
-                    'endpoints' => self::operationChanges(self::operations($old), $operations),
-                    'schemas' => self::schemaChanges($old, $spec),
+                    'endpoints' => self::markPreview(self::operationChanges(self::operations($old), $operations), $previewOnly),
+                    'schemas' => self::markPreview(self::schemaChanges($old, $spec), $previewOnly),
+                    'promoted' => [],
                 ];
+
+                // Only the live check knows the commit, and so the stable edition as it was at the baseline.
+                if (null !== $latest) {
+                    $changes['promoted'] = self::promoted(self::previewOnly(self::spec($baseline['commit'], $cache, self::STABLE_FILE), $old), $previewOnly, [...$changes['endpoints'], ...$changes['schemas']]);
+                }
             }
         } else {
             echo "Baseline: none yet, so every gap counts as new. Run composer openapi:update to record one.\n";
@@ -443,27 +557,48 @@ final class OpenApiCheck
 
         $sent = count($operations) - count($gaps);
         echo "\n".count($operations)." operations: {$sent} sent by DiscordPHP, ".count($gaps).' not; '.count($newGaps)." of those are new.\n";
+        echo null === $stable
+            ? "No stable edition to compare with, so nothing is marked as only in the preview. Pass --stable=FILE to compare with one.\n"
+            : count($previewOperations).' of the operations, and '.(count($previewOnly) - count($previewOperations))." other details, are only in the preview, not the stable edition.\n";
 
         if (null === $changes) {
             echo isset($baseline['commit']) ? "The spec has not changed since the baseline.\n" : '';
-        } elseif ([] === $changes['endpoints'] && [] === $changes['schemas']) {
+        } elseif ([] === $changes['endpoints'] && [] === $changes['schemas'] && [] === $changes['promoted']) {
             echo "The spec has had commits since the baseline, but its endpoints and schemas are unchanged.\n";
         } else {
             self::section('Endpoints changed since the baseline', $changes['endpoints']);
             self::section('Schemas changed since the baseline', $changes['schemas']);
+            self::section('Only in the preview at the baseline, now in the stable edition too', $changes['promoted']);
         }
 
-        self::section('Not sent by DiscordPHP, and new since the baseline', self::gapLines($newGaps, $operations));
+        $newGapLines = self::gapLines($newGaps, $operations, [], $previewOperations);
+        self::section('Not sent by DiscordPHP, and new since the baseline', $newGapLines);
         self::section('In the baseline, but now sent by DiscordPHP or gone from the spec', array_keys(self::sorted($closed)));
 
+        $marked = [...$changes['endpoints'] ?? [], ...$changes['schemas'] ?? [], ...$newGapLines];
+
         if ($options['all']) {
-            self::section('Not sent by DiscordPHP, as the baseline knows', self::gapLines(array_intersect_key($gaps, $known), $operations, $known));
+            $knownGapLines = self::gapLines(array_intersect_key($gaps, $known), $operations, $known, $previewOperations);
+            self::section('Not sent by DiscordPHP, as the baseline knows', $knownGapLines);
+
+            $sentPreview = [];
+            foreach (self::sorted(array_diff_key($previewOperations, $gaps)) as $key => $operation) {
+                $sentPreview[] = "{$key}  {$operation['id']}";
+            }
+            self::section('Sent by DiscordPHP, but only in the preview, so its docblock must say so', $sentPreview);
+            self::section('Everything only in the preview, not yet in the stable edition', array_values($previewOnly));
+
+            $marked = [...$marked, ...$knownGapLines];
 
             $unlisted = [];
             foreach (self::unlistedConstants($operations, $constants) as $name => $template) {
                 $unlisted[] = "Endpoint::{$name}  {$template}";
             }
             self::section('Endpoint constants for routes the spec does not describe', $unlisted);
+        }
+
+        if ([] !== array_filter($marked, static fn (string $line): bool => str_ends_with($line, self::PREVIEW_ONLY))) {
+            echo "\n".self::PREVIEW_ONLY.' marks what Discord describes only in the preview ('.self::FILE.'), not the stable edition ('.self::STABLE_FILE."). It may change or be removed at any time, so do not rely on it. Flag anything built on it as preview in its docblock: @since X.Y.Z OpenAPI Preview.\n";
         }
 
         if ($options['update']) {
@@ -473,7 +608,7 @@ final class OpenApiCheck
             return 0;
         }
 
-        $new = [] !== $newGaps || (null !== $changes && ([] !== $changes['endpoints'] || [] !== $changes['schemas']));
+        $new = [] !== $newGaps || (null !== $changes && ([] !== $changes['endpoints'] || [] !== $changes['schemas'] || [] !== $changes['promoted']));
         if ($new) {
             echo "\nOnce these are dealt with, composer openapi:update records them in the baseline.\n";
         }
@@ -488,10 +623,11 @@ final class OpenApiCheck
      * @param array<string, array{status: string, constants: list<string>, sent: list<string>}> $gaps
      * @param array<string, array{id: string, auth: list<string>}>                              $operations
      * @param array<string, string>                                                             $reasons
+     * @param array<string, mixed>                                                              $preview    The operations only the preview describes.
      *
      * @return list<string>
      */
-    private static function gapLines(array $gaps, array $operations, array $reasons = []): array
+    private static function gapLines(array $gaps, array $operations, array $reasons = [], array $preview = []): array
     {
         $lines = [];
 
@@ -505,7 +641,7 @@ final class OpenApiCheck
             };
             $auth = ['OAuth2'] === $operation['auth'] ? ', OAuth2 only' : '';
             $deprecated = $operation['deprecated'] ? ', deprecated' : '';
-            $lines[] = "{$key}  {$operation['id']}  ({$why}{$auth}{$deprecated})";
+            $lines[] = "{$key}  {$operation['id']}  ({$why}{$auth}{$deprecated})".(isset($preview[$key]) ? '  '.self::PREVIEW_ONLY : '');
 
             if (isset($reasons[$key]) && self::UNEXPLAINED !== $reasons[$key]) {
                 $lines[] = '    '.$reasons[$key];
@@ -534,19 +670,22 @@ final class OpenApiCheck
     /**
      * The spec as of a commit. Each edition is downloaded once, then read from the cache.
      *
+     * @param string $file Which edition: {@see OpenApiCheck::FILE} or {@see OpenApiCheck::STABLE_FILE}.
+     *
      * @return array<string, mixed>
      */
-    private static function spec(string $sha, string $cache): array
+    private static function spec(string $sha, string $cache, string $file = self::FILE): array
     {
+        $edition = $file;
         if (1 !== preg_match('/^[0-9a-f]{40}$/', $sha)) {
             throw new \RuntimeException("{$sha} is not a commit SHA.");
         }
 
-        $file = $cache.DIRECTORY_SEPARATOR.$sha.'.json';
+        $file = $cache.DIRECTORY_SEPARATOR.$sha.(self::FILE === $edition ? '' : '.stable').'.json';
 
         if (! is_file($file)) {
-            $json = self::download('https://raw.githubusercontent.com/'.self::REPOSITORY."/{$sha}/".self::FILE);
-            self::decode($json, 'the spec at commit '.substr($sha, 0, 7));
+            $json = self::download('https://raw.githubusercontent.com/'.self::REPOSITORY."/{$sha}/{$edition}");
+            self::decode($json, "{$edition} at commit ".substr($sha, 0, 7));
 
             if (! is_dir($cache) && ! @mkdir($cache, 0777, true) && ! is_dir($cache)) {
                 throw new \RuntimeException("Could not create {$cache}.");
@@ -868,6 +1007,19 @@ final class OpenApiCheck
     }
 
     /**
+     * What a line of changes is about, without what happened to it: `GET /gateway` for an operation added,
+     * `ChannelTypes: value GUILD_MEDIA = 16` for an enum value, `MessageResponse: property tts` for a property.
+     */
+    private static function subject(string $line): string
+    {
+        if (str_ends_with($line, '  '.self::PREVIEW_ONLY)) {
+            $line = substr($line, 0, -strlen('  '.self::PREVIEW_ONLY));
+        }
+
+        return preg_match('/^[+~-] (.+?)(?:  .*| added(?: \(.*\))?| removed| changed from .*| is now (?:required|optional))?$/', $line, $match) ? $match[1] : $line;
+    }
+
+    /**
      * Operations keyed `METHOD /path`, ordered by path, then method.
      *
      * @template T
@@ -922,9 +1074,11 @@ final class OpenApiCheck
               composer openapi -- --all        Also list the gaps the baseline knows, and Endpoint constants
                                                for routes the spec does not describe.
               composer openapi -- --spec=FILE  Check a local copy of the spec instead of the live one.
+                                --stable=FILE  With --spec, the stable edition to mark what is only in the preview.
               composer openapi:update          Record the live spec's commit and today's gaps as the baseline.
 
-            It exits with 0 when nothing is new since the baseline, 1 when something is, and 2 when it cannot run.
+            Anything only in the preview, not the stable edition, is marked [preview only]: Discord may change or
+            remove it at any time. It exits with 0 when nothing is new since the baseline, 1 when something is, and 2 when it cannot run.
             Set GITHUB_TOKEN for more than GitHub's 60 unauthenticated API requests an hour.
 
             USAGE;

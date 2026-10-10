@@ -19,6 +19,7 @@ namespace Discord\Parts\Channel;
  *
  * The GUILD_MEDIA channel type is still in active development.
  * Avoid implementing any features that are not documented, since they are subject to change without notice!
+ * It is only in Discord's OpenAPI preview: it may change or be removed at any time.
  */
 class GuildMedia extends Channel
 {
