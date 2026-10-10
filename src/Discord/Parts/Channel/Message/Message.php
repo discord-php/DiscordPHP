@@ -59,6 +59,7 @@ use function React\Promise\reject;
  * @property      int|null                                                 $channel_type           The type of channel the message was sent in.
  * @property      User|null                                                $author                 The author of the message. Will be a webhook if sent from one.
  * @property-read string|null                                              $user_id                The user id of the author.
+ * @property      User|null                                                $actor                  The user who performed the action the message records, when Discord sends one.
  * @property      string                                                   $content                The content of the message if it is a normal message.
  * @property      Carbon                                                   $timestamp              A timestamp of when the message was sent.
  * @property      ?Carbon|null                                             $edited_timestamp       A timestamp of when the message was edited, or null.
@@ -242,6 +243,7 @@ class Message extends Part
         'channel_id',
         'channel_type',
         'author',
+        'actor',
         'content',
         'timestamp',
         'edited_timestamp',
@@ -611,6 +613,24 @@ class Message extends Part
         }
 
         return $this->attributePartHelper('author', User::class);
+    }
+
+    /**
+     * Returns the actor attribute.
+     *
+     * @return User|null The user who performed the action the message records.
+     */
+    protected function getActorAttribute(): ?User
+    {
+        if (! isset($this->attributes['actor'])) {
+            return null;
+        }
+
+        if ($user = $this->discord->users->get('id', $this->attributes['actor']->id)) {
+            return $user;
+        }
+
+        return $this->attributePartHelper('actor', User::class);
     }
 
     /**

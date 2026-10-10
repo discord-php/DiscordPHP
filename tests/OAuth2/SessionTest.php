@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Discord\Discord;
 use Discord\OAuth2\AccessToken;
 use Discord\OAuth2\Session;
+use Discord\Parts\Guild\Member\GuildSearch;
 use Discord\Parts\Invite\Invite;
 use Discord\Parts\Application\Command\CommandPermissions;
 use Discord\Parts\OAuth\Authorization;
@@ -132,6 +133,27 @@ final class SessionTest extends DiscordTestCase
                         fn (\Throwable $e) => $this->assertInstanceOf(\RangeException::class, $e)
                     );
                 })
+                ->then(fn () => $this->assertCount(1, $driver->requests))
+                ->then($resolve, $resolve);
+        });
+    }
+
+    public function testGuildMessagesAreSearchedWithTheUsersToken()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            [$session, $driver] = $this->sessionWith(fn () => ['analytics_id' => 'a1', 'total_results' => 1, 'messages' => []]);
+
+            $session->searchGuildMessages('5', ['content' => 'gg', 'limit' => 10])
+                ->then(function ($search) use ($driver, $session) {
+                    $this->assertStringEndsWith('/guilds/5/messages/search?content=gg&limit=10', $driver->requests[0]['url']);
+                    $this->assertSame($session->getToken()->authorization(), $driver->requests[0]['headers']['Authorization']);
+                    $this->assertInstanceOf(GuildSearch::class, $search);
+                    $this->assertSame(1, $search->total_results);
+                })
+                ->then(fn () => $session->searchGuildMessages('5', [])->then(
+                    fn () => $this->fail('a search needs a query'),
+                    fn (\Throwable $e) => $this->assertInstanceOf(\InvalidArgumentException::class, $e)
+                ))
                 ->then(fn () => $this->assertCount(1, $driver->requests))
                 ->then($resolve, $resolve);
         });
