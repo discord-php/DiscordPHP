@@ -28,7 +28,7 @@ concurrency:
 jobs:
   check:
     name: Compare with Discord's OpenAPI description
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       HAS_DISCORD_WEBHOOK: ${{ secrets.OPENAPI_DISCORD_WEBHOOK != '' }}
