@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
       - name: Redis Server in GitHub Actions
-        uses: supercharge/redis-github-action@1.4.0
+        uses: supercharge/redis-github-action@1.8.1
       # - name: Memcached Service
       #   uses: niden/actions-memcached@v7
       - name: Run PHPUnit
