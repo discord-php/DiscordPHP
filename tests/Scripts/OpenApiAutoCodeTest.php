@@ -145,7 +145,7 @@ final class OpenApiAutoCodeTest extends TestCase
     public function testItRejectsMappingsOutsideTheSourceTree(): void
     {
         $spec = ['components' => ['schemas' => ['MessageResponse' => ['type' => 'object', 'properties' => ['extra' => ['type' => 'string']]]]]];
-        $result = OpenApiAutoCode::generate([], $spec, $this->directory, [
+        $result = OpenApiAutoCode::generate(['components' => ['schemas' => []]], $spec, $this->directory, [
             'MessageResponse' => ['file' => '../outside.php'],
         ]);
 

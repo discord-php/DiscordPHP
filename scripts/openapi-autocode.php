@@ -38,16 +38,20 @@ $arguments = [];
 foreach (array_slice($argv, 1) as $argument) {
     if (str_starts_with($argument, '--before=')) {
         $arguments['before'] = substr($argument, 9);
-    } elseif (str_starts_with($argument, '--after=')) {
-        $arguments['after'] = substr($argument, 8);
-    } else {
-        fwrite(STDERR, "Usage: php scripts/openapi-autocode.php --before=OLD_STABLE.json --after=NEW_STABLE.json\n");
-
-        exit(2);
+        continue;
     }
+
+    if (str_starts_with($argument, '--after=')) {
+        $arguments['after'] = substr($argument, 8);
+        continue;
+    }
+
+    fwrite(STDERR, "Usage: php scripts/openapi-autocode.php --before=OLD_STABLE.json --after=NEW_STABLE.json\n");
+
+    exit(2);
 }
 
-if (! isset($arguments['before'], $arguments['after'])) {
+if (! array_key_exists('before', $arguments) || ! array_key_exists('after', $arguments)) {
     fwrite(STDERR, "Usage: php scripts/openapi-autocode.php --before=OLD_STABLE.json --after=NEW_STABLE.json\n");
 
     exit(2);
