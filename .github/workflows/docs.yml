@@ -1,16 +1,25 @@
 name: Build Docs
 on:
   push:
+    branches: [master]
   release:
     types: [published]
 
 jobs:
   docs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    concurrency:
+      group: docs-deploy
+      queue: max
     if: github.event_name == 'release' || contains(github.event.head_commit.message, 'build docs')
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -31,9 +40,9 @@ jobs:
           yarn build
           sudo mv public/* ../build
       - name: Publish docs
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@v4.9.0
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: build
-          CLEAN: true
+          token: ${{ github.token }}
+          branch: gh-pages
+          folder: build
+          clean: true

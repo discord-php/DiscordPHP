@@ -15,6 +15,7 @@ declare(strict_types=1);
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\Message;
+use Discord\Parts\User\User;
 
 final class MessageTest extends DiscordTestCase
 {
@@ -47,5 +48,23 @@ final class MessageTest extends DiscordTestCase
                 ->then(fn ($message) => $this->assertInstanceOf(Message::class, $message))
                 ->then($resolve, $resolve);
         }, 10, fn () => $this->markTestIncomplete('Crosspost has likely hit ratelimit.'));
+    }
+
+    /**
+     * @covers \Discord\Parts\Channel\Message\Message::getActorAttribute
+     */
+    public function testActorIsAUser()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $factory = getMockDiscord()->getFactory();
+
+            $message = $factory->part(Message::class, ['id' => '1', 'channel_id' => '2', 'actor' => (object) ['id' => '3', 'username' => 'actor']], true);
+            $this->assertInstanceOf(User::class, $message->actor);
+            $this->assertSame('3', $message->actor->id);
+
+            $this->assertNull($factory->part(Message::class, ['id' => '1', 'channel_id' => '2'], true)->actor);
+
+            $resolve();
+        });
     }
 }

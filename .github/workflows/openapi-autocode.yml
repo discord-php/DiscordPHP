@@ -1,0 +1,142 @@
+name: OpenAPI Field Automation
+
+# A maintainer can apply the `openapi-autocode` label to the daily OpenAPI issue, or run this
+# workflow manually. The workflow reads only Discord's stable spec and never uses issue text as input.
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openapi-autocode
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'issues' && github.event.label.name == 'openapi-autocode')
+    name: Generate a reviewed draft PR for safe response fields
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_NUMBER: ${{ github.event.issue.number || '' }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run the focused generator tests
+        run: ./vendor/bin/phpunit --testdox tests/Scripts/OpenApiAutoCodeTest.php
+
+      - name: Fetch stable specs and generate safe fields
+        id: generate
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          baseline_sha=$(jq -r '.commit' scripts/openapi-baseline.json)
+          if [[ ! "$baseline_sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "The OpenAPI baseline does not contain a full commit SHA." >&2
+            exit 1
+          fi
+
+          target_sha=$(gh api repos/discord/discord-api-spec/commits/main --jq .sha)
+          if [[ ! "$target_sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Could not resolve Discord's OpenAPI commit." >&2
+            exit 1
+          fi
+
+          if [[ "$baseline_sha" == "$target_sha" ]]; then
+            echo "The OpenAPI baseline already points at the current commit."
+            exit 0
+          fi
+
+          curl --fail --silent --show-error "https://raw.githubusercontent.com/discord/discord-api-spec/$baseline_sha/specs/openapi.json" --output "$RUNNER_TEMP/openapi-before.json"
+          curl --fail --silent --show-error "https://raw.githubusercontent.com/discord/discord-api-spec/$target_sha/specs/openapi.json" --output "$RUNNER_TEMP/openapi-after.json"
+          php scripts/openapi-autocode.php \
+            --before="$RUNNER_TEMP/openapi-before.json" \
+            --after="$RUNNER_TEMP/openapi-after.json"
+
+          echo "target_sha=$target_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Run unit tests on the generated changes
+        if: steps.generate.outputs.target_sha != ''
+        run: composer unit
+
+      - name: Open a draft pull request
+        if: steps.generate.outputs.target_sha != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git add src/Discord/Parts
+          if git diff --cached --quiet; then
+            echo "No eligible new response fields were found; no branch or pull request was created."
+            exit 0
+          fi
+
+          target_sha='${{ steps.generate.outputs.target_sha }}'
+          branch="automation/openapi-autocode-${target_sha:0:12}"
+          existing_pr=$(gh pr list --state open --head "$branch" --json url --jq '.[0].url // empty')
+          if [[ -n "$existing_pr" ]]; then
+            echo "A draft pull request for this spec commit already exists: $existing_pr"
+            exit 0
+          fi
+
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "The automation branch already exists without an open pull request; refusing to overwrite it." >&2
+            exit 1
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch --create "$branch"
+          git commit -m "Add supported fields from Discord OpenAPI"
+          git push origin "HEAD:$branch"
+
+          body_file="$RUNNER_TEMP/openapi-autocode-pr.md"
+          {
+            echo "This draft was generated from Discord's **stable** OpenAPI description at commit `$target_sha`."
+            echo
+            echo 'The generator only adds docblock properties and `$fillable` entries for new, unformatted string, integer, and boolean fields in the explicitly mapped `MessageResponse` and `GuildRoleResponse` schemas. It does not generate request behavior, accessors, nested parts, or enum support.'
+            echo
+            echo 'Please review API semantics, update tests/docs if needed, and record the handled schema changes in `scripts/openapi-baseline.json` before merging.'
+            if [[ "$ISSUE_NUMBER" =~ ^[1-9][0-9]*$ ]]; then
+              echo
+              echo "Triggered from https://github.com/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER."
+            fi
+          } > "$body_file"
+
+          if ! gh pr create \
+            --draft \
+            --base "$DEFAULT_BRANCH" \
+            --head "$branch" \
+            --title "Add supported fields from Discord OpenAPI" \
+            --body-file "$body_file"; then
+            # Do not leave an automation branch without the PR required to review it.
+            git push origin --delete "$branch" || true
+            exit 1
+          fi
+
+          # PRs created with GITHUB_TOKEN do not emit a pull_request workflow run. Dispatch the
+          # existing workflow_dispatch-capable test workflow against the PR branch explicitly.
+          gh workflow run tests.yml --ref "$branch"

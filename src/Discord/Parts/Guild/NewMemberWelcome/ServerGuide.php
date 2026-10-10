@@ -25,7 +25,7 @@ use Discord\Parts\Guild\Guild;
  *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L25369
  *
- * @since 10.47.0 OpenAPI Preview
+ * @since 10.47.0
  *
  * @property string                                                   $guild_id           The ID of the guild this new member welcome is for.
  * @property bool                                                     $enabled            Whether the new member welcome experience is enabled.

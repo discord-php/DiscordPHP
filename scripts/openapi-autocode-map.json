@@ -1,0 +1,10 @@
+{
+    "schemas": {
+        "GuildRoleResponse": {
+            "file": "Parts/Guild/Role/Role.php"
+        },
+        "MessageResponse": {
+            "file": "Parts/Channel/Message/Message.php"
+        }
+    }
+}

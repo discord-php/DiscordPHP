@@ -77,6 +77,7 @@ class MessageRepository extends AbstractRepository
      * @param string $queryparams['min_id']               Minimum message ID (snowflake).
      * @param int    $queryparams['slop']                 Integer, minimum 0, maximum 100 (default 2).
      * @param string $queryparams['content']              Message content to search for (string, max 1024 chars).
+     * @param array  $queryparams['contents']             Array of strings, message contents to search for. Only in Discord's OpenAPI preview: it may change or be removed at any time.
      * @param array  $queryparams['channel_id']           Array of snowflakes, max 500 unique items.
      * @param array  $queryparams['author_type']          Array of strings, filter by author type.
      * @param array  $queryparams['author_id']            Array of snowflakes, filter by authors.

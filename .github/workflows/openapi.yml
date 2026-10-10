@@ -5,6 +5,10 @@ name: OpenAPI Check
 # sending a request it used to, this opens an issue labelled `openapi`, which notifies everyone watching the
 # repository. The issue is updated when the findings change, and closed once the check passes again.
 #
+# Anything Discord describes only in its preview (openapi_preview.json), not its stable edition (openapi.json),
+# is marked [preview only] in the report. Discord may change or remove it at any time, so when the report has
+# such lines the issue says so in a caution at the top and is also labelled `openapi-preview`.
+#
 # To also post to a Discord channel, add a webhook URL as the repository secret OPENAPI_DISCORD_WEBHOOK.
 
 on:
@@ -24,13 +28,15 @@ concurrency:
 jobs:
   check:
     name: Compare with Discord's OpenAPI description
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       HAS_DISCORD_WEBHOOK: ${{ secrets.OPENAPI_DISCORD_WEBHOOK != '' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -63,6 +69,7 @@ jobs:
           STATUS: ${{ steps.check.outputs.status }}
         run: |
           label=openapi
+          preview_label=openapi-preview
           issue=$(gh issue list --label "$label" --state open --limit 1 --json number --jq '.[0].number // empty')
 
           if [ "$STATUS" = 0 ]; then
@@ -75,9 +82,16 @@ jobs:
           # The first two lines name the spec's commit and the baseline's; the findings follow. Only a change
           # in the findings is worth another notification.
           hash=$(tail -n +3 report.txt | sha256sum | cut -c1-64)
+          preview=false
+          if grep -qF '[preview only]' report.txt; then preview=true; fi
           {
-            echo "The daily check against [Discord's OpenAPI description](https://github.com/discord/discord-api-spec/blob/main/specs/openapi_preview.json) found something new since \`scripts/openapi-baseline.json\`: an endpoint added, changed or removed, a schema that changed, or an operation DiscordPHP no longer sends."
+            echo "The daily check against [Discord's OpenAPI description](https://github.com/discord/discord-api-spec/blob/main/specs/openapi_preview.json) found something new since \`scripts/openapi-baseline.json\`: an endpoint added, changed or removed, a schema that changed, something that moved from the preview into the stable edition, or an operation DiscordPHP no longer sends."
             echo
+            if [ "$preview" = true ]; then
+              echo '> [!CAUTION]'
+              echo "> Lines marked \`[preview only]\` are in Discord's [preview description](https://github.com/discord/discord-api-spec/blob/main/specs/openapi_preview.json) but not its [stable one](https://github.com/discord/discord-api-spec/blob/main/specs/openapi.json). Discord is still rolling them out and may change or remove them at any time, so do not rely on them. Anything DiscordPHP builds on them must be flagged as preview in its docblock (\`@since X.Y.Z OpenAPI Preview\`, and a note that it may change or be removed), until Discord adds it to the stable description."
+              echo
+            fi
             echo '```text'
             head -c 60000 report.txt
             if [ "$(wc -c < report.txt)" -gt 60000 ]; then echo; echo '[The report is longer than an issue allows; the workflow run has all of it.]'; fi
@@ -89,26 +103,40 @@ jobs:
             echo "<!-- openapi-report: $hash -->"
           } > body.md
 
+          gh label create "$label" --color 5865F2 --description "Differences from Discord's OpenAPI description" 2>/dev/null || true
+          gh label create "$preview_label" --color FEE75C --description "Only in Discord's OpenAPI preview: may change or be removed at any time" 2>/dev/null || true
+
           if [ -z "$issue" ]; then
-            gh label create "$label" --color 5865F2 --description "Differences from Discord's OpenAPI description" 2>/dev/null || true
-            url=$(gh issue create --title "Discord's API has changed since the OpenAPI baseline" --label "$label" --body-file body.md)
+            labels=$label
+            if [ "$preview" = true ]; then
+              labels="$label,$preview_label"
+            fi
+            url=$(gh issue create --title "Discord's API has changed since the OpenAPI baseline" --label "$labels" --body-file body.md)
             echo "notify=true" >> "$GITHUB_OUTPUT"
           elif gh issue view "$issue" --json body --jq .body | grep -q "openapi-report: $hash"; then
             url=$(gh issue view "$issue" --json url --jq .url)
             echo "notify=false" >> "$GITHUB_OUTPUT"
           else
-            gh issue edit "$issue" --body-file body.md
+            if [ "$preview" = true ]; then
+              gh issue edit "$issue" --body-file body.md --add-label "$preview_label"
+            else
+              gh issue edit "$issue" --body-file body.md --remove-label "$preview_label"
+            fi
             gh issue comment "$issue" --body "The findings have changed; the issue now shows the latest report."
             url=$(gh issue view "$issue" --json url --jq .url)
             echo "notify=true" >> "$GITHUB_OUTPUT"
           fi
           echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "preview=$preview" >> "$GITHUB_OUTPUT"
 
       - name: Tell Discord
         if: steps.issue.outputs.notify == 'true' && env.HAS_DISCORD_WEBHOOK == 'true'
         env:
           WEBHOOK: ${{ secrets.OPENAPI_DISCORD_WEBHOOK }}
           URL: ${{ steps.issue.outputs.url }}
+          PREVIEW: ${{ steps.issue.outputs.preview }}
         run: |
-          jq -n --arg url "$URL" '{content: ("Discord'"'"'s API has changed since DiscordPHP'"'"'s OpenAPI baseline: " + $url), allowed_mentions: {parse: []}}' \
+          note=''
+          if [ "$PREVIEW" = true ]; then note=" Some of it is only in Discord's preview, which may change or be removed at any time."; fi
+          jq -n --arg url "$URL" --arg note "$note" '{content: ("Discord'"'"'s API has changed since DiscordPHP'"'"'s OpenAPI baseline: " + $url + $note), allowed_mentions: {parse: []}}' \
             | curl --fail --silent --show-error -H 'Content-Type: application/json' -d @- "$WEBHOOK"

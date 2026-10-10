@@ -126,7 +126,11 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_DIRECTORY = 14;
     /** Channel that can only contain threads. */
     public const TYPE_GUILD_FORUM = 15;
-    /** Channel that can only contain threads, similar to `GUILD_FORUM` channels. */
+    /**
+     * Channel that can only contain threads, similar to `GUILD_FORUM` channels.
+     *
+     * Only in Discord's OpenAPI preview: it may change or be removed at any time.
+     */
     public const TYPE_GUILD_MEDIA = 16;
 
     public const TYPES = [

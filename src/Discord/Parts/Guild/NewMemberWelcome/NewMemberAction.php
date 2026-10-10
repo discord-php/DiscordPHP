@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Guild;
  *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L32111
  *
- * @since 10.47.0 OpenAPI Preview
+ * @since 10.47.0
  *
  * @property string|null $channel_id  The ID of the channel where the action is located.
  * @property int         $action_type The type of action the user should take in the channel (0 = VIEW, 1 = TALK).

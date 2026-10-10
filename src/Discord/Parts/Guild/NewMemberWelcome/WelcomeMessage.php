@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L39934
  *
- * @since 10.47.0 OpenAPI Preview
+ * @since 10.47.0
  *
  * @property string[] $author_ids The IDs of the users who authored the welcome message (max 10).
  * @property string   $message    The welcome message shown to new members (max 300 characters).
