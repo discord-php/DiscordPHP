@@ -1,0 +1,39 @@
+name: Version
+
+# Keeps Discord::VERSION in step with the release tags (scripts/check-version.php). On a pull request or a
+# push it must not be older than the latest release; on a published release it must equal the release's tag.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    name: Discord::VERSION
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # All tags, to find the latest release.
+          fetch-depth: 0
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Check against the latest release
+        if: github.event_name != 'release'
+        run: php scripts/check-version.php
+
+      - name: Check against this release
+        if: github.event_name == 'release'
+        run: php scripts/check-version.php "${{ github.event.release.tag_name }}"
