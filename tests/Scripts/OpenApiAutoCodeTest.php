@@ -75,7 +75,7 @@ final class OpenApiAutoCodeTest extends TestCase
             ],
         ]]]];
 
-        $result = OpenApiAutoCode::generate($before, $after, $this->directory, [
+        $result = (new OpenApiAutoCode())->generate($before, $after, $this->directory, [
             'MessageResponse' => ['file' => 'Parts/Message.php'],
         ]);
 
@@ -109,7 +109,7 @@ final class OpenApiAutoCodeTest extends TestCase
         $before = ['components' => ['schemas' => ['MessageResponse' => ['type' => 'object', 'properties' => []]]]];
         $after = ['components' => ['schemas' => ['MessageResponse' => ['type' => 'object', 'properties' => ['extra' => ['type' => 'string']]]]]];
 
-        $result = OpenApiAutoCode::generate($before, $after, $this->directory, [
+        $result = (new OpenApiAutoCode())->generate($before, $after, $this->directory, [
             'MessageResponse' => ['file' => 'Parts/Message.php'],
         ]);
 
@@ -135,7 +135,7 @@ final class OpenApiAutoCodeTest extends TestCase
             }
             PHP;
 
-        $patched = OpenApiAutoCodePatcher::patchSource($source, ['new_field' => 'string|null']);
+        $patched = (new OpenApiAutoCodePatcher())->patchSource($source, ['new_field' => 'string|null']);
 
         $this->assertStringContainsString("'id',\n        'new_field',\n", $patched);
         $this->assertStringContainsString('@property string|null $new_field', $patched);
@@ -145,7 +145,7 @@ final class OpenApiAutoCodeTest extends TestCase
     public function testItRejectsMappingsOutsideTheSourceTree(): void
     {
         $spec = ['components' => ['schemas' => ['MessageResponse' => ['type' => 'object', 'properties' => ['extra' => ['type' => 'string']]]]]];
-        $result = OpenApiAutoCode::generate(['components' => ['schemas' => []]], $spec, $this->directory, [
+        $result = (new OpenApiAutoCode())->generate(['components' => ['schemas' => []]], $spec, $this->directory, [
             'MessageResponse' => ['file' => '../outside.php'],
         ]);
 

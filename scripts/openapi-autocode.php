@@ -64,7 +64,7 @@ try {
         throw new RuntimeException("The mapping {$mappingPath} has no schemas object.");
     }
 
-    $result = OpenApiAutoCode::generate(
+    $result = (new OpenApiAutoCode())->generate(
         read_spec($arguments['before']),
         read_spec($arguments['after']),
         dirname(__DIR__).DIRECTORY_SEPARATOR.'src',

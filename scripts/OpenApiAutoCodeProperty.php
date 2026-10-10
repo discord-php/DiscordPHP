@@ -21,7 +21,7 @@ final class OpenApiAutoCodeProperty
      * @param array<string, mixed> $definition
      * @param list<string>         $required
      */
-    public static function phpDocType(array $definition, array $required, string $property): ?string
+    public function phpDocType(array $definition, array $required, string $property): ?string
     {
         if (array_intersect(['$ref', 'enum', 'oneOf', 'anyOf', 'allOf', 'items', 'format'], array_keys($definition)) !== []) {
             return null;
@@ -44,7 +44,7 @@ final class OpenApiAutoCodeProperty
         return $type;
     }
 
-    public static function existsIn(string $source, string $property): bool
+    public function existsIn(string $source, string $property): bool
     {
         if (preg_match('/@property(?:-read)?\s+[^\s]+\s+\$'.preg_quote($property, '/').'(?:\s|$)/', $source)) {
             return true;

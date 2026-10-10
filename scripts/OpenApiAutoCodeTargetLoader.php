@@ -20,7 +20,7 @@ final class OpenApiAutoCodeTargetLoader
     /**
      * @return array{relative: string, path: ?string, contents: ?string, skipped: list<string>}
      */
-    public static function load(string $schemaName, string $relative, string $sourceRoot): array
+    public function load(string $schemaName, string $relative, string $sourceRoot): array
     {
         $path = realpath($sourceRoot.DIRECTORY_SEPARATOR.str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $relative));
         if (false === $path || ! str_starts_with($path, $sourceRoot.DIRECTORY_SEPARATOR) || ! is_file($path)) {

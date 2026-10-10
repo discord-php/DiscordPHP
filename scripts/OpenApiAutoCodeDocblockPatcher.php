@@ -20,7 +20,7 @@ final class OpenApiAutoCodeDocblockPatcher
     /**
      * @param array<string, string> $fields
      */
-    public static function add(string $source, array $fields): string
+    public function add(string $source, array $fields): string
     {
         $newline = str_contains($source, "\r\n") ? "\r\n" : "\n";
         if (! preg_match('/\/\*\*[\s\S]*?@property[\s\S]*?\*\//', $source, $doc, PREG_OFFSET_CAPTURE)) {

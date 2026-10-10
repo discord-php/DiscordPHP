@@ -20,7 +20,7 @@ final class OpenApiAutoCodeFillablePatcher
     /**
      * @param array<string, string> $fields
      */
-    public static function add(string $source, array $fields): string
+    public function add(string $source, array $fields): string
     {
         $newline = str_contains($source, "\r\n") ? "\r\n" : "\n";
         if (! preg_match('/protected\s+\$fillable\s*=\s*\[(.*?)\n([ \t]*)\];/s', $source, $fillable, PREG_OFFSET_CAPTURE)) {
@@ -38,7 +38,7 @@ final class OpenApiAutoCodeFillablePatcher
         }
 
         $additions = $prefix;
-        foreach ($fields as $field => $_) {
+        foreach (array_keys($fields) as $field) {
             $additions .= $indent.'\''.$field.'\','.$newline;
         }
 

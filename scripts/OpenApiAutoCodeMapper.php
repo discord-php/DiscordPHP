@@ -17,6 +17,16 @@ namespace Discord\Scripts;
 /** Maps explicitly selected response schemas to source files. */
 final class OpenApiAutoCodeMapper
 {
+    private OpenApiAutoCodeTargetLoader $targetLoader;
+
+    private OpenApiAutoCodeFieldMapper $fieldMapper;
+
+    public function __construct(?OpenApiAutoCodeTargetLoader $targetLoader = null, ?OpenApiAutoCodeFieldMapper $fieldMapper = null)
+    {
+        $this->targetLoader = $targetLoader ?? new OpenApiAutoCodeTargetLoader();
+        $this->fieldMapper = $fieldMapper ?? new OpenApiAutoCodeFieldMapper();
+    }
+
     /**
      * @param array<string, mixed>               $beforeSchemas
      * @param array<string, mixed>               $afterSchemas
@@ -24,12 +34,12 @@ final class OpenApiAutoCodeMapper
      *
      * @return array{files: array<string, array<string, string>>, skipped: list<string>}
      */
-    public static function map(array $beforeSchemas, array $afterSchemas, string $sourceRoot, array $mapping): array
+    public function map(array $beforeSchemas, array $afterSchemas, string $sourceRoot, array $mapping): array
     {
         $byFile = [];
         $skipped = [];
         foreach ($mapping as $schemaName => $target) {
-            $loaded = OpenApiAutoCodeTargetLoader::load($schemaName, $target['file'], $sourceRoot);
+            $loaded = $this->targetLoader->load($schemaName, $target['file'], $sourceRoot);
             $skipped = [...$skipped, ...$loaded['skipped']];
             if (null === $loaded['contents']) {
                 continue;
@@ -37,7 +47,7 @@ final class OpenApiAutoCodeMapper
 
             $old = $beforeSchemas[$schemaName] ?? null;
             $new = $afterSchemas[$schemaName] ?? null;
-            $result = OpenApiAutoCodeFieldMapper::map($schemaName, $old, $new, $loaded['contents']);
+            $result = $this->fieldMapper->map($schemaName, $old, $new, $loaded['contents']);
             $skipped = [...$skipped, ...$result['skipped']];
             if ([] !== $result['fields']) {
                 $relative = $loaded['relative'];

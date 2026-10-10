@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Scripts;
 
 require_once __DIR__.'/OpenApiAutoCodeFieldMapper.php';
+require_once __DIR__.'/OpenApiAutoCodeFieldPolicy.php';
 require_once __DIR__.'/OpenApiAutoCodeMapper.php';
 require_once __DIR__.'/OpenApiAutoCodeProperty.php';
 require_once __DIR__.'/OpenApiAutoCodeTargetLoader.php';
@@ -30,6 +31,16 @@ require_once __DIR__.'/OpenApiAutoCodePatcher.php';
  */
 final class OpenApiAutoCode
 {
+    private OpenApiAutoCodeMapper $mapper;
+
+    private OpenApiAutoCodePatcher $patcher;
+
+    public function __construct(?OpenApiAutoCodeMapper $mapper = null, ?OpenApiAutoCodePatcher $patcher = null)
+    {
+        $this->mapper = $mapper ?? new OpenApiAutoCodeMapper();
+        $this->patcher = $patcher ?? new OpenApiAutoCodePatcher();
+    }
+
     /**
      * Compare the two decoded specs and return patched source files without writing them.
      *
@@ -39,7 +50,7 @@ final class OpenApiAutoCode
      *
      * @return array{files: array<string, string>, added: list<string>, skipped: list<string>}
      */
-    public static function generate(array $before, array $after, string $source, array $mapping): array
+    public function generate(array $before, array $after, string $source, array $mapping): array
     {
         $beforeSchemas = $before['components']['schemas'] ?? null;
         $afterSchemas = $after['components']['schemas'] ?? null;
@@ -52,8 +63,8 @@ final class OpenApiAutoCode
             throw new \RuntimeException("There is no source directory {$source}.");
         }
 
-        $mapped = OpenApiAutoCodeMapper::map($beforeSchemas, $afterSchemas, $sourceRoot, $mapping);
-        $patched = OpenApiAutoCodePatcher::patchFiles($sourceRoot, $mapped['files']);
+        $mapped = $this->mapper->map($beforeSchemas, $afterSchemas, $sourceRoot, $mapping);
+        $patched = $this->patcher->patchFiles($sourceRoot, $mapped['files']);
         $skipped = [...$mapped['skipped'], ...$patched['skipped']];
         sort($patched['added']);
         sort($skipped);

@@ -17,6 +17,16 @@ namespace Discord\Scripts;
 /** Applies the source-level additions produced by the schema mapper. */
 final class OpenApiAutoCodePatcher
 {
+    private OpenApiAutoCodeDocblockPatcher $docblockPatcher;
+
+    private OpenApiAutoCodeFillablePatcher $fillablePatcher;
+
+    public function __construct(?OpenApiAutoCodeDocblockPatcher $docblockPatcher = null, ?OpenApiAutoCodeFillablePatcher $fillablePatcher = null)
+    {
+        $this->docblockPatcher = $docblockPatcher ?? new OpenApiAutoCodeDocblockPatcher();
+        $this->fillablePatcher = $fillablePatcher ?? new OpenApiAutoCodeFillablePatcher();
+    }
+
     /**
      * Patch each mapped file, reporting files that do not match the expected Part structure.
      *
@@ -24,7 +34,7 @@ final class OpenApiAutoCodePatcher
      *
      * @return array{files: array<string, string>, added: list<string>, skipped: list<string>}
      */
-    public static function patchFiles(string $sourceRoot, array $byFile): array
+    public function patchFiles(string $sourceRoot, array $byFile): array
     {
         $files = [];
         $added = [];
@@ -48,7 +58,7 @@ final class OpenApiAutoCodePatcher
                 continue;
             }
 
-            foreach ($fields as $field => $_) {
+            foreach (array_keys($fields) as $field) {
                 $added[] = "{$relative}::\${$field}";
             }
         }
@@ -61,10 +71,10 @@ final class OpenApiAutoCodePatcher
      *
      * @param array<string, string> $fields
      */
-    public static function patchSource(string $source, array $fields): string
+    public function patchSource(string $source, array $fields): string
     {
-        $source = OpenApiAutoCodeDocblockPatcher::add($source, $fields);
+        $source = $this->docblockPatcher->add($source, $fields);
 
-        return OpenApiAutoCodeFillablePatcher::add($source, $fields);
+        return $this->fillablePatcher->add($source, $fields);
     }
 }
