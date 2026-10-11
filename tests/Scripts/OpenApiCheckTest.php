@@ -20,6 +20,10 @@ require_once __DIR__.'/../../scripts/OpenApiCheck.php';
 /**
  * The OpenAPI check behind `composer openapi`, run on small specs and sources written here, so it needs
  * no network.
+ *
+ * Static calls intentionally exercise the checker's public CLI API.
+ *
+ * @SuppressWarnings(PHPMD.StaticAccess)
  */
 final class OpenApiCheckTest extends TestCase
 {
