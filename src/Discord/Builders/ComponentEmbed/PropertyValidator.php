@@ -22,7 +22,7 @@ final class PropertyValidator
         self::integer($component, 'id', 4_294_967_295);
         self::integer($component, 'accent_color', 0xFF_FFFF);
         self::booleans($component);
-        if (($component['spacing'] ?? null) !== null && ! in_array($component['spacing'], [1, 2], true)) {
+        if (! in_array($component['spacing'] ?? 1, [1, 2], true)) {
             throw new \InvalidArgumentException('Separator spacing must be 1 or 2.');
         }
     }

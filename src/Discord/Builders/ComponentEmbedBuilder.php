@@ -26,6 +26,8 @@ use JsonSerializable;
  * This is not a MessageBuilder payload and cannot send interactions.
  *
  * @link https://docs.discord.com/developers/link-previews/component-embeds
+ *
+ * @property array|null $component Validated website root Container snapshot.
  */
 class ComponentEmbedBuilder extends Builder implements JsonSerializable
 {
