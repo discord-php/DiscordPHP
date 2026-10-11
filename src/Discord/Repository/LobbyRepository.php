@@ -126,16 +126,18 @@ class LobbyRepository extends AbstractRepository
      */
     public function addMember($lobby, $user, $data = []): PromiseInterface
     {
-        if (! is_string($lobby)) {
-            $lobby = $lobby->id;
-        }
+        $id = is_string($lobby) ? $lobby : $lobby->id;
 
         if (! is_string($user)) {
             $user = $user->id;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::LOBBY_MEMBER, $lobby, $user), $data)
-            ->then(fn ($response) => $this->factory->part(Member::class, (array) $response, true));
+        return $this->http->put(Endpoint::bind(Endpoint::LOBBY_MEMBER, $id, $user), $data)
+            ->then(function ($response) use ($lobby) {
+                $member = $this->factory->part(Member::class, (array) $response, true);
+
+                return $this->updateRoster($lobby, [$member])->then(static fn () => $member);
+            });
     }
 
     /**
@@ -150,15 +152,14 @@ class LobbyRepository extends AbstractRepository
      */
     public function removeMember($lobby, $user): PromiseInterface
     {
-        if (! is_string($lobby)) {
-            $lobby = $lobby->id;
-        }
+        $id = is_string($lobby) ? $lobby : $lobby->id;
 
         if (! is_string($user)) {
             $user = $user->id;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::LOBBY_MEMBER, $lobby, $user));
+        return $this->http->delete(Endpoint::bind(Endpoint::LOBBY_MEMBER, $id, $user))
+            ->then(fn ($response) => $this->updateRoster($lobby, [], [$user])->then(static fn () => $response));
     }
 
     /**
@@ -176,17 +177,15 @@ class LobbyRepository extends AbstractRepository
      */
     public function bulkUpdateMembers($lobby, array $members): PromiseInterface
     {
-        if (! is_string($lobby)) {
-            $lobby = $lobby->id;
-        }
+        $id = is_string($lobby) ? $lobby : $lobby->id;
 
         $payload = array_map(
             static fn ($member) => $member instanceof Member ? $member->getRawAttributes() : $member,
             array_values($members)
         );
 
-        return $this->http->post(Endpoint::bind(Endpoint::LOBBY_MEMBERS_BULK, $lobby), $payload)
-            ->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::LOBBY_MEMBERS_BULK, $id), $payload)
+            ->then(function ($response) use ($lobby, $payload) {
                 /** @var ExCollectionInterface<Member> $collection */
                 $collection = $this->discord->getCollectionClass()::for(Member::class);
 
@@ -194,8 +193,36 @@ class LobbyRepository extends AbstractRepository
                     $collection->pushItem($this->factory->part(Member::class, (array) $member, true));
                 }
 
-                return $collection;
+                $removed = array_column(array_filter($payload, static fn ($member) => $member['remove_member'] ?? false), 'id');
+
+                return $this->updateRoster($lobby, $collection->toArray(), $removed)->then(static fn () => $collection);
             });
+    }
+
+    /**
+     * Applies successful REST roster changes to known lobbies without fetching a partial lobby.
+     *
+     * @param Lobby|string $lobby
+     * @param Member[]     $upserted Members returned by Discord, never the requested additions.
+     * @param string[]     $removed
+     */
+    protected function updateRoster($lobby, array $upserted, array $removed = []): PromiseInterface
+    {
+        $id = is_string($lobby) ? $lobby : $lobby->id;
+
+        return $this->cacheGet($id)->then(function (?Lobby $cached) use ($lobby, $upserted, $removed) {
+            $targets = array_filter([$cached, $lobby], static fn ($target) => $target instanceof Lobby);
+
+            foreach ($targets as $target) {
+                $members = array_diff_key($target->members->toArray(), array_flip($removed));
+                foreach ($upserted as $member) {
+                    $members[$member->id] = $member;
+                }
+                $target->members = array_values($members);
+            }
+
+            return $cached ? $this->cache->set($cached->id, $cached) : \React\Promise\resolve(null);
+        });
     }
 
     /**

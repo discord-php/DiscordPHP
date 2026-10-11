@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Repository;
 
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Helpers\CacheWrapper;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\OAuth2\Session;
@@ -68,6 +69,13 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function forSession(Session $session): static
     {
+        // A shared backend must not mix player state with other sessions or the bot.
+        $this->items = [];
+        $this->vars['lobby_session'] = bin2hex(random_bytes(16));
+        $config = $this->discord->getCacheConfig(static::class);
+        if ($config) {
+            $this->cache = new CacheWrapper($this->discord, $config, $this->items, $this->class, $this->vars);
+        }
         $this->session = $session;
 
         return $this;
