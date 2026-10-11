@@ -2,6 +2,44 @@
 title: "Message Components"
 ---
 
+## Website component embeds
+
+Website link previews use a separate `components` embed type. DiscordPHP hydrates
+these as `Discord\Parts\Channel\Message\Embed\EmbedComponents`; its read-only
+`components` collection contains one typed `Container`. Child components and
+Section accessories retain their normal Part types. These previews live in
+`$message->embeds`, separately from `$message->components`, including REST,
+gateway updates and forwarded snapshots.
+
+`ComponentEmbedBuilder` authors website JSON without a Discord client:
+
+```php
+use Discord\Builders\ComponentEmbedBuilder;
+use Discord\Builders\Components\Container;
+use Discord\Builders\Components\TextDisplay;
+
+$preview = ComponentEmbedBuilder::new(
+    Container::new()->addComponent(TextDisplay::new('# DiscordPHP'))
+);
+$script = $preview->toScript(); // Include in the server-rendered HTML <head>.
+```
+
+The helper snapshots and validates one root Container, display components and
+link buttons (style 5, no `custom_id`). It enforces 40 components including the
+root and accessories, 10 gallery items across all galleries, and 3,000 UTF-8 bytes
+of final JSON including HTML-safe escapes. `toJson()` also supports linked JSON.
+Keep existing Open Graph/Twitter fallback tags and reuse supported raster brand
+images (PNG, GIF, JPEG, WebP or AVIF); SVG is unsupported. The helper does not
+fetch media or verify the crawler's access or fetch time.
+
+Received component embeds cannot be sent through `MessageBuilder`. Author bot
+message edits with a fresh builder rather than copying received previews through
+`fromPart()`. `ComponentEmbedBuilder::fromPart()` also rejects received Parts,
+whose fetched media metadata differs from website authoring JSON.
+
+See [Discord's component embed contract](https://docs.discord.com/developers/link-previews/component-embeds)
+and [fallback metadata](https://docs.discord.com/developers/link-previews/overview).
+
 Message components are new components you can add to messages, such as buttons and select menus.
 There are currently four different types of message components:
 

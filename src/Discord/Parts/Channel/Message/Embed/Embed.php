@@ -23,7 +23,7 @@ use Discord\Parts\Part;
 use function Discord\poly_strlen;
 
 /**
- * An embed object to be sent with a message.
+ * An embed object received with a message, or a rich embed to send.
  *
  * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
  *
@@ -58,6 +58,7 @@ class Embed extends Part
         self::TYPE_ARTICLE => EmbedArticle::class,
         self::TYPE_LINK => EmbedLink::class,
         self::TYPE_POLL_RESULT => EmbedPollResult::class,
+        self::TYPE_COMPONENTS => EmbedComponents::class,
     ];
 
     /** Generic embed rendered from embed attributes. */
@@ -74,6 +75,8 @@ class Embed extends Part
     public const TYPE_LINK = 'link';
     /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
+    /** Display-only website link preview, not an outbound message embed. */
+    public const TYPE_COMPONENTS = 'components';
 
     /** This embed is a reply to an activity card and is no longer displayed. */
     public const FLAG_IS_CONTENT_INVENTORY_ENTRY = 1 << 5;
@@ -631,6 +634,7 @@ class Embed extends Part
             self::TYPE_ARTICLE,
             self::TYPE_LINK,
             self::TYPE_POLL_RESULT,
+            self::TYPE_COMPONENTS,
         ];
     }
 }

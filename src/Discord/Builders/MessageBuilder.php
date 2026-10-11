@@ -289,6 +289,8 @@ class MessageBuilder extends Builder implements JsonSerializable
                 $embed = $embed->getRawAttributes();
             }
 
+            self::validateOutboundEmbed($embed);
+
             if (isset($this->embeds) && count($this->embeds) >= 10) {
                 throw new \OverflowException('You can only have 10 embeds per message.');
             }
@@ -307,6 +309,15 @@ class MessageBuilder extends Builder implements JsonSerializable
     public function getEmbeds(): ?array
     {
         return $this->embeds ?? null;
+    }
+
+    /** Reject received website previews in bot/webhook message payloads. */
+    private static function validateOutboundEmbed($embed): void
+    {
+        $embed = (array) $embed;
+        if (($embed['type'] ?? null) === Embed::TYPE_COMPONENTS || array_key_exists('components', $embed)) {
+            throw new \InvalidArgumentException('Component embeds are received website previews; use ComponentEmbedBuilder for website JSON.');
+        }
     }
 
     /**
@@ -1190,6 +1201,9 @@ class MessageBuilder extends Builder implements JsonSerializable
 
         if (isset($this->embeds)) {
             if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
+                foreach ($this->embeds as $embed) {
+                    self::validateOutboundEmbed($embed instanceof Embed ? $embed->getRawAttributes() : $embed);
+                }
                 $body['embeds'] = $this->embeds;
                 $empty = false;
             }

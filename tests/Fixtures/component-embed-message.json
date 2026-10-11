@@ -1,0 +1,18 @@
+{
+  "id": "100", "channel_id": "20", "type": 0,
+  "author": {"id": "5", "username": "reader", "discriminator": "0"},
+  "content": "https://discordphp.org/",
+  "embeds": [
+    {"type": "components", "url": "https://discordphp.org/", "components": [{
+      "type": 17, "id": 1, "accent_color": 5793266, "spoiler": false,
+      "components": [
+        {"type": 9, "id": 2, "components": [{"type": 10, "id": 3, "content": "# DiscordPHP"}], "accessory": {"type": 11, "id": 4, "media": {"url": "https://example.com/brand.png", "proxy_url": "https://example.com/proxy.png", "width": 256, "height": 256, "content_type": "image/png"}}},
+        {"type": 12, "id": 5, "items": [{"media": {"url": "https://example.com/gallery.webp", "width": 640, "height": 360}, "description": "Project preview"}]},
+        {"type": 14, "id": 6, "divider": true, "spacing": 1},
+        {"type": 1, "id": 7, "components": [{"type": 2, "id": 8, "style": 5, "label": "Read the guide", "url": "https://discordphp.org/"}]}
+      ]
+    }]},
+    {"type": "rich", "title": "Fallback", "description": "Existing rich embeds still hydrate."}
+  ],
+  "components": []
+}
