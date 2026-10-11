@@ -17,13 +17,14 @@ permissions:
 jobs:
   version:
     name: Discord::VERSION
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # All tags, to find the latest release.
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -36,4 +37,6 @@ jobs:
 
       - name: Check against this release
         if: github.event_name == 'release'
-        run: php scripts/check-version.php "${{ github.event.release.tag_name }}"
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: php scripts/check-version.php "$RELEASE_TAG"
