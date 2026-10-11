@@ -34,10 +34,24 @@ a valid parent token, not OAuth refresh:
 https://docs.discord.com/developers/discord-social-sdk/development-guides/publisher-level-account-linking
 
 Local verification on PHP 8.5.9: affected OAuth suite passes (54 tests,
-255 assertions); focused php-cs-fixer dry run passes for all six PHP files.
+257 assertions); focused php-cs-fixer dry run passes for all six PHP files.
 Mago 1.52.0 repository lint reports 2091 issues (211 errors, 1350 warnings,
 9 notes, 521 help messages). The three changed source files have exactly the
 same normalized diagnostics as #1522's verified head: 12 issues (5 errors,
 6 warnings, 1 help), with no added or removed diagnostics. The source baseline
 was not changed. Full-suite and exact-head GitHub CI results are recorded in
 the PR description after verification.
+
+The local full suite ran 485 tests, 1572 assertions, 39 skips and 4 notices
+before the final migration-test refinement, with one failure in the unchanged
+OpenApiAutoCodeTest::testItAddsFieldsWhenTheFillableArrayHasNoInternalMarker
+Windows line-ending fixture. Linux CI passed the complete suite on PHP
+8.3, 8.4 and 8.5. The local whole-repository php-cs-fixer check reports
+533 files, mostly checkout line-ending differences; the milestone's focused
+check and GitHub's Linux style check pass. Optional Pint on the OAuth directory
+reports inherited formatting/Windows line-ending differences in Session,
+ArrayTokenStore, CacheTokenStore and TokenStoreInterface.
+
+Codacy initially flagged two static factory calls in migration tests. Those
+tests now seed raw legacy JSON in CacheTokenStore, exercising actual resume
+deserialization instead of constructing the legacy token directly.

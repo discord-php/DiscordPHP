@@ -384,7 +384,7 @@ final class SessionManagerTest extends DiscordTestCase
     /**
      * A manager for application 7, whose requests are answered by `$respond`.
      *
-     * @return array{0: SessionManager, 1: object, 2: ArrayTokenStore}
+     * @return array{0: SessionManager, 1: object, 2: TokenStoreInterface}
      */
     public function testThePublicKeysComeAsAKeySet()
     {
@@ -486,14 +486,16 @@ final class SessionManagerTest extends DiscordTestCase
     public function testOAuthAndLegacyUnknownStoredOriginsKeepOrdinaryRefreshBehavior()
     {
         return wait(function (Discord $discord, $resolve) {
-            [$manager, $driver, $store] = $this->managerWith(fn () => ['access_token' => 'fresh', 'refresh_token' => 'rotated', 'expires_in' => 3600]);
+            $cache = new ArrayCache();
+            $store = new CacheTokenStore($cache);
+            [$manager, $driver] = $this->managerWith(fn () => ['access_token' => 'fresh', 'refresh_token' => 'rotated', 'expires_in' => 3600], store: $store);
             $chain = resolve(null);
             foreach ([AccessToken::ORIGIN_OAUTH2, AccessToken::ORIGIN_UNKNOWN] as $origin) {
                 $stored = ['access_token' => 'stale', 'refresh_token' => 'old', 'expires_at' => 1, 'scopes' => ['sdk.social_layer']];
                 if (AccessToken::ORIGIN_UNKNOWN !== $origin) {
                     $stored['origin'] = $origin;
                 }
-                $chain = $chain->then(fn () => $store->set($origin, AccessToken::fromArray($stored)))
+                $chain = $chain->then(fn () => $cache->set('discordphp.oauth2.token.'.rawurlencode($origin), json_encode($stored)))
                     ->then(fn () => $manager->resume($origin))
                     ->then(function (Session $session) use ($store, $origin) {
                         $this->assertSame('fresh', $session->getToken()->access_token);
@@ -532,12 +534,15 @@ final class SessionManagerTest extends DiscordTestCase
     public function testLegacyExpiredNonRefreshableSessionsStillResumeForCompatibility()
     {
         return wait(function (Discord $discord, $resolve) {
-            [$manager, $driver, $store] = $this->managerWith(fn () => []);
-            $token = AccessToken::fromArray(['access_token' => 'old', 'expires_at' => 1]);
-            $store->set('player', $token)
+            $cache = new ArrayCache();
+            $store = new CacheTokenStore($cache);
+            [$manager, $driver] = $this->managerWith(fn () => [], store: $store);
+            $cache->set('discordphp.oauth2.token.player', json_encode(['access_token' => 'old', 'expires_at' => 1]))
                 ->then(fn () => $manager->resume('player'))
-                ->then(function (Session $session) use ($manager, $token) {
-                    $this->assertSame($token, $session->getToken());
+                ->then(function (Session $session) use ($manager) {
+                    $this->assertSame('old', $session->getToken()->access_token);
+                    $this->assertSame(AccessToken::ORIGIN_UNKNOWN, $session->getToken()->origin);
+                    $this->assertTrue($session->getToken()->isExpired());
 
                     return $manager->refresh($session);
                 })
@@ -598,14 +603,14 @@ final class SessionManagerTest extends DiscordTestCase
         });
     }
 
-    private function managerWith(callable $respond, ?string $clientSecret = 'secret', int $limit = SessionManager::DEFAULT_LIMIT): array
+    private function managerWith(callable $respond, ?string $clientSecret = 'secret', int $limit = SessionManager::DEFAULT_LIMIT, ?TokenStoreInterface $store = null): array
     {
         $mock = getMockDiscord();
         $driver = getMockHttpDriver($respond);
         $mock->getHttpClient()->setDriver($driver);
         $mock->application = $mock->getFactory()->part(Application::class, ['id' => '7'], true);
 
-        $store = new ArrayTokenStore();
+        $store ??= new ArrayTokenStore();
 
         return [new SessionManager($mock, $store, $clientSecret, $limit), $driver, $store];
     }
