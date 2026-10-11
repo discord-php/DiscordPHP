@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Builders\ComponentEmbed;
 
-/** @internal Media item shape and supported file suffixes; never fetches assets. */
+/**
+ * @internal Media item shape and supported file suffixes; never fetches assets.
+ * Stateless constraints deliberately use static calls.
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 final class MediaValidator
 {
     public static function gallery($items): int

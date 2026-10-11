@@ -18,6 +18,12 @@ use Discord\Builders\Components\TextDisplay;
 use Discord\Builders\MessageBuilder;
 use Discord\Parts\Channel\Message\Embed\Embed;
 
+/**
+ * Exercise the public static factories and independent preview boundary cases together.
+ *
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
+ */
 final class ComponentEmbedBuilderTest extends DiscordTestCase
 {
     private static function root(array $children): array

@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Builders\ComponentEmbed;
 
-/** @internal Display content and link button constraints. */
+/**
+ * @internal Display content and link button constraints.
+ * Stateless constraints deliberately use static calls.
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 final class ContentValidator
 {
     public static function validate(array $component): int

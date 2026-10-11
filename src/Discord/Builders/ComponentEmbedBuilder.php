@@ -28,6 +28,9 @@ use JsonSerializable;
  * @link https://docs.discord.com/developers/link-previews/component-embeds
  *
  * @property array|null $component Validated website root Container snapshot.
+ *
+ * Validation is stateless; no runtime dependency needs injection here.
+ * @SuppressWarnings(PHPMD.StaticAccess)
  */
 class ComponentEmbedBuilder extends Builder implements JsonSerializable
 {

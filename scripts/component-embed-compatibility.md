@@ -72,6 +72,14 @@ The baseline head has 418 JSON bytes, the adversarial Unicode/quotes/closing-scr
 head has 470; both have 5 components and 1 gallery item. This is inline-only local
 validation, not linked-document or live Discord rendering evidence.
 
+Code-quality disposition: the initial monolithic validator's complexity findings
+were fixed by separating tree shape, optional properties, content, media and primitive
+constraints. The new source passes scoped Mago lint. Rule-specific PHPMD exceptions
+document the deliberate stateless validation calls and repository-standard static
+builder factories; test-only size/coupling exceptions retain independent semantic
+boundary cases and adjacent hydration types in their focused fixtures. No blanket
+rule disable or complexity suppression was added to production validation.
+
 Actual observed test and CI counts are recorded in the PR description against the
 final source commit, rather than treated as assertions in this document. Follow-up
 website adoption and crawler/debugger checks require a separately authorized site

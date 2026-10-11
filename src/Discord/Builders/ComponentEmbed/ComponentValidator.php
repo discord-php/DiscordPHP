@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Builders\ComponentEmbed;
 
-/** @internal Validates website preview tree shape and aggregate limits. */
+/**
+ * @internal Validates website preview tree shape and aggregate limits.
+ * Stateless constraints deliberately use static calls.
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 final class ComponentValidator
 {
     private const FIELDS = [

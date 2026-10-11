@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Builders\ComponentEmbed;
 
-/** @internal Optional component property types and limits. */
+/**
+ * @internal Optional component property types and limits.
+ * Stateless constraints deliberately use static calls.
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 final class PropertyValidator
 {
     public static function validate(array $component): void
