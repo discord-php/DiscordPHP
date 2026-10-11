@@ -12,6 +12,7 @@
    message_builder
    components
    interactions
+   oauth2
 
 =====
 Guide
