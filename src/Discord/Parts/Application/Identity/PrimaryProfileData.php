@@ -22,24 +22,24 @@ use Discord\Parts\Part;
  * @since 10.59.0
  * @link https://docs.discord.com/developers/resources/application-identity-profile#primary-profile-data-object
  *
- * @property string|null $season Current season.
- * @property string|null $rank_name Current rank.
- * @property ProfileMedia|null $rank_image Current rank image.
- * @property string|null $highest_rank Highest rank achieved.
- * @property ProfileMedia|null $highest_rank_image Highest rank image.
- * @property string|null $featured_played_character Featured character.
+ * @property string|null       $season                          Current season.
+ * @property string|null       $rank_name                       Current rank.
+ * @property ProfileMedia|null $rank_image                      Current rank image.
+ * @property string|null       $highest_rank                    Highest rank achieved.
+ * @property ProfileMedia|null $highest_rank_image              Highest rank image.
+ * @property string|null       $featured_played_character       Featured character.
  * @property ProfileMedia|null $featured_played_character_image Featured character image.
- * @property int|float|null $playtime_hours Total hours played.
- * @property int|null $total_wins Total wins.
- * @property int|null $current_period_wins Wins this period.
- * @property int|null $total_games Total games.
- * @property int|null $current_period_games Games this period.
- * @property int|null $total_kills Total kills.
- * @property int|null $current_period_kills Kills this period.
- * @property int|null $total_assists Total assists.
- * @property int|null $current_period_assists Assists this period.
- * @property int|null $total_deaths Total deaths.
- * @property int|null $current_period_deaths Deaths this period.
+ * @property int|float|null    $playtime_hours                  Total hours played.
+ * @property int|null          $total_wins                      Total wins.
+ * @property int|null          $current_period_wins             Wins this period.
+ * @property int|null          $total_games                     Total games.
+ * @property int|null          $current_period_games            Games this period.
+ * @property int|null          $total_kills                     Total kills.
+ * @property int|null          $current_period_kills            Kills this period.
+ * @property int|null          $total_assists                   Total assists.
+ * @property int|null          $current_period_assists          Assists this period.
+ * @property int|null          $total_deaths                    Total deaths.
+ * @property int|null          $current_period_deaths           Deaths this period.
  */
 class PrimaryProfileData extends Part
 {

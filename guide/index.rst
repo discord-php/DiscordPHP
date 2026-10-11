@@ -9,6 +9,7 @@
    parts/index
    collection
    permissions
+   game_stats_profiles
    message_builder
    components
    interactions

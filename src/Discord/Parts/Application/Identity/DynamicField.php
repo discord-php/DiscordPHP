@@ -22,9 +22,9 @@ use Discord\Parts\Part;
  * @since 10.59.0
  * @link https://docs.discord.com/developers/resources/application-identity-profile#dynamic-field-object
  *
- * @property int $type Value discriminator.
- * @property string $name Widget data key.
- * @property mixed $value Stat value.
+ * @property int    $type  Value discriminator.
+ * @property string $name  Widget data key.
+ * @property mixed  $value Stat value.
  */
 class DynamicField extends Part
 {

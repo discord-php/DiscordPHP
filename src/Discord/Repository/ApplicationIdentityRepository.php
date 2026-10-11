@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Discord\Builders\ApplicationIdentityProfileBuilder;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Application\Identity\ApplicationIdentity;
@@ -146,17 +147,17 @@ class ApplicationIdentityRepository extends AbstractRepository
      *
      * @link https://docs.discord.com/developers/resources/application-identity-profile#update-application-identity-profile
      *
-     * @param User|string $user                    The user or user id.
-     * @param string      $provider_issued_user_id The user's ID in the external system.
-     * @param array       $data
-     * @param ?string     $data['username']        The user's username in the external system.
-     * @param ?array      $data['data']            The profile data: `primary` pre-configured stats and `dynamic` custom fields.
+     * @param User|string                             $user                    The user or user id.
+     * @param string                                  $provider_issued_user_id The user's ID in the external system.
+     * @param array|ApplicationIdentityProfileBuilder $data
+     * @param ?string                                 $data['username']        The user's username in the external system.
+     * @param ?array                                  $data['data']            The profile data: `primary` pre-configured stats and `dynamic` custom fields.
      *
      * @return PromiseInterface
      */
-    public function updateProfile($user, string $provider_issued_user_id, array $data): PromiseInterface
+    public function updateProfile($user, string $provider_issued_user_id, array|ApplicationIdentityProfileBuilder $data): PromiseInterface
     {
-        return $this->http->patch(Endpoint::bind(Endpoint::APPLICATION_USER_IDENTITY_PROFILE, $this->vars['application_id'], $this->userId($user), $provider_issued_user_id), $data);
+        return $this->http->patch(Endpoint::bind(Endpoint::APPLICATION_USER_IDENTITY_PROFILE, $this->vars['application_id'], $this->userId($user), $provider_issued_user_id), $data instanceof ApplicationIdentityProfileBuilder ? $data->jsonSerialize() : $data);
     }
 
     /**

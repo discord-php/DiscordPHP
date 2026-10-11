@@ -23,7 +23,7 @@ use Discord\Parts\Part;
  * @since 10.59.0
  * @link https://docs.discord.com/developers/resources/application-identity-profile#profile-data-object
  *
- * @property PrimaryProfileData|null $primary Pre-configured stats.
+ * @property PrimaryProfileData|null                  $primary Pre-configured stats.
  * @property ExCollectionInterface<DynamicField>|null $dynamic Custom fields in payload order.
  */
 class ProfileData extends Part
