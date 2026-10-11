@@ -36,6 +36,33 @@ Typed reads create views without replacing raw attributes. Editing a nested view
 does not edit its parent; use the builder or assign complete raw data back.
 ``getRawAttributes()`` and profile JSON serialization retain the original payload.
 
+Migrating array consumers
+========================
+
+The previous data property exposed raw stats. Use typed access for reading, as in
+the example above. Code that calls array functions or checks is_array() must now
+take data from the raw attributes or from the authoring builder:
+
+.. code-block:: php
+
+   // Read the stored raw representation (array, object, or null).
+   $attributes = $profile->getRawAttributes();
+   $rawData = $attributes['data'] ?? null;
+   // Use array_key_exists('data', $attributes) when absence matters.
+
+   // Obtain an editable array snapshot containing only writable fields.
+   $builder = ApplicationIdentityProfileBuilder::fromPart($profile);
+   $data = $builder->getData() ?? [];
+   $data['primary']['rank_name'] = 'Gold';
+   $builder->setData($data)->publish(
+       $application->identities, $discordUserId, $externalAccountId
+   );
+
+Import Discord\Builders\ApplicationIdentityProfileBuilder for the second example.
+Do not edit a temporary nested typed view and expect it to update the stored parent.
+Passing an existing raw array to updateProfile() remains supported, with the same
+complete replacement semantics.
+
 Publish a complete snapshot
 ===========================
 

@@ -80,7 +80,7 @@ class PrimaryProfileData extends Part
     /** Materialize a media view without replacing the raw attribute. */
     private function media(string $key): ?ProfileMedia
     {
-        if (! isset($this->attributes[$key])) {
+        if (($this->attributes[$key] ?? null) === null) {
             return null;
         }
 

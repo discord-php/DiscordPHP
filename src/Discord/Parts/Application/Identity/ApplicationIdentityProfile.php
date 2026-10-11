@@ -45,7 +45,7 @@ class ApplicationIdentityProfile extends Part
      */
     protected function getDataAttribute(): ?ProfileData
     {
-        if (! isset($this->attributes['data'])) {
+        if (($this->attributes['data'] ?? null) === null) {
             return null;
         }
 

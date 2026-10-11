@@ -136,6 +136,32 @@ final class ApplicationIdentityProfileBuilderTest extends DiscordTestCase
             ['type' => 3, 'name' => 'rank', 'value' => ['url' => 'https://example.com/rank.png']],
         ]], $builder->getData());
     }
+    public function testFetchedProfileCanBeCopiedAndPublished()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $snapshot = ['username' => 'player', 'data' => [
+                'primary' => ['rank_name' => 'Gold', 'total_wins' => 0],
+                'dynamic' => [['type' => 3, 'name' => 'rank', 'value' => ['url' => 'https://example.com/rank.png']]],
+            ]];
+            $mock = getMockDiscord();
+            $driver = getMockHttpDriver(fn ($method) => $method === 'GET' ? $snapshot : null);
+            $mock->getHttpClient()->setDriver($driver);
+            $application = $mock->getFactory()->part(Application::class, ['id' => '7'], true);
+            $application->identities->getProfile('5', 'abc')
+                ->then(function (ApplicationIdentityProfile $profile) use ($application) {
+                    // HTTP decodes nested data as stdClass; reading typed data keeps it raw.
+                    $this->assertInstanceOf(stdClass::class, $profile->getRawAttributes()['data']);
+                    $this->assertSame('Gold', $profile->data->primary->rank_name);
+
+                    return ApplicationIdentityProfileBuilder::fromPart($profile)->publish($application->identities, '5', 'abc');
+                })
+                ->then(function () use ($driver, $snapshot) {
+                    $this->assertSame('PATCH', $driver->requests[1]['method']);
+                    $this->assertSame($snapshot, $driver->requests[1]['content']);
+                })
+                ->then($resolve, $resolve);
+        });
+    }
     public function testPublishRecordsReplacementAndUsernameOnlyRequests()
     {
         return wait(function (Discord $discord, $resolve) {

@@ -33,7 +33,7 @@ class ProfileData extends Part
     /** @return PrimaryProfileData|null */
     protected function getPrimaryAttribute(): ?PrimaryProfileData
     {
-        if (! isset($this->attributes['primary'])) {
+        if (($this->attributes['primary'] ?? null) === null) {
             return null;
         }
 
@@ -45,7 +45,7 @@ class ProfileData extends Part
     /** @return ExCollectionInterface<DynamicField>|null */
     protected function getDynamicAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['dynamic'])) {
+        if (($this->attributes['dynamic'] ?? null) === null) {
             return null;
         }
 

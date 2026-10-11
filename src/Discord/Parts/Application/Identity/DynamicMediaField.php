@@ -25,7 +25,7 @@ class DynamicMediaField extends DynamicField
     /** @return ProfileMedia|null */
     protected function getValueAttribute(): ?ProfileMedia
     {
-        if (! isset($this->attributes['value'])) {
+        if (($this->attributes['value'] ?? null) === null) {
             return null;
         }
 
