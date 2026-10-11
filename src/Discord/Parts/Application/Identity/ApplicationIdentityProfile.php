@@ -23,9 +23,9 @@ use Discord\Parts\Part;
  *
  * @link https://docs.discord.com/developers/resources/application-identity-profile#application-identity-profile-object
  *
- * @property ?string|null $username The user's username in the external system.
- * @property ?array|null  $metadata Arbitrary game-defined data; not consumed by Discord.
- * @property ?array|null  $data     The profile data: `primary` pre-configured stats and `dynamic` custom fields.
+ * @property ?string|null     $username The user's username in the external system.
+ * @property ?array|null      $metadata Arbitrary game-defined data; not consumed by Discord.
+ * @property ProfileData|null $data     The profile data: `primary` pre-configured stats and `dynamic` custom fields.
  */
 class ApplicationIdentityProfile extends Part
 {
@@ -37,4 +37,33 @@ class ApplicationIdentityProfile extends Part
         'metadata',
         'data',
     ];
+
+    /**
+     * Returns typed stats without changing the raw response attributes.
+     *
+     * @return ProfileData|null
+     */
+    protected function getDataAttribute(): ?ProfileData
+    {
+        if (($this->attributes['data'] ?? null) === null) {
+            return null;
+        }
+
+        return $this->attributes['data'] instanceof ProfileData
+            ? $this->attributes['data']
+            : $this->createOf(ProfileData::class, $this->attributes['data']);
+    }
+
+    /**
+     * Preserve response serialization, including unknown nested fields.
+     *
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        $attributes = parent::jsonSerialize();
+        $attributes['data'] = $this->attributes['data'] ?? null;
+
+        return $attributes;
+    }
 }
