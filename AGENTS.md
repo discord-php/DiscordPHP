@@ -32,6 +32,8 @@ In this repo, companion surfaces usually matter as much as the line you edit.
 
 ## Skill map
 
+For Compatibility Watch findings, Discord API/schema drift, or an issue labelled `openapi`, read [the compatibility handoff](scripts/compatibility-handoff.md). Reuse the existing OpenAPI check and issue; retain source/spec revisions and prove affected runtime behavior separately from schema coverage. Do not accept a baseline merely to silence a new finding.
+
 Each skill lives in `.agents/skills/<name>/SKILL.md` and is loaded automatically when relevant. When a task crosses layers, load multiple skills.
 
 | If task touches... | Skill to load |
