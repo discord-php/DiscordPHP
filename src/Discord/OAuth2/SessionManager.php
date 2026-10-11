@@ -24,7 +24,7 @@ use function React\Promise\reject;
 use function React\Promise\resolve;
 
 /**
- * Opens, stores, resumes and refreshes users' sessions — `$discord->sessions`.
+ * Opens, stores, resumes, refreshes and revokes users' sessions — `$discord->sessions`.
  *
  * A session acts as one user with their own OAuth2 token: see {@see Session}.
  * Tokens given a key are kept in the token store (the `tokenStore` option), so
@@ -113,6 +113,65 @@ class SessionManager
         $this->remember($key, $session);
 
         return $this->store->set($key, $token)->then(static fn () => $session);
+    }
+
+    /**
+     * Exchanges an authorization code for a user's token and opens a session as them.
+     *
+     * For confidential clients: requires the `clientSecret` option. The caller must validate the
+     * authorization callback's state before calling this, and handle a denied authorization.
+     *
+     * @link https://docs.discord.com/developers/topics/oauth2#authorization-code-grant
+     *
+     * @param string      $code         The authorization code returned by Discord.
+     * @param string      $redirect_uri The exact redirect URI used for the authorization request.
+     * @param string|null $key          What to store the token under; not stored if omitted.
+     *
+     * @return PromiseInterface<Session>
+     *
+     * @since 10.67.0
+     */
+    public function exchangeAuthorizationCode(string $code, string $redirect_uri, ?string $key = null): PromiseInterface
+    {
+        return $this->withCredentials(function (string $client_id, string $client_secret) use ($code, $redirect_uri, $key) {
+            $http = new Http('Basic '.base64_encode("{$client_id}:{$client_secret}"), $this->discord->getLoop(), $this->discord->getLogger(), $this->discord->getHttpClient()->getDriver());
+
+            return $http->post(
+                Endpoint::OAUTH2_TOKEN,
+                http_build_query(['grant_type' => 'authorization_code', 'code' => $code, 'redirect_uri' => $redirect_uri]),
+                ['Content-Type' => 'application/x-www-form-urlencoded']
+            )->then(fn ($response) => $this->open($response, $key));
+        });
+    }
+
+    /**
+     * Revokes a user's OAuth2 authorization at Discord, then forgets this session's stored token.
+     *
+     * Discord invalidates all access and refresh tokens for the authorization, not only this token.
+     * The caller must also clear their account mapping and any other local keys for that user.
+     * Requires the `clientSecret` option. On HTTP failure the local session and token are retained.
+     * Retained Session objects must no longer be used after a successful revocation.
+     *
+     * @link https://docs.discord.com/developers/topics/oauth2#token-revocation-example
+     * @link https://docs.discord.com/developers/discord-social-sdk/development-guides/unlinking-accounts
+     *
+     * @param Session $session The session whose authorization to revoke.
+     *
+     * @return PromiseInterface<bool> True for an unkeyed session, otherwise the token store's deletion result.
+     *
+     * @since 10.67.0
+     */
+    public function revoke(Session $session): PromiseInterface
+    {
+        return $this->withCredentials(function (string $client_id, string $client_secret) use ($session) {
+            $http = new Http('Basic '.base64_encode("{$client_id}:{$client_secret}"), $this->discord->getLoop(), $this->discord->getLogger(), $this->discord->getHttpClient()->getDriver());
+
+            return $http->post(
+                Endpoint::OAUTH2_TOKEN_REVOKE,
+                http_build_query(['token' => $session->getToken()->access_token, 'token_type_hint' => 'access_token']),
+                ['Content-Type' => 'application/x-www-form-urlencoded']
+            )->then(fn () => null === $session->getKey() ? true : $this->forget($session->getKey()));
+        });
     }
 
     /**
