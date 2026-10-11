@@ -18,32 +18,34 @@ use Carbon\Carbon;
 use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Attachment;
+use Discord\Parts\Channel\Message\Container;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
 
 /**
- * An embed object to be sent with a message.
+ * An embed object received with a message, or a rich embed to send.
  *
  * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
  *
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
  *
- * @property      ?string|null                          $title       The title of the embed.
- * @property-read ?string|null                          $type        The type of the embed (always "rich" for webhook embeds).
- * @property      ?string|null                          $description A description of the embed.
- * @property      ?string|null                          $url         The URL of the embed.
- * @property      ?Carbon|null                          $timestamp   A timestamp of the embed.
- * @property      ?int|null                             $color       The color of the embed.
- * @property      ?Footer|null                          $footer      The footer of the embed.
- * @property      ?Image|null                           $image       The image of the embed.
- * @property      ?Thumbnail|null                       $thumbnail   The thumbnail of the embed.
- * @property-read ?Video|null                           $video       The video of the embed.
- * @property-read ?Provider|null                        $provider    The provider of the embed.
- * @property      ?Author|null                          $author      The author of the embed.
- * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
- * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
+ * @property      ?string|null                                 $title       The title of the embed.
+ * @property-read ?string|null                                 $type        The type of the embed (always "rich" for webhook embeds).
+ * @property      ?string|null                                 $description A description of the embed.
+ * @property      ?string|null                                 $url         The URL of the embed.
+ * @property      ?Carbon|null                                 $timestamp   A timestamp of the embed.
+ * @property      ?int|null                                    $color       The color of the embed.
+ * @property      ?Footer|null                                 $footer      The footer of the embed.
+ * @property      ?Image|null                                  $image       The image of the embed.
+ * @property      ?Thumbnail|null                              $thumbnail   The thumbnail of the embed.
+ * @property-read ?Video|null                                  $video       The video of the embed.
+ * @property-read ?Provider|null                               $provider    The provider of the embed.
+ * @property      ?Author|null                                 $author      The author of the embed.
+ * @property      ?ExCollectionInterface<Field>|Field[]        $fields      A collection of embed fields (max of 25).
+ * @property      ?int|null                                    $flags       Embedded flags combined as a bitfield.
+ * @property-read ExCollectionInterface<Container>|Container[] $components  The received component embed's single Container. Empty on other embed types.
  *
  * @phpstan-property ?ExCollectionInterface<Field> $fields
  */
@@ -58,6 +60,7 @@ class Embed extends Part
         self::TYPE_ARTICLE => EmbedArticle::class,
         self::TYPE_LINK => EmbedLink::class,
         self::TYPE_POLL_RESULT => EmbedPollResult::class,
+        self::TYPE_COMPONENTS => EmbedComponents::class,
     ];
 
     /** Generic embed rendered from embed attributes. */
@@ -74,6 +77,8 @@ class Embed extends Part
     public const TYPE_LINK = 'link';
     /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
+    /** Display-only website link preview, not an outbound message embed. */
+    public const TYPE_COMPONENTS = 'components';
 
     /** This embed is a reply to an activity card and is no longer displayed. */
     public const FLAG_IS_CONTENT_INVENTORY_ENTRY = 1 << 5;
@@ -96,6 +101,7 @@ class Embed extends Part
         'author',
         'fields',
         'flags',
+        'components',
     ];
 
     /**
@@ -108,6 +114,16 @@ class Embed extends Part
     protected function getTimestampAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('timestamp');
+    }
+
+    /**
+     * Returns the Container received in a component embed.
+     *
+     * @return ExCollectionInterface<Container>|Container[]
+     */
+    protected function getComponentsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('components', Container::class);
     }
 
     /**
@@ -631,6 +647,7 @@ class Embed extends Part
             self::TYPE_ARTICLE,
             self::TYPE_LINK,
             self::TYPE_POLL_RESULT,
+            self::TYPE_COMPONENTS,
         ];
     }
 }
