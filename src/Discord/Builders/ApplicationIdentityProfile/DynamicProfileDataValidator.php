@@ -24,7 +24,7 @@ use Discord\Parts\Application\Identity\DynamicField;
 final class DynamicProfileDataValidator
 {
     /** Validate an ordered list of at most 30 custom fields. */
-    public static function validate($dynamic): void
+    public function validate($dynamic): void
     {
         if (! is_array($dynamic) || ! array_is_list($dynamic)) {
             throw new \InvalidArgumentException('dynamic must be a list.');
@@ -33,20 +33,21 @@ final class DynamicProfileDataValidator
             throw new \LengthException('At most 30 dynamic fields are allowed.');
         }
         foreach ($dynamic as $field) {
-            self::field($field);
+            $this->field($field);
         }
     }
 
     /** Dispatch value validation using the root family's discriminator constants. */
-    private static function field($field): void
+    private function field($field): void
     {
         if (! is_array($field)) {
             throw new \InvalidArgumentException('Invalid dynamic field shape.');
         }
+        $values = new ProfileValueValidator();
         $validators = [
-            DynamicField::TYPE_STRING => static fn ($value) => ProfileValueValidator::text($value, 100, 'value'),
-            DynamicField::TYPE_NUMBER => ProfileValueValidator::number(...),
-            DynamicField::TYPE_MEDIA => ProfileValueValidator::media(...),
+            DynamicField::TYPE_STRING => static fn ($value) => $values->text($value, 100, 'value'),
+            DynamicField::TYPE_NUMBER => $values->number(...),
+            DynamicField::TYPE_MEDIA => $values->media(...),
         ];
         $type = $field['type'] ?? null;
         if (! is_int($type) || ! array_key_exists($type, $validators)) {
@@ -55,7 +56,7 @@ final class DynamicProfileDataValidator
         if (! array_key_exists('value', $field) || array_diff(array_keys($field), ['type', 'name', 'value'])) {
             throw new \InvalidArgumentException('Invalid dynamic field shape.');
         }
-        ProfileValueValidator::text($field['name'] ?? null, 100, 'name');
+        $values->text($field['name'] ?? null, 100, 'name');
         $validators[$type]($field['value']);
     }
 }

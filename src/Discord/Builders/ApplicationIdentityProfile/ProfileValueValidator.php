@@ -24,7 +24,7 @@ use function Discord\poly_strlen;
 final class ProfileValueValidator
 {
     /** Require a text value within the documented character limit. */
-    public static function text($value, int $limit, string $field): void
+    public function text($value, int $limit, string $field): void
     {
         if (! is_string($value)) {
             throw new \InvalidArgumentException($field.' must be a string.');
@@ -35,7 +35,7 @@ final class ProfileValueValidator
     }
 
     /** Require a finite number, without undocumented range restrictions. */
-    public static function number($value): void
+    public function number($value): void
     {
         if (! in_array(gettype($value), ['integer', 'double'], true)) {
             throw new \InvalidArgumentException('Stat values must be finite numbers.');
@@ -46,7 +46,7 @@ final class ProfileValueValidator
     }
 
     /** Require an integer stat, without coercing floats or numeric strings. */
-    public static function integer($value): void
+    public function integer($value): void
     {
         if (! is_int($value)) {
             throw new \InvalidArgumentException('Stat value must be an integer.');
@@ -54,7 +54,7 @@ final class ProfileValueValidator
     }
 
     /** Require one HTTP(S) media URL; validation never fetches it. */
-    public static function media($value): void
+    public function media($value): void
     {
         if (! is_array($value) || array_keys($value) !== ['url']) {
             throw new \InvalidArgumentException('Media requires an HTTP(S) url.');

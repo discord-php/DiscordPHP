@@ -69,7 +69,7 @@ class ApplicationIdentityProfileBuilder extends Builder implements JsonSerializa
     public function setUsername(?string $username): self
     {
         if ($username !== null) {
-            ProfileValueValidator::text($username, 1024, 'username');
+            (new ProfileValueValidator())->text($username, 1024, 'username');
         }
         $this->payload['username'] = $username;
 
@@ -94,7 +94,7 @@ class ApplicationIdentityProfileBuilder extends Builder implements JsonSerializa
         if ($data instanceof ProfileData) {
             $data = $data->getRawAttributes();
         }
-        $this->payload['data'] = ProfileDataValidator::normalize($data);
+        $this->payload['data'] = (new ProfileDataValidator())->normalize($data);
 
         return $this;
     }
@@ -129,6 +129,6 @@ class ApplicationIdentityProfileBuilder extends Builder implements JsonSerializa
     /** @return array<string, mixed> */
     public function jsonSerialize(): array
     {
-        return ProfileDataValidator::payload($this->payload);
+        return (new ProfileDataValidator())->payload($this->payload);
     }
 }

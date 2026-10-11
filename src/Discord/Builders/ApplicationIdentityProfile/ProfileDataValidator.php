@@ -22,48 +22,50 @@ namespace Discord\Builders\ApplicationIdentityProfile;
 final class ProfileDataValidator
 {
     /** Normalize Parts and JSON objects, then validate before storing builder state. */
-    public static function normalize(?array $data): ?array
+    public function normalize(?array $data): ?array
     {
         if ($data === null) {
             return null;
         }
         // Match HTTP encoding, including escaped Unicode and slashes.
-        $normalized = self::decode($data);
-        self::validate($normalized);
+        $normalized = $this->decode($data);
+        $this->validate($normalized);
 
         return $normalized;
     }
 
     /** Apply section rules and the serialized data limit, excluding username. */
-    private static function validate(array $data): void
+    private function validate(array $data): void
     {
         if (array_diff(array_keys($data), ['primary', 'dynamic'])) {
             throw new \InvalidArgumentException('Unknown profile data field.');
         }
+        $primary = new PrimaryProfileDataValidator();
+        $dynamic = new DynamicProfileDataValidator();
         $validators = [
-            'primary' => PrimaryProfileDataValidator::validate(...),
-            'dynamic' => DynamicProfileDataValidator::validate(...),
+            'primary' => $primary->validate(...),
+            'dynamic' => $dynamic->validate(...),
         ];
         foreach ($data as $key => $value) {
             $validators[$key]($value);
         }
-        if (strlen(json_encode(self::object($data), JSON_THROW_ON_ERROR)) > 10_240) {
+        if (strlen(json_encode($this->object($data), JSON_THROW_ON_ERROR)) > 10_240) {
             throw new \LengthException('Serialized profile data cannot exceed 10 KB.');
         }
     }
 
     /** Serialize only supplied fields, preserving explicit nulls. */
-    public static function payload(array $payload): array
+    public function payload(array $payload): array
     {
         if (($payload['data'] ?? null) !== null) {
-            $payload['data'] = self::object($payload['data']);
+            $payload['data'] = $this->object($payload['data']);
         }
 
         return $payload;
     }
 
     /** Empty data and primary are JSON objects; dynamic is a JSON array. */
-    private static function object(array $data): object
+    private function object(array $data): object
     {
         if (array_key_exists('primary', $data)) {
             $data['primary'] = (object) $data['primary'];
@@ -73,7 +75,7 @@ final class ProfileDataValidator
     }
 
     /** Convert nested Parts and objects to arrays with the HTTP client's encoding. */
-    private static function decode(array $data): array
+    private function decode(array $data): array
     {
         $json = json_encode((object) $data, JSON_THROW_ON_ERROR);
 
