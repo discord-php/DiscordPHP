@@ -133,10 +133,10 @@ class LobbyRepository extends AbstractRepository
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::LOBBY_MEMBER, $id, $user), $data)
-            ->then(function ($response) use ($lobby) {
+            ->then(function ($response) use ($id, $lobby) {
                 $member = $this->factory->part(Member::class, (array) $response, true);
 
-                return $this->updateRoster($lobby, [$member])->then(static fn () => $member);
+                return $this->updateRoster($id, $lobby, [$member->id => $member])->then(static fn () => $member);
             });
     }
 
@@ -159,7 +159,7 @@ class LobbyRepository extends AbstractRepository
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::LOBBY_MEMBER, $id, $user))
-            ->then(fn ($response) => $this->updateRoster($lobby, [], [$user])->then(static fn () => $response));
+            ->then(fn ($response) => $this->updateRoster($id, $lobby, [], [$user])->then(static fn () => $response));
     }
 
     /**
@@ -185,7 +185,7 @@ class LobbyRepository extends AbstractRepository
         );
 
         return $this->http->post(Endpoint::bind(Endpoint::LOBBY_MEMBERS_BULK, $id), $payload)
-            ->then(function ($response) use ($lobby, $payload) {
+            ->then(function ($response) use ($id, $lobby, $payload) {
                 /** @var ExCollectionInterface<Member> $collection */
                 $collection = $this->discord->getCollectionClass()::for(Member::class);
 
@@ -195,29 +195,25 @@ class LobbyRepository extends AbstractRepository
 
                 $removed = array_column(array_filter($payload, static fn ($member) => $member['remove_member'] ?? false), 'id');
 
-                return $this->updateRoster($lobby, $collection->toArray(), $removed)->then(static fn () => $collection);
+                return $this->updateRoster($id, $lobby, $collection->toArray(), $removed)->then(static fn () => $collection);
             });
     }
 
     /**
      * Applies successful REST roster changes to known lobbies without fetching a partial lobby.
      *
-     * @param Lobby|string $lobby
-     * @param Member[]     $upserted Members returned by Discord, never the requested additions.
-     * @param string[]     $removed
+     * @param string                    $id
+     * @param Lobby|string              $lobby
+     * @param array<string|int, Member> $upserted Members returned by Discord, keyed by id, never the requested additions.
+     * @param string[]                  $removed
      */
-    protected function updateRoster($lobby, array $upserted, array $removed = []): PromiseInterface
+    protected function updateRoster(string $id, $lobby, array $upserted, array $removed = []): PromiseInterface
     {
-        $id = is_string($lobby) ? $lobby : $lobby->id;
-
         return $this->cacheGet($id)->then(function (?Lobby $cached) use ($lobby, $upserted, $removed) {
             $targets = array_filter([$cached, $lobby], static fn ($target) => $target instanceof Lobby);
 
             foreach ($targets as $target) {
-                $members = array_diff_key($target->members->toArray(), array_flip($removed));
-                foreach ($upserted as $member) {
-                    $members[$member->id] = $member;
-                }
+                $members = array_replace(array_diff_key($target->members->toArray(), array_flip($removed)), $upserted);
                 $target->members = array_values($members);
             }
 

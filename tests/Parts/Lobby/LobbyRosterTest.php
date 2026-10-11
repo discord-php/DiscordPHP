@@ -177,7 +177,7 @@ final class LobbyRosterTest extends DiscordTestCase
                 ->then(fn () => $one->lobbies->cache->set('1', $oneLobby))
                 ->then(fn () => $two->lobbies->cache->set('1', $twoLobby))
                 ->then(fn () => $mock->lobbies->addMember('1', '7'))
-                ->then(fn () => $one->lobbies->leave('1'))
+                ->then(fn () => $one->lobbies->leave($oneLobby))
                 ->then(function () use ($mock, $one, $two, $botLobby, $twoLobby) {
                     $this->assertNotNull($botLobby->members->get('id', '7'));
                     $this->assertNull($twoLobby->members->get('id', '7'));
