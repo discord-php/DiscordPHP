@@ -45,6 +45,8 @@ class Section extends Layout
     /** @return Thumbnail|Button */
     protected function getAccessoryAttribute(): Component
     {
-        return $this->attributePartHelper('accessory', Component::TYPES[$this->attributes['accessory']->type ?? 0]);
+        $accessory = (array) ($this->attributes['accessory'] ?? []);
+
+        return $this->attributePartHelper('accessory', Component::TYPES[$accessory['type'] ?? 0]);
     }
 }

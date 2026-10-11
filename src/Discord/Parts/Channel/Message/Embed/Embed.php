@@ -18,7 +18,6 @@ use Carbon\Carbon;
 use Discord\Builders\AttachmentRequestBuilder;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Attachment;
-use Discord\Parts\Channel\Message\Container;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -31,21 +30,20 @@ use function Discord\poly_strlen;
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
  *
- * @property      ?string|null                                 $title       The title of the embed.
- * @property-read ?string|null                                 $type        The type of the embed (always "rich" for webhook embeds).
- * @property      ?string|null                                 $description A description of the embed.
- * @property      ?string|null                                 $url         The URL of the embed.
- * @property      ?Carbon|null                                 $timestamp   A timestamp of the embed.
- * @property      ?int|null                                    $color       The color of the embed.
- * @property      ?Footer|null                                 $footer      The footer of the embed.
- * @property      ?Image|null                                  $image       The image of the embed.
- * @property      ?Thumbnail|null                              $thumbnail   The thumbnail of the embed.
- * @property-read ?Video|null                                  $video       The video of the embed.
- * @property-read ?Provider|null                               $provider    The provider of the embed.
- * @property      ?Author|null                                 $author      The author of the embed.
- * @property      ?ExCollectionInterface<Field>|Field[]        $fields      A collection of embed fields (max of 25).
- * @property      ?int|null                                    $flags       Embedded flags combined as a bitfield.
- * @property-read ExCollectionInterface<Container>|Container[] $components  The received component embed's single Container. Empty on other embed types.
+ * @property      ?string|null                          $title       The title of the embed.
+ * @property-read ?string|null                          $type        The type of the embed (always "rich" for webhook embeds).
+ * @property      ?string|null                          $description A description of the embed.
+ * @property      ?string|null                          $url         The URL of the embed.
+ * @property      ?Carbon|null                          $timestamp   A timestamp of the embed.
+ * @property      ?int|null                             $color       The color of the embed.
+ * @property      ?Footer|null                          $footer      The footer of the embed.
+ * @property      ?Image|null                           $image       The image of the embed.
+ * @property      ?Thumbnail|null                       $thumbnail   The thumbnail of the embed.
+ * @property-read ?Video|null                           $video       The video of the embed.
+ * @property-read ?Provider|null                        $provider    The provider of the embed.
+ * @property      ?Author|null                          $author      The author of the embed.
+ * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
+ * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
  *
  * @phpstan-property ?ExCollectionInterface<Field> $fields
  */
@@ -101,7 +99,6 @@ class Embed extends Part
         'author',
         'fields',
         'flags',
-        'components',
     ];
 
     /**
@@ -114,16 +111,6 @@ class Embed extends Part
     protected function getTimestampAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('timestamp');
-    }
-
-    /**
-     * Returns the Container received in a component embed.
-     *
-     * @return ExCollectionInterface<Container>|Container[]
-     */
-    protected function getComponentsAttribute(): ExCollectionInterface
-    {
-        return $this->attributeCollectionHelper('components', Container::class);
     }
 
     /**

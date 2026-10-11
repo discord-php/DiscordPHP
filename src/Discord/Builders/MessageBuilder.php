@@ -314,6 +314,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /** Reject received website previews in bot/webhook message payloads. */
     private static function validateOutboundEmbed($embed): void
     {
+        $embed = (array) $embed;
         if (($embed['type'] ?? null) === Embed::TYPE_COMPONENTS || array_key_exists('components', $embed)) {
             throw new \InvalidArgumentException('Component embeds are received website previews; use ComponentEmbedBuilder for website JSON.');
         }

@@ -546,7 +546,8 @@ trait PartTrait
 
         foreach ($this->attributes[$key] as &$part) {
             if (! $part instanceof $class) {
-                $part = $this->createOf($class::TYPES[$part->type ?? $part->component_type ?? $part->field_type ?? 0], $part);
+                $data = (array) $part;
+                $part = $this->createOf($class::TYPES[$data['type'] ?? $data['component_type'] ?? $data['field_type'] ?? 0], $part);
             }
             $collection->pushItem($part);
         }
