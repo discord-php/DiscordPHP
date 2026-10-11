@@ -25,7 +25,7 @@ use Discord\Parts\Part;
  *
  * @property ?string|null $username The user's username in the external system.
  * @property ?array|null  $metadata Arbitrary game-defined data; not consumed by Discord.
- * @property ?array|null  $data     The profile data: `primary` pre-configured stats and `dynamic` custom fields.
+ * @property ProfileData|null $data     The profile data: `primary` pre-configured stats and `dynamic` custom fields.
  */
 class ApplicationIdentityProfile extends Part
 {
@@ -37,4 +37,20 @@ class ApplicationIdentityProfile extends Part
         'metadata',
         'data',
     ];
+
+    /**
+     * Returns typed stats without changing the raw response attributes.
+     *
+     * @return ProfileData|null
+     */
+    protected function getDataAttribute(): ?ProfileData
+    {
+        if (! isset($this->attributes['data'])) {
+            return null;
+        }
+
+        return $this->attributes['data'] instanceof ProfileData
+            ? $this->attributes['data']
+            : $this->createOf(ProfileData::class, $this->attributes['data']);
+    }
 }
