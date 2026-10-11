@@ -209,6 +209,90 @@ final class OpenApiCheckTest extends TestCase
         $this->assertStringContainsString("Not sent by DiscordPHP, and new since the baseline (1)\n  GET /channels/{channel_id}/messages  list_messages  (Endpoint::CHANNEL_MESSAGES is only sent POST)", $report);
     }
 
+    public function testJsonHandoffPreservesRevisionsAndDoesNotChangeTheTextReport()
+    {
+        $before = $this->spec();
+        $preview = $before;
+        $preview['components']['schemas']['MessageResponse']['properties']['new_field'] = ['type' => 'boolean'];
+        $commit = str_repeat('a', 40);
+        mkdir($this->directory.'/cache');
+        file_put_contents($this->directory.'/cache/'.$commit.'.json', json_encode($before));
+        file_put_contents($this->directory.'/preview.json', json_encode($preview));
+        file_put_contents($this->directory.'/stable.json', json_encode($before));
+        $baseline = $this->directory.'/baseline.json';
+        $baselineJson = json_encode(['commit' => $commit, 'date' => '2026-01-01', 'unimplemented' => []]);
+        file_put_contents($baseline, $baselineJson);
+        $arguments = ['--spec='.$this->directory.'/preview.json', '--stable='.$this->directory.'/stable.json'];
+
+        ob_start();
+        $withoutReport = OpenApiCheck::run($arguments, $baseline, $this->directory.'/src', $this->directory.'/cache');
+        $text = (string) ob_get_clean();
+        $arguments[] = '--report='.$this->directory.'/handoff.json';
+        ob_start();
+        $withReport = OpenApiCheck::run($arguments, $baseline, $this->directory.'/src', $this->directory.'/cache');
+        $handoffText = (string) ob_get_clean();
+        $handoff = json_decode(file_get_contents($this->directory.'/handoff.json'), true, 512, JSON_THROW_ON_ERROR);
+
+        $this->assertSame(1, $withReport);
+        $this->assertSame($withoutReport, $withReport);
+        $this->assertSame($text, $handoffText, 'adding a handoff must not change the issue notification hash');
+        $this->assertSame($commit, $handoff['baseline']['commit'], 'preserve the full baseline revision');
+        $this->assertNull($handoff['spec']['commit'], 'a local document has no inferred upstream revision');
+        $this->assertSame(hash('sha256', json_encode($preview, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)), $handoff['spec']['document_sha256']);
+        $this->assertContains('~ MessageResponse: property new_field added (boolean)  [preview only]', $handoff['changes']['schemas']);
+        $this->assertContains('MessageResponse: property new_field', $handoff['preview_only']);
+        $this->assertSame(3, $handoff['summary']['new_gaps']);
+        $this->assertSame('not_run', $handoff['runtime_tests']);
+        $this->assertSame($baselineJson, file_get_contents($baseline), 'a handoff must not accept or rewrite the baseline');
+    }
+
+    public function testJsonHandoffCannotOverwriteBaselineOrSpecInputs()
+    {
+        $files = ['baseline.json' => json_encode(['unimplemented' => []]), 'preview.json' => json_encode($this->spec()), 'stable.json' => json_encode($this->spec())];
+        foreach ($files as $name => $contents) {
+            file_put_contents($this->directory.'/'.$name, $contents);
+        }
+
+        foreach (array_keys($files) as $name) {
+            $destination = $this->directory.'/./'.$name;
+            if ('\\' === DIRECTORY_SEPARATOR && 'preview.json' === $name) {
+                $destination = strtoupper($destination);
+            }
+            ob_start();
+            $status = OpenApiCheck::run([
+                '--spec='.$this->directory.'/preview.json',
+                '--stable='.$this->directory.'/stable.json',
+                '--report='.$destination,
+            ], $this->directory.'/baseline.json', $this->directory.'/src', $this->directory.'/cache');
+            ob_end_clean();
+
+            $this->assertSame(2, $status, 'reject aliases for each input before running the check');
+            foreach ($files as $input => $contents) {
+                $this->assertSame($contents, file_get_contents($this->directory.'/'.$input), 'all input bytes must remain unchanged');
+            }
+        }
+    }
+
+    public function testJsonHandoffRecordsCleanChecksWithoutClaimingRuntimeCoverage()
+    {
+        file_put_contents($this->directory.'/spec.json', json_encode($this->spec()));
+        $baseline = $this->directory.'/baseline.json';
+        file_put_contents($baseline, json_encode(['unimplemented' => array_fill_keys(array_keys(OpenApiCheck::operations($this->spec())), 'Known gap.')]));
+
+        ob_start();
+        $status = OpenApiCheck::run(['--spec='.$this->directory.'/spec.json', '--report='.$this->directory.'/handoff.json'], $baseline, $this->directory.'/src', $this->directory.'/cache');
+        ob_end_clean();
+        $handoff = json_decode(file_get_contents($this->directory.'/handoff.json'), true, 512, JSON_THROW_ON_ERROR);
+
+        $this->assertSame(0, $status);
+        $this->assertSame(0, $handoff['exit_status']);
+        $this->assertSame(3, $handoff['summary']['gaps'], 'passing the baseline is not complete API coverage');
+        $this->assertSame([], $handoff['new_gaps']);
+        $this->assertSame(['endpoints' => [], 'schemas' => [], 'promoted' => []], $handoff['changes']);
+        $this->assertNull($handoff['spec']['stable_document_sha256']);
+        $this->assertSame('not_run', $handoff['runtime_tests']);
+    }
+
     public function testWhatOnlyThePreviewDescribesIsMarked()
     {
         $baseline = $this->spec();

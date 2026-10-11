@@ -53,14 +53,30 @@ jobs:
           # Raises GitHub's API rate limit for looking up the spec's latest commit.
           GITHUB_TOKEN: ${{ github.token }}
         run: |
+          mkdir -p openapi-handoff
           set +e
-          php scripts/openapi-check.php > report.txt 2>&1
+          php scripts/openapi-check.php --report=openapi-handoff/check.json > report.txt 2>&1
           status=$?
           set -e
           cat report.txt
           echo "status=$status" >> "$GITHUB_OUTPUT"
+          cp report.txt scripts/openapi-baseline.json scripts/compatibility-handoff.md openapi-handoff/
+          jq -n --arg repository "$GITHUB_REPOSITORY" --arg source_commit "$GITHUB_SHA" \
+            --arg run_url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --argjson check_exit_status "$status" \
+            '{repository: $repository, source_commit: $source_commit, run_url: $run_url, check_exit_status: $check_exit_status, runtime_tests: "not_run"}' \
+            > openapi-handoff/source.json
           # 0: nothing new. 1: something to report. Anything else: the check could not run.
           if [ "$status" -gt 1 ]; then exit "$status"; fi
+
+      - name: Upload compatibility handoff
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: openapi-handoff-${{ github.sha }}
+          path: openapi-handoff/
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Open, update or close the issue
         id: issue
@@ -98,6 +114,8 @@ jobs:
             echo '```'
             echo
             echo "Implement the changes, or record why not in \`scripts/openapi-baseline.json\`. Then run \`composer openapi:update\` and commit the baseline. This issue closes itself once the check passes."
+            echo
+            echo "The run's \`openapi-handoff\` artifact records the source/spec revisions and findings. Follow the [compatibility handoff]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/blob/$GITHUB_SHA/scripts/compatibility-handoff.md) for affected runtime tests and reuse this issue for matching Compatibility Watch findings."
             echo
             echo "Found by [this run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."
             echo "<!-- openapi-report: $hash -->"

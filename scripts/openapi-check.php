@@ -18,6 +18,7 @@ declare(strict_types=1);
 //   composer openapi                 Report, and fail on anything new since the baseline.
 //   composer openapi -- --all        Also list the gaps the baseline already knows about.
 //   composer openapi -- --spec=FILE  Check a local copy of the spec instead of the live one.
+//   composer openapi -- --report=FILE Also write JSON findings for a compatibility handoff (existing directory).
 //   composer openapi:update          Record the live spec's commit and today's gaps as the baseline.
 //
 // Downloaded editions of the spec are kept in the system's temporary directory, one file per commit.

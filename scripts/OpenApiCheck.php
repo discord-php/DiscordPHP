@@ -70,7 +70,7 @@ final class OpenApiCheck
      */
     public static function run(array $arguments, string $baseline, string $source, string $cache): int
     {
-        $options = ['all' => false, 'update' => false, 'spec' => null, 'stable' => null];
+        $options = ['all' => false, 'update' => false, 'spec' => null, 'stable' => null, 'report' => null];
 
         foreach ($arguments as $argument) {
             if ('--all' === $argument || '--update' === $argument) {
@@ -79,6 +79,8 @@ final class OpenApiCheck
                 $options['spec'] = substr($argument, 7);
             } elseif (str_starts_with($argument, '--stable=')) {
                 $options['stable'] = substr($argument, 9);
+            } elseif (str_starts_with($argument, '--report=')) {
+                $options['report'] = substr($argument, 9);
             } else {
                 fwrite(STDERR, ('--help' === $argument || '-h' === $argument ? '' : "Unknown option {$argument}.\n").self::usage());
 
@@ -98,6 +100,23 @@ final class OpenApiCheck
             return 2;
         }
 
+        if ('' === $options['report'] || ($options['update'] && null !== $options['report'])) {
+            fwrite(STDERR, "--report needs an output file and cannot be combined with --update; it records a read-only check.\n");
+
+            return 2;
+        }
+
+        if (null !== $options['report']) {
+            $destination = self::resolvedPath($options['report']);
+            foreach ([$baseline, $options['spec'], $options['stable']] as $input) {
+                if (null !== $input && $destination === self::resolvedPath($input)) {
+                    fwrite(STDERR, "The report output must not overwrite the baseline or a spec input.\n");
+
+                    return 2;
+                }
+            }
+        }
+
         try {
             return self::check($options, $baseline, $source, $cache);
         } catch (\RuntimeException|\JsonException $e) {
@@ -105,6 +124,14 @@ final class OpenApiCheck
 
             return 2;
         }
+    }
+
+    /** Resolves existing symlinks and relative paths, with Windows' case-insensitive file names. */
+    private static function resolvedPath(string $file): string
+    {
+        $path = realpath($file) ?: (realpath(dirname($file)) ?: dirname($file)).DIRECTORY_SEPARATOR.basename($file);
+
+        return '\\' === DIRECTORY_SEPARATOR ? strtolower($path) : $path;
     }
 
     /**
@@ -497,7 +524,7 @@ final class OpenApiCheck
     /**
      * Compares and reports.
      *
-     * @param array{all: bool, update: bool, spec: ?string} $options
+     * @param array{all: bool, update: bool, spec: ?string, stable: ?string, report: ?string} $options
      */
     private static function check(array $options, string $baselineFile, string $source, string $cache): int
     {
@@ -611,6 +638,39 @@ final class OpenApiCheck
         $new = [] !== $newGaps || (null !== $changes && ([] !== $changes['endpoints'] || [] !== $changes['schemas'] || [] !== $changes['promoted']));
         if ($new) {
             echo "\nOnce these are dealt with, composer openapi:update records them in the baseline.\n";
+        }
+
+        if (null !== $options['report']) {
+            // Keep stdout unchanged: the issue workflow hashes its findings to avoid duplicate notifications.
+            $digest = static fn (array $document): string => hash('sha256', json_encode($document, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+            $report = [
+                'schema_version' => 1,
+                'exit_status' => $new ? 1 : 0,
+                'spec' => [
+                    'repository' => self::REPOSITORY,
+                    'source' => $options['spec'] ?? self::FILE,
+                    'commit' => $latest['sha'] ?? null,
+                    'date' => $latest['date'] ?? null,
+                    'document_sha256' => $digest($spec),
+                    'stable_source' => null === $stable ? null : ($options['stable'] ?? self::STABLE_FILE),
+                    'stable_document_sha256' => null === $stable ? null : $digest($stable),
+                ],
+                'baseline' => [
+                    'commit' => $baseline['commit'] ?? null,
+                    'date' => $baseline['date'] ?? null,
+                    'document_sha256' => $digest($baseline),
+                ],
+                'summary' => ['operations' => count($operations), 'sent' => $sent, 'gaps' => count($gaps), 'new_gaps' => count($newGaps)],
+                'changes' => $changes ?? ['endpoints' => [], 'schemas' => [], 'promoted' => []],
+                'new_gaps' => $newGapLines,
+                'closed_gaps' => array_keys(self::sorted($closed)),
+                'preview_only' => array_keys($previewOnly),
+                'runtime_tests' => 'not_run',
+            ];
+            $json = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR)."\n";
+            if (false === @file_put_contents($options['report'], $json)) {
+                throw new \RuntimeException("Could not write the check report to {$options['report']}.");
+            }
         }
 
         return $new ? 1 : 0;
@@ -1075,6 +1135,8 @@ final class OpenApiCheck
                                                for routes the spec does not describe.
               composer openapi -- --spec=FILE  Check a local copy of the spec instead of the live one.
                                 --stable=FILE  With --spec, the stable edition to mark what is only in the preview.
+                                --report=FILE  Also write JSON findings and spec/baseline revisions; no runtime tests are run.
+                                               The output directory must exist. Cannot be used with --update.
               composer openapi:update          Record the live spec's commit and today's gaps as the baseline.
 
             Anything only in the preview, not the stable edition, is marked [preview only]: Discord may change or
