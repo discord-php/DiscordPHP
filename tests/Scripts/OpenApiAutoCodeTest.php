@@ -135,11 +135,15 @@ final class OpenApiAutoCodeTest extends TestCase
             }
             PHP;
 
-        $patched = (new OpenApiAutoCodePatcher())->patchSource($source, ['new_field' => 'string|null']);
+        foreach (["\n", "\r\n"] as $newline) {
+            $fixture = str_replace("\n", $newline, str_replace("\r\n", "\n", $source));
+            $patched = (new OpenApiAutoCodePatcher())->patchSource($fixture, ['new_field' => 'string|null']);
 
-        $this->assertStringContainsString("'id',\n        'new_field',\n", $patched);
-        $this->assertStringContainsString('@property string|null $new_field', $patched);
-        $this->assertSame(1, substr_count($patched, "'new_field'"));
+            $this->assertStringContainsString("'id',{$newline}        'new_field',{$newline}    ];", $patched);
+            $this->assertStringNotContainsString("\r\r\n", $patched);
+            $this->assertStringContainsString('@property string|null $new_field', $patched);
+            $this->assertSame(1, substr_count($patched, "'new_field'"));
+        }
     }
 
     public function testItRejectsMappingsOutsideTheSourceTree(): void

@@ -23,7 +23,7 @@ final class OpenApiAutoCodeFillablePatcher
     public function add(string $source, array $fields): string
     {
         $newline = str_contains($source, "\r\n") ? "\r\n" : "\n";
-        if (! preg_match('/protected\s+\$fillable\s*=\s*\[(.*?)\n([ \t]*)\];/s', $source, $fillable, PREG_OFFSET_CAPTURE)) {
+        if (! preg_match('/protected\s+\$fillable\s*=\s*\[(.*?)\r?\n([ \t]*)\];/s', $source, $fillable, PREG_OFFSET_CAPTURE)) {
             throw new \RuntimeException('the class has no simple `$fillable` array');
         }
 
@@ -40,6 +40,9 @@ final class OpenApiAutoCodeFillablePatcher
         $additions = $prefix;
         foreach (array_keys($fields) as $field) {
             $additions .= $indent.'\''.$field.'\','.$newline;
+        }
+        if ($prefix !== '') {
+            $additions = substr($additions, 0, -strlen($newline));
         }
 
         $body = substr($body, 0, $insertAt).$additions.substr($body, $insertAt);
