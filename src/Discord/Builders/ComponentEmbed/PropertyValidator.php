@@ -45,4 +45,15 @@ final class PropertyValidator
             }
         }
     }
+
+    public static function emoji($emoji): void
+    {
+        if (! is_array($emoji)) {
+            throw new \InvalidArgumentException('Button emoji must be an object.');
+        }
+        InputValidator::keys($emoji, ['id', 'name', 'animated']);
+        if (($emoji['id'] ?? null) === null && ($emoji['name'] ?? '') === '') {
+            throw new \InvalidArgumentException('Button emoji requires an id or name.');
+        }
+    }
 }

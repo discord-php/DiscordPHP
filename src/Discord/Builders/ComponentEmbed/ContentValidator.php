@@ -27,7 +27,7 @@ final class ContentValidator
                 InputValidator::text($component['content'] ?? null, 4000);
                 break;
             case 11:
-                MediaValidator::item($component, true);
+                MediaValidator::item($component, 11);
                 break;
             case 12:
                 return MediaValidator::gallery($component['items'] ?? null);
@@ -46,18 +46,7 @@ final class ContentValidator
             InputValidator::text($component['label'], 80);
         }
         if (($component['emoji'] ?? null) !== null) {
-            self::emoji($component['emoji']);
-        }
-    }
-
-    private static function emoji($emoji): void
-    {
-        if (! is_array($emoji)) {
-            throw new \InvalidArgumentException('Button emoji must be an object.');
-        }
-        InputValidator::keys($emoji, ['id', 'name', 'animated']);
-        if (($emoji['id'] ?? null) === null && ($emoji['name'] ?? '') === '') {
-            throw new \InvalidArgumentException('Button emoji requires an id or name.');
+            PropertyValidator::emoji($component['emoji']);
         }
     }
 }

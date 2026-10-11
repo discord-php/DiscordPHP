@@ -25,13 +25,13 @@ final class MediaValidator
                 throw new \InvalidArgumentException('Gallery items must be objects.');
             }
             InputValidator::keys($item, ['media', 'description', 'spoiler']);
-            self::item($item, false);
+            self::item($item, 12);
         }
 
         return count($items);
     }
 
-    public static function item(array $item, bool $thumbnail): void
+    public static function item(array $item, int $type): void
     {
         $media = $item['media'] ?? null;
         if (! is_array($media)) {
@@ -39,7 +39,7 @@ final class MediaValidator
         }
         InputValidator::keys($media, ['url']);
         InputValidator::url($media['url'] ?? null, 2048);
-        self::format($media['url'], $thumbnail);
+        self::format($media['url'], $type);
         if (($item['description'] ?? null) !== null) {
             InputValidator::text($item['description'], 1024);
         }
@@ -48,11 +48,11 @@ final class MediaValidator
         }
     }
 
-    private static function format(string $url, bool $thumbnail): void
+    private static function format(string $url, int $type): void
     {
         $extension = strtolower(pathinfo((string) parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
         $formats = ['png', 'gif', 'jpg', 'jpeg', 'webp', 'avif'];
-        if (! $thumbnail) {
+        if ($type === 12) {
             $formats = array_merge($formats, ['mp4', 'webm', 'mov']);
         }
         // A suffix is only a local guard, not proof of the fetched Content-Type.
