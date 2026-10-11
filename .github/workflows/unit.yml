@@ -2,41 +2,49 @@ name: Unit Tests
 on:
   workflow_dispatch:
 
-env:
-  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-  TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
-  TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
+permissions:
+  contents: read
+
+concurrency:
+  # The live tests share a Discord channel, so run one dispatch at a time without dropping queued runs.
+  group: live-unit-tests
+  queue: max
 
 jobs:
   unit-lint:
     name: PHPUnit and Lint
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'no test')"
-    concurrency: phpunit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         php:
           - '8.5'
           - '8.4'
           - '8.3'
-          - '8.2'
-          - '8.1'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: uv, zlib, mbstring, zstd
-          tools: phpunit, phplint
+          tools: phplint
       - name: Install dependencies
-        run: composer install
+        run: composer install --no-interaction --no-progress
       - name: Redis Server in GitHub Actions
-        uses: supercharge/redis-github-action@1.4.0
+        uses: supercharge/redis-github-action@1.8.1
       # - name: Memcached Service
       #   uses: niden/actions-memcached@v7
       - name: Run PHPUnit
-        run: phpunit
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
+          TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
+        run: vendor/bin/phpunit
       - name: Run PHPLint
         run: phplint

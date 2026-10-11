@@ -897,6 +897,12 @@ class Discord
      */
     public function handleWsConnection(WebSocket $ws): void
     {
+        if ($this->closing) {
+            $ws->close(Op::CLOSE_NORMAL, 'discordphp closing...');
+
+            return;
+        }
+
         $this->ws = $ws;
         $this->connected = true;
 
@@ -1063,6 +1069,10 @@ class Discord
      */
     public function handleWsConnectionFailed(\Throwable $e): void
     {
+        if ($this->closing) {
+            return;
+        }
+
         $this->logger->error('failed to connect to websocket, retry in 5 seconds', ['e' => $e->getMessage()]);
 
         $this->loop->addTimer(5, fn () => $this->connectWs());
@@ -1710,7 +1720,15 @@ class Discord
      */
     public function connectWs(): void
     {
+        if ($this->closing) {
+            return;
+        }
+
         $this->setGateway()->then(function ($gateway) {
+            if ($this->closing) {
+                return;
+            }
+
             if (isset($gateway['session']) && $session = $gateway['session']) {
                 $this->logger->debug('session data received', ['session' => $session]);
                 if ($session['remaining'] < 2) {
