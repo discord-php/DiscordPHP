@@ -619,6 +619,8 @@ class Message extends Part
      * Returns the actor attribute.
      *
      * @return User|null The user who performed the action the message records.
+     *
+     * @since 10.67.0
      */
     protected function getActorAttribute(): ?User
     {

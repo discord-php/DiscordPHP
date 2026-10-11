@@ -261,6 +261,8 @@ class Session
      * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
      * @return PromiseInterface<ExCollectionInterface<Message>|Message[]>
+     *
+     * @since 10.66.2
      */
     public function getChannelMessages($channel, array $options = []): PromiseInterface
     {
@@ -311,6 +313,8 @@ class Session
      * @see \Discord\Repository\Guild\MessageRepository::freshen() for the query parameters.
      *
      * @return PromiseInterface<GuildSearch>
+     *
+     * @since 10.67.0
      */
     public function searchGuildMessages($guild, array $queryparams): PromiseInterface
     {

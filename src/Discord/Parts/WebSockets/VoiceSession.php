@@ -107,6 +107,8 @@ class VoiceSession extends Part
      * Gets the string representation of the voice session.
      *
      * @return string The session ID as a string.
+     *
+     * @since 10.66.1
      */
     public function __toString(): string
     {
