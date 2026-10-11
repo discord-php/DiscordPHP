@@ -78,23 +78,25 @@ final class ApplicationIdentityProfileTest extends DiscordTestCase
         foreach ([[], ['data' => null], ['data' => []], ['data' => ['primary' => null, 'dynamic' => null]], ['data' => ['primary' => [], 'dynamic' => []]]] as $raw) {
             $profile = getMockDiscord()->getFactory()->part(ApplicationIdentityProfile::class, $raw);
             $data = $profile->data;
+            $this->assertSame($raw, $profile->getRawAttributes());
             if (! isset($raw['data'])) {
                 $this->assertNull($data);
-            } else {
-                $this->assertInstanceOf(ProfileData::class, $data);
-                if (isset($raw['data']['primary'])) {
-                    $this->assertInstanceOf(PrimaryProfileData::class, $data->primary);
-                    $this->assertNull($data->primary->rank_image);
-                } else {
-                    $this->assertNull($data->primary);
-                }
-                if (isset($raw['data']['dynamic'])) {
-                    $this->assertCount(0, $data->dynamic);
-                } else {
-                    $this->assertNull($data->dynamic);
-                }
+                continue;
             }
-            $this->assertSame($raw, $profile->getRawAttributes());
+            $this->assertInstanceOf(ProfileData::class, $data);
+            if (isset($raw['data']['primary'])) {
+                $this->assertInstanceOf(PrimaryProfileData::class, $data->primary);
+                $this->assertNull($data->primary->rank_image);
+            }
+            if (! isset($raw['data']['primary'])) {
+                $this->assertNull($data->primary);
+            }
+            if (isset($raw['data']['dynamic'])) {
+                $this->assertCount(0, $data->dynamic);
+            }
+            if (! isset($raw['data']['dynamic'])) {
+                $this->assertNull($data->dynamic);
+            }
         }
         $field = getMockDiscord()->getFactory()->part(DynamicMediaField::class, ['type' => 3, 'name' => 'image', 'value' => null]);
         $this->assertNull($field->value);
