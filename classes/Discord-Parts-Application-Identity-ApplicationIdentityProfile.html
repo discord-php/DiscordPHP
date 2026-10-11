@@ -145,6 +145,10 @@
                 <a href="guide/parts/user.html#user" class="">User</a>
                 
             </li>
+                    <li>
+                <a href="guide/parts/lobby.html#lobby" class="">Lobby</a>
+                
+            </li>
             </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -153,6 +157,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/permissions.html#permissions" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/game_stats_profiles.html#game-stats-profiles" class="">Game stats profiles</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -165,6 +173,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/interactions.html#interactions" class="">Interactions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
                         </section>
@@ -343,7 +355,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#property_data">$data</a>
     <span>
-                        &nbsp;: ?array&lt;string|int, mixed&gt;|null            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Application-Identity-ProfileData.html"><abbr title="\Discord\Parts\Application\Identity\ProfileData">ProfileData</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -571,12 +583,11 @@
 be fetched from Discord.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a>
+    <a class="" href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#method_jsonSerialize">jsonSerialize()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>Provides data when the part is encoded into
-JSON. Used for JsonSerializable.</dd>
+<dd>Preserve response serialization, including unknown nested fields.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a>
@@ -684,6 +695,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#method_getDataAttribute">getDataAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Application-Identity-ProfileData.html"><abbr title="\Discord\Parts\Application\Identity\ProfileData">ProfileData</abbr></a>|null    </span>
+</dt>
+<dd>Returns typed stats without changing the raw response attributes.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -782,7 +800,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">?array&lt;string|int, mixed&gt;|null</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Application-Identity-ProfileData.html"><abbr title="\Discord\Parts\Application\Identity\ProfileData">ProfileData</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$data</span>
     </code>
 
@@ -1416,7 +1434,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">631</span>
+    <span class="phpdocumentor-element-found-in__line">632</span>
 
     </aside>
 
@@ -1494,7 +1512,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">649</span>
+    <span class="phpdocumentor-element-found-in__line">650</span>
 
     </aside>
 
@@ -1608,7 +1626,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">662</span>
+    <span class="phpdocumentor-element-found-in__line">663</span>
 
     </aside>
 
@@ -1680,7 +1698,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">603</span>
+    <span class="phpdocumentor-element-found-in__line">604</span>
 
     </aside>
 
@@ -1907,7 +1925,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">588</span>
+    <span class="phpdocumentor-element-found-in__line">589</span>
 
     </aside>
 
@@ -2328,18 +2346,17 @@ be fetched from Discord.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_jsonSerialize">
         jsonSerialize()
-        <a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#method_jsonSerialize" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Application/Identity/ApplicationIdentityProfile.php"><a href="files/src-discord-parts-application-identity-applicationidentityprofile.html"><abbr title="src/Discord/Parts/Application/Identity/ApplicationIdentityProfile.php">ApplicationIdentityProfile.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">315</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Provides data when the part is encoded into
-JSON. Used for JsonSerializable.</p>
+        <p class="phpdocumentor-summary">Preserve response serialization, including unknown nested fields.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -2351,39 +2368,12 @@ JSON. Used for JsonSerializable.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="method_jsonSerialize_tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">throws</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                                                    
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">see</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::getPublicAttributes()">Part::getPublicAttributes()</abbr></span>
-                                                                    <section class="phpdocumentor-description"><p>This function forwards onto getPublicAttributes.</p>
-</section>
-
-                                    </dd>
-                        </dl>
 
         
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>An array of public attributes.</p>
-</section>
-
             </section>
 
 </article>
@@ -3053,7 +3043,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">570</span>
+    <span class="phpdocumentor-element-found-in__line">571</span>
 
     </aside>
 
@@ -3406,6 +3396,45 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getDataAttribute">
+        getDataAttribute()
+        <a href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#method_getDataAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Application/Identity/ApplicationIdentityProfile.php"><a href="files/src-discord-parts-application-identity-applicationidentityprofile.html"><abbr title="src/Discord/Parts/Application/Identity/ApplicationIdentityProfile.php">ApplicationIdentityProfile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">46</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns typed stats without changing the raw response attributes.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getDataAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Application-Identity-ProfileData.html"><abbr title="\Discord\Parts\Application\Identity\ProfileData">ProfileData</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Application-Identity-ProfileData.html"><abbr title="\Discord\Parts\Application\Identity\ProfileData">ProfileData</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_makeOptionalAttributes">
         makeOptionalAttributes()
         <a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3640,7 +3669,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetSet">offsetSet()</a></li>
@@ -3656,6 +3685,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Application-Identity-ApplicationIdentityProfile.html#method_getDataAttribute">getDataAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>

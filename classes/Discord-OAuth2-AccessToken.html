@@ -145,6 +145,10 @@
                 <a href="guide/parts/user.html#user" class="">User</a>
                 
             </li>
+                    <li>
+                <a href="guide/parts/lobby.html#lobby" class="">Lobby</a>
+                
+            </li>
             </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -153,6 +157,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/permissions.html#permissions" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/game_stats_profiles.html#game-stats-profiles" class="">Game stats profiles</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -165,6 +173,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/interactions.html#interactions" class="">Interactions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
                         </section>
@@ -337,6 +349,50 @@ however long the token is kept.</p>
 
 
 
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/Discord-OAuth2-AccessToken.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_CHILD">ORIGIN_CHILD</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;child&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_OAUTH2">ORIGIN_OAUTH2</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;oauth2&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_BOT">ORIGIN_PROVISIONAL_BOT</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;provisional_bot&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_EXTERNAL">ORIGIN_PROVISIONAL_EXTERNAL</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;provisional_external&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_PUBLIC">ORIGIN_PROVISIONAL_PUBLIC</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;provisional_public&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_UNKNOWN">ORIGIN_UNKNOWN</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;unknown&#039;                            </span>
+</dt>
+<dd>Origin is local metadata, never inferred from a token response or its scopes.</dd>
+
+    </dl>
 
 
 <h4 id="toc-properties">
@@ -361,6 +417,12 @@ however long the token is kept.</p>
     <a class="" href="classes/Discord-OAuth2-AccessToken.html#property_id_token">$id_token</a>
     <span>
                         &nbsp;: ?string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#property_origin">$origin</a>
+    <span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -442,11 +504,206 @@ however long the token is kept.</p>
                                 &nbsp;: array&lt;string, mixed&gt;    </span>
 </dt>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-AccessToken.html#method_requiresReacquisition">requiresReacquisition()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Whether renewal must repeat the original issuance method, instead of OAuth refresh.</dd>
+
     </dl>
 
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-OAuth2-AccessToken.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ORIGIN_CHILD">
+        ORIGIN_CHILD
+        <a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_CHILD" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ORIGIN_CHILD</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;child&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ORIGIN_OAUTH2">
+        ORIGIN_OAUTH2
+        <a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_OAUTH2" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ORIGIN_OAUTH2</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;oauth2&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ORIGIN_PROVISIONAL_BOT">
+        ORIGIN_PROVISIONAL_BOT
+        <a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_BOT" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">35</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ORIGIN_PROVISIONAL_BOT</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;provisional_bot&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ORIGIN_PROVISIONAL_EXTERNAL">
+        ORIGIN_PROVISIONAL_EXTERNAL
+        <a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_EXTERNAL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ORIGIN_PROVISIONAL_EXTERNAL</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;provisional_external&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ORIGIN_PROVISIONAL_PUBLIC">
+        ORIGIN_PROVISIONAL_PUBLIC
+        <a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_PUBLIC" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">37</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ORIGIN_PROVISIONAL_PUBLIC</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;provisional_public&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ORIGIN_UNKNOWN">
+        ORIGIN_UNKNOWN
+        <a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_UNKNOWN" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Origin is local metadata, never inferred from a token response or its scopes.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">ORIGIN_UNKNOWN</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;unknown&#039;</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -472,7 +729,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -509,7 +766,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -546,7 +803,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -573,6 +830,43 @@ however long the token is kept.</p>
             -public
                                                 -read-only                    "
 >
+    <h4 class="phpdocumentor-element__name" id="property_origin">
+        $origin
+        <a href="classes/Discord-OAuth2-AccessToken.html#property_origin" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$origin</span>
+     = <span class="phpdocumentor-signature__default-value">self::ORIGIN_UNKNOWN</span></code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_refresh_token">
         $refresh_token
         <a href="classes/Discord-OAuth2-AccessToken.html#property_refresh_token" class="headerlink"><i class="fas fa-link"></i></a>
@@ -583,7 +877,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -620,7 +914,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -657,7 +951,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -699,14 +993,14 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$access_token</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token_type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'Bearer'</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$refresh_token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$expires_at</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$scopes</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$access_token</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token_type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'Bearer'</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$refresh_token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$expires_at</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$scopes</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id_token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$origin</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><abbr title="\self::ORIGIN_UNKNOWN">self::ORIGIN_UNKNOWN</abbr></span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -737,7 +1031,7 @@ however long the token is kept.</p>
                 : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>What to exchange for a new token when this one expires. Provisional account tokens have none.</p>
+                    <section class="phpdocumentor-description"><p>Present in some provisional responses too; its presence alone does not permit OAuth refresh.</p>
 </section>
 
             </dd>
@@ -768,6 +1062,15 @@ however long the token is kept.</p>
 </section>
 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$origin</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value"><abbr title="\self::ORIGIN_UNKNOWN">self::ORIGIN_UNKNOWN</abbr></span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Local issuance provenance; unknown preserves legacy refresh behavior.</p>
+</section>
+
+            </dd>
             </dl>
 
     
@@ -790,7 +1093,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -828,7 +1131,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -867,7 +1170,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -916,7 +1219,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -924,7 +1227,7 @@ however long the token is kept.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromResponse</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">object|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$response</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$now</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromResponse</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">object|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$response</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$now</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$origin</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"><abbr title="\self::ORIGIN_UNKNOWN">self::ORIGIN_UNKNOWN</abbr></span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -950,6 +1253,15 @@ however long the token is kept.</p>
 </section>
 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$origin</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value"><abbr title="\self::ORIGIN_UNKNOWN">self::ORIGIN_UNKNOWN</abbr></span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Local provenance supplied by the issuer, not by the response.</p>
+</section>
+
+            </dd>
             </dl>
 
     
@@ -964,7 +1276,7 @@ however long the token is kept.</p>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
-                                                                                        <section class="phpdocumentor-description"><p>The response carries no access token.</p>
+                                                                                        <section class="phpdocumentor-description"><p>The response carries no access token or the origin is invalid.</p>
 </section>
 
                                     </dd>
@@ -992,7 +1304,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1054,7 +1366,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -1093,7 +1405,7 @@ however long the token is kept.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -1117,6 +1429,45 @@ however long the token is kept.</p>
             </section>
 
 </article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_requiresReacquisition">
+        requiresReacquisition()
+        <a href="classes/Discord-OAuth2-AccessToken.html#method_requiresReacquisition" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/AccessToken.php"><a href="files/src-discord-oauth2-accesstoken.html"><abbr title="src/Discord/OAuth2/AccessToken.php">AccessToken.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">134</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether renewal must repeat the original issuance method, instead of OAuth refresh.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">requiresReacquisition</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
             </section>
 
         
@@ -1131,10 +1482,22 @@ however long the token is kept.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                        <li><a href="classes/Discord-OAuth2-AccessToken.html#toc-constants">Constants</a></li>
                                                             <li><a href="classes/Discord-OAuth2-AccessToken.html#toc-properties">Properties</a></li>
                                                             <li><a href="classes/Discord-OAuth2-AccessToken.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_CHILD">ORIGIN_CHILD</a></li>
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_OAUTH2">ORIGIN_OAUTH2</a></li>
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_BOT">ORIGIN_PROVISIONAL_BOT</a></li>
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_EXTERNAL">ORIGIN_PROVISIONAL_EXTERNAL</a></li>
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_PROVISIONAL_PUBLIC">ORIGIN_PROVISIONAL_PUBLIC</a></li>
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#constant_ORIGIN_UNKNOWN">ORIGIN_UNKNOWN</a></li>
+                                            </ul>
+                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
@@ -1142,6 +1505,7 @@ however long the token is kept.</p>
                                                     <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_access_token">$access_token</a></li>
                                                     <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_expires_at">$expires_at</a></li>
                                                     <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_id_token">$id_token</a></li>
+                                                    <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_origin">$origin</a></li>
                                                     <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_refresh_token">$refresh_token</a></li>
                                                     <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_scopes">$scopes</a></li>
                                                     <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#property_token_type">$token_type</a></li>
@@ -1159,6 +1523,7 @@ however long the token is kept.</p>
                                             <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#method_isExpired">isExpired()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#method_isRefreshable">isRefreshable()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#method_jsonSerialize">jsonSerialize()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-AccessToken.html#method_requiresReacquisition">requiresReacquisition()</a></li>
                                     </ul>
             </li>
                     </ul>

@@ -145,6 +145,10 @@
                 <a href="guide/parts/user.html#user" class="">User</a>
                 
             </li>
+                    <li>
+                <a href="guide/parts/lobby.html#lobby" class="">Lobby</a>
+                
+            </li>
             </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -153,6 +157,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/permissions.html#permissions" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/game_stats_profiles.html#game-stats-profiles" class="">Game stats profiles</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -165,6 +173,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/interactions.html#interactions" class="">Interactions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
                         </section>
@@ -268,7 +280,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php"><a href="files/src-discord-oauth2-tokenstore-tokenstoreinterface.html"><abbr title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php">TokenStoreInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -279,7 +291,9 @@
 TTL, a sweep or an eviction policy dropping a token would sign that user out,
 and Discord replaces the refresh token every time it is used, so a lost one
 cannot be recovered. Keep tokens somewhere durable, and treat them as the
-credentials they are.</p>
+credentials they are.
+Preserve the local origin metadata too: serialize with jsonSerialize() and
+restore with fromArray(). Dropping origin restores legacy refresh behavior.</p>
 </section>
 
 
@@ -368,7 +382,7 @@ credentials they are.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php"><a href="files/src-discord-oauth2-tokenstore-tokenstoreinterface.html"><abbr title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php">TokenStoreInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -418,7 +432,7 @@ credentials they are.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php"><a href="files/src-discord-oauth2-tokenstore-tokenstoreinterface.html"><abbr title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php">TokenStoreInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -472,7 +486,7 @@ credentials they are.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php"><a href="files/src-discord-oauth2-tokenstore-tokenstoreinterface.html"><abbr title="src/Discord/OAuth2/TokenStore/TokenStoreInterface.php">TokenStoreInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 

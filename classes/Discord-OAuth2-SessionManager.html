@@ -145,6 +145,10 @@
                 <a href="guide/parts/user.html#user" class="">User</a>
                 
             </li>
+                    <li>
+                <a href="guide/parts/lobby.html#lobby" class="">Lobby</a>
+                
+            </li>
             </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -153,6 +157,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/permissions.html#permissions" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/game_stats_profiles.html#game-stats-profiles" class="">Game stats profiles</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -165,6 +173,10 @@
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/interactions.html#interactions" class="">Interactions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
                         </section>
@@ -280,7 +292,7 @@
 
     </aside>
 
-            <p class="phpdocumentor-summary">Opens, stores, resumes and refreshes users&#039; sessions — `$discord-&gt;sessions`.</p>
+            <p class="phpdocumentor-summary">Opens, stores, resumes, refreshes and revokes users&#039; sessions — `$discord-&gt;sessions`.</p>
 
 
     <section class="phpdocumentor-description"><p>A session acts as one user with their own OAuth2 token: see <a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>.
@@ -418,6 +430,13 @@ instead, and need the <code class="prettyprint">clientSecret</code> option.</p>
 <dd>Creates a provisional account for a player in your own account system, or returns the one already made, and opens a session as it.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-SessionManager.html#method_exchangeAuthorizationCode">exchangeAuthorizationCode()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&gt;    </span>
+</dt>
+<dd>Exchanges an authorization code for a user&#039;s token and opens a session as them.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-SessionManager.html#method_exchangeChildToken">exchangeChildToken()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&gt;    </span>
@@ -473,6 +492,13 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, ?<a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&gt;    </span>
 </dt>
 <dd>Returns the session stored under `$key`, refreshing its token first if it has expired and can be refreshed.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-OAuth2-SessionManager.html#method_revoke">revoke()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, bool&gt;    </span>
+</dt>
+<dd>Revokes a user&#039;s OAuth2 authorization at Discord, then forgets this session&#039;s stored token.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-OAuth2-SessionManager.html#method_unmergeExternalAccount">unmergeExternalAccount()</a>
@@ -879,7 +905,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">359</span>
+    <span class="phpdocumentor-element-found-in__line">434</span>
 
     </aside>
 
@@ -917,7 +943,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -993,6 +1019,98 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_exchangeAuthorizationCode">
+        exchangeAuthorizationCode()
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeAuthorizationCode" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">134</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Exchanges an authorization code for a user&#039;s token and opens a session as them.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">exchangeAuthorizationCode</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$code</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$redirect_uri</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>For confidential clients: requires the <code class="prettyprint">clientSecret</code> option. The caller must validate the
+authorization callback's state before calling this, and handle a denied authorization.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$code</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The authorization code returned by Discord.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$redirect_uri</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The exact redirect URI used for the authorization request.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$key</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>What to store the token under; not stored if omitted.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_exchangeAuthorizationCode_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeAuthorizationCode_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/oauth2#authorization-code-grant"> https://docs.discord.com/developers/topics/oauth2#authorization-code-grant </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.67.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_exchangeChildToken">
         exchangeChildToken()
         <a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeChildToken" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1001,7 +1119,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -1085,7 +1203,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">332</span>
 
     </aside>
 
@@ -1169,7 +1287,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 
@@ -1220,7 +1338,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -1393,7 +1511,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
@@ -1406,7 +1524,8 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>Discord replaces the refresh token as well, and the old one stops working.</p>
+        <section class="phpdocumentor-description"><p>Discord replaces the refresh token as well, and the old one stops working.
+Known provisional and child origins reject without a request; repeat their issuance instead.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1457,7 +1576,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -1485,6 +1604,22 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="method_resume_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_resume_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>Through rejection for expired known provisional or child origins.</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         
     
@@ -1504,6 +1639,89 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_revoke">
+        revoke()
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_revoke" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">164</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Revokes a user&#039;s OAuth2 authorization at Discord, then forgets this session&#039;s stored token.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">revoke</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$session</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, bool&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Discord invalidates all access and refresh tokens for the authorization, not only this token.
+The caller must also clear their account mapping and any other local keys for that user.
+Requires the <code class="prettyprint">clientSecret</code> option. On HTTP failure the local session and token are retained.
+Retained Session objects must no longer be used after a successful revocation.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$session</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-OAuth2-Session.html"><abbr title="\Discord\OAuth2\Session">Session</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The session whose authorization to revoke.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_revoke_tags">
+        Tags
+        <a href="classes/Discord-OAuth2-SessionManager.html#method_revoke_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/topics/oauth2#token-revocation-example"> https://docs.discord.com/developers/topics/oauth2#token-revocation-example </a>
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/discord-social-sdk/development-guides/unlinking-accounts"> https://docs.discord.com/developers/discord-social-sdk/development-guides/unlinking-accounts </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.67.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, bool&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True for an unkeyed session, otherwise the token store's deletion result.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_unmergeExternalAccount">
         unmergeExternalAccount()
         <a href="classes/Discord-OAuth2-SessionManager.html#method_unmergeExternalAccount" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1512,7 +1730,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">354</span>
 
     </aside>
 
@@ -1587,7 +1805,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">314</span>
 
     </aside>
 
@@ -1651,7 +1869,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">428</span>
 
     </aside>
 
@@ -1690,7 +1908,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">316</span>
+    <span class="phpdocumentor-element-found-in__line">391</span>
 
     </aside>
 
@@ -1746,7 +1964,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">335</span>
+    <span class="phpdocumentor-element-found-in__line">410</span>
 
     </aside>
 
@@ -1827,6 +2045,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method___debugInfo">__debugInfo()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_createProvisionalAccount">createProvisionalAccount()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeAuthorizationCode">exchangeAuthorizationCode()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeChildToken">exchangeChildToken()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_exchangeExternalToken">exchangeExternalToken()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_forget">forget()</a></li>
@@ -1835,6 +2054,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_open">open()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_refresh">refresh()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_resume">resume()</a></li>
+                                            <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_revoke">revoke()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_unmergeExternalAccount">unmergeExternalAccount()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_unmergeProvisionalAccount">unmergeProvisionalAccount()</a></li>
                                             <li class=""><a href="classes/Discord-OAuth2-SessionManager.html#method_credentialsHttp">credentialsHttp()</a></li>
