@@ -140,7 +140,7 @@ class SessionManager
                 Endpoint::OAUTH2_TOKEN,
                 http_build_query(['grant_type' => 'authorization_code', 'code' => $code, 'redirect_uri' => $redirect_uri]),
                 ['Content-Type' => 'application/x-www-form-urlencoded']
-            )->then(fn ($response) => $this->open($response, $key));
+            )->then(fn ($response) => $this->open(AccessToken::fromResponse($response, origin: AccessToken::ORIGIN_OAUTH2), $key));
         });
     }
 
@@ -197,6 +197,8 @@ class SessionManager
      * @param string $key What the token is stored under.
      *
      * @return PromiseInterface<?Session> Null if nothing is stored under the key.
+     *
+     * @throws \DomainException Through rejection for expired known provisional or child origins.
      */
     public function resume(string $key): PromiseInterface
     {
@@ -206,7 +208,7 @@ class SessionManager
             ? resolve($open)
             : $this->store->get($key)->then(fn (?AccessToken $token) => null === $token ? null : $this->remember($key, new Session($this->discord, $token, $key)));
 
-        return $session->then(fn (?Session $session) => null !== $session && $session->getToken()->isExpired() && $session->getToken()->isRefreshable()
+        return $session->then(fn (?Session $session) => null !== $session && $session->getToken()->isExpired() && ($session->getToken()->isRefreshable() || $session->getToken()->requiresReacquisition())
             ? $this->refresh($session)
             : $session);
     }
@@ -215,6 +217,7 @@ class SessionManager
      * Exchanges a session's refresh token for a new token, and stores it if the session is keyed.
      *
      * Discord replaces the refresh token as well, and the old one stops working.
+     * Known provisional and child origins reject without a request; repeat their issuance instead.
      *
      * @link https://docs.discord.com/developers/topics/oauth2#authorization-code-grant-refresh-token-exchange-example
      *
@@ -224,21 +227,34 @@ class SessionManager
      */
     public function refresh(Session $session): PromiseInterface
     {
-        $refresh_token = $session->getToken()->refresh_token;
+        $token = $session->getToken();
 
-        if (null === $refresh_token) {
-            return reject(new \DomainException('This token has no refresh token: provisional account tokens are renewed by creating the account again.'));
+        if ($token->requiresReacquisition()) {
+            $action = match ($token->origin) {
+                AccessToken::ORIGIN_PROVISIONAL_BOT => 'Call createProvisionalAccount() again with the same external user ID.',
+                AccessToken::ORIGIN_PROVISIONAL_EXTERNAL => 'Obtain a fresh identity-provider token and call exchangeExternalToken() again.',
+                AccessToken::ORIGIN_PROVISIONAL_PUBLIC => 'Obtain a fresh provider token and repeat Public Client issuance, then open() the classified token.',
+                AccessToken::ORIGIN_CHILD => 'Call exchangeChildToken() again with a valid parent token.',
+            };
+
+            return reject(new \DomainException('This token requires reacquisition. '.$action.' Use the same storage key for a keyed session.'));
         }
 
-        return $this->withCredentials(function (string $client_id, string $client_secret) use ($session, $refresh_token) {
+        $refresh_token = $token->refresh_token;
+
+        if (null === $refresh_token) {
+            return reject(new \DomainException('This token has no refresh token. Obtain a new token through its original issuance method.'));
+        }
+
+        return $this->withCredentials(function (string $client_id, string $client_secret) use ($session, $refresh_token, $token) {
             $http = new Http('Basic '.base64_encode("{$client_id}:{$client_secret}"), $this->discord->getLoop(), $this->discord->getLogger(), $this->discord->getHttpClient()->getDriver());
 
             return $http->post(
                 Endpoint::OAUTH2_TOKEN,
                 http_build_query(['grant_type' => 'refresh_token', 'refresh_token' => $refresh_token]),
                 ['Content-Type' => 'application/x-www-form-urlencoded']
-            )->then(function ($response) use ($session) {
-                $session->useToken(AccessToken::fromResponse($response));
+            )->then(function ($response) use ($session, $token) {
+                $session->useToken(AccessToken::fromResponse($response, origin: $token->origin));
 
                 return null === $session->getKey()
                     ? $session
@@ -283,7 +299,7 @@ class SessionManager
         }
 
         return $this->discord->getHttpClient()->post(Endpoint::PARTNER_SDK_TOKEN_BOT, $payload)
-            ->then(fn ($response) => $this->open($response, $key));
+            ->then(fn ($response) => $this->open(AccessToken::fromResponse($response, origin: AccessToken::ORIGIN_PROVISIONAL_BOT), $key));
     }
 
     /**
@@ -320,7 +336,7 @@ class SessionManager
             'client_secret' => $client_secret,
             'external_auth_type' => $external_auth_type,
             'external_auth_token' => $external_auth_token,
-        ])->then(fn ($response) => $this->open($response, $key)));
+        ])->then(fn ($response) => $this->open(AccessToken::fromResponse($response, origin: AccessToken::ORIGIN_PROVISIONAL_EXTERNAL), $key)));
     }
 
     /**
@@ -366,7 +382,7 @@ class SessionManager
             'parent_access_token' => $parent_token->access_token,
             'child_application_id' => $child_application_id,
             'parent_client_secret' => $client_secret,
-        ])->then(fn ($response) => $this->open($response, $key)));
+        ])->then(fn ($response) => $this->open(AccessToken::fromResponse($response, origin: AccessToken::ORIGIN_CHILD), $key)));
     }
 
     /**

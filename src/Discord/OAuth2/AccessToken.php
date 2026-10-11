@@ -29,13 +29,22 @@ namespace Discord\OAuth2;
  */
 final class AccessToken implements \JsonSerializable
 {
+    /** Origin is local metadata, never inferred from a token response or its scopes. */
+    public const ORIGIN_UNKNOWN = 'unknown';
+    public const ORIGIN_OAUTH2 = 'oauth2';
+    public const ORIGIN_PROVISIONAL_BOT = 'provisional_bot';
+    public const ORIGIN_PROVISIONAL_EXTERNAL = 'provisional_external';
+    public const ORIGIN_PROVISIONAL_PUBLIC = 'provisional_public';
+    public const ORIGIN_CHILD = 'child';
+
     /**
      * @param string      $access_token  The token itself.
      * @param string      $token_type    Always `Bearer` for a user's token.
-     * @param string|null $refresh_token What to exchange for a new token when this one expires. Provisional account tokens have none.
+     * @param string|null $refresh_token Present in some provisional responses too; its presence alone does not permit OAuth refresh.
      * @param int|null    $expires_at    When the token expires, as a Unix timestamp.
      * @param string[]    $scopes        The scopes the token was granted.
      * @param string|null $id_token      An OpenID Connect ID token, when one was issued.
+     * @param string      $origin        Local issuance provenance; unknown preserves legacy refresh behavior.
      */
     public function __construct(
         public readonly string $access_token,
@@ -44,7 +53,14 @@ final class AccessToken implements \JsonSerializable
         public readonly ?int $expires_at = null,
         public readonly array $scopes = [],
         public readonly ?string $id_token = null,
+        public readonly string $origin = self::ORIGIN_UNKNOWN,
     ) {
+        if (! in_array($origin, [
+            self::ORIGIN_UNKNOWN, self::ORIGIN_OAUTH2, self::ORIGIN_PROVISIONAL_BOT,
+            self::ORIGIN_PROVISIONAL_EXTERNAL, self::ORIGIN_PROVISIONAL_PUBLIC, self::ORIGIN_CHILD,
+        ], true)) {
+            throw new \InvalidArgumentException('Unknown token issuance origin.');
+        }
     }
 
     /**
@@ -52,10 +68,11 @@ final class AccessToken implements \JsonSerializable
      *
      * @param object|array $response The decoded response.
      * @param int|null     $now      The time the response arrived, as a Unix timestamp; now if omitted.
+     * @param string       $origin   Local provenance supplied by the issuer, not by the response.
      *
-     * @throws \InvalidArgumentException The response carries no access token.
+     * @throws \InvalidArgumentException The response carries no access token or the origin is invalid.
      */
-    public static function fromResponse(object|array $response, ?int $now = null): self
+    public static function fromResponse(object|array $response, ?int $now = null, string $origin = self::ORIGIN_UNKNOWN): self
     {
         $response = (array) $response;
 
@@ -72,6 +89,7 @@ final class AccessToken implements \JsonSerializable
             null === $expires_in ? null : ($now ?? time()) + $expires_in,
             array_values(array_filter(explode(' ', (string) ($response['scope'] ?? '')))),
             isset($response['id_token']) ? (string) $response['id_token'] : null,
+            $origin,
         );
     }
 
@@ -89,6 +107,7 @@ final class AccessToken implements \JsonSerializable
             isset($stored['expires_at']) ? (int) $stored['expires_at'] : null,
             (array) ($stored['scopes'] ?? []),
             $stored['id_token'] ?? null,
+            $stored['origin'] ?? self::ORIGIN_UNKNOWN,
         );
     }
 
@@ -108,7 +127,13 @@ final class AccessToken implements \JsonSerializable
     /** Whether the token can be refreshed through `oauth2/token`. */
     public function isRefreshable(): bool
     {
-        return null !== $this->refresh_token;
+        return null !== $this->refresh_token && ! $this->requiresReacquisition();
+    }
+
+    /** Whether renewal must repeat the original issuance method, instead of OAuth refresh. */
+    public function requiresReacquisition(): bool
+    {
+        return ! in_array($this->origin, [self::ORIGIN_UNKNOWN, self::ORIGIN_OAUTH2], true);
     }
 
     /** The value for an `Authorization` header. */
@@ -126,6 +151,7 @@ final class AccessToken implements \JsonSerializable
             'refresh_token' => $this->refresh_token,
             'expires_at' => $this->expires_at,
             'scopes' => $this->scopes,
+            'origin' => $this->origin,
             'id_token' => $this->id_token,
         ];
     }
@@ -139,6 +165,7 @@ final class AccessToken implements \JsonSerializable
             'refresh_token' => null === $this->refresh_token ? null : '*****',
             'expires_at' => $this->expires_at,
             'scopes' => $this->scopes,
+            'origin' => $this->origin,
             'id_token' => null === $this->id_token ? null : '*****',
         ];
     }
