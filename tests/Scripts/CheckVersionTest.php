@@ -12,6 +12,8 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
+use PHPUnit\Framework\Attributes\TestWith;
+
 /**
  * Exercises the CLI in temporary repositories without network access or changing real release tags.
  */
@@ -41,58 +43,22 @@ final class CheckVersionTest extends DiscordTestCase
         rmdir($this->directory);
     }
 
-    public function testCurrentVersionPassesAgainstStableTags(): void
+    #[TestWith(['v10.66.3', ['v10.66.3'], 0, 'not older than the latest release, v10.66.3', false], 'current version')]
+    #[TestWith(['v10.64.0', ['v10.66.3'], 1, 'older than the latest release, v10.66.3', false], 'stale version')]
+    #[TestWith(['v10.10.0', ['v10.9.0', 'v10.66.3'], 1, 'latest release, v10.66.3', false], 'numeric sorting')]
+    #[TestWith(['v10.67.0', ['v10.66.3', 'v11.0.0-RC.1', 'v99-invalid'], 0, 'latest release, v10.66.3', false], 'future version and ignored tags')]
+    #[TestWith(['v10.66.3', ['v10.67.0'], 1, 'latest release, v10.67.0', true], 'another working directory')]
+    #[TestWith(['v10.66.3', ['v11.0.0-RC.1'], 2, 'No stable release tags', false], 'only prerelease tags')]
+    #[TestWith(['v10.66.3', [], 2, 'No stable release tags', false], 'no tags')]
+    public function testStableTagChecks(string $version, array $tags, int $expectedStatus, string $expectedMessage, bool $elsewhere): void
     {
-        $this->git(['tag', 'v10.66.3']);
-        [$status, $output] = $this->check();
-        $this->assertSame(0, $status, $output);
-        $this->assertStringContainsString('not older than the latest release, v10.66.3', $output);
-    }
-
-    public function testStaleVersionFails(): void
-    {
-        $this->git(['tag', 'v10.66.3']);
-        $this->writeVersion('v10.64.0');
-        [$status, $output] = $this->check();
-        $this->assertSame(1, $status, $output);
-        $this->assertStringContainsString('older than the latest release, v10.66.3', $output);
-    }
-
-    public function testVersionsSortNumerically(): void
-    {
-        $this->git(['tag', 'v10.9.0']);
-        $this->git(['tag', 'v10.66.3']);
-        $this->writeVersion('v10.10.0');
-        [$status, $output] = $this->check();
-        $this->assertSame(1, $status, $output);
-        $this->assertStringContainsString('latest release, v10.66.3', $output);
-    }
-
-    public function testFutureVersionPassesAndPrereleasesAreIgnored(): void
-    {
-        $this->git(['tag', 'v10.66.3']);
-        $this->git(['tag', 'v11.0.0-RC.1']);
-        $this->git(['tag', 'v99-invalid']);
-        $this->writeVersion('v10.67.0');
-        [$status, $output] = $this->check();
-        $this->assertSame(0, $status, $output);
-        $this->assertStringContainsString('latest release, v10.66.3', $output);
-    }
-
-    public function testCheckUsesItsOwnCheckoutFromAnotherWorkingDirectory(): void
-    {
-        $this->git(['tag', 'v10.67.0']);
-        [$status, $output] = $this->check([], sys_get_temp_dir());
-        $this->assertSame(1, $status, $output);
-        $this->assertStringContainsString('latest release, v10.67.0', $output);
-    }
-
-    public function testMissingStableTagsFailRatherThanReportSuccess(): void
-    {
-        $this->git(['tag', 'v11.0.0-RC.1']);
-        [$status, $output] = $this->check();
-        $this->assertSame(2, $status, $output);
-        $this->assertStringContainsString('No stable release tags', $output);
+        $this->writeVersion($version);
+        foreach ($tags as $tag) {
+            $this->git(['tag', $tag]);
+        }
+        [$status, $output] = $this->check([], $elsewhere ? sys_get_temp_dir() : null);
+        $this->assertSame($expectedStatus, $status, $output);
+        $this->assertStringContainsString($expectedMessage, $output);
     }
 
     public function testPublishedReleaseMustMatchExactly(): void
