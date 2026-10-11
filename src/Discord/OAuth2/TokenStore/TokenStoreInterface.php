@@ -25,6 +25,8 @@ use React\Promise\PromiseInterface;
  * and Discord replaces the refresh token every time it is used, so a lost one
  * cannot be recovered. Keep tokens somewhere durable, and treat them as the
  * credentials they are.
+ * Preserve the local origin metadata too: serialize with jsonSerialize() and
+ * restore with fromArray(). Dropping origin restores legacy refresh behavior.
  *
  * @since 10.59.0
  */

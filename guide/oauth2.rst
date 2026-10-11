@@ -95,3 +95,59 @@ method; ordinary OAuth refresh is for linked-account grants. In particular,
 Discord deprecates the OIDC provisional refresh-token grant. Unlinking a
 provisional account uses ``unmergeProvisionalAccount()`` or
 ``unmergeExternalAccount()``. See `managing provisional accounts <https://docs.discord.com/developers/discord-social-sdk/development-guides/provisional-accounts/managing-accounts>`_.
+
+Issuance origin and renewal
+--------------------------
+
+Tokens issued by the manager record a local ``origin``: authorization-code
+exchange is ``ORIGIN_OAUTH2``, bot provisional issuance is
+``ORIGIN_PROVISIONAL_BOT``, external exchange is
+``ORIGIN_PROVISIONAL_EXTERNAL``, and child exchange is ``ORIGIN_CHILD``.
+``isRefreshable()`` permits the OAuth refresh grant only for ordinary OAuth
+and legacy unknown origins with a refresh token. This policy describes
+issuance, not whether the account has subsequently been linked.
+
+``refresh()`` rejects known provisional and child tokens with a
+``DomainException`` explaining how to reacquire them; no request is sent.
+``resume()`` does the same when such a token expires or enters the existing
+60-second expiry leeway. Unexpired tokens resume normally. Use Discord's
+response ``expires_in``; backend provisional tokens normally last seven days,
+while Public Client provisional tokens last one hour.
+
+Obtain a fresh provider credential yourself, then call
+``exchangeExternalToken($providerType, $freshProviderToken, $sameKey)``.
+The library stores only the returned Discord token and origin. It does not
+store the provider credential, replay a JWT, or install a native SDK callback.
+Reacquisition opens a new ``Session``: use that returned session for later
+requests. Previously held session references keep their original token.
+
+Migration
+---------
+
+``open()`` cannot infer origin from a response, scopes, JWT contents, or the
+presence of a refresh token. Classify manually imported tokens explicitly::
+
+    use Discord\OAuth2\AccessToken;
+
+    $token = AccessToken::fromResponse(
+        $response,
+        origin: AccessToken::ORIGIN_PROVISIONAL_EXTERNAL
+    );
+    $discord->sessions->open($token, $playerKey);
+
+For a token obtained with the native Public Client, use
+``ORIGIN_PROVISIONAL_PUBLIC`` and repeat that client's issuance method yourself.
+DiscordPHP does not implement the native Public Client.
+
+Existing constructor calls, responses opened directly, and stored entries
+without ``origin`` remain ``ORIGIN_UNKNOWN``. They retain the previous behavior:
+an expired token with a refresh token attempts ordinary OAuth refresh; an
+expired token without one resumes unchanged. This compatibility choice cannot
+identify older provisional entries. Audit those keys using your application's
+issuance records and replace them with freshly issued, classified tokens;
+do not guess from scopes or change every unknown entry to ordinary OAuth.
+
+Custom stores must retain ``origin`` along with the existing token fields.
+Use ``AccessToken::jsonSerialize()`` and ``AccessToken::fromArray()``. Both
+bundled stores already preserve the metadata. Invalid origin values fail
+validation instead of enabling an OAuth refresh grant.

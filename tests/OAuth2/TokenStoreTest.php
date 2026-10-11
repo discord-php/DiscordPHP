@@ -69,7 +69,7 @@ final class TokenStoreTest extends DiscordTestCase
     private function roundTrip(TokenStoreInterface $store)
     {
         return wait(function (Discord $discord, $resolve) use ($store) {
-            $token = new AccessToken('abc', 'Bearer', 'def', 1000, ['identify']);
+            $token = new AccessToken('abc', 'Bearer', 'def', 1000, ['identify'], origin: AccessToken::ORIGIN_PROVISIONAL_EXTERNAL);
 
             $store->get('player-1')
                 ->then(function ($missing) use ($store, $token) {

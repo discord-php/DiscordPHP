@@ -16,6 +16,55 @@ use Discord\OAuth2\AccessToken;
 
 final class AccessTokenTest extends DiscordTestCase
 {
+    public function testOriginControlsRenewalWithoutGuessingFromScopes(): void
+    {
+        $response = ['access_token' => 'abc', 'refresh_token' => 'def', 'scope' => 'sdk.social_layer', 'origin' => AccessToken::ORIGIN_OAUTH2];
+        foreach ([
+            AccessToken::ORIGIN_PROVISIONAL_BOT,
+            AccessToken::ORIGIN_PROVISIONAL_EXTERNAL,
+            AccessToken::ORIGIN_PROVISIONAL_PUBLIC,
+            AccessToken::ORIGIN_CHILD,
+        ] as $origin) {
+            $token = AccessToken::fromResponse($response, 1000, $origin);
+            $this->assertTrue($token->requiresReacquisition());
+            $this->assertFalse($token->isRefreshable());
+            $this->assertSame($origin, AccessToken::fromArray($token->jsonSerialize())->origin);
+        }
+
+        foreach ([AccessToken::ORIGIN_UNKNOWN, AccessToken::ORIGIN_OAUTH2] as $origin) {
+            $token = AccessToken::fromResponse($response, origin: $origin);
+            $this->assertFalse($token->requiresReacquisition());
+            $this->assertTrue($token->isRefreshable());
+        }
+
+        $this->assertSame(AccessToken::ORIGIN_UNKNOWN, AccessToken::fromResponse($response)->origin);
+    }
+
+    public function testLegacyStoredTokensHaveUnknownOrigin(): void
+    {
+        $token = AccessToken::fromArray(['access_token' => 'old', 'refresh_token' => 'refresh', 'scopes' => ['sdk.social_layer']]);
+        $this->assertSame(AccessToken::ORIGIN_UNKNOWN, $token->origin);
+        $this->assertTrue($token->isRefreshable());
+        $this->assertFalse($token->requiresReacquisition());
+    }
+
+    public function testUnknownOriginValuesAreRefusedRatherThanEnablingRefresh(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        AccessToken::fromArray(['access_token' => 'abc', 'refresh_token' => 'def', 'origin' => 'future-provisional']);
+    }
+
+    public function testResponseExpiryIsUsedForEveryIssuanceOrigin(): void
+    {
+        foreach ([3600, 604800] as $lifetime) {
+            $token = AccessToken::fromResponse(['access_token' => 'abc', 'expires_in' => $lifetime], 1000, AccessToken::ORIGIN_PROVISIONAL_EXTERNAL);
+            $this->assertFalse($token->isExpired(60, 1000 + $lifetime - 61));
+            $this->assertTrue($token->isExpired(60, 1000 + $lifetime - 60));
+            $this->assertTrue($token->isExpired(0, 1000 + $lifetime));
+        }
+    }
+
     public function testATokenResponseRecordsWhenItExpires(): void
     {
         $token = AccessToken::fromResponse((object) [
