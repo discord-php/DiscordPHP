@@ -68,6 +68,9 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function forSession(Session $session): static
     {
+        // A shared backend must not mix player state with other sessions or the bot.
+        $this->items = [];
+        parent::__construct($this->discord, ['lobby_session' => bin2hex(random_bytes(16))] + $this->vars);
         $this->session = $session;
 
         return $this;
@@ -103,7 +106,7 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function leave($lobby): PromiseInterface
     {
-        $id = $this->idOf($lobby);
+        $id = $lobby->id ?? $lobby;
 
         return $this->http()->delete(Endpoint::bind(Endpoint::LOBBY_SELF, $id))
             ->then(fn () => $this->cache->delete($id));
@@ -123,7 +126,7 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function linkChannel($lobby, $channel): PromiseInterface
     {
-        return $this->http()->patch(Endpoint::bind(Endpoint::LOBBY_CHANNEL_LINKING, $this->idOf($lobby)), ['channel_id' => $this->idOf($channel)])
+        return $this->http()->patch(Endpoint::bind(Endpoint::LOBBY_CHANNEL_LINKING, $lobby->id ?? $lobby), ['channel_id' => $channel->id ?? $channel])
             ->then($this->remember(...));
     }
 
@@ -140,7 +143,7 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function unlinkChannel($lobby): PromiseInterface
     {
-        return $this->http()->patch(Endpoint::bind(Endpoint::LOBBY_CHANNEL_LINKING, $this->idOf($lobby)), (object) [])
+        return $this->http()->patch(Endpoint::bind(Endpoint::LOBBY_CHANNEL_LINKING, $lobby->id ?? $lobby), (object) [])
             ->then($this->remember(...));
     }
 
@@ -159,7 +162,7 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function sendMessage($lobby, string $content, array $data = []): PromiseInterface
     {
-        return $this->http()->post(Endpoint::bind(Endpoint::LOBBY_MESSAGES, $this->idOf($lobby)), ['content' => $content] + $data)
+        return $this->http()->post(Endpoint::bind(Endpoint::LOBBY_MESSAGES, $lobby->id ?? $lobby), ['content' => $content] + $data)
             ->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
@@ -175,7 +178,7 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function getMessages($lobby, int $limit = 50): PromiseInterface
     {
-        $endpoint = Endpoint::bind(Endpoint::LOBBY_MESSAGES, $this->idOf($lobby));
+        $endpoint = Endpoint::bind(Endpoint::LOBBY_MESSAGES, $lobby->id ?? $lobby);
         $endpoint->addQuery('limit', $limit);
 
         return $this->http()->get($endpoint)
@@ -202,7 +205,7 @@ class SessionLobbyRepository extends AbstractRepository
      */
     public function createInvite($lobby): PromiseInterface
     {
-        return $this->http()->post(Endpoint::bind(Endpoint::LOBBY_MEMBER_ME_INVITES, $this->idOf($lobby)))
+        return $this->http()->post(Endpoint::bind(Endpoint::LOBBY_MEMBER_ME_INVITES, $lobby->id ?? $lobby))
             ->then(fn ($response) => $this->factory->part(Invite::class, (array) $response, true));
     }
 
@@ -232,15 +235,5 @@ class SessionLobbyRepository extends AbstractRepository
         $lobby = $this->factory->part(Lobby::class, (array) $response, true);
 
         return $this->cache->set($lobby->id, $lobby)->then(static fn () => $lobby);
-    }
-
-    /**
-     * The id of a part, or the id itself.
-     *
-     * @param \Discord\Parts\Part|string $part
-     */
-    protected function idOf($part): string
-    {
-        return is_string($part) ? $part : $part->id;
     }
 }

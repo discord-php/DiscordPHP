@@ -6,6 +6,7 @@
    member
    message
    user
+   lobby
 
 =====
 Parts
