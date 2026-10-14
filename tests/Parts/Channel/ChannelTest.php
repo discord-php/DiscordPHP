@@ -255,4 +255,35 @@ final class ChannelTest extends DiscordTestCase
 
         $this->assertTrue($vc->isVoiceBased());
     }
+
+    public function testChannelPayloadReplacesPermissionOverwrites(): void
+    {
+        $mock = getMockDiscord();
+        $channel = $mock->getFactory()->part(Channel::class, [
+            'id' => '10',
+            'guild_id' => '10',
+            'type' => Channel::TYPE_GUILD_TEXT,
+            'permission_overwrites' => [
+                ['id' => '10', 'type' => 0, 'allow' => '0', 'deny' => '1024'],
+                ['id' => '20', 'type' => 0, 'allow' => '1024', 'deny' => '0'],
+            ],
+        ], true);
+
+        $retainedOverwrite = $channel->overwrites->offsetGet('10');
+        $channel->fill([
+            'permission_overwrites' => [
+                ['id' => '10', 'type' => 0, 'allow' => '2048', 'deny' => '1024'],
+            ],
+        ]);
+
+        $this->assertCount(1, $channel->overwrites);
+        $this->assertSame($retainedOverwrite, $channel->overwrites->offsetGet('10'));
+        $this->assertNull($channel->overwrites->offsetGet('20'));
+        $this->assertSame(['10'], array_column($channel->permission_overwrites, 'id'));
+    }
+
+    public function testChannelObfuscatedFlagMatchesDiscord(): void
+    {
+        $this->assertSame(1 << 17, Channel::FLAG_CHANNEL_OBFUSCATED);
+    }
 }

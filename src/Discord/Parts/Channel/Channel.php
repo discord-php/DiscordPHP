@@ -183,6 +183,8 @@ class Channel extends Part implements Stringable
     public const HIDE_MEDIA_DOWNLOAD_OPTIONS = self::FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS;
     /** When set hides the embedded media download options. Available only for media channels. */
     public const FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
+    /** This channel's metadata has been obfuscated because the current user cannot view it. */
+    public const FLAG_CHANNEL_OBFUSCATED = (1 << 17);
     /** This channel is a Spoiler Channel i.e. users must opt in to view its contents. Can be set on all textual guild channels and voice channels (not `GUILD_STAGE`). Can only be set if channel's `nsfw` is false. */
     public const FLAG_IS_SPOILER_CHANNEL = (1 << 21);
 
@@ -924,8 +926,10 @@ class Channel extends Part implements Stringable
     {
         if ($overwrites) {
             $overwritesDiscrim = $this->overwrites->discrim;
+            $overwriteKeys = [];
             foreach ($overwrites as $overwrite) {
                 $overwrite = (array) $overwrite;
+                $overwriteKeys[(string) $overwrite[$overwritesDiscrim]] = true;
                 /** @var ?Overwrite */
                 if ($overwritePart = $this->overwrites->offsetGet($overwrite[$overwritesDiscrim])) {
                     $overwritePart->fill($overwrite);
@@ -935,6 +939,14 @@ class Channel extends Part implements Stringable
                     $overwritePart->created = &$this->created;
                 }
                 $this->overwrites->pushItem($overwritePart);
+            }
+
+            foreach ($this->overwrites->keys() as $key) {
+                if (array_key_exists((string) $key, $overwriteKeys)) {
+                    continue;
+                }
+
+                $this->overwrites->pull($key);
             }
         } else {
             if (null === nowait($this->overwrites->cache->clear())) {
