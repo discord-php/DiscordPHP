@@ -6811,6 +6811,11 @@ Search.appendIndex(
             "summary": "When\u0020set\u0020hides\u0020the\u0020embedded\u0020media\u0020download\u0020options.\u0020Available\u0020only\u0020for\u0020media\u0020channels.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_FLAG_HIDE_MEDIA_DOWNLOAD_OPTIONS"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_CHANNEL_OBFUSCATED",
+            "name": "FLAG_CHANNEL_OBFUSCATED",
+            "summary": "This\u0020channel\u0027s\u0020metadata\u0020has\u0020been\u0020obfuscated\u0020because\u0020the\u0020current\u0020user\u0020cannot\u0020view\u0020it.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FLAG_CHANNEL_OBFUSCATED"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_IS_SPOILER_CHANNEL",
             "name": "FLAG_IS_SPOILER_CHANNEL",
             "summary": "This\u0020channel\u0020is\u0020a\u0020Spoiler\u0020Channel\u0020i.e.\u0020users\u0020must\u0020opt\u0020in\u0020to\u0020view\u0020its\u0020contents.\u0020Can\u0020be\u0020set\u0020on\u0020all\u0020textual\u0020guild\u0020channels\u0020and\u0020voice\u0020channels\u0020\u0028not\u0020\u0060GUILD_STAGE\u0060\u0029.\u0020Can\u0020only\u0020be\u0020set\u0020if\u0020channel\u0027s\u0020\u0060nsfw\u0060\u0020is\u0020false.",
