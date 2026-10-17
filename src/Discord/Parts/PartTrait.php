@@ -556,9 +556,13 @@ trait PartTrait
     }
 
     /**
-     * Helps with getting Part attributes.
+     * Hydrates an embedded payload attribute as a Part.
      *
-     * @param string $key       The attribute key.
+     * The hydrated Part is stored in the raw attributes and shares this Part's
+     * created state. This does not resolve an ID through a repository cache;
+     * ID-only relations should look up their current cached object instead.
+     *
+     * @param string $key       The embedded payload attribute key.
      * @param string $class     The attribute class.
      * @param array  $extraData Extra data to pass to the part constructor.
      *

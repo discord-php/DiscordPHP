@@ -52,6 +52,12 @@ exceptions and message interactions expose ``guild``. These properties return
 ``null`` when the corresponding ID is absent or the related object is not cached.
 They are derived from the IDs and are not added to the raw or serialized payload.
 
+Embedded payload objects use a different path. The protected
+``attributePartHelper()`` converts an embedded object, such as ``client_status``,
+into a Part and retains it in the raw attributes. It does not resolve
+``guild_id`` or ``user_id`` through a repository cache. Cache-only relations
+therefore use repository lookups, while nested payload getters use this helper.
+
 Presence updates expose ``embedded_status`` from ``client_status.embedded`` in the
 same way as ``desktop_status``, ``mobile_status``, ``web_status`` and ``vr_status``.
 It returns ``null`` when no embedded application session is present.

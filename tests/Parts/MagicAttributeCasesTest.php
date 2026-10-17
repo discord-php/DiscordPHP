@@ -61,6 +61,20 @@ final class MagicAttributeCasesTest extends DiscordTestCase
         $this->assertArrayNotHasKey($relation, $part->getRawAttributes());
         $this->assertArrayNotHasKey($relation, $part->__serialize());
 
+        $replacement = $factory->part($relatedClass, ['id' => '10'], true);
+        $discord->{$repository}->pushItem($replacement);
+        $this->assertSame($replacement, $part->{$relation}, 'Relations use the current cache identity, not a hydrated snapshot.');
+        $this->assertSame([$relation.'_id' => '10'], $part->__serialize());
+
+        foreach ([[], [$relation.'_id' => null]] as $attributes) {
+            $withoutId = $factory->part($class, $attributes, true);
+            $this->assertNull($withoutId->{$relation}, 'A populated cache must not resolve an absent ID.');
+        }
+
+        unset($discord->{$repository}['10']);
+        $this->assertNull($part->{$relation}, 'Removing the cached object must remove the resolved relation.');
+        $this->assertFalse(isset($part[$relation]));
+
         $part->{$relation.'_id'} = '20';
         $this->assertNull($part->{$relation});
         $this->assertFalse(isset($part->{$relation}));
