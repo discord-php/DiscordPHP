@@ -181,6 +181,8 @@ class PresenceUpdate extends Part
     /**
      * Gets the status of the user on an embedded application.
      *
+     * @since 10.68.0
+     *
      * @return string|null
      */
     protected function getEmbeddedStatusAttribute(): ?string

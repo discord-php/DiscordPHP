@@ -57,7 +57,11 @@ class MessageInteraction extends Part
      */
     protected $hidden = ['guild_id'];
 
-    /** Returns the interaction's guild from cache, if available. */
+    /**
+     * Returns the interaction's guild from cache, if available.
+     *
+     * @since 10.68.0
+     */
     protected function getGuildAttribute(): ?Guild
     {
         $guildId = $this->attributes['guild_id'] ?? null;

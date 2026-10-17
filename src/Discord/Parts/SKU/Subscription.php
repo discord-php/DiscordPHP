@@ -73,7 +73,11 @@ class Subscription extends Part
         'country',
     ];
 
-    /** Returns the subscribed user from cache, if available. */
+    /**
+     * Returns the subscribed user from cache, if available.
+     *
+     * @since 10.68.0
+     */
     protected function getUserAttribute(): ?User
     {
         $userId = $this->attributes['user_id'] ?? null;
