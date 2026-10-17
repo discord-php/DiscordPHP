@@ -46,6 +46,16 @@ Part attributes can be accessed similar to an object or like an array:
 
    $input = $components->get('custom_id', 'instructions');
 
+Computed relations use local caches and do not fetch from Discord. Entitlements
+expose ``guild`` and ``user``, subscriptions expose ``user``, and scheduled event
+exceptions and message interactions expose ``guild``. These properties return
+``null`` when the corresponding ID is absent or the related object is not cached.
+They are derived from the IDs and are not added to the raw or serialized payload.
+
+Presence updates expose ``embedded_status`` from ``client_status.embedded`` in the
+same way as ``desktop_status``, ``mobile_status``, ``web_status`` and ``vr_status``.
+It returns ``null`` when no embedded application session is present.
+
 Filling a part with data
 ========================
 

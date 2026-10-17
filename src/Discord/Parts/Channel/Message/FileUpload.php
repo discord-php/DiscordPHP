@@ -43,6 +43,7 @@ class FileUpload extends Interactive
      * @inheritDoc
      */
     protected $fillable = [
+        'type',
         'id',
         'custom_id',
         'min_values',

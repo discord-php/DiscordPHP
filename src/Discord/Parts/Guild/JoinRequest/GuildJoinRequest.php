@@ -43,6 +43,8 @@ use function React\Promise\reject;
  * @property ExCollectionInterface<FormFieldResponse>|FormFieldResponse[] $form_responses     Applicant's responses to the guild's verification form.
  * @property ?User|null                                                   $actioned_by_user   User who approved or rejected the join request.
  *
+ * @property-read Guild|null $guild The guild the applicant is applying to, if cached.
+ *
  * @phpstan-property ExCollectionInterface<FormFieldResponse> $form_responses
  */
 class GuildJoinRequest extends Part

@@ -36,6 +36,7 @@ use function React\Promise\reject;
  * @since 7.0.0
  *
  * @property      string     $code                    The template code (unique ID).
+ * @property-read string     $id                      Alias of the template code.
  * @property      string     $name                    Template name.
  * @property      ?string    $description             The description for the template. Up to 120 characters.
  * @property      int        $usage_count             Number of times this template has been used.

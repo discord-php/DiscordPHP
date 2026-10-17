@@ -30,6 +30,7 @@ use Discord\Parts\Part;
  * @since 2.0.0
  *
  * @property int|string $bitwise                             Bitwise value of the enabled/disabled permissions
+ * @property bool|null  $manage_emojis_and_stickers          Deprecated alias of `manage_guild_expressions`.
  * @property bool       $create_instant_invite               Allows creation of instant invites
  * @property bool       $kick_members                        Allows kicking members
  * @property bool       $ban_members                         Allows banning members

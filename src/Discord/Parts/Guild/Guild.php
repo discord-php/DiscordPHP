@@ -181,6 +181,8 @@ use function React\Promise\resolve;
  * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  * @property VoiceStateRepository         $voice_states
+ *
+ * @property-read ExCollectionInterface<StageInstance>|StageInstance[] $stage_instances Deprecated; use `$channel->stage_instances`.
  */
 class Guild extends Part
 {

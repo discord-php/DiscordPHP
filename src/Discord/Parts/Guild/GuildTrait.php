@@ -14,6 +14,14 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+/**
+ * @property-read bool $feature_has_directory_entry                 Guild has a directory entry.
+ * @property-read bool $feature_linked_to_hub                       Guild is linked to a hub.
+ * @property-read bool $feature_member_verification_manual_approval Guild requires manual approval of join requests.
+ * @property-read bool $feature_private_threads                     Guild has access to private threads.
+ * @property-read bool $feature_raid_alerts_enabled                 Guild has raid alerts enabled.
+ * @property-read bool $feature_prune_requires_admin                Guild requires administrator permission to prune members.
+ */
 trait GuildTrait
 {
     /**
