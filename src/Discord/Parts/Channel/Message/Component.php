@@ -31,6 +31,9 @@ use Discord\Parts\Part;
  *
  * @property int         $type The type of the component.
  * @property string|null $id   32 bit integer used as an optional identifier for component.
+ *
+ * @property-read ExCollectionInterface<Component>|Component[] $components Child components, or an empty collection.
+ * @property-read Component|null                               $component  The wrapped component, if present.
  */
 class Component extends Part
 {

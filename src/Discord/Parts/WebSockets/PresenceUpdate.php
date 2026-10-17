@@ -179,6 +179,18 @@ class PresenceUpdate extends Part
     }
 
     /**
+     * Gets the status of the user on an embedded application.
+     *
+     * @return string|null
+     */
+    protected function getEmbeddedStatusAttribute(): ?string
+    {
+        $clientStatus = $this->attributePartHelper('client_status', ClientStatus::class);
+
+        return $clientStatus->embedded ?? null;
+    }
+
+    /**
      * Returns the id attribute.
      *
      * @return string The user ID of the member.

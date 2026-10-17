@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\WebSockets;
 
 use Discord\Parts\Part;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
 
@@ -32,7 +33,8 @@ use Discord\Parts\User\User;
  * @property User        $user   User who invoked the interaction.
  * @property Member|null $member Partial Member who invoked the interaction.
  *
- * @property string|null $guild_id
+ * @property      string|null $guild_id
+ * @property-read Guild|null  $guild    The guild the interaction was invoked in, if cached.
  */
 class MessageInteraction extends Part
 {
@@ -54,6 +56,14 @@ class MessageInteraction extends Part
      * @inheritDoc
      */
     protected $hidden = ['guild_id'];
+
+    /** Returns the interaction's guild from cache, if available. */
+    protected function getGuildAttribute(): ?Guild
+    {
+        $guildId = $this->attributes['guild_id'] ?? null;
+
+        return $guildId === null ? null : $this->discord->guilds->get('id', $guildId);
+    }
 
     /**
      * Returns the user who invoked the interaction.

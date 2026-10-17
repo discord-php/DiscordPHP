@@ -17,6 +17,7 @@ namespace Discord\Parts\SKU;
 use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\Application\SKU;
+use Discord\Parts\User\User;
 
 /**
  * Subscriptions in Discord represent a user making recurring payments for at least one SKU over an ongoing period.
@@ -44,6 +45,8 @@ use Discord\Parts\Application\SKU;
  * @property int          $status               Current status of the subscription.
  * @property ?Carbon|null $canceled_at          When the subscription was canceled.
  * @property string|null  $country              ISO3166-1 alpha-2 country code of the payment source used to purchase the subscription. Missing unless queried with a private OAuth scope.
+ *
+ * @property-read User|null $user The subscribed user, if cached.
  */
 class Subscription extends Part
 {
@@ -69,6 +72,14 @@ class Subscription extends Part
         'canceled_at',
         'country',
     ];
+
+    /** Returns the subscribed user from cache, if available. */
+    protected function getUserAttribute(): ?User
+    {
+        $userId = $this->attributes['user_id'] ?? null;
+
+        return $userId === null ? null : $this->discord->users->get('id', $userId);
+    }
 
     /**
      * Get the start of the current subscription period as a Carbon instance.

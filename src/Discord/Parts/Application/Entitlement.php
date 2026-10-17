@@ -15,7 +15,9 @@ declare(strict_types=1);
 namespace Discord\Parts\Application;
 
 use Carbon\Carbon;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\User\User;
 use Discord\Repository\Monetization\EntitlementRepository;
 use React\Promise\PromiseInterface;
 
@@ -28,16 +30,19 @@ use function React\Promise\reject;
  *
  * @since 10.15.0
  *
- * @property string        $id             ID of the entitlement.
- * @property string        $sku_id         ID of the SKU.
- * @property string        $application_id ID of the parent application.
- * @property string|null   $user_id        ID of the user that is granted access to the entitlement's SKU.
- * @property int           $type           Type of entitlement.
- * @property bool          $deleted        Whether the entitlement was deleted.
- * @property ?Carbons|null $starts_at      Start date at which the entitlement is valid (ISO8601 timestamp).
- * @property ?Carbon|null  $ends_at        Date at which the entitlement is no longer valid (ISO8601 timestamp).
- * @property string|null   $guild_id       ID of the guild that is granted access to the entitlement's SKU.
- * @property bool|null     $consumed       For consumable items, whether or not the entitlement has been consumed.
+ * @property string       $id             ID of the entitlement.
+ * @property string       $sku_id         ID of the SKU.
+ * @property string       $application_id ID of the parent application.
+ * @property string|null  $user_id        ID of the user that is granted access to the entitlement's SKU.
+ * @property int          $type           Type of entitlement.
+ * @property bool         $deleted        Whether the entitlement was deleted.
+ * @property ?Carbon|null $starts_at      Start date at which the entitlement is valid (ISO8601 timestamp).
+ * @property ?Carbon|null $ends_at        Date at which the entitlement is no longer valid (ISO8601 timestamp).
+ * @property string|null  $guild_id       ID of the guild that is granted access to the entitlement's SKU.
+ * @property bool|null    $consumed       For consumable items, whether or not the entitlement has been consumed.
+ *
+ * @property-read Guild|null $guild The entitled guild, if cached.
+ * @property-read User|null  $user  The entitled user, if cached.
  */
 class Entitlement extends Part
 {
@@ -73,6 +78,22 @@ class Entitlement extends Part
         'guild_id',
         'consumed',
     ];
+
+    /** Returns the entitled guild from cache, if available. */
+    protected function getGuildAttribute(): ?Guild
+    {
+        $guildId = $this->attributes['guild_id'] ?? null;
+
+        return $guildId === null ? null : $this->discord->guilds->get('id', $guildId);
+    }
+
+    /** Returns the entitled user from cache, if available. */
+    protected function getUserAttribute(): ?User
+    {
+        $userId = $this->attributes['user_id'] ?? null;
+
+        return $userId === null ? null : $this->discord->users->get('id', $userId);
+    }
 
     /**
      * Return the starts_at attribute.

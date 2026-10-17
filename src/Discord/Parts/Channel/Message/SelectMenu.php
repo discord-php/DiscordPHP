@@ -25,6 +25,8 @@ use Discord\Helpers\ExCollectionInterface;
  * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.11.0
+ *
+ * @property-read ExCollectionInterface<DefaultValue>|DefaultValue[] $default_values Default selected values, or an empty collection.
  */
 abstract class SelectMenu extends Interactive
 {

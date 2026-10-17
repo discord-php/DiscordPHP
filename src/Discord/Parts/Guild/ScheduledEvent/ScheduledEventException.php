@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild\ScheduledEvent;
 
 use Carbon\Carbon;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
@@ -30,7 +31,8 @@ use Discord\Parts\Part;
  * @property Carbon|null $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
  * @property bool        $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
  *
- * @property string|null $guild_id The id of the guild the scheduled event belongs to. Only present when received from either the GuildScheduledEventExceptionCreate, GuildScheduledEventExceptionUpdate, or GuildScheduledEventExceptionDelete event.
+ * @property      string|null $guild_id The id of the guild the scheduled event belongs to. Only present when received from either the GuildScheduledEventExceptionCreate, GuildScheduledEventExceptionUpdate, or GuildScheduledEventExceptionDelete event.
+ * @property-read Guild|null  $guild    The guild the scheduled event belongs to, if cached.
  */
 class ScheduledEventException extends Part
 {
@@ -46,6 +48,14 @@ class ScheduledEventException extends Part
         // internal
         'guild_id',
     ];
+
+    /** Returns the event's guild from cache, if available. */
+    protected function getGuildAttribute(): ?Guild
+    {
+        $guildId = $this->attributes['guild_id'] ?? null;
+
+        return $guildId === null ? null : $this->discord->guilds->get('id', $guildId);
+    }
 
     /**
      * Returns the Scheduled Start Time attribute.

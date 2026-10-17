@@ -42,24 +42,25 @@ use function React\Promise\reject;
  * @since 7.0.0 Namespace moved from Guild to Channel
  * @since 2.0.0
  *
- * @property int                 $type                       The type of invite
- * @property string              $code                       The invite code.
- * @property Guild|null          $guild                      The partial guild that the invite is for.
- * @property string|null         $guild_id
- * @property ?Channel|null       $channel                    The partial channel that the invite is for.
- * @property string|null         $channel_id
- * @property User|null           $inviter                    The user that created the invite.
- * @property bool|null           $is_nickname_changeable     A member's ability to change their nickname by default, returned from the `GET /invites/<code>` endpoint when `with_permissions` is `true`
- * @property int|null            $target_type                The type of target for this voice channel invite.
- * @property User|null           $target_user                The user whose stream to display for this voice channel stream invite.
- * @property Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
- * @property int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property Carbon              $expires_at                 The expiration date of this invite.
- * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
- * @property int                 $flags                      Guild invite flags for guild invites.
- * @property Role[]              $roles                      The roles assigned to the user upon accepting the invite. Contains a limited amount of role information.
- * @property Profile             $profile                    The guild profile.
+ * @property      int                 $type                       The type of invite
+ * @property      string              $code                       The invite code.
+ * @property-read string              $id                         Alias of the invite code.
+ * @property      Guild|null          $guild                      The partial guild that the invite is for.
+ * @property      string|null         $guild_id
+ * @property      ?Channel|null       $channel                    The partial channel that the invite is for.
+ * @property      string|null         $channel_id
+ * @property      User|null           $inviter                    The user that created the invite.
+ * @property      bool|null           $is_nickname_changeable     A member's ability to change their nickname by default, returned from the `GET /invites/<code>` endpoint when `with_permissions` is `true`
+ * @property      int|null            $target_type                The type of target for this voice channel invite.
+ * @property      User|null           $target_user                The user whose stream to display for this voice channel stream invite.
+ * @property      Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
+ * @property      int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property      int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property      Carbon              $expires_at                 The expiration date of this invite.
+ * @property      ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
+ * @property      int                 $flags                      Guild invite flags for guild invites.
+ * @property      Role[]              $roles                      The roles assigned to the user upon accepting the invite. Contains a limited amount of role information.
+ * @property      Profile             $profile                    The guild profile.
  *
  * @property int|null    $uses       How many times the invite has been used.
  * @property int|null    $max_uses   How many times the invite can be used.
