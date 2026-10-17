@@ -293,7 +293,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php"><a href="files/src-discord-parts-guild-scheduledevent-scheduledeventexception.html"><abbr title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php">ScheduledEventException.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -362,6 +362,12 @@
     <a class="" href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_event_id">$event_id</a>
     <span>
                         &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_guild">$guild</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -683,7 +689,7 @@ JSON. Used for JsonSerializable.</dd>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
 </dt>
-<dd>Helps with getting Part attributes.</dd>
+<dd>Hydrates an embedded payload attribute as a Part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_attributeTypedCollectionHelper">attributeTypedCollectionHelper()</a>
@@ -712,6 +718,13 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Gets an attribute on the part.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <span>
+                                &nbsp;: ?<a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>    </span>
+</dt>
+<dd>Returns the event&#039;s guild from cache, if available.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getScheduledEndTimeAttribute">getScheduledEndTimeAttribute()</a>
@@ -870,6 +883,45 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The id of the scheduled event.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_guild">
+        $guild
+        <a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php"><a href="files/src-discord-parts-guild-scheduledevent-scheduledeventexception.html"><abbr title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php">ScheduledEventException.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$guild</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The guild the scheduled event belongs to, if cached.</p>
 </section>
 
     
@@ -1219,7 +1271,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php"><a href="files/src-discord-parts-guild-scheduledevent-scheduledeventexception.html"><abbr title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php">ScheduledEventException.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1585,7 +1637,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">632</span>
+    <span class="phpdocumentor-element-found-in__line">636</span>
 
     </aside>
 
@@ -1663,7 +1715,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">650</span>
+    <span class="phpdocumentor-element-found-in__line">654</span>
 
     </aside>
 
@@ -1777,7 +1829,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">663</span>
+    <span class="phpdocumentor-element-found-in__line">667</span>
 
     </aside>
 
@@ -1849,7 +1901,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">604</span>
+    <span class="phpdocumentor-element-found-in__line">608</span>
 
     </aside>
 
@@ -2076,7 +2128,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">593</span>
 
     </aside>
 
@@ -3222,11 +3274,11 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">571</span>
+    <span class="phpdocumentor-element-found-in__line">575</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Helps with getting Part attributes.</p>
+        <p class="phpdocumentor-summary">Hydrates an embedded payload attribute as a Part.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -3235,7 +3287,11 @@ JSON. Used for JsonSerializable.</p>
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>The hydrated Part is stored in the raw attributes and shares this Part's
+created state. This does not resolve an ID through a repository cache;
+ID-only relations should look up their current cached object instead.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3243,7 +3299,7 @@ JSON. Used for JsonSerializable.</p>
                 : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute key.</p>
+                    <section class="phpdocumentor-description"><p>The embedded payload attribute key.</p>
 </section>
 
             </dd>
@@ -3575,6 +3631,59 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
+        getGuildAttribute()
+        <a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php"><a href="files/src-discord-parts-guild-scheduledevent-scheduledeventexception.html"><abbr title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php">ScheduledEventException.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the event&#039;s guild from cache, if available.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getGuildAttribute_tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getGuildAttribute_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.68.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getScheduledEndTimeAttribute">
         getScheduledEndTimeAttribute()
         <a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getScheduledEndTimeAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3583,7 +3692,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php"><a href="files/src-discord-parts-guild-scheduledevent-scheduledeventexception.html"><abbr title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php">ScheduledEventException.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -3622,7 +3731,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php"><a href="files/src-discord-parts-guild-scheduledevent-scheduledeventexception.html"><abbr title="src/Discord/Parts/Guild/ScheduledEvent/ScheduledEventException.php">ScheduledEventException.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -3851,6 +3960,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_event_exception_id">$event_exception_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_event_id">$event_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_guild">$guild</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_guild_id">$guild_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_is_canceled">$is_canceled</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#property_scheduled_end_time">$scheduled_end_time</a></li>
@@ -3906,6 +4016,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getGuildAttribute">getGuildAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getScheduledEndTimeAttribute">getScheduledEndTimeAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getScheduledStartTimeAttribute">getScheduledStartTimeAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>

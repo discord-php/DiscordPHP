@@ -6171,6 +6171,16 @@ Search.appendIndex(
             "summary": "Entitlements\u0020in\u0020Discord\u0020represent\u0020that\u0020a\u0020user\u0020or\u0020guild\u0020has\u0020access\u0020to\u0020a\u0020premium\u0020offering\u0020in\u0020your\u0020application.",
             "url": "classes/Discord-Parts-Application-Entitlement.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Application\\Entitlement\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020entitled\u0020guild\u0020from\u0020cache,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-Application-Entitlement.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Application\\Entitlement\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020entitled\u0020user\u0020from\u0020cache,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-Application-Entitlement.html#method_getUserAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Application\\Entitlement\u003A\u003AgetStartsAtAttribute\u0028\u0029",
             "name": "getStartsAtAttribute",
             "summary": "Return\u0020the\u0020starts_at\u0020attribute.",
@@ -12396,6 +12406,11 @@ Search.appendIndex(
             "summary": "A\u0020guild\u0020scheduled\u0020event\u0020exception\u0020represents\u0020a\u0020skipped\u0020or\u0020rescheduled\u0020recurrence\u0020for\u0020the\u0020scheduled\u0020event\u0027s\u0020recurrence\u0020rule.\u0020In\u0020the\u0020client,\u0020scheduled\u0020event\u0020exceptions\u0020are\u0020commonly\u0020known\u0020as\u0020\u0022canceled\u0020events\u0022\u0020or\u0020\u0022re\u002Dscheduled\u0022\u0020events.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\\ScheduledEventException\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020event\u0027s\u0020guild\u0020from\u0020cache,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent-ScheduledEventException.html#method_getGuildAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\\ScheduledEventException\u003A\u003AgetScheduledStartTimeAttribute\u0028\u0029",
             "name": "getScheduledStartTimeAttribute",
             "summary": "Returns\u0020the\u0020Scheduled\u0020Start\u0020Time\u0020attribute.",
@@ -13883,7 +13898,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributePartHelper\u0028\u0029",
             "name": "attributePartHelper",
-            "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes.",
+            "summary": "Hydrates\u0020an\u0020embedded\u0020payload\u0020attribute\u0020as\u0020a\u0020Part.",
             "url": "classes/Discord-Parts-PartTrait.html#method_attributePartHelper"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AgetConstants\u0028\u0029",
@@ -14270,6 +14285,11 @@ Search.appendIndex(
             "name": "Subscription",
             "summary": "Subscriptions\u0020in\u0020Discord\u0020represent\u0020a\u0020user\u0020making\u0020recurring\u0020payments\u0020for\u0020at\u0020least\u0020one\u0020SKU\u0020over\u0020an\u0020ongoing\u0020period.",
             "url": "classes/Discord-Parts-SKU-Subscription.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\SKU\\Subscription\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020subscribed\u0020user\u0020from\u0020cache,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-SKU-Subscription.html#method_getUserAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\SKU\\Subscription\u003A\u003AgetCurrentPeriodStartAttribute\u0028\u0029",
             "name": "getCurrentPeriodStartAttribute",
@@ -15276,6 +15296,11 @@ Search.appendIndex(
             "summary": "Sent\u0020on\u0020the\u0020message\u0020object\u0020when\u0020the\u0020message\u0020is\u0020a\u0020response\u0020to\u0020an\u0020Interaction\nwithout\u0020an\u0020existing\u0020message.",
             "url": "classes/Discord-Parts-WebSockets-MessageInteraction.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\MessageInteraction\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020interaction\u0027s\u0020guild\u0020from\u0020cache,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-WebSockets-MessageInteraction.html#method_getGuildAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\MessageInteraction\u003A\u003AgetUserAttribute\u0028\u0029",
             "name": "getUserAttribute",
             "summary": "Returns\u0020the\u0020user\u0020who\u0020invoked\u0020the\u0020interaction.",
@@ -15405,6 +15430,11 @@ Search.appendIndex(
             "name": "getVrStatusAttribute",
             "summary": "Gets\u0020the\u0020status\u0020of\u0020the\u0020user\u0020on\u0020their\u0020VR\u0020client.",
             "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getVrStatusAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetEmbeddedStatusAttribute\u0028\u0029",
+            "name": "getEmbeddedStatusAttribute",
+            "summary": "Gets\u0020the\u0020status\u0020of\u0020the\u0020user\u0020on\u0020an\u0020embedded\u0020application.",
+            "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getEmbeddedStatusAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetIdAttribute\u0028\u0029",
             "name": "getIdAttribute",

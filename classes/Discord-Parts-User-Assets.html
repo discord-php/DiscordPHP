@@ -355,6 +355,12 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-User-Assets.html#property_invite_cover_image">$invite_cover_image</a>
+    <span>
+                        &nbsp;: ?string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-User-Assets.html#property_large_image">$large_image</a>
     <span>
                         &nbsp;: ?string|null            </span>
@@ -368,12 +374,6 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-User-Assets.html#property_large_url">$large_url</a>
-    <span>
-                        &nbsp;: ?string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Assets.html#property_nvite_cover_image">$nvite_cover_image</a>
     <span>
                         &nbsp;: ?string|null            </span>
 </dt>
@@ -691,7 +691,7 @@ JSON. Used for JsonSerializable.</dd>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
 </dt>
-<dd>Helps with getting Part attributes.</dd>
+<dd>Hydrates an embedded payload attribute as a Part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_attributeTypedCollectionHelper">attributeTypedCollectionHelper()</a>
@@ -789,6 +789,45 @@ JSON. Used for JsonSerializable.</dd>
         <section class="phpdocumentor-description"><p>Whether the part has been created.</p>
 </section>
 
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_invite_cover_image">
+        $invite_cover_image
+        <a href="classes/Discord-Parts-User-Assets.html#property_invite_cover_image" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Assets.php"><a href="files/src-discord-parts-user-assets.html"><abbr title="src/Discord/Parts/User/Assets.php">Assets.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">?string|null</span>
+    <span class="phpdocumentor-signature__name">$invite_cover_image</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Displayed as a banner on a Game Invite.</p>
+</section>
+
+    
     
 
         
@@ -903,45 +942,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>URL that is opened when clicking on the large image.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_nvite_cover_image">
-        $nvite_cover_image
-        <a href="classes/Discord-Parts-User-Assets.html#property_nvite_cover_image" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Assets.php"><a href="files/src-discord-parts-user-assets.html"><abbr title="src/Discord/Parts/User/Assets.php">Assets.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">?string|null</span>
-    <span class="phpdocumentor-signature__name">$nvite_cover_image</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Displayed as a banner on a Game Invite.</p>
 </section>
 
     
@@ -1610,7 +1610,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">632</span>
+    <span class="phpdocumentor-element-found-in__line">636</span>
 
     </aside>
 
@@ -1688,7 +1688,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">650</span>
+    <span class="phpdocumentor-element-found-in__line">654</span>
 
     </aside>
 
@@ -1802,7 +1802,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">663</span>
+    <span class="phpdocumentor-element-found-in__line">667</span>
 
     </aside>
 
@@ -1874,7 +1874,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">604</span>
+    <span class="phpdocumentor-element-found-in__line">608</span>
 
     </aside>
 
@@ -2101,7 +2101,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">593</span>
 
     </aside>
 
@@ -3247,11 +3247,11 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">571</span>
+    <span class="phpdocumentor-element-found-in__line">575</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Helps with getting Part attributes.</p>
+        <p class="phpdocumentor-summary">Hydrates an embedded payload attribute as a Part.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -3260,7 +3260,11 @@ JSON. Used for JsonSerializable.</p>
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>The hydrated Part is stored in the raw attributes and shares this Part's
+created state. This does not resolve an ID through a repository cache;
+ID-only relations should look up their current cached object instead.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3268,7 +3272,7 @@ JSON. Used for JsonSerializable.</p>
                 : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute key.</p>
+                    <section class="phpdocumentor-description"><p>The embedded payload attribute key.</p>
 </section>
 
             </dd>
@@ -3796,10 +3800,10 @@ static as we may move it outside this class in future.</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_invite_cover_image">$invite_cover_image</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_large_image">$large_image</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_large_text">$large_text</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_large_url">$large_url</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_nvite_cover_image">$nvite_cover_image</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_small_image">$small_image</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Assets.html#property_small_text">$small_text</a></li>

@@ -304,6 +304,41 @@ isset($message-&gt;guild);   // true when the guild is cached
 
 $input = $components-&gt;get(&#039;custom_id&#039;, &#039;instructions&#039;);</code></pre>
 
+            
+    <p>Computed relations use local caches and do not fetch from Discord. Entitlements
+expose <code>guild</code>
+ and <code>user</code>
+, subscriptions expose <code>user</code>
+, and scheduled event
+exceptions and message interactions expose <code>guild</code>
+. These properties return
+<code>null</code>
+ when the corresponding ID is absent or the related object is not cached.
+They are derived from the IDs and are not added to the raw or serialized payload.</p>
+
+            
+    <p>Embedded payload objects use a different path. The protected
+<code>attributePartHelper()</code>
+ converts an embedded object, such as <code>client_status</code>
+,
+into a Part and retains it in the raw attributes. It does not resolve
+<code>guild_id</code>
+ or <code>user_id</code>
+ through a repository cache. Cache-only relations
+therefore use repository lookups, while nested payload getters use this helper.</p>
+
+            
+    <p>Presence updates expose <code>embedded_status</code>
+ from <code>client_status.embedded</code>
+ in the
+same way as <code>desktop_status</code>
+, <code>mobile_status</code>
+, <code>web_status</code>
+ and <code>vr_status</code>
+.
+It returns <code>null</code>
+ when no embedded application session is present.</p>
+
             <section class="section " id="filling-a-part-with-data">
             <h2>Filling a part with data</h2>
 
