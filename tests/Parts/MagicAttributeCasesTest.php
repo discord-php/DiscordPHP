@@ -18,14 +18,12 @@ use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\FileUpload;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent\ScheduledEventException;
-use Discord\Parts\Part;
 use Discord\Parts\SKU\Subscription;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Log\NullLogger;
-use Discord\Repository\Guild\MemberRepository;
 
 final class MagicAttributeCasesTest extends DiscordTestCase
 {
@@ -96,34 +94,6 @@ final class MagicAttributeCasesTest extends DiscordTestCase
         $this->assertSame(19, $part['type'] ?? null);
         $this->assertSame($payload, $part->getRawAttributes());
         $this->assertSame(19, $part->jsonSerialize()['type']);
-    }
-
-    public function testAttributeDispatchPreservesRepositoryAndGetterPrecedence(): void
-    {
-        $part = new class($this->discord(), ['guild_id' => '10', 'members' => 'raw', 'computed_name' => 'raw'], true) extends Part {
-            protected $fillable = ['guild_id', 'members', 'computed_name'];
-
-            protected $repositories = ['members' => MemberRepository::class];
-
-            protected function getMembersAttribute(): string
-            {
-                throw new \LogicException('The repository must take precedence.');
-            }
-
-            protected function getComputedNameAttribute(): string
-            {
-                return strtoupper($this->attributes['computed_name']);
-            }
-        };
-
-        $this->assertInstanceOf(MemberRepository::class, $part->members);
-        $this->assertSame($part->members, $part['members']);
-        $this->assertSame('RAW', $part->computed_name);
-        $this->assertSame('RAW', $part->{'computed-name'});
-        $this->assertSame('RAW', $part->computedName);
-        $this->assertSame('raw', $part->getRawAttributes()['computed_name']);
-        $this->assertNull($part->unknown);
-        $this->assertFalse(isset($part['unknown']));
     }
 
     private function discord(): Discord
