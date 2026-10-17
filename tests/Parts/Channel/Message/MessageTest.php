@@ -67,4 +67,20 @@ final class MessageTest extends DiscordTestCase
             $resolve();
         });
     }
+
+    public function testSearchResultFieldsAreKept()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $factory = getMockDiscord()->getFactory();
+
+            $message = $factory->part(Message::class, ['id' => '1', 'channel_id' => '2', 'forward_source_author_id' => '3', 'author_restriction_count' => 1, 'source_author_restriction_count' => 0], true);
+            $this->assertSame('3', $message->forward_source_author_id);
+            $this->assertSame(1, $message->author_restriction_count);
+            $this->assertSame(0, $message->source_author_restriction_count);
+
+            $this->assertNull($factory->part(Message::class, ['id' => '1', 'channel_id' => '2'], true)->forward_source_author_id);
+
+            $resolve();
+        });
+    }
 }
