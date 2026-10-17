@@ -49,7 +49,11 @@ class ScheduledEventException extends Part
         'guild_id',
     ];
 
-    /** Returns the event's guild from cache, if available. */
+    /**
+     * Returns the event's guild from cache, if available.
+     *
+     * @since 10.68.0
+     */
     protected function getGuildAttribute(): ?Guild
     {
         $guildId = $this->attributes['guild_id'] ?? null;

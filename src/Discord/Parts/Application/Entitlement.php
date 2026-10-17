@@ -79,7 +79,11 @@ class Entitlement extends Part
         'consumed',
     ];
 
-    /** Returns the entitled guild from cache, if available. */
+    /**
+     * Returns the entitled guild from cache, if available.
+     *
+     * @since 10.68.0
+     */
     protected function getGuildAttribute(): ?Guild
     {
         $guildId = $this->attributes['guild_id'] ?? null;
@@ -87,7 +91,11 @@ class Entitlement extends Part
         return $guildId === null ? null : $this->discord->guilds->get('id', $guildId);
     }
 
-    /** Returns the entitled user from cache, if available. */
+    /**
+     * Returns the entitled user from cache, if available.
+     *
+     * @since 10.68.0
+     */
     protected function getUserAttribute(): ?User
     {
         $userId = $this->attributes['user_id'] ?? null;
