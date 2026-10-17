@@ -17,6 +17,27 @@ has checked the callback's ``state`` against the authenticated player's saved
 state and handled any ``error`` response. Use the exact registered redirect URI.
 DiscordPHP does not own your browser session or validate callback state.
 
+Discord's authorization-code callbacks also include an ``iss`` parameter set
+to ``https://discord.com``. If your application supports multiple OAuth2
+providers, validate this issuer against the expected provider saved with the
+authorization request before exchanging the code. For a Discord authorization
+request, require exactly one string value equal to ``https://discord.com``;
+reject missing, malformed, duplicate or mismatched issuer values. Detect
+duplicate parameters before a query parser discards them. Do not choose the
+token endpoint from an untrusted callback value. Continue validating ``state``
+and handling ``error`` responses as above.
+
+This check belongs in your application's callback handler, before calling
+``exchangeAuthorizationCode()``: the helper receives a code and redirect URI,
+not the browser callback. Accept the additional ``iss`` field in callback
+parsers that previously allowed only ``code`` and ``state``. See Discord's
+`Issuer Identification <https://docs.discord.com/developers/topics/oauth2#issuer-identification>`_
+documentation.
+
+Test callbacks with valid, missing, malformed, duplicate and mismatched issuer
+values, as well as invalid state and denied authorization. Rejected callbacks
+must not send a token exchange request.
+
 .. code:: php
 
    use Discord\OAuth2\Session;
