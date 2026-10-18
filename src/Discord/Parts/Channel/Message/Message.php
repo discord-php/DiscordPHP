@@ -53,46 +53,49 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      string                                                   $id                     The unique identifier of the message.
- * @property      string                                                   $channel_id             The unique identifier of the channel that the message was sent in.
- * @property-read Channel|Thread                                           $channel                The channel that the message was sent in.
- * @property      int|null                                                 $channel_type           The type of channel the message was sent in.
- * @property      User|null                                                $author                 The author of the message. Will be a webhook if sent from one.
- * @property-read string|null                                              $user_id                The user id of the author.
- * @property      User|null                                                $actor                  The user who performed the action the message records, when Discord sends one.
- * @property      string                                                   $content                The content of the message if it is a normal message.
- * @property      Carbon                                                   $timestamp              A timestamp of when the message was sent.
- * @property      ?Carbon|null                                             $edited_timestamp       A timestamp of when the message was edited, or null.
- * @property      bool                                                     $tts                    Whether the message was sent as a text-to-speech message.
- * @property      bool                                                     $mention_everyone       Whether the message contained an @everyone mention.
- * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
- * @property      ExCollectionInterface<?Role>|array<string, ?Role>        $mention_roles          A collection of roles that were mentioned in the message.
- * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
- * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects. This will be empty if the message has the `IS_COMPONENTS_V2` flag (`1 << 15`) set and attachments will instead be included within the `components` field.
- * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
- * @property      string|null                                              $nonce                  A randomly generated string that provides verification for the client. Not required.
- * @property      bool                                                     $pinned                 Whether the message is pinned to the channel.
- * @property      string|null                                              $webhook_id             ID of the webhook that made the message, if any.
- * @property      int                                                      $type                   The type of message.
- * @property      Activity|null                                            $activity               Current message activity. Sent with Rich Presence-related chat embeds.
- * @property      Application|null                                         $application            Application of message. Sent with Rich Presence-related chat embeds.
- * @property      string|null                                              $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      int|null                                                 $flags                  Message flags.
- * @property      MessageReference|null                                    $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
- * @property-read MessageSnapshot|null                                     $message_snapshot       The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
- * @property      ExCollectionInterface<MessageSnapshot>|MessageSnapshot[] $message_snapshots      The messages associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
- * @property      ?Message|null                                            $referenced_message     The message that is referenced in a reply.
- * @property      MessageInteractionMetadata|null                          $interaction_metadata   Sent if the message is sent as a result of an interaction.
- * @property      MessageInteraction|null                                  $interaction            Sent if the message is a response to an Interaction.
- * @property      Thread|null                                              $thread                 The thread that was started from this message, includes thread member object.
- * @property      ExCollectionInterface<Component>|Component[]             $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      ExCollectionInterface<Sticker>|Sticker[]                 $sticker_items          Stickers attached to the message.
- * @property      int|null                                                 $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
- * @property      RoleSubscriptionData|null                                $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
- * @property      Resolved|null                                            $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
- * @property      Poll|null                                                $poll                   The poll attached to the message.
- * @property      MessageCall|null                                         $call                   The call associated with the message.
- * @property      SharedClientTheme|null                                   $shared_client_theme    The custom client-side theme shared via the message.
+ * @property      string                                                   $id                              The unique identifier of the message.
+ * @property      string                                                   $channel_id                      The unique identifier of the channel that the message was sent in.
+ * @property-read Channel|Thread                                           $channel                         The channel that the message was sent in.
+ * @property      int|null                                                 $channel_type                    The type of channel the message was sent in.
+ * @property      User|null                                                $author                          The author of the message. Will be a webhook if sent from one.
+ * @property-read string|null                                              $user_id                         The user id of the author.
+ * @property      User|null                                                $actor                           The user who performed the action the message records, when Discord sends one.
+ * @property      string                                                   $content                         The content of the message if it is a normal message.
+ * @property      Carbon                                                   $timestamp                       A timestamp of when the message was sent.
+ * @property      ?Carbon|null                                             $edited_timestamp                A timestamp of when the message was edited, or null.
+ * @property      bool                                                     $tts                             Whether the message was sent as a text-to-speech message.
+ * @property      bool                                                     $mention_everyone                Whether the message contained an @everyone mention.
+ * @property      ExCollectionInterface<User>|User[]                       $mentions                        A collection of the users mentioned in the message.
+ * @property      ExCollectionInterface<?Role>|array<string, ?Role>        $mention_roles                   A collection of roles that were mentioned in the message.
+ * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels                Collection of mentioned channels.
+ * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments                     Collection of attachment objects. This will be empty if the message has the `IS_COMPONENTS_V2` flag (`1 << 15`) set and attachments will instead be included within the `components` field.
+ * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                          A collection of embed objects.
+ * @property      string|null                                              $nonce                           A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                                                     $pinned                          Whether the message is pinned to the channel.
+ * @property      string|null                                              $webhook_id                      ID of the webhook that made the message, if any.
+ * @property      int                                                      $type                            The type of message.
+ * @property      Activity|null                                            $activity                        Current message activity. Sent with Rich Presence-related chat embeds.
+ * @property      Application|null                                         $application                     Application of message. Sent with Rich Presence-related chat embeds.
+ * @property      string|null                                              $application_id                  If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      int|null                                                 $flags                           Message flags.
+ * @property      MessageReference|null                                    $message_reference               Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
+ * @property-read MessageSnapshot|null                                     $message_snapshot                The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property      ExCollectionInterface<MessageSnapshot>|MessageSnapshot[] $message_snapshots               The messages associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property      ?Message|null                                            $referenced_message              The message that is referenced in a reply.
+ * @property      MessageInteractionMetadata|null                          $interaction_metadata            Sent if the message is sent as a result of an interaction.
+ * @property      MessageInteraction|null                                  $interaction                     Sent if the message is a response to an Interaction.
+ * @property      Thread|null                                              $thread                          The thread that was started from this message, includes thread member object.
+ * @property      ExCollectionInterface<Component>|Component[]             $components                      Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      ExCollectionInterface<Sticker>|Sticker[]                 $sticker_items                   Stickers attached to the message.
+ * @property      int|null                                                 $position                        A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      RoleSubscriptionData|null                                $role_subscription_data          Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Resolved|null                                            $resolved                        Data for users, members, channels, and roles in the message's auto-populated select menus
+ * @property      Poll|null                                                $poll                            The poll attached to the message.
+ * @property      MessageCall|null                                         $call                            The call associated with the message.
+ * @property      SharedClientTheme|null                                   $shared_client_theme             The custom client-side theme shared via the message.
+ * @property      string|null                                              $forward_source_author_id        The ID of the author of the message this message forwards, in guild message search results.
+ * @property      int|null                                                 $author_restriction_count        The number of restrictions on the message's author, in guild message search results.
+ * @property      int|null                                                 $source_author_restriction_count The number of restrictions on the forwarded message's author, in guild message search results.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -276,6 +279,9 @@ class Message extends Part
         'resolved',
         'poll',
         'call',
+        'forward_source_author_id',
+        'author_restriction_count',
+        'source_author_restriction_count',
         // @internal
         'guild_id',
         'member',
