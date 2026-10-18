@@ -20,7 +20,7 @@ final class ApplicationTest extends DiscordTestCase
     public function testConjureProjectIdIsKept()
     {
         return wait(function (Discord $discord, $resolve) {
-            $factory = getMockDiscord()->getFactory();
+            $factory = $discord->getFactory();
 
             $application = $factory->part(Application::class, ['id' => '1', 'name' => 'App', 'conjure_project_id' => '2'], true);
             $this->assertSame('2', $application->conjure_project_id);
