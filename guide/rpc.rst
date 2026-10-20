@@ -184,10 +184,14 @@ It is not a full-support percentage or an assertion that all commands work
 against Discord.
 
 Offline stream fixtures can verify framing, handshakes, correlation, timeouts,
-disconnect behavior and dispatch forwarding. They cannot prove installed-client
-compatibility, operating-system transport availability, user consent, app
-approval, scope eligibility, or command-specific behavior on Discord. No native
-platform smoke test, live authentication or live command integration is claimed.
+disconnect behavior and dispatch forwarding. ``tests/RPC/IpcSocketTest.php`` also
+exercises the default connector and real event loop against a temporary local
+Unix socket server: path fallback, fragmented READY, binary PING/PONG,
+out-of-order replies and shutdown when READY never arrives. These tests skip
+where PHP has no Unix socket transport, including the Windows CI environment.
+They cannot prove compatibility with an installed Discord client, native Windows
+pipe support, user consent, app approval, scope eligibility, or command-specific
+behavior on Discord. No live authentication or live command integration is claimed.
 
 Sources
 -------
