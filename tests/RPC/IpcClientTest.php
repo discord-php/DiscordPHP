@@ -29,6 +29,11 @@ use function React\Promise\resolve;
 
 require_once __DIR__.'/FakeConnection.php';
 
+/**
+ * @SuppressWarnings(PHPMD.StaticAccess) Exercises stateless frame/path helpers.
+ * @SuppressWarnings(PHPMD.TooManyMethods) Independent lifecycle and wire regression cases share one offline fixture.
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects) Integration fixture supplies all loop, transport and OAuth boundaries.
+ */
 final class IpcClientTest extends DiscordTestCase
 {
     private LoopInterface $loop;
@@ -426,5 +431,199 @@ final class IpcClientTest extends DiscordTestCase
         $this->assertSame('RPC OAuth exchange failed.', $result->error->getMessage());
         $this->assertNull($result->error->getPrevious());
         $this->assertCount(2, $this->connection->writes);
+    }
+
+    public function testHandshakeHonorsFrameLimit(): void
+    {
+        $this->client = $this->newClient(['max_frame_bytes' => 32]);
+        $result = $this->observe($this->client->connect(str_repeat('1', 200)));
+        $this->flush();
+        $this->assertInstanceOf(OverflowException::class, $result->error);
+        $this->assertSame([], $this->connection->writes);
+        $this->assertSame(1, $this->connection->closes);
+    }
+
+    public function testQueuedWriteFailureDoesNotEmitReadyAfterClose(): void
+    {
+        $events = [];
+        $this->client->on('ready', function () use (&$events) {
+            $events[] = 'ready';
+        });
+        $this->client->on('close', function () use (&$events) {
+            $events[] = 'close';
+        });
+        $this->observe($this->client->connect('123'));
+        $request = $this->observe($this->client->request('GET_GUILDS'));
+        $this->flush();
+        $this->connection->onWrite = static function () {
+            throw new RuntimeException('synthetic write failure');
+        };
+        $this->connection->receive(['cmd' => 'DISPATCH', 'evt' => 'READY']);
+        $this->flush();
+        $this->assertNotNull($request->error);
+        $this->assertSame(['close'], $events);
+    }
+
+    public function testCloseInsideInjectedExchangeCancelsItsReturnedOperation(): void
+    {
+        $this->ready();
+        $cancelled = false;
+        $deferred = new Deferred(function () use (&$cancelled) {
+            $cancelled = true;
+        });
+        $exchange = $this->createStub(TokenExchangeInterface::class);
+        $exchange->method('exchange')->willReturnCallback(function () use ($deferred) {
+            $this->client->close();
+
+            return $deferred->promise();
+        });
+        $result = $this->observe($this->client->authorizeAndAuthenticate(['rpc'], 'http://127.0.0.1', $exchange));
+        $this->answer(1, ['code' => 'synthetic']);
+        $this->assertTrue($cancelled);
+        $this->assertNotNull($result->error);
+        $deferred->resolve('synthetic-late-token');
+        $this->assertCount(2, $this->connection->writes);
+    }
+
+    public function testClosedConnectionCanReconnectFromCloseListenerWithoutReplayingOldRequests(): void
+    {
+        $this->ready();
+        $old = $this->observe($this->client->request('GET_GUILDS'));
+        $freshConnection = new FakeRpcConnection();
+        $this->attempts = [resolve($freshConnection)];
+        $fresh = null;
+        $this->client->once('close', function () use (&$fresh) {
+            $fresh = $this->observe($this->client->connect('456'));
+        });
+        $this->connection->emit('end');
+        $this->flush();
+        $this->assertNotNull($old->error);
+        $this->assertCount(1, $freshConnection->writes);
+        $this->assertSame('456', $freshConnection->payload(0)['client_id']);
+        $freshConnection->receive(['cmd' => 'DISPATCH', 'evt' => 'READY']);
+        $this->flush();
+        $this->assertSame($this->client, $fresh->value);
+        $this->assertCount(1, $freshConnection->writes);
+    }
+
+    public function testCloseDuringArgumentEncodingRejectsRequestWithoutReplayingOnReconnect(): void
+    {
+        $this->ready();
+        $argument = $this->createStub(JsonSerializable::class);
+        $argument->method('jsonSerialize')->willReturnCallback(function () {
+            $this->client->close();
+
+            return [];
+        });
+        $result = $this->observe($this->client->request('GET_GUILDS', ['value' => $argument]));
+        $this->assertInstanceOf(RuntimeException::class, $result->error);
+        $this->assertSame([], $this->timers);
+        $this->connection = new FakeRpcConnection();
+        $this->attempts = [resolve($this->connection)];
+        $this->ready();
+        $this->assertCount(1, $this->connection->writes);
+    }
+
+    public function testThrowingArgumentSerializerRejectsWithoutLeakingItsException(): void
+    {
+        $this->ready();
+        $argument = $this->createStub(JsonSerializable::class);
+        $argument->method('jsonSerialize')->willThrowException(new RuntimeException('synthetic private provider body'));
+        $result = $this->observe($this->client->request('GET_GUILDS', ['value' => $argument]));
+        $this->assertInstanceOf(InvalidArgumentException::class, $result->error);
+        $this->assertNull($result->error->getPrevious());
+        $this->assertStringNotContainsString('synthetic', $result->error->getMessage());
+        $this->assertSame([], $this->timers);
+        $this->assertCount(1, $this->connection->writes);
+    }
+
+    public function testRecursiveArgumentEncodingCannotExceedPendingLimit(): void
+    {
+        $this->client = $this->newClient(['max_pending_requests' => 1]);
+        $this->ready();
+        $nested = null;
+        $argument = $this->createStub(JsonSerializable::class);
+        $argument->method('jsonSerialize')->willReturnCallback(function () use (&$nested) {
+            $nested = $this->observe($this->client->request('GET_GUILDS'));
+
+            return [];
+        });
+        $outer = $this->observe($this->client->request('GET_GUILDS', ['value' => $argument]));
+        $this->assertInstanceOf(OverflowException::class, $outer->error);
+        $this->assertFalse($nested->settled);
+        $this->assertCount(2, $this->connection->writes);
+        $this->answer(1);
+        $this->assertTrue($nested->settled);
+    }
+
+    public function testObsoleteWriteFailureCannotCloseReconnectedSession(): void
+    {
+        $this->ready();
+        $freshConnection = new FakeRpcConnection();
+        $this->attempts = [resolve($freshConnection)];
+        $fresh = null;
+        $this->connection->onWrite = function () use (&$fresh) {
+            $this->client->close();
+            $fresh = $this->observe($this->client->connect('456'));
+            throw new RuntimeException('Old transport failed after reconnect.');
+        };
+        $old = $this->observe($this->client->request('GET_GUILDS'));
+        $this->flush();
+        $this->assertInstanceOf(RuntimeException::class, $old->error);
+        $this->assertFalse($fresh->settled);
+        $this->assertCount(1, $freshConnection->writes);
+        $freshConnection->receive(['cmd' => 'DISPATCH', 'evt' => 'READY']);
+        $this->flush();
+        $this->assertSame($this->client, $fresh->value);
+    }
+
+    public function testEveryInventoriedCommandAndNotificationTraversesRawEnvelopePath(): void
+    {
+        $this->ready();
+        $inventory = json_decode(file_get_contents(__DIR__.'/../../scripts/rpc-coverage.json'), true, 64, JSON_THROW_ON_ERROR);
+        $this->assertCount(18, $inventory['commands']);
+        $this->assertCount(25, $inventory['events']);
+        foreach ($inventory['commands'] as $entry) {
+            $event = in_array($entry['name'], ['SUBSCRIBE', 'UNSUBSCRIBE'], true) ? 'MESSAGE_CREATE' : null;
+            $result = $this->observe($this->client->request($entry['name'], [], $event));
+            $index = count($this->connection->writes) - 1;
+            $this->answer($index, ['synthetic' => true], $event);
+            $this->assertTrue($result->settled, $entry['name']);
+            $this->assertSame($entry['name'], $result->value['cmd']);
+        }
+        $received = [];
+        $this->client->on('dispatch', function ($event) use (&$received) {
+            $received[] = $event;
+        });
+        $expected = [];
+        foreach ($inventory['events'] as $entry) {
+            if (in_array($entry['name'], ['READY', 'ERROR'], true)) {
+                continue;
+            }
+            $expected[] = $entry['name'];
+            $this->connection->receive(['cmd' => 'DISPATCH', 'evt' => $entry['name'], 'data' => []]);
+        }
+        $this->flush();
+        $this->assertSame($expected, $received);
+    }
+
+    #[DataProvider('invalidOptions')]
+    public function testRejectsInvalidConfiguration(array $options): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->newClient($options);
+    }
+
+    public static function invalidOptions(): array
+    {
+        return [
+            [['paths' => ['primary' => 'unix:///synthetic/discord-ipc-0']]],
+            [['paths' => ['tcp://127.0.0.1:6463']]],
+            [['paths' => []]],
+            [['max_buffer_bytes' => 8]],
+            [['frames_per_tick' => 0]],
+            [['connect_timeout' => INF]],
+            [['unknown_option' => true]],
+        ];
     }
 }

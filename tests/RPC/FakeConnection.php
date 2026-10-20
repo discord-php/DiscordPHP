@@ -16,17 +16,24 @@ use Evenement\EventEmitter;
 use React\Socket\ConnectionInterface;
 use React\Stream\WritableStreamInterface;
 
-/** Offline duplex transport: no sockets, files, processes or Discord session. */
+/**
+ * Offline duplex transport: no sockets, files, processes or Discord session.
+ * @SuppressWarnings(PHPMD.StaticAccess) Test-only stateless wire encoding.
+ */
 final class FakeRpcConnection extends EventEmitter implements ConnectionInterface
 {
     public array $writes = [];
     public bool $writable = true;
     public bool $acceptMore = true;
     public int $closes = 0;
+    public ?\Closure $onWrite = null;
 
     public function write($data)
     {
         $this->writes[] = $data;
+        if ($this->onWrite !== null) {
+            ($this->onWrite)($data);
+        }
 
         return $this->acceptMore;
     }
@@ -60,6 +67,7 @@ final class FakeRpcConnection extends EventEmitter implements ConnectionInterfac
     public function resume()
     {
     }
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) Required stream-interface options; this fixture never pipes. */
     public function pipe(WritableStreamInterface $dest, array $options = [])
     {
         return $dest;

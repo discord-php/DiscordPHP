@@ -16,6 +16,7 @@ use Discord\RPC\FrameDecoder;
 use Discord\RPC\ProtocolException;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+/** @SuppressWarnings(PHPMD.StaticAccess) Tests the stateless wire encoder. */
 final class FrameDecoderTest extends DiscordTestCase
 {
     protected static function isLive(): bool
