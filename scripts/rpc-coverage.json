@@ -1,0 +1,610 @@
+{
+  "schema_version": 1,
+  "audited_on": "2026-10-20",
+  "sources": [
+    {
+      "url": "https://docs.discord.com/developers/topics/rpc",
+      "sections": [
+        "RPC over IPC",
+        "Commands and Events",
+        "Authenticating"
+      ],
+      "revision": "Live documentation fetched on audited_on; no immutable revision supplied"
+    },
+    {
+      "url": "https://docs.discord.com/developers/topics/opcodes-and-status-codes#rpc",
+      "sections": [
+        "RPC Error Codes",
+        "RPC Close Event Codes"
+      ]
+    },
+    {
+      "url": "https://docs.discord.com/developers/topics/oauth2#oauth2-scopes",
+      "sections": [
+        "OAuth2 Scopes",
+        "Authorization Code Grant"
+      ]
+    }
+  ],
+  "totals": {
+    "client_commands": 18,
+    "events": 25,
+    "server_envelopes": 1,
+    "named_entries": 44
+  },
+  "evidence_policy": {
+    "scope": "Optional low-level IPC foundation",
+    "envelope_support": "Raw request encoding, nonce correlation and dispatch delivery are not typed command-specific implementations",
+    "offline_evidence": "No passing test run is asserted by this inventory; fixture references identify test scope only",
+    "live_verification": "unverified",
+    "full_support_percentage": null,
+    "no_full_support_claim": true
+  },
+  "commands": [
+    {
+      "name": "AUTHORIZE",
+      "envelope_support": "generic_request",
+      "convenience_method": "authorize",
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testInjectedOAuthPreservesContextIsAsyncAndPrintsNoToken"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "AUTHENTICATE",
+      "envelope_support": "generic_request",
+      "convenience_method": "authenticate",
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testInjectedOAuthPreservesContextIsAsyncAndPrintsNoToken",
+        "tests/RPC/IpcClientTest.php::testOutOfOrderResponsesSubscriptionAcksErrorsAndDispatch"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GET_GUILD",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GET_GUILDS",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testFirstFrameFragmentsReadyAndReleasesQueuedRequest",
+        "tests/RPC/IpcClientTest.php::testOutOfOrderResponsesSubscriptionAcksErrorsAndDispatch"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GET_CHANNEL",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testBackpressureDoesNotDuplicateAcceptedWritesAndCancellationRemovesQueuedFrames"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GET_CHANNELS",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testBackpressureDoesNotDuplicateAcceptedWritesAndCancellationRemovesQueuedFrames"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SUBSCRIBE",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testOutOfOrderResponsesSubscriptionAcksErrorsAndDispatch",
+        "tests/RPC/IpcClientTest.php::testCommandAndSubscriptionEventMismatchRejectOnlyTheirRequest"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "UNSUBSCRIBE",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testCommandAndSubscriptionEventMismatchRejectOnlyTheirRequest"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SET_USER_VOICE_SETTINGS",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SELECT_VOICE_CHANNEL",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GET_SELECTED_VOICE_CHANNEL",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SELECT_TEXT_CHANNEL",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GET_VOICE_SETTINGS",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SET_VOICE_SETTINGS",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SET_CERTIFIED_DEVICES",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SET_ACTIVITY",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testOutboundQueueAndFrameLimits"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SEND_ACTIVITY_JOIN_INVITE",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "CLOSE_ACTIVITY_REQUEST",
+      "envelope_support": "generic_request",
+      "convenience_method": null,
+      "typed_wrapper": false,
+      "command_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    }
+  ],
+  "events": [
+    {
+      "name": "READY",
+      "envelope_support": "lifecycle_ready",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testFirstFrameFragmentsReadyAndReleasesQueuedRequest"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ERROR",
+      "envelope_support": "command_rejection_or_uncorrelated_disconnect",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testOutOfOrderResponsesSubscriptionAcksErrorsAndDispatch"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "CURRENT_USER_UPDATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "RELATIONSHIP_UPDATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GUILD_STATUS",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "GUILD_CREATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "CHANNEL_CREATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "VOICE_CHANNEL_SELECT",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "VOICE_STATE_CREATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "VOICE_STATE_UPDATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "VOICE_STATE_DELETE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "VOICE_SETTINGS_UPDATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "VOICE_CONNECTION_STATUS",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SPEAKING_START",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "SPEAKING_STOP",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "MESSAGE_CREATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testOutOfOrderResponsesSubscriptionAcksErrorsAndDispatch"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "MESSAGE_UPDATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "MESSAGE_DELETE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "NOTIFICATION_CREATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ACTIVITY_JOIN",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ACTIVITY_SPECTATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ACTIVITY_JOIN_REQUEST",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ACTIVITY_INVITE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testPingPongAndFairReceiveScheduling"
+      ],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ENTITLEMENT_CREATE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    },
+    {
+      "name": "ENTITLEMENT_DELETE",
+      "envelope_support": "raw_dispatch",
+      "typed_wrapper": false,
+      "event_specific_validation": false,
+      "offline_evidence": [],
+      "live_verification": "unverified",
+      "eligibility": "unverified"
+    }
+  ],
+  "server_envelopes": [
+    {
+      "name": "DISPATCH",
+      "direction": "server_to_client",
+      "envelope_support": "raw_dispatch_with_READY_and_ERROR_special_handling",
+      "client_request_allowed": false,
+      "typed_wrapper": false,
+      "offline_evidence": [
+        "tests/RPC/IpcClientTest.php::testOutOfOrderResponsesSubscriptionAcksErrorsAndDispatch",
+        "tests/RPC/IpcClientTest.php::testPingPongAndFairReceiveScheduling"
+      ],
+      "live_verification": "unverified"
+    }
+  ],
+  "protocol": {
+    "opcodes": {
+      "HANDSHAKE": 0,
+      "FRAME": 1,
+      "CLOSE": 2,
+      "PING": 3,
+      "PONG": 4
+    },
+    "rpc_error_codes": [
+      1000,
+      4000,
+      4002,
+      4003,
+      4004,
+      4005,
+      4006,
+      4007,
+      4008,
+      4009,
+      4010,
+      5000,
+      5001,
+      5002,
+      5003,
+      5004
+    ],
+    "rpc_close_codes": [
+      4000,
+      4001,
+      4002,
+      4003,
+      4004
+    ],
+    "error_code_handling": "CommandException preserves command and numeric code; raw server messages are not exposed as exception messages",
+    "close_code_handling": "CloseException preserves numeric code separately from command errors",
+    "automatic_reconnect": false,
+    "automatic_subscription_replay": false
+  },
+  "platforms": {
+    "unix": {
+      "default_connector": "React asynchronous Unix socket connector",
+      "prefix_order": [
+        "XDG_RUNTIME_DIR",
+        "TMPDIR",
+        "TMP",
+        "TEMP",
+        "/tmp"
+      ],
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "native_smoke": "unverified"
+    },
+    "windows": {
+      "default_connector": "unsupported",
+      "injected_connector": "Caller-provided asynchronous ConnectorInterface returning ConnectionInterface for native Discord named pipes",
+      "native_smoke": "unverified",
+      "shipped_tcp_or_process_proxy": false
+    },
+    "deprecated_websocket": "out_of_scope"
+  },
+  "authentication": {
+    "authorize_helper": true,
+    "authenticate_helper": true,
+    "async_exchange_interface": "Discord\\RPC\\TokenExchangeInterface::exchange(string code, string clientId, string redirectUri): PromiseInterface<string>",
+    "exchange_implementation": "caller_owned_confidential_backend",
+    "ships_client_secret": false,
+    "live_authentication": "unverified",
+    "approval": "unverified",
+    "relevant_scope_catalog": [
+      "identify",
+      "identify.premium",
+      "rpc",
+      "rpc.activities.write",
+      "rpc.notifications.read",
+      "rpc.voice.read",
+      "rpc.voice.write",
+      "messages.read",
+      "relationships.read"
+    ],
+    "scope_catalog_is_per_command_guarantee": false
+  },
+  "source_discrepancies": [
+    {
+      "subject": "RELATIONSHIP_UPDATE OAuth2 scope",
+      "rpc_page": "relationships_read",
+      "oauth2_scope_table": "relationships.read",
+      "resolution": "Preserve discrepancy; do not infer live acceptance"
+    }
+  ],
+  "remaining_gaps": [
+    "Typed command argument builders and response models",
+    "Command-specific validation and integration evidence",
+    "Native platform transport smoke evidence",
+    "Live authorization and application/scope eligibility",
+    "Automatic reconnect and subscription replay are intentionally absent"
+  ],
+  "shared_offline_fixtures": [
+    "tests/RPC/FrameDecoderTest.php::testFragmentedAndCoalescedFrames",
+    "tests/RPC/FrameDecoderTest.php::testRejectsInvalidHeadersBeforePayloadArrives",
+    "tests/RPC/FrameDecoderTest.php::testAggregateBufferLimitAndClear",
+    "tests/RPC/IpcClientTest.php::testDeadlinesAndResourceLimits",
+    "tests/RPC/IpcClientTest.php::testCloseCodeIsSeparateFromCommandErrorsAndCloseIsIdempotent",
+    "tests/RPC/IpcClientTest.php::testCancelledConnectClosesLateSocketAndReconnectHasFreshIdentity",
+    "tests/RPC/IpcClientTest.php::testOAuthCancellationDeadlineAndCloseIgnoreLateExchange",
+    "tests/RPC/IpcClientTest.php::testOAuthExchangeFailureDoesNotLeakProviderBodyOrCode"
+  ],
+  "fixture_reference_limits": "References identify selected raw-envelope, cancellation or rejection cases. A command listed in an overflow/cancellation fixture is not proof of a successful command exchange. No fixture references prove live behavior or a passing test run."
+}
