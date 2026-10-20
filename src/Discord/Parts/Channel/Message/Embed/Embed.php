@@ -40,6 +40,7 @@ use function Discord\poly_strlen;
  * @property      ?Image|null                           $image       The image of the embed.
  * @property      ?Thumbnail|null                       $thumbnail   The thumbnail of the embed.
  * @property-read ?Video|null                           $video       The video of the embed.
+ * @property      Audio|null                            $audio       The audio of the embed, when provided by Discord.
  * @property-read ?Provider|null                        $provider    The provider of the embed.
  * @property      ?Author|null                          $author      The author of the embed.
  * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
@@ -95,6 +96,7 @@ class Embed extends Part
         'image',
         'thumbnail',
         'video',
+        'audio',
         'provider',
         'author',
         'fields',
@@ -151,6 +153,16 @@ class Embed extends Part
     protected function getVideoAttribute(): ?Video
     {
         return $this->attributePartHelper('video', Video::class);
+    }
+
+    /**
+     * Gets the audio attribute described by Discord's stable OpenAPI schema.
+     *
+     * @return Audio|null The audio attribute.
+     */
+    protected function getAudioAttribute(): ?Audio
+    {
+        return $this->attributePartHelper('audio', Audio::class);
     }
 
     /**
