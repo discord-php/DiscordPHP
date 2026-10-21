@@ -54,6 +54,30 @@ You can also set the embeds from another array of embeds. Note this will remove 
    $embeds = [...];
    $builder->setEmbeds($embeds);
 
+Embed audio
+-----------
+
+Discord's stable OpenAPI schema includes an optional ``audio`` object on
+embeds. Received audio is exposed as a ``Discord\Parts\Channel\Message\Embed\Audio`` Part through
+``$embed->audio``, with ``url``, ``proxy_url``, ``content_type`` and
+``description`` attributes. Missing or null audio returns ``null``.
+
+For authoring, the schema permits ``url`` (up to 2048 characters) and
+``description`` (up to 4096 characters), each optional and nullable::
+
+   $embed->audio = [
+       'url' => 'https://example.com/clip.mp3',
+       'description' => 'A short recording',
+   ];
+   $builder->addEmbed($embed);
+
+``MessageBuilder`` validates the authored fields' types and character limits,
+preserves explicit nulls, and omits response metadata (``proxy_url`` and
+``content_type``) from outgoing audio. The received ``Audio`` Part retains
+that metadata. This support follows
+the `October 20, 2026 schema update <https://github.com/discord/discord-api-spec/commit/bf93257f85d62054a0a6982d32f6bcb724abd015>`_;
+live API acceptance and audio playback have not been verified.
+
 Replying to a message
 =====================
 
