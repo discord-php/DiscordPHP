@@ -14,6 +14,7 @@
    components
    interactions
    oauth2
+   rpc
 
 =====
 Guide

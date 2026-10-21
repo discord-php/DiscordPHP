@@ -47,6 +47,35 @@ jobs:
           DISCORD_TOKEN: ''
         run: vendor/bin/phpunit
 
+  rpc-windows:
+    name: RPC offline (Windows, PHP ${{ matrix.php }})
+    runs-on: windows-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.5']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: zlib, mbstring
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Verify RPC with injected offline transports
+        # Exercises framing/lifecycle on Windows; does not claim native named-pipe or live Discord support.
+        env:
+          DISCORD_TOKEN: ''
+        run: php vendor/bin/phpunit tests/RPC
+
   syntax:
     name: Syntax (PHP ${{ matrix.php }})
     runs-on: ubuntu-24.04
