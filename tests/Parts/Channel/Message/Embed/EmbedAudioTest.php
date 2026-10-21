@@ -69,18 +69,20 @@ final class EmbedAudioTest extends DiscordTestCase
 
     public function testRestFetchHydratesAudio()
     {
-        return wait(function (Discord $unusedDiscord, $resolve) {
+        return wait(function (Discord $discord, $resolve) {
             $mock = getMockDiscord();
             $driver = getMockHttpDriver(fn () => $this->fixture());
             $mock->getHttpClient()->setDriver($driver);
             $repository = $mock->getFactory()->repository(MessageRepository::class, ['channel_id' => '20']);
 
-            $repository->fetch('100')->then(function (Message $message) use ($driver) {
-                $this->assertInstanceOf(Audio::class, $message->embeds->first()->audio);
-                $this->assertSame('audio/mpeg', $message->embeds->first()->audio->content_type);
-                $this->assertSame('GET', $driver->requests[0]['method']);
-                $this->assertStringEndsWith('/channels/20/messages/100', $driver->requests[0]['url']);
-            })->then($resolve, $resolve);
+            $discord->getLoop()->futureTick(function () use ($repository, $driver, $resolve) {
+                $repository->fetch('100')->then(function (Message $message) use ($driver) {
+                    $this->assertInstanceOf(Audio::class, $message->embeds->first()->audio);
+                    $this->assertSame('audio/mpeg', $message->embeds->first()->audio->content_type);
+                    $this->assertSame('GET', $driver->requests[0]['method']);
+                    $this->assertStringEndsWith('/channels/20/messages/100', $driver->requests[0]['url']);
+                })->then($resolve, $resolve);
+            });
         });
     }
 
@@ -116,22 +118,24 @@ final class EmbedAudioTest extends DiscordTestCase
 
     public function testSendRequestContainsOnlyAuthoredAudioFields()
     {
-        return wait(function (Discord $unusedDiscord, $resolve) {
+        return wait(function (Discord $discord, $resolve) {
             $mock = getMockDiscord();
             $driver = getMockHttpDriver(fn () => $this->fixture());
             $mock->getHttpClient()->setDriver($driver);
             $channel = $mock->getFactory()->part(Channel::class, ['id' => '20', 'type' => Channel::TYPE_DM], true);
             $embed = $mock->getFactory()->part(Embed::class, $this->fixture()['embeds'][0], true);
 
-            $channel->sendMessage(MessageBuilder::new()->addEmbed($embed))->then(function (Message $message) use ($driver) {
-                $request = $driver->requests[0];
-                $this->assertSame('POST', $request['method']);
-                $this->assertStringEndsWith('/channels/20/messages', $request['url']);
-                $this->assertSame(1, preg_match('/name=payload_json\r?\nContent-Type: application\/json\r?\n\r?\n([^\r\n]+)/', $request['raw'], $matches));
-                $payload = json_decode($matches[1], true, 512, JSON_THROW_ON_ERROR);
-                $this->assertSame(['url' => 'https://example.com/clip.mp3', 'description' => 'A short recording'], $payload['embeds'][0]['audio']);
-                $this->assertSame('audio/mpeg', $message->embeds->first()->audio->content_type);
-            })->then($resolve, $resolve);
+            $discord->getLoop()->futureTick(function () use ($channel, $embed, $driver, $resolve) {
+                $channel->sendMessage(MessageBuilder::new()->addEmbed($embed))->then(function (Message $message) use ($driver) {
+                    $request = $driver->requests[0];
+                    $this->assertSame('POST', $request['method']);
+                    $this->assertStringEndsWith('/channels/20/messages', $request['url']);
+                    $this->assertSame(1, preg_match('/name=payload_json\r?\nContent-Type: application\/json\r?\n\r?\n([^\r\n]+)/', $request['raw'], $matches));
+                    $payload = json_decode($matches[1], true, 512, JSON_THROW_ON_ERROR);
+                    $this->assertSame(['url' => 'https://example.com/clip.mp3', 'description' => 'A short recording'], $payload['embeds'][0]['audio']);
+                    $this->assertSame('audio/mpeg', $message->embeds->first()->audio->content_type);
+                })->then($resolve, $resolve);
+            });
         });
     }
 }
