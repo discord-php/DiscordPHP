@@ -69,7 +69,7 @@ final class EmbedAudioTest extends DiscordTestCase
 
     public function testRestFetchHydratesAudio()
     {
-        return wait(function (Discord $discord, $resolve) {
+        return wait(function (Discord $unusedDiscord, $resolve) {
             $mock = getMockDiscord();
             $driver = getMockHttpDriver(fn () => $this->fixture());
             $mock->getHttpClient()->setDriver($driver);
@@ -116,7 +116,7 @@ final class EmbedAudioTest extends DiscordTestCase
 
     public function testSendRequestContainsOnlyAuthoredAudioFields()
     {
-        return wait(function (Discord $discord, $resolve) {
+        return wait(function (Discord $unusedDiscord, $resolve) {
             $mock = getMockDiscord();
             $driver = getMockHttpDriver(fn () => $this->fixture());
             $mock->getHttpClient()->setDriver($driver);
