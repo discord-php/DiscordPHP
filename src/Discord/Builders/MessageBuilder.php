@@ -28,6 +28,7 @@ use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Channel\Message\SharedClientTheme;
 use Discord\Parts\Channel\Message\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Channel\Message\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\Audio;
 use Discord\Parts\Guild\Sticker;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\PrivateChannelRepository;
@@ -285,11 +286,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     public function addEmbed(...$embeds): self
     {
         foreach ($embeds as $embed) {
-            if ($embed instanceof Embed) {
-                $embed = $embed->getRawAttributes();
-            }
-
-            self::validateOutboundEmbed($embed);
+            $embed = self::prepareOutboundEmbed($embed);
 
             if (isset($this->embeds) && count($this->embeds) >= 10) {
                 throw new \OverflowException('You can only have 10 embeds per message.');
@@ -318,6 +315,46 @@ class MessageBuilder extends Builder implements JsonSerializable
         if (($embed['type'] ?? null) === Embed::TYPE_COMPONENTS || array_key_exists('components', $embed)) {
             throw new \InvalidArgumentException('Component embeds are received website previews; use ComponentEmbedBuilder for website JSON.');
         }
+    }
+
+    /** Normalize authored audio without modifying received embed metadata. */
+    private static function prepareOutboundEmbed($embed): array
+    {
+        $embed = $embed instanceof Embed ? $embed->getRawAttributes() : (array) $embed;
+        self::validateOutboundEmbed($embed);
+
+        if (isset($embed['audio'])) {
+            $embed['audio'] = self::prepareEmbedAudio($embed['audio']);
+        }
+
+        return $embed;
+    }
+
+    /** Retain only the fields accepted by RichEmbedAudio. */
+    private static function prepareEmbedAudio($audio): array|\stdClass
+    {
+        if ($audio instanceof Audio) {
+            $audio = $audio->getRawAttributes();
+        } elseif ($audio instanceof \stdClass) {
+            $audio = (array) $audio;
+        }
+        if (! is_array($audio) || ($audio !== [] && array_is_list($audio))) {
+            throw new \InvalidArgumentException('Embed audio must be an object or null.');
+        }
+        foreach (['url' => 2048, 'description' => 4096] as $field => $limit) {
+            if (! isset($audio[$field])) {
+                continue;
+            }
+            if (! is_string($audio[$field])) {
+                throw new \InvalidArgumentException("Embed audio {$field} must be a string or null.");
+            }
+            if (poly_strlen($audio[$field]) > $limit) {
+                throw new \LengthException("Embed audio {$field} cannot exceed {$limit} characters.");
+            }
+        }
+        $audio = array_intersect_key($audio, ['url' => true, 'description' => true]);
+
+        return $audio === [] ? new \stdClass() : $audio;
     }
 
     /**
@@ -1201,10 +1238,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
         if (isset($this->embeds)) {
             if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
-                foreach ($this->embeds as $embed) {
-                    self::validateOutboundEmbed($embed instanceof Embed ? $embed->getRawAttributes() : $embed);
-                }
-                $body['embeds'] = $this->embeds;
+                $body['embeds'] = array_map(self::prepareOutboundEmbed(...), $this->embeds);
                 $empty = false;
             }
         }

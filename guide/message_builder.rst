@@ -71,7 +71,10 @@ For authoring, the schema permits ``url`` (up to 2048 characters) and
    ];
    $builder->addEmbed($embed);
 
-``proxy_url`` and ``content_type`` are response metadata. This support follows
+``MessageBuilder`` validates the authored fields' types and character limits,
+preserves explicit nulls, and omits response metadata (``proxy_url`` and
+``content_type``) from outgoing audio. The received ``Audio`` Part retains
+that metadata. This support follows
 the `October 20, 2026 schema update <https://github.com/discord/discord-api-spec/commit/bf93257f85d62054a0a6982d32f6bcb724abd015>`_;
 live API acceptance and audio playback have not been verified.
 

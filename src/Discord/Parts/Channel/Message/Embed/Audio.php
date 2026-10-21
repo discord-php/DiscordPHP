@@ -21,6 +21,8 @@ use Discord\Parts\Part;
  *
  * @link https://github.com/discord/discord-api-spec/blob/bf93257f85d62054a0a6982d32f6bcb724abd015/specs/openapi.json
  *
+ * @since 10.69.0
+ *
  * @property      string|null $url          The source URL of the audio.
  * @property-read string|null $proxy_url    Discord's proxied URL of the audio.
  * @property-read string|null $content_type The audio's media type.

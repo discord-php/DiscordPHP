@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\Embed\Audio;
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Channel\Message\Message;
@@ -100,5 +101,37 @@ final class EmbedAudioTest extends DiscordTestCase
         $audio = getMockDiscord()->getFactory()->part(Audio::class, ['url' => null, 'description' => null]);
 
         $this->assertSame(['url' => null, 'description' => null], $audio->jsonSerialize());
+    }
+
+    public function testEditingReceivedEmbedOmitsResponseMetadataWithoutLosingIt(): void
+    {
+        $embed = getMockDiscord()->getFactory()->part(Embed::class, $this->fixture()['embeds'][0], true);
+        $audio = $embed->audio;
+        $body = json_decode(json_encode(MessageBuilder::new()->addEmbed($embed), JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+
+        $this->assertSame(['url' => $audio->url, 'description' => $audio->description], $body['embeds'][0]['audio']);
+        $this->assertSame('audio/mpeg', $audio->content_type);
+        $this->assertSame('https://media.example.com/clip.mp3', $audio->proxy_url);
+    }
+
+    public function testSendRequestContainsOnlyAuthoredAudioFields()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $mock = getMockDiscord();
+            $driver = getMockHttpDriver(fn () => $this->fixture());
+            $mock->getHttpClient()->setDriver($driver);
+            $channel = $mock->getFactory()->part(Channel::class, ['id' => '20', 'type' => Channel::TYPE_DM], true);
+            $embed = $mock->getFactory()->part(Embed::class, $this->fixture()['embeds'][0], true);
+
+            $channel->sendMessage(MessageBuilder::new()->addEmbed($embed))->then(function (Message $message) use ($driver) {
+                $request = $driver->requests[0];
+                $this->assertSame('POST', $request['method']);
+                $this->assertStringEndsWith('/channels/20/messages', $request['url']);
+                $this->assertSame(1, preg_match('/name=payload_json\r?\nContent-Type: application\/json\r?\n\r?\n([^\r\n]+)/', $request['raw'], $matches));
+                $payload = json_decode($matches[1], true, 512, JSON_THROW_ON_ERROR);
+                $this->assertSame(['url' => 'https://example.com/clip.mp3', 'description' => 'A short recording'], $payload['embeds'][0]['audio']);
+                $this->assertSame('audio/mpeg', $message->embeds->first()->audio->content_type);
+            })->then($resolve, $resolve);
+        });
     }
 }

@@ -158,6 +158,8 @@ class Embed extends Part
     /**
      * Gets the audio attribute described by Discord's stable OpenAPI schema.
      *
+     * @since 10.69.0
+     *
      * @return Audio|null The audio attribute.
      */
     protected function getAudioAttribute(): ?Audio
