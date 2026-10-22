@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\RPC;
 
-/** @internal Validated local IPC configuration and deterministic path discovery. */
+/**
+ * @internal Validated local IPC configuration and deterministic path discovery.
+ *
+ * @since 10.69.0
+ */
 final class IpcOptions
 {
     private array $options;

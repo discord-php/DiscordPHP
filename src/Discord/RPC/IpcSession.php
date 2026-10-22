@@ -29,6 +29,7 @@ use function React\Promise\reject;
  * Events: frame(int opcode, string payload), close(\Throwable error).
  *
  * @internal
+ * @since 10.69.0
  */
 final class IpcSession extends EventEmitter
 {

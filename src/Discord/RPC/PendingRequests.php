@@ -23,6 +23,7 @@ use function React\Promise\reject;
 /**
  * @internal Owns correlated requests and their deadlines; no command-specific domain modeling.
  * @SuppressWarnings(PHPMD.StaticAccess) FrameDecoder is a stateless wire codec.
+ * @since 10.69.0
  */
 final class PendingRequests
 {

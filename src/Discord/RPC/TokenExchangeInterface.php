@@ -19,6 +19,7 @@ use React\Promise\PromiseInterface;
 /**
  * Application-owned asynchronous OAuth exchange. No HTTP or confidential secret is bundled here.
  * A distributed desktop application should delegate confidential exchange to its trusted backend.
+ * @since 10.69.0
  */
 interface TokenExchangeInterface
 {

@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\RPC;
 
-/** A command ERROR response. Unknown numeric codes are retained without logging server data. */
+/**
+ * A command ERROR response. Unknown numeric codes are retained without logging server data.
+ *
+ * @since 10.69.0
+ */
 final class CommandException extends \RuntimeException
 {
     public function __construct(private string $command, int $rpcCode)

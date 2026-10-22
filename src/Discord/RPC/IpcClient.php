@@ -37,6 +37,7 @@ use function React\Promise\reject;
  * @SuppressWarnings(PHPMD.StaticAccess) Optional global-loop default and stateless wire/path utilities.
  * @SuppressWarnings(PHPMD.TooManyMethods) Public lifecycle/command facade over focused internal units.
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects) Facade wires the focused transport, protocol and OAuth units.
+ * @since 10.69.0
  */
 final class IpcClient extends EventEmitter
 {
