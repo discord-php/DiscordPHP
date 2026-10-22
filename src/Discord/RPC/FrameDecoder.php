@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\RPC;
 
-/** Incremental, bounded little-endian IPC framing; JSON interpretation belongs to the client. */
+/**
+ * Incremental, bounded little-endian IPC framing; JSON interpretation belongs to the client.
+ *
+ * @since 10.69.0
+ */
 final class FrameDecoder
 {
     private string $buffer = '';

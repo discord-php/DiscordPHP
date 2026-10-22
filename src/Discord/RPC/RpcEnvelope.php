@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\RPC;
 
-/** @internal Decodes envelope structure without interpreting command-specific data. */
+/**
+ * @internal Decodes envelope structure without interpreting command-specific data.
+ *
+ * @since 10.69.0
+ */
 final class RpcEnvelope
 {
     public static function decode(int $opcode, string $payload): array

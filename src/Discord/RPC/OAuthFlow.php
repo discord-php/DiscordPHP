@@ -23,6 +23,7 @@ use React\Promise\PromiseInterface;
  * One session-bound OAuth operation with an overall deadline.
  *
  * @internal
+ * @since 10.69.0
  */
 final class OAuthFlow
 {

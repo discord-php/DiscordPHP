@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\RPC;
 
-/** A connection CLOSE code, separate from command error codes. */
+/**
+ * A connection CLOSE code, separate from command error codes.
+ *
+ * @since 10.69.0
+ */
 final class CloseException extends \RuntimeException
 {
     public function __construct(int $closeCode, private string $reason)

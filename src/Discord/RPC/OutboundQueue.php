@@ -21,6 +21,7 @@ use React\Socket\ConnectionInterface;
 /**
  * @internal Bounded, cancellable frames awaiting READY or transport drain.
  * @SuppressWarnings(PHPMD.StaticAccess) FrameDecoder is a stateless wire codec.
+ * @since 10.69.0
  */
 final class OutboundQueue extends EventEmitter
 {

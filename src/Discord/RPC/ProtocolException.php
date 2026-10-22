@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\RPC;
 
-/** An invalid or oversized IPC frame. Messages never include payload contents. */
+/**
+ * An invalid or oversized IPC frame. Messages never include payload contents.
+ *
+ * @since 10.69.0
+ */
 final class ProtocolException extends \RuntimeException
 {
 }
