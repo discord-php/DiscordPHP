@@ -180,6 +180,10 @@
     <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/rpc.html#optional-local-rpc-client" class="">Optional local RPC client</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -221,6 +225,10 @@
             </li>
                     <li>
                 <a href="namespaces/discord-repository.html" class="">Repository</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-rpc.html" class="">RPC</a>
                 
             </li>
                     <li>
@@ -316,6 +324,50 @@
 
             <pre><code class="language-php">$embeds = [...];
 $builder-&gt;setEmbeds($embeds);</code></pre>
+
+            <section class="section " id="embed-audio">
+            <h3>Embed audio</h3>
+
+            
+    <p>Discord&#039;s stable OpenAPI schema includes an optional <code>audio</code>
+ object on
+embeds. Received audio is exposed as a <code>Discord\Parts\Channel\Message\Embed\Audio</code>
+ Part through
+<code>$embed-&gt;audio</code>
+, with <code>url</code>
+, <code>proxy_url</code>
+, <code>content_type</code>
+ and
+<code>description</code>
+ attributes. Missing or null audio returns <code>null</code>
+.</p>
+
+            
+    <p>For authoring, the schema permits <code>url</code>
+ (up to 2048 characters) and
+<code>description</code>
+ (up to 4096 characters), each optional and nullable:</p>
+
+            <pre><code class="language-">$embed-&gt;audio = [
+    &#039;url&#039; =&gt; &#039;https://example.com/clip.mp3&#039;,
+    &#039;description&#039; =&gt; &#039;A short recording&#039;,
+];
+$builder-&gt;addEmbed($embed);
+</code></pre>
+
+            
+    <p><code>MessageBuilder</code>
+ validates the authored fields&#039; types and character limits,
+preserves explicit nulls, and omits response metadata (<code>proxy_url</code>
+ and
+<code>content_type</code>
+) from outgoing audio. The received <code>Audio</code>
+ Part retains
+that metadata. This support follows
+the <a href="https://github.com/discord/discord-api-spec/commit/bf93257f85d62054a0a6982d32f6bcb724abd015">October 20, 2026 schema update</a>;
+live API acceptance and audio playback have not been verified.</p>
+
+    </section>
 
     </section>
 

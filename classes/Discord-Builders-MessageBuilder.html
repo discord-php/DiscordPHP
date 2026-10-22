@@ -179,6 +179,10 @@
     <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/rpc.html#optional-local-rpc-client" class="">Optional local RPC client</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -220,6 +224,10 @@
             </li>
                     <li>
                 <a href="namespaces/discord-repository.html" class="">Repository</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-rpc.html" class="">RPC</a>
                 
             </li>
                     <li>
@@ -297,7 +305,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -968,6 +976,20 @@ be sent via multipart request, i.e. contains files.</dd>
 <dd>Sets an property on the parent part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_prepareEmbedAudio">prepareEmbedAudio()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;|<abbr title="\stdClass">stdClass</abbr>    </span>
+</dt>
+<dd>Retain only the fields accepted by RichEmbedAudio.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_prepareOutboundEmbed">prepareOutboundEmbed()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Normalize authored audio without modifying received embed metadata.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_studly">studly()</a>
     <span>
                                 &nbsp;: string    </span>
@@ -1011,7 +1033,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1049,7 +1071,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1087,7 +1109,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
@@ -1163,7 +1185,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -1201,7 +1223,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1239,7 +1261,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -1277,7 +1299,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -1315,7 +1337,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -1353,7 +1375,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -1391,7 +1413,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1429,7 +1451,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1467,7 +1489,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -1505,7 +1527,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -1543,7 +1565,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -1581,7 +1603,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -1855,7 +1877,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">866</span>
+    <span class="phpdocumentor-element-found-in__line">903</span>
 
     </aside>
 
@@ -1910,7 +1932,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">801</span>
+    <span class="phpdocumentor-element-found-in__line">838</span>
 
     </aside>
 
@@ -1961,7 +1983,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">515</span>
+    <span class="phpdocumentor-element-found-in__line">552</span>
 
     </aside>
 
@@ -2114,7 +2136,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">285</span>
+    <span class="phpdocumentor-element-found-in__line">286</span>
 
     </aside>
 
@@ -2179,7 +2201,7 @@ contract <code class="prettyprint">??</code> already has: only properties with a
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">698</span>
+    <span class="phpdocumentor-element-found-in__line">735</span>
 
     </aside>
 
@@ -2243,7 +2265,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">735</span>
+    <span class="phpdocumentor-element-found-in__line">772</span>
 
     </aside>
 
@@ -2303,7 +2325,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">627</span>
+    <span class="phpdocumentor-element-found-in__line">664</span>
 
     </aside>
 
@@ -2370,7 +2392,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">839</span>
+    <span class="phpdocumentor-element-found-in__line">876</span>
 
     </aside>
 
@@ -2409,7 +2431,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">747</span>
+    <span class="phpdocumentor-element-found-in__line">784</span>
 
     </aside>
 
@@ -2448,7 +2470,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">578</span>
+    <span class="phpdocumentor-element-found-in__line">615</span>
 
     </aside>
 
@@ -2497,7 +2519,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
@@ -2609,7 +2631,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">344</span>
+    <span class="phpdocumentor-element-found-in__line">381</span>
 
     </aside>
 
@@ -2648,7 +2670,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">829</span>
+    <span class="phpdocumentor-element-found-in__line">866</span>
 
     </aside>
 
@@ -2689,7 +2711,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1115</span>
+    <span class="phpdocumentor-element-found-in__line">1152</span>
 
     </aside>
 
@@ -2728,7 +2750,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">595</span>
+    <span class="phpdocumentor-element-found-in__line">632</span>
 
     </aside>
 
@@ -2767,7 +2789,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">204</span>
 
     </aside>
 
@@ -2806,7 +2828,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">309</span>
+    <span class="phpdocumentor-element-found-in__line">306</span>
 
     </aside>
 
@@ -2845,7 +2867,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1011</span>
+    <span class="phpdocumentor-element-found-in__line">1048</span>
 
     </aside>
 
@@ -2884,7 +2906,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">722</span>
+    <span class="phpdocumentor-element-found-in__line">759</span>
 
     </aside>
 
@@ -2923,7 +2945,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">985</span>
+    <span class="phpdocumentor-element-found-in__line">1022</span>
 
     </aside>
 
@@ -2962,7 +2984,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">404</span>
+    <span class="phpdocumentor-element-found-in__line">441</span>
 
     </aside>
 
@@ -3001,7 +3023,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">479</span>
+    <span class="phpdocumentor-element-found-in__line">516</span>
 
     </aside>
 
@@ -3054,7 +3076,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">233</span>
+    <span class="phpdocumentor-element-found-in__line">234</span>
 
     </aside>
 
@@ -3093,7 +3115,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">763</span>
+    <span class="phpdocumentor-element-found-in__line">800</span>
 
     </aside>
 
@@ -3155,7 +3177,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1035</span>
+    <span class="phpdocumentor-element-found-in__line">1072</span>
 
     </aside>
 
@@ -3194,7 +3216,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">371</span>
+    <span class="phpdocumentor-element-found-in__line">408</span>
 
     </aside>
 
@@ -3233,7 +3255,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1061</span>
+    <span class="phpdocumentor-element-found-in__line">1098</span>
 
     </aside>
 
@@ -3272,7 +3294,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">667</span>
+    <span class="phpdocumentor-element-found-in__line">704</span>
 
     </aside>
 
@@ -3311,7 +3333,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">258</span>
 
     </aside>
 
@@ -3350,7 +3372,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1091</span>
+    <span class="phpdocumentor-element-found-in__line">1128</span>
 
     </aside>
 
@@ -3389,7 +3411,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1174</span>
+    <span class="phpdocumentor-element-found-in__line">1211</span>
 
     </aside>
 
@@ -3440,7 +3462,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -3479,7 +3501,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">712</span>
+    <span class="phpdocumentor-element-found-in__line">749</span>
 
     </aside>
 
@@ -3518,7 +3540,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">491</span>
+    <span class="phpdocumentor-element-found-in__line">528</span>
 
     </aside>
 
@@ -3569,7 +3591,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">649</span>
+    <span class="phpdocumentor-element-found-in__line">686</span>
 
     </aside>
 
@@ -3620,7 +3642,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1128</span>
+    <span class="phpdocumentor-element-found-in__line">1165</span>
 
     </aside>
 
@@ -3662,7 +3684,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 
     </aside>
 
@@ -3724,7 +3746,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">779</span>
+    <span class="phpdocumentor-element-found-in__line">816</span>
 
     </aside>
 
@@ -3775,7 +3797,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1103</span>
+    <span class="phpdocumentor-element-found-in__line">1140</span>
 
     </aside>
 
@@ -3906,7 +3928,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -3971,7 +3993,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">269</span>
+    <span class="phpdocumentor-element-found-in__line">270</span>
 
     </aside>
 
@@ -4020,7 +4042,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">999</span>
+    <span class="phpdocumentor-element-found-in__line">1036</span>
 
     </aside>
 
@@ -4072,7 +4094,7 @@ that message will be returned and no new message will be created.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">679</span>
+    <span class="phpdocumentor-element-found-in__line">716</span>
 
     </aside>
 
@@ -4123,7 +4145,7 @@ that message will be returned and no new message will be created.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">856</span>
+    <span class="phpdocumentor-element-found-in__line">893</span>
 
     </aside>
 
@@ -4188,7 +4210,7 @@ that message will be returned and no new message will be created.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">429</span>
 
     </aside>
 
@@ -4262,7 +4284,7 @@ that message will be returned and no new message will be created.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">967</span>
+    <span class="phpdocumentor-element-found-in__line">1004</span>
 
     </aside>
 
@@ -4331,7 +4353,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">921</span>
+    <span class="phpdocumentor-element-found-in__line">958</span>
 
     </aside>
 
@@ -4394,7 +4416,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">428</span>
+    <span class="phpdocumentor-element-found-in__line">465</span>
 
     </aside>
 
@@ -4484,7 +4506,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -4551,7 +4573,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1023</span>
+    <span class="phpdocumentor-element-found-in__line">1060</span>
 
     </aside>
 
@@ -4600,7 +4622,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">359</span>
+    <span class="phpdocumentor-element-found-in__line">396</span>
 
     </aside>
 
@@ -4674,7 +4696,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1049</span>
+    <span class="phpdocumentor-element-found-in__line">1086</span>
 
     </aside>
 
@@ -4737,7 +4759,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">607</span>
+    <span class="phpdocumentor-element-found-in__line">644</span>
 
     </aside>
 
@@ -4788,7 +4810,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">879</span>
+    <span class="phpdocumentor-element-found-in__line">916</span>
 
     </aside>
 
@@ -4851,7 +4873,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">900</span>
+    <span class="phpdocumentor-element-found-in__line">937</span>
 
     </aside>
 
@@ -4914,7 +4936,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">245</span>
+    <span class="phpdocumentor-element-found-in__line">246</span>
 
     </aside>
 
@@ -4963,7 +4985,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1075</span>
+    <span class="phpdocumentor-element-found-in__line">1112</span>
 
     </aside>
 
@@ -5030,7 +5052,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">948</span>
+    <span class="phpdocumentor-element-found-in__line">985</span>
 
     </aside>
 
@@ -5202,7 +5224,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">562</span>
+    <span class="phpdocumentor-element-found-in__line">599</span>
 
     </aside>
 
@@ -5269,7 +5291,7 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">547</span>
+    <span class="phpdocumentor-element-found-in__line">584</span>
 
     </aside>
 
@@ -5437,6 +5459,104 @@ Failing to do this will result in a 400 BAD REQUEST response.</p>
             -private
                                     -static                    "
 >
+    <h4 class="phpdocumentor-element__name" id="method_prepareEmbedAudio">
+        prepareEmbedAudio()
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_prepareEmbedAudio" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">334</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retain only the fields accepted by RichEmbedAudio.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">prepareEmbedAudio</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$audio</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|<abbr title="\stdClass">stdClass</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$audio</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|<abbr title="\stdClass">stdClass</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_prepareOutboundEmbed">
+        prepareOutboundEmbed()
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_prepareOutboundEmbed" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">321</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Normalize authored audio without modifying received embed metadata.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">prepareOutboundEmbed</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embed</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$embed</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
     <h4 class="phpdocumentor-element__name" id="method_studly">
         studly()
         <a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_studly" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5514,7 +5634,7 @@ as we may move it outside this class in future.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">315</span>
+    <span class="phpdocumentor-element-found-in__line">312</span>
 
     </aside>
 
@@ -5659,6 +5779,8 @@ as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_enforceV2Limits">enforceV2Limits()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_getProperty">getProperty()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_setProperty">setProperty()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_prepareEmbedAudio">prepareEmbedAudio()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_prepareOutboundEmbed">prepareOutboundEmbed()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_studly">studly()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_validateOutboundEmbed">validateOutboundEmbed()</a></li>
                                     </ul>

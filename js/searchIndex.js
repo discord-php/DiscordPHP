@@ -2676,6 +2676,16 @@ Search.appendIndex(
             "summary": "Reject\u0020received\u0020website\u0020previews\u0020in\u0020bot\/webhook\u0020message\u0020payloads.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_validateOutboundEmbed"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AprepareOutboundEmbed\u0028\u0029",
+            "name": "prepareOutboundEmbed",
+            "summary": "Normalize\u0020authored\u0020audio\u0020without\u0020modifying\u0020received\u0020embed\u0020metadata.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_prepareOutboundEmbed"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AprepareEmbedAudio\u0028\u0029",
+            "name": "prepareEmbedAudio",
+            "summary": "Retain\u0020only\u0020the\u0020fields\u0020accepted\u0020by\u0020RichEmbedAudio.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_prepareEmbedAudio"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetAllowedMentions\u0028\u0029",
             "name": "setAllowedMentions",
             "summary": "Sets\u0020the\u0020allowed\u0020mentions\u0020object\u0020of\u0020the\u0020message.",
@@ -7531,6 +7541,21 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Message-DefaultValue.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Audio",
+            "name": "Audio",
+            "summary": "Audio\u0020metadata\u0020for\u0020an\u0020embed,\u0020defined\u0020in\u0020Discord\u0027s\u0020stable\u0020OpenAPI\u0020description.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Audio.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Audio\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "The\u0020Part\u0027s\u0020public\u0020attributes,\u0020for\u0020\u0060json_encode\u0028\u0029\u0060.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Audio.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Audio\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Audio.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Author",
             "name": "Author",
             "summary": "The\u0020author\u0020of\u0020an\u0020embed\u0020object.",
@@ -7570,6 +7595,11 @@ Search.appendIndex(
             "name": "getVideoAttribute",
             "summary": "Gets\u0020the\u0020video\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getVideoAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AgetAudioAttribute\u0028\u0029",
+            "name": "getAudioAttribute",
+            "summary": "Gets\u0020the\u0020audio\u0020attribute\u0020described\u0020by\u0020Discord\u0027s\u0020stable\u0020OpenAPI\u0020schema.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAudioAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AgetProviderAttribute\u0028\u0029",
             "name": "getProviderAttribute",
@@ -17196,6 +17226,231 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-VoiceStateRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\RPC\\CloseException",
+            "name": "CloseException",
+            "summary": "A\u0020connection\u0020CLOSE\u0020code,\u0020separate\u0020from\u0020command\u0020error\u0020codes.",
+            "url": "classes/Discord-RPC-CloseException.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CloseException\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-RPC-CloseException.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CloseException\u003A\u003AgetReason\u0028\u0029",
+            "name": "getReason",
+            "summary": "Remote\u0020diagnostic\u0020text\u003B\u0020callers\u0020should\u0020not\u0020log\u0020it\u0020without\u0020redaction.",
+            "url": "classes/Discord-RPC-CloseException.html#method_getReason"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CloseException\u003A\u003A\u0024reason",
+            "name": "reason",
+            "summary": "",
+            "url": "classes/Discord-RPC-CloseException.html#property_reason"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CommandException",
+            "name": "CommandException",
+            "summary": "A\u0020command\u0020ERROR\u0020response.\u0020Unknown\u0020numeric\u0020codes\u0020are\u0020retained\u0020without\u0020logging\u0020server\u0020data.",
+            "url": "classes/Discord-RPC-CommandException.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CommandException\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-RPC-CommandException.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CommandException\u003A\u003AgetCommand\u0028\u0029",
+            "name": "getCommand",
+            "summary": "",
+            "url": "classes/Discord-RPC-CommandException.html#method_getCommand"
+        },                {
+            "fqsen": "\\Discord\\RPC\\CommandException\u003A\u003A\u0024command",
+            "name": "command",
+            "summary": "",
+            "url": "classes/Discord-RPC-CommandException.html#property_command"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder",
+            "name": "FrameDecoder",
+            "summary": "Incremental,\u0020bounded\u0020little\u002Dendian\u0020IPC\u0020framing\u003B\u0020JSON\u0020interpretation\u0020belongs\u0020to\u0020the\u0020client.",
+            "url": "classes/Discord-RPC-FrameDecoder.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003Aappend\u0028\u0029",
+            "name": "append",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#method_append"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003Anext\u0028\u0029",
+            "name": "next",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#method_next"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003Aclear\u0028\u0029",
+            "name": "clear",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#method_clear"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003Aencode\u0028\u0029",
+            "name": "encode",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#method_encode"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003A\u0024buffer",
+            "name": "buffer",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#property_buffer"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003A\u0024maxFrameBytes",
+            "name": "maxFrameBytes",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#property_maxFrameBytes"
+        },                {
+            "fqsen": "\\Discord\\RPC\\FrameDecoder\u003A\u003A\u0024maxBufferBytes",
+            "name": "maxBufferBytes",
+            "summary": "",
+            "url": "classes/Discord-RPC-FrameDecoder.html#property_maxBufferBytes"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient",
+            "name": "IpcClient",
+            "summary": "Optional\u0020local\u0020RPC\u0020facade,\u0020independent\u0020of\u0020the\u0020bot\u0020Gateway\u0020runtime.",
+            "url": "classes/Discord-RPC-IpcClient.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Windows\u0020requires\u0020an\u0020injected\u0020asynchronous\u0020native\u0020pipe\u0020connector.\u0020See\u0020guide\/rpc.rst\u0020for\u0020options.",
+            "url": "classes/Discord-RPC-IpcClient.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003AgetCandidatePaths\u0028\u0029",
+            "name": "getCandidatePaths",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_getCandidatePaths"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Aconnect\u0028\u0029",
+            "name": "connect",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_connect"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Ahandshake\u0028\u0029",
+            "name": "handshake",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_handshake"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Areceive\u0028\u0029",
+            "name": "receive",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_receive"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Aready\u0028\u0029",
+            "name": "ready",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_ready"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Arequest\u0028\u0029",
+            "name": "request",
+            "summary": "Raw\u0020command\u0020API.\u0020Callers\u0020own\u0020command\u002Dspecific\u0020arguments,\u0020scopes\u0020and\u0020result\u0020shapes.",
+            "url": "classes/Discord-RPC-IpcClient.html#method_request"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Aauthorize\u0028\u0029",
+            "name": "authorize",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_authorize"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Aauthenticate\u0028\u0029",
+            "name": "authenticate",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_authenticate"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003AauthorizeAndAuthenticate\u0028\u0029",
+            "name": "authorizeAndAuthenticate",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_authorizeAndAuthenticate"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003AsendPing\u0028\u0029",
+            "name": "sendPing",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_sendPing"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Aclose\u0028\u0029",
+            "name": "close",
+            "summary": "Explicit\u0020close\u003B\u0020reconnect\u0020requires\u0020a\u0020new\u0020connect\u0028\u0029\u0020call.\u0020No\u0020automatic\u0020replay\u0020or\u0020retry.",
+            "url": "classes/Discord-RPC-IpcClient.html#method_close"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003Adisconnect\u0028\u0029",
+            "name": "disconnect",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#method_disconnect"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024loop",
+            "name": "loop",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_loop"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024options",
+            "name": "options",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_options"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024session",
+            "name": "session",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_session"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024outbound",
+            "name": "outbound",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_outbound"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024pending",
+            "name": "pending",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_pending"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024state",
+            "name": "state",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_state"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024clientId",
+            "name": "clientId",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_clientId"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024generation",
+            "name": "generation",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_generation"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024connecting",
+            "name": "connecting",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_connecting"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024connectTimer",
+            "name": "connectTimer",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_connectTimer"
+        },                {
+            "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A\u0024authentication",
+            "name": "authentication",
+            "summary": "",
+            "url": "classes/Discord-RPC-IpcClient.html#property_authentication"
+        },                {
+            "fqsen": "\\Discord\\RPC\\ProtocolException",
+            "name": "ProtocolException",
+            "summary": "An\u0020invalid\u0020or\u0020oversized\u0020IPC\u0020frame.\u0020Messages\u0020never\u0020include\u0020payload\u0020contents.",
+            "url": "classes/Discord-RPC-ProtocolException.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\TokenExchangeInterface",
+            "name": "TokenExchangeInterface",
+            "summary": "Application\u002Downed\u0020asynchronous\u0020OAuth\u0020exchange.\u0020No\u0020HTTP\u0020or\u0020confidential\u0020secret\u0020is\u0020bundled\u0020here.",
+            "url": "classes/Discord-RPC-TokenExchangeInterface.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\TokenExchangeInterface\u003A\u003Aexchange\u0028\u0029",
+            "name": "exchange",
+            "summary": "",
+            "url": "classes/Discord-RPC-TokenExchangeInterface.html#method_exchange"
+        },                {
             "fqsen": "\\Discord\\Voice\\Any",
             "name": "Any",
             "summary": "Represents\u0020the\u0020any\u0020data\u0020sent\u0020when\u0020a\u0020user\u0020connects\u0020to\u0020a\u0020voice\u0020channel.",
@@ -20965,6 +21220,11 @@ Search.appendIndex(
             "name": "Thread",
             "summary": "",
             "url": "namespaces/discord-repository-thread.html"
+        },                {
+            "fqsen": "\\Discord\\RPC",
+            "name": "RPC",
+            "summary": "",
+            "url": "namespaces/discord-rpc.html"
         },                {
             "fqsen": "\\Discord\\Voice",
             "name": "Voice",

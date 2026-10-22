@@ -179,6 +179,10 @@
     <a href="guide/oauth2.html#oauth2-sessions-and-game-linking" class="">OAuth2 sessions and game linking</a>
 </h4>
 
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/rpc.html#optional-local-rpc-client" class="">Optional local RPC client</a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category -namespaces">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -220,6 +224,10 @@
             </li>
                     <li>
                 <a href="namespaces/discord-repository.html" class="">Repository</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-rpc.html" class="">RPC</a>
                 
             </li>
                     <li>
@@ -408,6 +416,12 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#property_audio">$audio</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Embed-Audio.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Audio">Audio</abbr></a>|null            </span>
+</dt>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#property_author">$author</a>
     <span>
@@ -924,6 +938,13 @@ characters overall limit.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAudioAttribute">getAudioAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Embed-Audio.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Audio">Audio</abbr></a>|null    </span>
+</dt>
+<dd>Gets the audio attribute described by Discord&#039;s stable OpenAPI schema.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAuthorAttribute">getAuthorAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Channel-Message-Embed-Author.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Author">Author</abbr></a>|null    </span>
@@ -1063,7 +1084,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1124,7 +1145,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -1155,7 +1176,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -1186,7 +1207,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -1217,7 +1238,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -1248,7 +1269,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1279,7 +1300,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -1310,7 +1331,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1341,7 +1362,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1372,7 +1393,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -1412,6 +1433,45 @@ characters overall limit.</dd>
             <a href="classes/Discord-Parts-Channel-Message-Embed-EmbedLink.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_audio">
+        $audio
+        <a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#property_audio" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-Embed-Audio.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Audio">Audio</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$audio</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The audio of the embed, when provided by Discord.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -2182,7 +2242,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -2193,7 +2253,7 @@ characters overall limit.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;title&#039;, &#039;type&#039;, &#039;description&#039;, &#039;url&#039;, &#039;timestamp&#039;, &#039;color&#039;, &#039;footer&#039;, &#039;image&#039;, &#039;thumbnail&#039;, &#039;video&#039;, &#039;provider&#039;, &#039;author&#039;, &#039;fields&#039;, &#039;flags&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;title&#039;, &#039;type&#039;, &#039;description&#039;, &#039;url&#039;, &#039;timestamp&#039;, &#039;color&#039;, &#039;footer&#039;, &#039;image&#039;, &#039;thumbnail&#039;, &#039;video&#039;, &#039;audio&#039;, &#039;provider&#039;, &#039;author&#039;, &#039;fields&#039;, &#039;flags&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2915,7 +2975,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">341</span>
+    <span class="phpdocumentor-element-found-in__line">355</span>
 
     </aside>
 
@@ -2986,7 +3046,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">385</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 
     </aside>
 
@@ -4068,7 +4128,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">413</span>
+    <span class="phpdocumentor-element-found-in__line">427</span>
 
     </aside>
 
@@ -4159,7 +4219,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">324</span>
+    <span class="phpdocumentor-element-found-in__line">338</span>
 
     </aside>
 
@@ -4208,7 +4268,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -4257,7 +4317,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">452</span>
+    <span class="phpdocumentor-element-found-in__line">466</span>
 
     </aside>
 
@@ -4339,7 +4399,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">486</span>
+    <span class="phpdocumentor-element-found-in__line">500</span>
 
     </aside>
 
@@ -4406,7 +4466,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">508</span>
+    <span class="phpdocumentor-element-found-in__line">522</span>
 
     </aside>
 
@@ -4473,7 +4533,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">530</span>
+    <span class="phpdocumentor-element-found-in__line">544</span>
 
     </aside>
 
@@ -4536,7 +4596,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">280</span>
+    <span class="phpdocumentor-element-found-in__line">294</span>
 
     </aside>
 
@@ -4585,7 +4645,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">296</span>
+    <span class="phpdocumentor-element-found-in__line">310</span>
 
     </aside>
 
@@ -4641,7 +4701,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">544</span>
+    <span class="phpdocumentor-element-found-in__line">558</span>
 
     </aside>
 
@@ -5253,7 +5313,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">559</span>
+    <span class="phpdocumentor-element-found-in__line">573</span>
 
     </aside>
 
@@ -5321,7 +5381,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">574</span>
+    <span class="phpdocumentor-element-found-in__line">588</span>
 
     </aside>
 
@@ -5432,6 +5492,63 @@ characters overall limit.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getAudioAttribute">
+        getAudioAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAudioAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">165</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the audio attribute described by Discord&#039;s stable OpenAPI schema.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getAudioAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Embed-Audio.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Audio">Audio</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getAudioAttribute_tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAudioAttribute_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.69.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-Embed-Audio.html"><abbr title="\Discord\Parts\Channel\Message\Embed\Audio">Audio</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The audio attribute.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getAuthorAttribute">
         getAuthorAttribute()
         <a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAuthorAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5440,7 +5557,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -5483,7 +5600,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">195</span>
 
     </aside>
 
@@ -5522,7 +5639,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -5565,7 +5682,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -5608,7 +5725,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -5651,7 +5768,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -5694,7 +5811,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
@@ -5751,7 +5868,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">153</span>
 
     </aside>
 
@@ -5847,7 +5964,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">601</span>
+    <span class="phpdocumentor-element-found-in__line">615</span>
 
     </aside>
 
@@ -5968,7 +6085,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -6027,7 +6144,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">216</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
@@ -6090,7 +6207,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -6135,7 +6252,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">258</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -6202,7 +6319,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Embed/Embed.php"><a href="files/src-discord-parts-channel-message-embed-embed.html"><abbr title="src/Discord/Parts/Channel/Message/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">254</span>
 
     </aside>
 
@@ -6365,6 +6482,7 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#property_audio">$audio</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#property_author">$author</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#property_color">$color</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
@@ -6445,6 +6563,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_ensureValidUrl">ensureValidUrl()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_exceedsOverallLimit">exceedsOverallLimit()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAudioAttribute">getAudioAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAuthorAttribute">getAuthorAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getFieldsAttribute">getFieldsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getFooterAttribute">getFooterAttribute()</a></li>
