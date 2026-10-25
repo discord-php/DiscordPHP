@@ -50,7 +50,8 @@ The default remains unchanged. The helper accepts only local ``discord-ipc-0``
 through ``discord-ipc-9`` pipe paths, including both ``\\?\pipe\`` and
 ``\\.\pipe\`` spellings. Discovery and fallback remain owned by ``IpcClient``.
 Each attempted endpoint gets a new helper, ephemeral listener and random secret.
-The connector timeout covers helper startup and native connection; the client's
+The connector timeout (greater than zero, at most 300 seconds) covers helper
+startup and native connection; the client's
 ``connect_timeout`` still covers all discovery attempts and the READY handshake.
 Cancellation/close terminates the helper; reconnect never reuses its connection
 or replays requests. Keep the loop running briefly after close so process-exit

@@ -14,6 +14,10 @@ declare(strict_types=1);
 
 use Discord\RPC\IpcClient;
 use Discord\RPC\WindowsPipeConnector;
+use Discord\RPC\WindowsPipeAttempt;
+use React\Socket\Connector;
+
+use function React\Promise\all;
 use React\EventLoop\StreamSelectLoop;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -127,6 +131,35 @@ final class WindowsPipeConnectorTest extends DiscordTestCase
         // A failed process spawn may reject synchronously; it must never wait on a pipe.
     }
 
+    public function testUnauthenticatedLoopbackPeerIsClosedWithoutReceivingTraffic(): void
+    {
+        $this->server();
+        $attempt = new WindowsPipeAttempt($this->loop, $this->node, 9, 2);
+        $pending = $attempt->start();
+        // Discover the internal ephemeral endpoint to simulate an unrelated local process.
+        $listener = (new ReflectionProperty($attempt, 'server'))->getValue($attempt);
+        $this->assertStringStartsWith('tcp://127.0.0.1:', $listener->getAddress());
+        $received = '';
+        $closed = new Deferred();
+        $rogue = (new Connector([], $this->loop))->connect($listener->getAddress())->then(function ($peer) use (&$received, $closed) {
+            $peer->on('data', function ($bytes) use (&$received) {
+                $received .= $bytes;
+            });
+            $peer->on('close', fn () => $closed->resolve(true));
+            $peer->write(str_repeat('x', 65));
+
+            return $closed->promise();
+        });
+        $result = $this->await(all([$pending, $rogue]));
+        $this->assertNull($result->error);
+        $this->assertSame('', $received);
+        $this->connections[] = $result->value[0];
+        $result->value[0]->close();
+        $this->loop->addTimer(0.15, fn () => $this->loop->stop());
+        $this->loop->run();
+        $this->assertNull((new ReflectionProperty($attempt, 'helper'))->getValue($attempt), 'Closed helpers must be reaped and release their poll timer.');
+    }
+
     public function testCancellationAndConnectorDeadline(): void
     {
         $this->server();
@@ -162,7 +195,13 @@ final class WindowsPipeConnectorTest extends DiscordTestCase
         $this->client->request('GET_GUILDS')->then(null, function ($error) use (&$queuedError) {
             $queuedError = $error;
         });
+        $ticks = 0;
+        $heartbeat = $this->loop->addPeriodicTimer(0.01, function () use (&$ticks) {
+            ++$ticks;
+        });
         $result = $this->await($connecting);
+        $this->loop->cancelTimer($heartbeat);
+        $this->assertGreaterThan(5, $ticks, 'The loop must continue servicing timers while waiting for native READY.');
         $this->assertSame('IPC READY deadline exceeded.', $result->error->getMessage());
         $this->assertSame($queuedError, $result->error);
     }

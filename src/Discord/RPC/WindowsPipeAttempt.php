@@ -26,14 +26,12 @@ final class WindowsPipeAttempt
 {
     private ?SocketServer $server = null;
     private ?TimerInterface $deadline = null;
-    private ?TimerInterface $poll = null;
     private array $peers = [];
     private ?ConnectionInterface $connection = null;
     private Deferred $deferred;
     private bool $settled = false;
     private bool $closing = false;
-    /** @var resource|null */
-    private $process = null;
+    private ?WindowsPipeProcess $helper = null;
 
     public function __construct(private LoopInterface $loop, private string $node, private int $index, private float $timeout)
     {
@@ -50,22 +48,14 @@ final class WindowsPipeAttempt
             $this->server->on('connection', fn (ConnectionInterface $peer) => $this->accept($peer, $secret));
             $this->server->on('error', fn () => $this->close(new \RuntimeException('Windows pipe listener failed.')));
             $this->deadline = $this->loop->addTimer($this->timeout, fn () => $this->close(new \RuntimeException('Windows pipe connection deadline exceeded.')));
-            // Never inherit NODE_OPTIONS, NODE_PATH, OAuth secrets or other application environment.
-            $env = ['DPHP_RPC_PORT' => (string) $port, 'DPHP_RPC_SECRET' => $secret, 'DPHP_RPC_INDEX' => (string) $this->index,
-                'DPHP_RPC_TIMEOUT' => (string) max(1, (int) ceil($this->timeout * 1000))];
-            foreach (['SystemRoot', 'TEMP', 'TMP'] as $key) {
-                if (getenv($key) !== false) {
-                    $env[$key] = getenv($key);
-                }
-            }
-            // No anonymous process pipes: these are not selectable on Windows. No shell or secret argv.
-            $this->process = @proc_open([$this->node, __DIR__.'/bridge/windows-pipe.cjs'], [
-                0 => ['file', 'NUL', 'r'], 1 => ['file', 'NUL', 'w'], 2 => ['file', 'NUL', 'w'],
-            ], $unused, null, $env, ['bypass_shell' => true, 'create_no_window' => true]);
-            if (! is_resource($this->process)) {
-                throw new \RuntimeException('Windows pipe helper could not start.');
-            }
-            $this->poll = $this->loop->addPeriodicTimer(0.02, fn () => $this->checkProcess());
+            $this->helper = new WindowsPipeProcess($this->loop, $this->node, [
+                'DPHP_RPC_PORT' => (string) $port, 'DPHP_RPC_SECRET' => $secret, 'DPHP_RPC_INDEX' => (string) $this->index,
+                'DPHP_RPC_TIMEOUT' => (string) max(1, (int) ceil($this->timeout * 1000)),
+            ], function () {
+                $this->helper = null;
+                $this->close(new \RuntimeException('Windows pipe helper exited.'));
+            });
+            $this->helper->start();
         } catch (\Throwable $error) {
             $this->close(new \RuntimeException('Windows pipe helper could not start.'));
         }
@@ -130,21 +120,10 @@ final class WindowsPipeAttempt
             $this->deadline = null;
         }
         foreach ($this->peers as $peer) {
-            if ($peer !== $this->connection) {
-                $peer->close();
+            if ($peer === $this->connection) {
+                continue;
             }
-        }
-    }
-
-    private function checkProcess(): void
-    {
-        if (is_resource($this->process) && ! proc_get_status($this->process)['running']) {
-            // proc_close can wait: only reap after the OS reports termination.
-            proc_close($this->process);
-            $this->process = null;
-            $this->loop->cancelTimer($this->poll);
-            $this->poll = null;
-            $this->close(new \RuntimeException('Windows pipe helper exited.'));
+            $peer->close();
         }
     }
 
@@ -156,10 +135,7 @@ final class WindowsPipeAttempt
         $this->closing = true;
         $this->releaseListener();
         $this->connection?->close();
-        if (is_resource($this->process)) {
-            // Termination is nonblocking; the poll timer reaps it after exit.
-            proc_terminate($this->process, 9);
-        }
+        $this->helper?->terminate();
         if (! $this->settled) {
             $this->settled = true;
             $this->deferred->reject($error);

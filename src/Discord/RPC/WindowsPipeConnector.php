@@ -34,8 +34,8 @@ final class WindowsPipeConnector implements ConnectorInterface
 
     public function __construct(private string $nodeBinary, ?LoopInterface $loop = null, private float $timeout = 5.0)
     {
-        if (! preg_match('~^(?:[A-Za-z]:[\\\\/]|/)~', $nodeBinary) || str_contains($nodeBinary, "\0") || ! is_finite($timeout) || $timeout <= 0) {
-            throw new \InvalidArgumentException('An absolute Node.js executable path and positive finite timeout are required.');
+        if (! preg_match('~^(?:[A-Za-z]:[\\\\/]|/)~', $nodeBinary) || str_contains($nodeBinary, "\0") || ! is_finite($timeout) || $timeout <= 0 || $timeout > 300) {
+            throw new \InvalidArgumentException('An absolute Node.js executable path and timeout between zero (exclusive) and 300 seconds are required.');
         }
         $this->loop = $loop ?? Loop::get();
     }
