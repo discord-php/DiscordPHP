@@ -27,6 +27,8 @@ use function React\Promise\reject;
  * The helper uses libuv for pipe I/O. PHP watches only a loopback TCP socket.
  * Supply an absolute path to a trusted Node.js executable (22 or newer).
  * No RPC protocol or OAuth logic is implemented by this connector.
+ *
+ * @SuppressWarnings(PHPMD.StaticAccess) Optional global-loop default matches IpcClient.
  */
 final class WindowsPipeConnector implements ConnectorInterface
 {

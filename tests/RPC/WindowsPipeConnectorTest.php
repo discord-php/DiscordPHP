@@ -22,7 +22,11 @@ use React\EventLoop\StreamSelectLoop;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 
-/** Real native Windows pipes against a synthetic Node server; no Discord client or OAuth. */
+/**
+ * Real native Windows pipes against a synthetic Node server; no Discord client or OAuth.
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods) Independent transport regressions share the same native pipe fixture.
+ */
 final class WindowsPipeConnectorTest extends DiscordTestCase
 {
     private StreamSelectLoop $loop;
@@ -74,6 +78,7 @@ final class WindowsPipeConnectorTest extends DiscordTestCase
         }
     }
 
+    /** @SuppressWarnings(PHPMD.UnusedLocalVariable) proc_open requires a by-reference pipes output even with file-only descriptors. */
     private function server(string $mode = 'rpc'): void
     {
         $this->requireWindows();

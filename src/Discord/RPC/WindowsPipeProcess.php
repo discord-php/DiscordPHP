@@ -28,6 +28,7 @@ final class WindowsPipeProcess
     {
     }
 
+    /** @SuppressWarnings(PHPMD.UnusedLocalVariable) proc_open requires a by-reference pipes output even with file-only descriptors. */
     public function start(): void
     {
         // Never inherit NODE_OPTIONS, NODE_PATH, OAuth secrets or application environment.

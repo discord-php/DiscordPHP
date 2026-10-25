@@ -70,8 +70,8 @@ final class WindowsPipeAttempt
 
             return;
         }
-        $id = spl_object_id($peer);
-        $this->peers[$id] = $peer;
+        $peerId = spl_object_id($peer);
+        $this->peers[$peerId] = $peer;
         $buffer = '';
         $listener = null;
         $listener = function (string $bytes) use ($peer, $secret, &$buffer, &$listener) {
@@ -84,29 +84,33 @@ final class WindowsPipeAttempt
 
                 return;
             }
-            $peer->pause();
-            $peer->removeListener('data', $listener);
-            $this->connection = $peer;
-            $this->settled = true;
-            $this->releaseListener();
-            $this->deferred->resolve($peer);
-            $tail = substr($buffer, 65);
-            $this->loop->futureTick(function () use ($peer, $tail) {
-                if (! $this->closing && $peer->isReadable()) {
-                    if ($tail !== '') {
-                        $peer->emit('data', [$tail]);
-                    }
-                    $peer->resume();
-                }
-            });
+            $this->connected($peer, $listener, substr($buffer, 65));
         };
         $peer->on('data', $listener);
         $peer->on('error', static function () {
         });
-        $peer->on('close', function () use ($id, $peer) {
-            unset($this->peers[$id]);
+        $peer->on('close', function () use ($peerId, $peer) {
+            unset($this->peers[$peerId]);
             if ($peer === $this->connection) {
                 $this->close(new \RuntimeException('Windows pipe connection closed.'));
+            }
+        });
+    }
+
+    private function connected(ConnectionInterface $peer, callable $listener, string $tail): void
+    {
+        $peer->pause();
+        $peer->removeListener('data', $listener);
+        $this->connection = $peer;
+        $this->settled = true;
+        $this->releaseListener();
+        $this->deferred->resolve($peer);
+        $this->loop->futureTick(function () use ($peer, $tail) {
+            if (! $this->closing && $peer->isReadable()) {
+                if ($tail !== '') {
+                    $peer->emit('data', [$tail]);
+                }
+                $peer->resume();
             }
         });
     }
