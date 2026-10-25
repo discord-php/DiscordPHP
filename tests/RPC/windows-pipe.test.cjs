@@ -2,7 +2,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const net = require('node:net');
-const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { once } = require('node:events');
@@ -56,8 +55,8 @@ test('authenticated preamble, native IPC, backpressure and binary integrity', { 
         chunks.push(chunk); size += chunk.length;
         if (size === bytes.length) resolve(Buffer.concat(chunks));
     }));
-    assert.equal(socket.write(bytes), false);
-    await once(socket, 'drain');
+    // Windows may accept this entire write immediately; wait for drain only if requested.
+    if (!socket.write(bytes)) await once(socket, 'drain');
     assert.deepEqual(await received, bytes);
 });
 

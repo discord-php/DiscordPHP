@@ -111,7 +111,8 @@ final class WindowsPipeAttempt
             });
         };
         $peer->on('data', $listener);
-        $peer->on('error', static function () {});
+        $peer->on('error', static function () {
+        });
         $peer->on('close', function () use ($id, $peer) {
             unset($this->peers[$id]);
             if ($peer === $this->connection) {

@@ -17,7 +17,6 @@ use Discord\RPC\WindowsPipeConnector;
 use React\EventLoop\StreamSelectLoop;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
-use React\Socket\ConnectionInterface;
 
 /** Real native Windows pipes against a synthetic Node server; no Discord client or OAuth. */
 final class WindowsPipeConnectorTest extends DiscordTestCase
@@ -30,7 +29,10 @@ final class WindowsPipeConnectorTest extends DiscordTestCase
     private array $connections = [];
     private ?IpcClient $client = null;
 
-    protected static function isLive(): bool { return false; }
+    protected static function isLive(): bool
+    {
+        return false;
+    }
 
     protected function setUp(): void
     {
@@ -157,7 +159,9 @@ final class WindowsPipeConnectorTest extends DiscordTestCase
         $this->client = new IpcClient($this->loop, $this->connector(), ['paths' => [$this->path], 'connect_timeout' => 0.5]);
         $connecting = $this->client->connect('123456789');
         $queuedError = null;
-        $this->client->request('GET_GUILDS')->then(null, function ($error) use (&$queuedError) { $queuedError = $error; });
+        $this->client->request('GET_GUILDS')->then(null, function ($error) use (&$queuedError) {
+            $queuedError = $error;
+        });
         $result = $this->await($connecting);
         $this->assertSame('IPC READY deadline exceeded.', $result->error->getMessage());
         $this->assertSame($queuedError, $result->error);
@@ -174,10 +178,14 @@ final class WindowsPipeConnectorTest extends DiscordTestCase
         $received = '';
         $drained = false;
         $finished = new Deferred();
-        $connection->on('drain', function () use (&$drained) { $drained = true; });
+        $connection->on('drain', function () use (&$drained) {
+            $drained = true;
+        });
         $connection->on('data', function ($chunk) use (&$received, $bytes, $finished) {
             $received .= $chunk;
-            if (strlen($received) >= strlen($bytes)) { $finished->resolve(true); }
+            if (strlen($received) >= strlen($bytes)) {
+                $finished->resolve(true);
+            }
         });
         $this->assertFalse($connection->write($bytes), 'Large write must expose ReactPHP backpressure.');
         $this->assertNull($this->await($finished->promise())->error);
