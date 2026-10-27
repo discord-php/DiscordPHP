@@ -21,6 +21,47 @@ use Discord\Parts\User\User;
 
 final class LobbyTest extends DiscordTestCase
 {
+    public static function lobbyNames(): array
+    {
+        return [
+            'omitted' => [[]],
+            'null' => [['name' => null]],
+            'minimum length' => [['name' => 'A']],
+            'maximum length' => [['name' => str_repeat('A', 100)]],
+            'unicode' => [['name' => '金曜日のゲーム']],
+        ];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('lobbyNames')]
+    public function testLobbyNamesAreForwardedOnCreateAndModify(array $data)
+    {
+        return wait(function (Discord $discord, $resolve) use ($data) {
+            [$mock, $driver] = $this->mockWith(fn () => ['id' => '1', 'application_id' => '2', 'members' => []]);
+
+            $mock->lobbies->createLobby($data)
+                ->then(function (Lobby $lobby) use ($mock, $driver, $data) {
+                    $this->assertSame('POST', $driver->requests[0]['method']);
+                    $this->assertStringEndsWith('/lobbies', $driver->requests[0]['url']);
+                    $this->assertSame($data, $driver->requests[0]['content']);
+                    $this->assertStringStartsWith('Bot ', $driver->requests[0]['headers']['Authorization']);
+
+                    return $mock->lobbies->cacheGet($lobby->id)->then(function ($cached) use ($mock, $lobby, $data) {
+                        $this->assertSame($lobby, $cached);
+
+                        return $mock->lobbies->modifyLobby($lobby, $data);
+                    });
+                })
+                ->then(function (Lobby $lobby) use ($mock, $driver, $data) {
+                    $this->assertSame('PATCH', $driver->requests[1]['method']);
+                    $this->assertStringEndsWith('/lobbies/1', $driver->requests[1]['url']);
+                    $this->assertSame($data, $driver->requests[1]['content']);
+
+                    return $mock->lobbies->cacheGet($lobby->id)->then(fn ($cached) => $this->assertSame($lobby, $cached));
+                })
+                ->then($resolve, $resolve);
+        });
+    }
+
     public function testMembersAreLobbyMembers(): void
     {
         $lobby = getMockDiscord()->getFactory()->part(Lobby::class, [
