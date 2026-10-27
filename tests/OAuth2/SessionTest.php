@@ -28,6 +28,41 @@ use Discord\Parts\User\User;
 
 final class SessionTest extends DiscordTestCase
 {
+    public static function lobbyNames(): array
+    {
+        return [
+            'omitted' => [[]],
+            'null' => [['name' => null]],
+            'minimum length' => [['name' => 'A']],
+            'maximum length' => [['name' => str_repeat('A', 100)]],
+            'unicode' => [['name' => '金曜日のゲーム']],
+        ];
+    }
+
+    /**
+     * wait() supplies a shared client; this test uses an isolated mock.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('lobbyNames')]
+    public function testJoiningALobbyForwardsItsOptionalName(array $data)
+    {
+        return wait(function (Discord $discord, $resolve) use ($data) {
+            [$session, $driver] = $this->sessionWith(fn () => ['id' => '1', 'application_id' => '7', 'members' => []]);
+            // The explicit argument owns the secret even if data contains a different one.
+            $session->lobbies->createOrJoin('match-42', $data + ['secret' => 'wrong-secret'])
+                ->then(function (Lobby $lobby) use ($session, $driver, $data) {
+                    $this->assertSame('PUT', $driver->requests[0]['method']);
+                    $this->assertStringEndsWith('/lobbies', $driver->requests[0]['url']);
+                    $this->assertSame(['secret' => 'match-42'] + $data, $driver->requests[0]['content']);
+                    $this->assertSame('Bearer player-token', $driver->requests[0]['headers']['Authorization']);
+
+                    return $session->lobbies->cacheGet($lobby->id)->then(fn ($cached) => $this->assertSame($lobby, $cached));
+                })
+                ->then($resolve, $resolve);
+        });
+    }
+
     public function testTheUserIsFetchedWithTheirOwnToken()
     {
         return wait(function (Discord $discord, $resolve) {

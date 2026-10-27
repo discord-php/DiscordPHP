@@ -63,6 +63,7 @@ class LobbyRepository extends AbstractRepository
      * Creates a new lobby, adding any of the specified members to it, if provided.
      *
      * @param array     $data
+     * @param ?string   $data['name']                 Optional lobby name, 1-100 characters when non-null. Omitted fields and explicit null are forwarded as supplied.
      * @param ?array    $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
      * @param ?Member[] $data['members']              Optional array of up to 25 users to be added to the lobby.
      * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
@@ -86,6 +87,7 @@ class LobbyRepository extends AbstractRepository
      *
      * @param Lobby|string $lobby                        The lobby or lobby id to modify.
      * @param array        $data
+     * @param ?string      $data['name']                 Optional lobby name, 1-100 characters when non-null. Omit to leave the name unchanged; explicit null is forwarded.
      * @param ?array       $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
      * @param ?Member[]    $data['members']              Optional array of up to 25 users to replace the lobby members with.
      * @param ?int         $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
