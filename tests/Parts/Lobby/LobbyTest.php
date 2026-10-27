@@ -32,6 +32,11 @@ final class LobbyTest extends DiscordTestCase
         ];
     }
 
+    /**
+     * wait() supplies a shared client; this test uses an isolated mock.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     #[\PHPUnit\Framework\Attributes\DataProvider('lobbyNames')]
     public function testLobbyNamesAreForwardedOnCreateAndModify(array $data)
     {
