@@ -23,15 +23,16 @@ use Discord\Parts\Part;
  *
  * @since 10.11.0
  *
- * @property string       $url                 Supports arbitrary urls and attachment://<filename> references.
- * @property ?string|null $proxy_url           The proxied url of the media item. This field is ignored and provided by the API as part of the response.
- * @property ?int|null    $height              The height of the media item. This field is ignored and provided by the API as part of the response.
- * @property ?int|null    $width               The width of the media item. This field is ignored and provided by the API as part of the response.
- * @property ?string|null $placeholder         Thumbhash (https://evanw.github.io/thumbhash/) placeholder (if image or video). This field is ignored and provided by the API as part of the response.
- * @property ?int|null    $placeholder_version Version of the placeholder (if image or video). This field is ignored and provided by the API as part of the response.
- * @property ?string|null $content_type        The media type of the content. This field is ignored and provided by the API as part of the response.
- * @property ?int|null    $flags               Unfurled media item flags combined as a bitfield. This field is ignored and provided by the API as part of the response.
- * @property ?string|null $attachment_id       The id of the uploaded attachment. Only present if the media item was uploaded as an attachment. This field is ignored and provided by the API as part of the response.
+ * @property-read ContentScanMetadata|null $content_scan_metadata Discord scanning result, when available. May arrive in a later message update.
+ * @property      string                   $url                   Supports arbitrary urls and attachment://<filename> references.
+ * @property      ?string|null             $proxy_url             The proxied url of the media item. This field is ignored and provided by the API as part of the response.
+ * @property      ?int|null                $height                The height of the media item. This field is ignored and provided by the API as part of the response.
+ * @property      ?int|null                $width                 The width of the media item. This field is ignored and provided by the API as part of the response.
+ * @property      ?string|null             $placeholder           Thumbhash (https://evanw.github.io/thumbhash/) placeholder (if image or video). This field is ignored and provided by the API as part of the response.
+ * @property      ?int|null                $placeholder_version   Version of the placeholder (if image or video). This field is ignored and provided by the API as part of the response.
+ * @property      ?string|null             $content_type          The media type of the content. This field is ignored and provided by the API as part of the response.
+ * @property      ?int|null                $flags                 Unfurled media item flags combined as a bitfield. This field is ignored and provided by the API as part of the response.
+ * @property      ?string|null             $attachment_id         The id of the uploaded attachment. Only present if the media item was uploaded as an attachment. This field is ignored and provided by the API as part of the response.
  */
 class UnfurledMediaItem extends Part
 {
@@ -51,5 +52,11 @@ class UnfurledMediaItem extends Part
         'content_type',
         'flags',
         'attachment_id',
+        'content_scan_metadata',
     ];
+    /** Returns the available scan result without fetching or inferring a result. */
+    protected function getContentScanMetadataAttribute(): ?ContentScanMetadata
+    {
+        return $this->attributePartHelper('content_scan_metadata', ContentScanMetadata::class);
+    }
 }
