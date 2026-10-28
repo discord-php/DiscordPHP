@@ -70,11 +70,21 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
 
-      - name: Verify RPC with injected offline transports
-        # Exercises framing/lifecycle on Windows; does not claim native named-pipe or live Discord support.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify helper against synthetic native pipes
+        run: node --test tests/RPC/windows-pipe.test.cjs
+
+      - name: Verify RPC and native Windows pipe connector offline
+        # A synthetic Node pipe server validates native I/O, not live Discord interoperability.
+        shell: pwsh
         env:
           DISCORD_TOKEN: ''
-        run: php vendor/bin/phpunit tests/RPC
+        run: |
+          $env:DPHP_TEST_NODE = (Get-Command node).Source
+          php vendor/bin/phpunit tests/RPC
 
   syntax:
     name: Syntax (PHP ${{ matrix.php }})

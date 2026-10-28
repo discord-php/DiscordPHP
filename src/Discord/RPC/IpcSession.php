@@ -57,7 +57,7 @@ final class IpcSession extends EventEmitter
             return reject(new \LogicException('IPC session is already connecting or connected.'));
         }
         if ($this->connector === null) {
-            return reject(new \RuntimeException('Windows IPC requires an injected asynchronous native pipe connector.'));
+            return reject(new \RuntimeException('Windows IPC requires an injected asynchronous connector (see WindowsPipeConnector).'));
         }
         $generation = ++$this->generation;
         $this->state = 'connecting';
