@@ -20,6 +20,26 @@ use Discord\Parts\Channel\Message\Embed\Embed;
 
 final class ContentScanTest extends DiscordTestCase
 {
+    public function testUnfurledMediaRetainsOptionalAndNullableResponseFields(): void
+    {
+        $media = getMockDiscord()->getFactory()->part(UnfurledMediaItem::class, [
+            'url' => 'https://example.com/image.png',
+            'placeholder' => 'thumbhash',
+            'placeholder_version' => 1,
+            'flags' => 1,
+        ], true);
+        $this->assertNull($media->proxy_url);
+        $this->assertSame('thumbhash', $media->placeholder);
+        $this->assertSame(1, $media->placeholder_version);
+        $this->assertSame(UnfurledMediaItem::FLAG_IS_ANIMATED, $media->flags);
+
+        $media->fill(['placeholder' => null, 'placeholder_version' => null, 'flags' => 0]);
+        $this->assertNull($media->placeholder);
+        $this->assertNull($media->placeholder_version);
+        $this->assertSame(0, $media->flags);
+        $this->assertSame('https://example.com/image.png', $media->url);
+    }
+
     public function testScanMetadataSurvivesHydrationAndLateReplacement(): void
     {
         $factory = getMockDiscord()->getFactory();

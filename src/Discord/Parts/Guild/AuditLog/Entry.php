@@ -78,7 +78,7 @@ class Entry extends Part
     /** Role was deleted. */
     public const ROLE_DELETE = 32;
     /** Role positions were updated. */
-    public const ROLE_POSITION_UPDATE = 35;
+    public const ROLE_POSITION_UPDATE = 33;
     /** Server invite was created. */
     public const INVITE_CREATE = 40;
     /** Server invite was updated. */
