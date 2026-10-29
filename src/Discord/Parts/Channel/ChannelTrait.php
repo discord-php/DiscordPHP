@@ -24,6 +24,7 @@ use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Role\Role;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Guild\Member\Member;
 use Discord\Parts\User\User;
@@ -221,6 +222,64 @@ trait ChannelTrait
     public function getBotPermissions(): ?RolePermission
     {
         return $this->guild?->members->get('id', $this->discord->id)?->getPermissions($this);
+    }
+
+    /**
+     * Fetches a member's fully cascaded permissions in this channel or thread.
+     *
+     * Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+     * Discord applies roles and channel overwrites. Requires VIEW_CHANNEL.
+     * This makes a REST request without relying on cached roles or overwrites.
+     * The result is a snapshot and does not change cached member or role permissions.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#get-channel-member-permissions
+     * @since 10.71.0
+     *
+     * @param Member|User|string $member   The member, user, or user ID.
+     * @param bool               $implicit Whether to include implicit permissions (default true).
+     *
+     * @return PromiseInterface<RolePermission>
+     */
+    public function fetchMemberPermissions(Member|User|string $member, bool $implicit = true): PromiseInterface
+    {
+        if ($this->is_private) {
+            return reject(new \BadMethodCallException('Member permissions are only available in guild channels.'));
+        }
+
+        $userId = $member instanceof Member || $member instanceof User ? $member->id : $member;
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MEMBER_PERMISSIONS, $this->id, $userId);
+        $endpoint->addQuery('implicit', $implicit ? 'true' : 'false');
+
+        return $this->http->get($endpoint)
+            ->then(fn ($response) => $this->factory->part(RolePermission::class, ['bitwise' => $response->permissions], true));
+    }
+
+    /**
+     * Fetches a role's permissions in this channel or thread after channel overwrites.
+     *
+     * Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+     * Requires VIEW_CHANNEL. The result does not replace the role's guild-level permissions.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#get-channel-role-permissions
+     * @since 10.71.0
+     *
+     * @param Role|string $role     The role or role ID.
+     * @param bool        $implicit Whether to include implicit permissions (default true).
+     *
+     * @return PromiseInterface<RolePermission>
+     */
+    public function fetchRolePermissions(Role|string $role, bool $implicit = true): PromiseInterface
+    {
+        if ($this->is_private) {
+            return reject(new \BadMethodCallException('Role permissions are only available in guild channels.'));
+        }
+
+        $roleId = $role instanceof Role ? $role->id : $role;
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_ROLE_PERMISSIONS, $this->id, $roleId);
+        $endpoint->addQuery('implicit', $implicit ? 'true' : 'false');
+
+        return $this->http->get($endpoint)
+            ->then(fn ($response) => $this->factory->part(RolePermission::class, ['bitwise' => $response->permissions], true));
     }
 
     /**
