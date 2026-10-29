@@ -7441,6 +7441,21 @@ Search.appendIndex(
             "summary": "This\u0020attachment\u0020is\u0020an\u0020animated\u0020image.",
             "url": "classes/Discord-Parts-Channel-Message-Attachment.html#constant_FLAG_IS_ANIMATED"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Attachment\u003A\u003AFLAG_CONTAINS_EXPLICIT_CONTENT",
+            "name": "FLAG_CONTAINS_EXPLICIT_CONTENT",
+            "summary": "Discord\u0020flagged\u0020this\u0020media\u0020as\u0020explicit.",
+            "url": "classes/Discord-Parts-Channel-Message-Attachment.html#constant_FLAG_CONTAINS_EXPLICIT_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Attachment\u003A\u003AFLAG_CONTAINS_GORE_CONTENT",
+            "name": "FLAG_CONTAINS_GORE_CONTENT",
+            "summary": "Discord\u0020flagged\u0020this\u0020media\u0020as\u0020gore.",
+            "url": "classes/Discord-Parts-Channel-Message-Attachment.html#constant_FLAG_CONTAINS_GORE_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Attachment\u003A\u003AFLAG_CONTAINS_SELF_HARM_CONTENT",
+            "name": "FLAG_CONTAINS_SELF_HARM_CONTENT",
+            "summary": "Discord\u0020flagged\u0020this\u0020media\u0020as\u0020self\u002Dharm.",
+            "url": "classes/Discord-Parts-Channel-Message-Attachment.html#constant_FLAG_CONTAINS_SELF_HARM_CONTENT"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Attachment\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -7530,6 +7545,31 @@ Search.appendIndex(
             "name": "Content",
             "summary": "For\u0020displaying\u0020static\u0020text,\u0020images,\u0020and\u0020files\u0020\u0028Text\u0020Display,\u0020Media\u0020Gallery,\u0020Thumbnails\u0029.",
             "url": "classes/Discord-Parts-Channel-Message-Content.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\ContentScanMetadata",
+            "name": "ContentScanMetadata",
+            "summary": "Discord\u0027s\u0020response\u002Donly\u0020content\u0020scanning\u0020result\u0020for\u0020an\u0020unfurled\u0020media\u0020item.",
+            "url": "classes/Discord-Parts-Channel-Message-ContentScanMetadata.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\ContentScanMetadata\u003A\u003AFLAG_IS_EXPLICIT_CONTENT",
+            "name": "FLAG_IS_EXPLICIT_CONTENT",
+            "summary": "Discord\u0020flagged\u0020the\u0020media\u0020as\u0020explicit.",
+            "url": "classes/Discord-Parts-Channel-Message-ContentScanMetadata.html#constant_FLAG_IS_EXPLICIT_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\ContentScanMetadata\u003A\u003AFLAG_IS_GORE_CONTENT",
+            "name": "FLAG_IS_GORE_CONTENT",
+            "summary": "Discord\u0020flagged\u0020the\u0020media\u0020as\u0020gore.",
+            "url": "classes/Discord-Parts-Channel-Message-ContentScanMetadata.html#constant_FLAG_IS_GORE_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\ContentScanMetadata\u003A\u003AFLAG_IS_SELF_HARM_CONTENT",
+            "name": "FLAG_IS_SELF_HARM_CONTENT",
+            "summary": "Discord\u0020flagged\u0020the\u0020media\u0020as\u0020self\u002Dharm.",
+            "url": "classes/Discord-Parts-Channel-Message-ContentScanMetadata.html#constant_FLAG_IS_SELF_HARM_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\ContentScanMetadata\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-ContentScanMetadata.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\DefaultValue",
             "name": "DefaultValue",
@@ -7770,6 +7810,21 @@ Search.appendIndex(
             "name": "FLAG_IS_CONTENT_INVENTORY_ENTRY",
             "summary": "This\u0020embed\u0020is\u0020a\u0020reply\u0020to\u0020an\u0020activity\u0020card\u0020and\u0020is\u0020no\u0020longer\u0020displayed.",
             "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#constant_FLAG_IS_CONTENT_INVENTORY_ENTRY"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AFLAG_CONTAINS_EXPLICIT_CONTENT",
+            "name": "FLAG_CONTAINS_EXPLICIT_CONTENT",
+            "summary": "Discord\u0020flagged\u0020this\u0020media\u0020as\u0020explicit.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#constant_FLAG_CONTAINS_EXPLICIT_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AFLAG_CONTAINS_GORE_CONTENT",
+            "name": "FLAG_CONTAINS_GORE_CONTENT",
+            "summary": "Discord\u0020flagged\u0020this\u0020media\u0020as\u0020gore.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#constant_FLAG_CONTAINS_GORE_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AFLAG_CONTAINS_SELF_HARM_CONTENT",
+            "name": "FLAG_CONTAINS_SELF_HARM_CONTENT",
+            "summary": "Discord\u0020flagged\u0020this\u0020media\u0020as\u0020self\u002Dharm.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#constant_FLAG_CONTAINS_SELF_HARM_CONTENT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -9365,6 +9420,11 @@ Search.appendIndex(
             "name": "UnfurledMediaItem",
             "summary": "A\u0020url\u0020or\u0020attachment,\u0020except\u0020in\u0020the\u0020case\u0020of\u0020File,\u0020which\u0020only\u0020supports\u0020attachment.",
             "url": "classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\UnfurledMediaItem\u003A\u003AgetContentScanMetadataAttribute\u0028\u0029",
+            "name": "getContentScanMetadataAttribute",
+            "summary": "Returns\u0020the\u0020available\u0020scan\u0020result\u0020without\u0020fetching\u0020or\u0020inferring\u0020a\u0020result.",
+            "url": "classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#method_getContentScanMetadataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\UnfurledMediaItem\u003A\u003AFLAG_IS_ANIMATED",
             "name": "FLAG_IS_ANIMATED",

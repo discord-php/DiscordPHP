@@ -279,6 +279,35 @@
  repository manages membership
 through the <a href="https://docs.discord.com/developers/resources/lobby">Lobby HTTP API</a>.</p>
 
+            <section class="section " id="naming-a-lobby">
+            <h2>Naming a lobby</h2>
+
+            
+    <p>The bot&#039;s <code>createLobby()</code>
+ and <code>modifyLobby()</code>
+ methods and a player&#039;s
+<code>$session-&gt;lobbies-&gt;createOrJoin()</code>
+ accept an optional <code>name</code>
+ in their data
+array. Discord&#039;s stable OpenAPI schema allows a string of 1-100 characters or
+explicit <code>null</code>
+. The library forwards the value as supplied; omitting the key
+does not send a name update.</p>
+
+            <pre><code class="language-php">$discord-&gt;lobbies-&gt;createLobby([&#039;name&#039; =&gt; &#039;Friday co-op&#039;]);
+$discord-&gt;lobbies-&gt;modifyLobby($lobbyId, [&#039;name&#039; =&gt; &#039;Saturday co-op&#039;]);
+$session-&gt;lobbies-&gt;createOrJoin(&#039;match-42&#039;, [&#039;name&#039; =&gt; &#039;Friday co-op&#039;]);</code></pre>
+
+            
+    <p>These are asynchronous requests that return promises resolving to lobby parts.
+The create-or-join request uses the player&#039;s OAuth2 token; bot operations use
+the bot token. The current Discord lobby response schema does not include
+<code>name</code>
+, so these request options do not imply a <code>$lobby-&gt;name</code>
+ property.</p>
+
+    </section>
+
             <section class="section " id="updating-the-roster">
             <h2>Updating the roster</h2>
 

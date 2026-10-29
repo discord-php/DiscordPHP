@@ -301,7 +301,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php"><a href="files/src-discord-parts-channel-message-unfurledmediaitem.html"><abbr title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -371,6 +371,12 @@
     <a class="" href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_attachment_id">$attachment_id</a>
     <span>
                         &nbsp;: ?string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_content_scan_metadata">$content_scan_metadata</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-ContentScanMetadata.html"><abbr title="\Discord\Parts\Channel\Message\ContentScanMetadata">ContentScanMetadata</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -754,6 +760,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#method_getContentScanMetadataAttribute">getContentScanMetadataAttribute()</a>
+    <span>
+                                &nbsp;: ?<a href="classes/Discord-Parts-Channel-Message-ContentScanMetadata.html"><abbr title="\Discord\Parts\Channel\Message\ContentScanMetadata">ContentScanMetadata</abbr></a>    </span>
+</dt>
+<dd>Returns the available scan result without fetching or inferring a result.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -795,7 +808,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php"><a href="files/src-discord-parts-channel-message-unfurledmediaitem.html"><abbr title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -855,6 +868,45 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The id of the uploaded attachment. Only present if the media item was uploaded as an attachment. This field is ignored and provided by the API as part of the response.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_content_scan_metadata">
+        $content_scan_metadata
+        <a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_content_scan_metadata" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php"><a href="files/src-discord-parts-channel-message-unfurledmediaitem.html"><abbr title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-ContentScanMetadata.html"><abbr title="\Discord\Parts\Channel\Message\ContentScanMetadata">ContentScanMetadata</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$content_scan_metadata</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Discord scanning result, when available. May arrive in a later message update.</p>
 </section>
 
     
@@ -1400,7 +1452,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php"><a href="files/src-discord-parts-channel-message-unfurledmediaitem.html"><abbr title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -1411,7 +1463,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;url&#039;, &#039;proxy_url&#039;, &#039;height&#039;, &#039;width&#039;, &#039;placeholder&#039;, &#039;placeholder_version&#039;, &#039;content_type&#039;, &#039;flags&#039;, &#039;attachment_id&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;url&#039;, &#039;proxy_url&#039;, &#039;height&#039;, &#039;width&#039;, &#039;placeholder&#039;, &#039;placeholder_version&#039;, &#039;content_type&#039;, &#039;flags&#039;, &#039;attachment_id&#039;, &#039;content_scan_metadata&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -3752,6 +3804,59 @@ ID-only relations should look up their current cached object instead.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getContentScanMetadataAttribute">
+        getContentScanMetadataAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#method_getContentScanMetadataAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php"><a href="files/src-discord-parts-channel-message-unfurledmediaitem.html"><abbr title="src/Discord/Parts/Channel/Message/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">63</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the available scan result without fetching or inferring a result.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getContentScanMetadataAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Parts-Channel-Message-ContentScanMetadata.html"><abbr title="\Discord\Parts\Channel\Message\ContentScanMetadata">ContentScanMetadata</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_getContentScanMetadataAttribute_tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#method_getContentScanMetadataAttribute_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.70.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">?<a href="classes/Discord-Parts-Channel-Message-ContentScanMetadata.html"><abbr title="\Discord\Parts\Channel\Message\ContentScanMetadata">ContentScanMetadata</abbr></a></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_makeOptionalAttributes">
         makeOptionalAttributes()
         <a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3955,6 +4060,7 @@ static as we may move it outside this class in future.</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_attachment_id">$attachment_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_content_scan_metadata">$content_scan_metadata</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_content_type">$content_type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#property_flags">$flags</a></li>
@@ -4015,6 +4121,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-UnfurledMediaItem.html#method_getContentScanMetadataAttribute">getContentScanMetadataAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>

@@ -800,6 +800,35 @@ and <a href="https://docs.discord.com/developers/link-previews/overview">link pr
 
     </section>
 
+            <section class="section " id="content-scanning-results">
+            <h2>Content scanning results</h2>
+
+            
+    <p>Received component media exposes <code>$media-&gt;content_scan_metadata</code>
+ as a
+<code>Discord\Parts\Channel\Message\ContentScanMetadata</code>
+ Part when Discord
+provides a scan result. Its flags use bits 0 (explicit), 1 (gore), and 2
+(self-harm). Attachment and embed <code>FLAG_CONTAINS_*_CONTENT</code>
+ constants instead
+use bits 4, 6, and 7. These are separate bitfields.</p>
+
+            
+    <p>Check the message returned after sending user media and any later
+<code>MESSAGE_UPDATE</code>
+ events. Scanning may finish after message creation; missing
+metadata or missing flags do not prove that media is safe. Interaction-resolved
+attachments do not carry scanning flags until sent in a message. Applications
+own any subsequent action, such as deleting a flagged repost. These response
+fields cannot be used to request or override a scanning result.</p>
+
+            
+    <p>See Discord&#039;s <a href="https://github.com/discord/discord-api-docs/commit/2b434c56eca46b61461bf5578499dd7810e2f6af">content scanning documentation</a>
+(October 28, 2026). This support is based on the documented payload contract;
+live scanning timing and enforcement have not been tested.</p>
+
+    </section>
+
     </section>
 
                             </div>
