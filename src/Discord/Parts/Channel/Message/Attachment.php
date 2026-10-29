@@ -60,6 +60,13 @@ class Attachment extends Part
     /** This attachment is an animated image. */
     public const FLAG_IS_ANIMATED = 1 << 5;
 
+    /** Discord flagged this media as explicit. */
+    public const FLAG_CONTAINS_EXPLICIT_CONTENT = 1 << 4;
+    /** Discord flagged this media as gore. */
+    public const FLAG_CONTAINS_GORE_CONTENT = 1 << 6;
+    /** Discord flagged this media as self-harm. */
+    public const FLAG_CONTAINS_SELF_HARM_CONTENT = 1 << 7;
+
     /**
      * @inheritDoc
      */
