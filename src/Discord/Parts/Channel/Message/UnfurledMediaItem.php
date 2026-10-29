@@ -54,7 +54,12 @@ class UnfurledMediaItem extends Part
         'attachment_id',
         'content_scan_metadata',
     ];
-    /** Returns the available scan result without fetching or inferring a result. */
+
+    /**
+     * Returns the available scan result without fetching or inferring a result.
+     *
+     * @since 10.70.0
+     */
     protected function getContentScanMetadataAttribute(): ?ContentScanMetadata
     {
         return $this->attributePartHelper('content_scan_metadata', ContentScanMetadata::class);

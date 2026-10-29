@@ -23,6 +23,8 @@ use Discord\Parts\Part;
  *
  * @link https://docs.discord.com/developers/components/reference#unfurled-media-item-content-scan-metadata-structure
  *
+ * @since 10.70.0
+ *
  * @property-read int $flags Content scan metadata flags, distinct from attachment and embed flags.
  */
 class ContentScanMetadata extends Part
