@@ -3472,6 +3472,45 @@ Collections implement interfaces allowing them to be accessed like arrays, such 
 </table>
 <p>The rest of the properties are listed under each permission type, all are type of <code class="language-text">bool</code>.</p>
 <h3>Methods</h3>
+<h4>Fetch effective permissions from Discord</h4>
+<p>Added in DiscordPHP 10.71.0; requires <code class="language-text">discord-php/http</code> 10.9.9 or newer.</p>
+<p><code class="language-text">Guild::fetchMemberPermissions($member)</code> and <code class="language-text">Guild::fetchRolePermissions($role)</code>
+fetch Discord's calculated guild-level permissions. Member results cascade all
+the member's roles, including <code class="language-text">@everyone</code>. Role results combine the selected role
+with <code class="language-text">@everyone</code>, rather than returning only <code class="language-text">$role->permissions</code>.</p>
+<p><code class="language-text">Channel::fetchMemberPermissions($member, $implicit = true)</code> and
+<code class="language-text">Channel::fetchRolePermissions($role, $implicit = true)</code> fetch permissions after
+channel overwrites. Threads expose the same methods and use their own channel ID.
+Discord requires the calling bot to have <code class="language-text">VIEW_CHANNEL</code>. Pass <code class="language-text">false</code> as the
+second argument to omit <a href="https://docs.discord.com/developers/topics/permissions#implicit-permissions">implicit permissions</a>;
+the default includes them. DM and group DM channels reject these operations.</p>
+<p>All four methods return a promise resolving to a <code class="language-text">RolePermission</code> snapshot,
+preserving the full set of known guild and channel flags. Members may be passed
+as a <code class="language-text">Member</code>, <code class="language-text">User</code> or user ID string; roles as a <code class="language-text">Role</code> or role ID string.
+The methods need no cached roles or overwrites and do not replace cached role,
+member or interaction permission data. API errors reject the promise.</p>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token keyword">use</span> <span class="token package">Discord<span class="token punctuation">\</span>Parts<span class="token punctuation">\</span>Permissions<span class="token punctuation">\</span>RolePermission</span><span class="token punctuation">;</span>
+
+<span class="token variable">$guild</span><span class="token operator">-></span><span class="token function">fetchMemberPermissions</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'user_id'</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">RolePermission</span> <span class="token variable">$permissions</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$permissions</span><span class="token operator">-></span><span class="token property">manage_guild</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Throwable</span> <span class="token variable">$error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token variable">$error</span><span class="token operator">-></span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">$channel</span><span class="token operator">-></span><span class="token function">fetchRolePermissions</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'role_id'</span><span class="token punctuation">,</span> <span class="token constant boolean">false</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">RolePermission</span> <span class="token variable">$permissions</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$permissions</span><span class="token operator">-></span><span class="token property">view_channel</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token punctuation">(</span><span class="token keyword type-casting">string</span><span class="token punctuation">)</span> <span class="token variable">$permissions</span><span class="token punctuation">,</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span> <span class="token comment">// Decimal bitfield.</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Throwable</span> <span class="token variable">$error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token variable">$error</span><span class="token operator">-></span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p><code class="language-text">$member->getPermissions($channel)</code> and <code class="language-text">getBotPermissions()</code> still calculate
+permissions synchronously from local caches. Use the fetch methods when you need
+Discord's calculation without relying on a complete cache.</p>
+<p>These endpoints follow <a href="https://github.com/discord/discord-api-docs/pull/8695">Discord API documentation PR #8695</a>,
+reviewed at <code class="language-text">a668a51dc1c8177684a7b6fa5a36b698ed655845</code>. The prose PR remains open,
+but all four operations are in Discord's stable OpenAPI description at
+<code class="language-text">4e75626a4cedfbc397d66f5491c79a9a62a71fd5</code>. The prose may change; offline request
+tests do not establish live endpoint availability.</p>
 <h4>Get all valid permissions</h4>
 <p>Returns a list of valid permissions, in key value form. Static method.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token class-name static-context">ChannelPermission</span><span class="token operator">::</span><span class="token function">getPermissions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
