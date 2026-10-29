@@ -323,6 +323,90 @@
             <section class="section " id="methods">
             <h2>Methods</h2>
 
+            <section class="section " id="fetch-effective-permissions-from-discord">
+            <h3>Fetch effective permissions from Discord</h3>
+
+            
+    <p><code>Guild::fetchMemberPermissions($member)</code>
+ and
+<code>Guild::fetchRolePermissions($role)</code>
+ fetch Discord&#039;s calculated guild-level
+permissions. Member results cascade all of the member&#039;s roles, including
+<code>@everyone</code>
+. Role results combine the selected role with <code>@everyone</code>
+.
+They do not simply return the selected role&#039;s own <code>$role-&gt;permissions</code>
+.</p>
+
+            
+    <p><code>Channel::fetchMemberPermissions($member, $implicit = true)</code>
+ and
+<code>Channel::fetchRolePermissions($role, $implicit = true)</code>
+ fetch permissions
+after channel overwrites. These methods are also available on threads and
+use the thread&#039;s own channel ID. Discord requires the calling bot to have
+<code>VIEW_CHANNEL</code>
+. Pass <code>false</code>
+ as the second argument to request a result
+without implicit permissions; the default includes them. See Discord&#039;s
+<a href="https://docs.discord.com/developers/topics/permissions#implicit-permissions">implicit permissions documentation</a>.
+DM and group DM channels reject these operations.</p>
+
+            
+    <p>All four methods return a promise resolving to a <code>RolePermission</code>
+ snapshot,
+so the full set of known guild and channel flags remains accessible. Members
+may be given as a <code>Member</code>
+, <code>User</code>
+ or user ID string; roles may be given
+as a <code>Role</code>
+ or role ID string. They do not require cached roles or overwrites,
+and they do not overwrite cached role permissions, interaction permissions,
+or member data. API errors reject the promise.</p>
+
+            <pre><code class="language-php">use Discord\Parts\Permissions\RolePermission;
+
+$guild-&gt;fetchMemberPermissions(&#039;user_id&#039;)-&gt;then(function (RolePermission $permissions) {
+    var_dump($permissions-&gt;manage_guild);
+}, function (Throwable $error) {
+    echo $error-&gt;getMessage(), PHP_EOL;
+});
+
+$channel-&gt;fetchRolePermissions(&#039;role_id&#039;, false)-&gt;then(function (RolePermission $permissions) {
+    var_dump($permissions-&gt;view_channel);
+    echo (string) $permissions, PHP_EOL; // Decimal bitfield.
+}, function (Throwable $error) {
+    echo $error-&gt;getMessage(), PHP_EOL;
+});</code></pre>
+
+            
+    <p><code>$member-&gt;getPermissions($channel)</code>
+ and <code>getBotPermissions()</code>
+ still calculate
+permissions synchronously from the local cache. Use the fetch methods when you
+need Discord&#039;s calculation without relying on a complete local cache.</p>
+
+            <div class="phpdocumentor-admonition warning">
+                <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <article>
+        
+    <p>Added in DiscordPHP 10.71.0 with <code>discord-php/http</code>
+ 10.9.9 or newer.
+These endpoints follow the still-open
+<a href="https://github.com/discord/discord-api-docs/pull/8695">Discord API documentation PR #8695</a>
+(reviewed revision <code>a668a51dc1c8177684a7b6fa5a36b698ed655845</code>
+).
+All four operations are already present in Discord&#039;s stable OpenAPI
+description at <code>4e75626a4cedfbc397d66f5491c79a9a62a71fd5</code>
+.
+The prose documentation may still change. Offline request tests do not
+establish live endpoint availability.</p>
+
+    </article>
+</div>
+
+    </section>
+
             <section class="section " id="get-all-valid-permissions">
             <h3>Get all valid permissions</h3>
 

@@ -676,6 +676,20 @@
 <dd>Fetches any missing information about the part from Discord&#039;s servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchMemberPermissions">fetchMemberPermissions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;    </span>
+</dt>
+<dd>Fetches a member&#039;s fully cascaded permissions in this channel or thread.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchRolePermissions">fetchRolePermissions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;    </span>
+</dt>
+<dd>Fetches a role&#039;s permissions in this channel or thread after channel overwrites.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -2760,7 +2774,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">192</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -2810,7 +2824,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -2860,7 +2874,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -2961,7 +2975,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">614</span>
+    <span class="phpdocumentor-element-found-in__line">673</span>
 
     </aside>
 
@@ -3020,7 +3034,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -3063,7 +3077,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">633</span>
+    <span class="phpdocumentor-element-found-in__line">692</span>
 
     </aside>
 
@@ -3123,7 +3137,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">309</span>
+    <span class="phpdocumentor-element-found-in__line">368</span>
 
     </aside>
 
@@ -3256,6 +3270,174 @@ Without this, isset() is false for every attribute and empty() is true.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_fetchMemberPermissions">
+        fetchMemberPermissions()
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchMemberPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">243</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fetches a member&#039;s fully cascaded permissions in this channel or thread.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">fetchMemberPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Member-Member.html"><abbr title="\Discord\Parts\Guild\Member\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$implicit</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+Discord applies roles and channel overwrites. Requires VIEW_CHANNEL.
+This makes a REST request without relying on cached roles or overwrites.
+The result is a snapshot and does not change cached member or role permissions.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$member</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Guild-Member-Member.html"><abbr title="\Discord\Parts\Guild\Member\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The member, user, or user ID.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$implicit</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether to include implicit permissions (default true).</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fetchMemberPermissions_tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchMemberPermissions_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/channel#get-channel-member-permissions"> https://docs.discord.com/developers/resources/channel#get-channel-member-permissions </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.71.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_fetchRolePermissions">
+        fetchRolePermissions()
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchRolePermissions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">271</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fetches a role&#039;s permissions in this channel or thread after channel overwrites.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">fetchRolePermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Role-Role.html"><abbr title="\Discord\Parts\Guild\Role\Role">Role</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$implicit</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+Requires VIEW_CHANNEL. The result does not replace the role's guild-level permissions.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$role</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Guild-Role-Role.html"><abbr title="\Discord\Parts\Guild\Role\Role">Role</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The role or role ID.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$implicit</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether to include implicit permissions (default true).</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fetchRolePermissions_tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchRolePermissions_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/channel#get-channel-role-permissions"> https://docs.discord.com/developers/resources/channel#get-channel-role-permissions </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.71.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_fill">
         fill()
         <a href="classes/Discord-Parts-PartTrait.html#method_fill" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3325,7 +3507,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">221</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
@@ -3518,7 +3700,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">302</span>
 
     </aside>
 
@@ -3596,7 +3778,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">424</span>
 
     </aside>
 
@@ -3985,7 +4167,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -4028,7 +4210,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -4513,7 +4695,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">423</span>
+    <span class="phpdocumentor-element-found-in__line">482</span>
 
     </aside>
 
@@ -4856,7 +5038,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">572</span>
+    <span class="phpdocumentor-element-found-in__line">631</span>
 
     </aside>
 
@@ -4928,7 +5110,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">592</span>
+    <span class="phpdocumentor-element-found-in__line">651</span>
 
     </aside>
 
@@ -5027,7 +5209,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">514</span>
+    <span class="phpdocumentor-element-found-in__line">573</span>
 
     </aside>
 
@@ -5298,7 +5480,7 @@ rest of the arguments are disregarded.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">466</span>
+    <span class="phpdocumentor-element-found-in__line">525</span>
 
     </aside>
 
@@ -6305,7 +6487,7 @@ threads created after 2022-01-09.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -6348,7 +6530,7 @@ threads created after 2022-01-09.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -6440,7 +6622,7 @@ threads created after 2022-01-09.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -6479,7 +6661,7 @@ threads created after 2022-01-09.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -6518,7 +6700,7 @@ threads created after 2022-01-09.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -7035,6 +7217,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_createMessageCollector">createMessageCollector()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_deleteMessages">deleteMessages()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchMemberPermissions">fetchMemberPermissions()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchRolePermissions">fetchRolePermissions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getBotPermissions">getBotPermissions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>

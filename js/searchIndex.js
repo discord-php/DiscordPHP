@@ -6951,6 +6951,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020thread.",
             "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getBotPermissions"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AfetchMemberPermissions\u0028\u0029",
+            "name": "fetchMemberPermissions",
+            "summary": "Fetches\u0020a\u0020member\u0027s\u0020fully\u0020cascaded\u0020permissions\u0020in\u0020this\u0020channel\u0020or\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchMemberPermissions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AfetchRolePermissions\u0028\u0029",
+            "name": "fetchRolePermissions",
+            "summary": "Fetches\u0020a\u0020role\u0027s\u0020permissions\u0020in\u0020this\u0020channel\u0020or\u0020thread\u0020after\u0020channel\u0020overwrites.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_fetchRolePermissions"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetMessageHistory\u0028\u0029",
             "name": "getMessageHistory",
             "summary": "Fetches\u0020message\u0020history.",
@@ -10835,6 +10845,16 @@ Search.appendIndex(
             "name": "getBotPermissions",
             "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getBotPermissions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AfetchMemberPermissions\u0028\u0029",
+            "name": "fetchMemberPermissions",
+            "summary": "Fetches\u0020a\u0020member\u0027s\u0020fully\u0020cascaded\u0020guild\u0020permissions,\u0020including\u0020\u0040everyone.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_fetchMemberPermissions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AfetchRolePermissions\u0028\u0029",
+            "name": "fetchRolePermissions",
+            "summary": "Fetches\u0020a\u0020role\u0027s\u0020guild\u0020permissions\u0020combined\u0020with\u0020\u0040everyone\u0027s\u0020permissions.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_fetchRolePermissions"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AupdateRolePositions\u0028\u0029",
             "name": "updateRolePositions",

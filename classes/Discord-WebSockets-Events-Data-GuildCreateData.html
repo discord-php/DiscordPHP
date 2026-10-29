@@ -1416,6 +1416,20 @@
 <dd>Fetches any missing information about the part from Discord&#039;s servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_fetchMemberPermissions">fetchMemberPermissions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;    </span>
+</dt>
+<dd>Fetches a member&#039;s fully cascaded guild permissions, including @everyone.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_fetchRolePermissions">fetchRolePermissions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;    </span>
+</dt>
+<dd>Fetches a role&#039;s guild permissions combined with @everyone&#039;s permissions.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_fetchVanityUrl">fetchVanityUrl()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, string|null&gt;    </span>
@@ -8354,7 +8368,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1505</span>
+    <span class="phpdocumentor-element-found-in__line">1548</span>
 
     </aside>
 
@@ -8523,7 +8537,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1993</span>
+    <span class="phpdocumentor-element-found-in__line">2036</span>
 
     </aside>
 
@@ -8659,7 +8673,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1804</span>
+    <span class="phpdocumentor-element-found-in__line">1847</span>
 
     </aside>
 
@@ -8979,6 +8993,155 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_fetchMemberPermissions">
+        fetchMemberPermissions()
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_fetchMemberPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1229</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fetches a member&#039;s fully cascaded guild permissions, including @everyone.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">fetchMemberPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Member-Member.html"><abbr title="\Discord\Parts\Guild\Member\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$member</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+Unlike Member::getPermissions(), this makes a REST request and needs no cached roles.
+The result does not replace the member's channel-specific permissions or role cache.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$member</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Guild-Member-Member.html"><abbr title="\Discord\Parts\Guild\Member\Member">Member</abbr></a>|<a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The member, user, or user ID.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fetchMemberPermissions_tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_fetchMemberPermissions_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/guild#get-guild-member-permissions"> https://docs.discord.com/developers/resources/guild#get-guild-member-permissions </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.71.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_fetchRolePermissions">
+        fetchRolePermissions()
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_fetchRolePermissions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1250</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fetches a role&#039;s guild permissions combined with @everyone&#039;s permissions.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">fetchRolePermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Discord-Parts-Guild-Role-Role.html"><abbr title="\Discord\Parts\Guild\Role\Role">Role</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+The result does not replace Role::$permissions, which describes only that role.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$role</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Discord-Parts-Guild-Role-Role.html"><abbr title="\Discord\Parts\Guild\Role\Role">Role</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The role or role ID.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fetchRolePermissions_tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_fetchRolePermissions_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/guild#get-guild-role-permissions"> https://docs.discord.com/developers/resources/guild#get-guild-role-permissions </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.71.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_fetchVanityUrl">
         fetchVanityUrl()
         <a href="classes/Discord-Parts-Guild-Guild.html#method_fetchVanityUrl" class="headerlink"><i class="fas fa-link"></i></a>
@@ -9275,7 +9438,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1913</span>
+    <span class="phpdocumentor-element-found-in__line">1956</span>
 
     </aside>
 
@@ -9556,7 +9719,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1650</span>
+    <span class="phpdocumentor-element-found-in__line">1693</span>
 
     </aside>
 
@@ -9615,7 +9778,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1446</span>
+    <span class="phpdocumentor-element-found-in__line">1489</span>
 
     </aside>
 
@@ -9792,7 +9955,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1969</span>
+    <span class="phpdocumentor-element-found-in__line">2012</span>
 
     </aside>
 
@@ -10038,7 +10201,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1936</span>
+    <span class="phpdocumentor-element-found-in__line">1979</span>
 
     </aside>
 
@@ -10284,7 +10447,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1560</span>
+    <span class="phpdocumentor-element-found-in__line">1603</span>
 
     </aside>
 
@@ -10357,7 +10520,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1789</span>
+    <span class="phpdocumentor-element-found-in__line">1832</span>
 
     </aside>
 
@@ -10409,7 +10572,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1720</span>
+    <span class="phpdocumentor-element-found-in__line">1763</span>
 
     </aside>
 
@@ -10769,7 +10932,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1671</span>
+    <span class="phpdocumentor-element-found-in__line">1714</span>
 
     </aside>
 
@@ -11209,7 +11372,7 @@ Supports the <code class="prettyprint">X-Audit-Log-Reason</code> header.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1977</span>
+    <span class="phpdocumentor-element-found-in__line">2020</span>
 
     </aside>
 
@@ -11270,7 +11433,7 @@ Supports the <code class="prettyprint">X-Audit-Log-Reason</code> header.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1398</span>
+    <span class="phpdocumentor-element-found-in__line">1441</span>
 
     </aside>
 
@@ -11378,7 +11541,7 @@ with a provided string.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1866</span>
+    <span class="phpdocumentor-element-found-in__line">1909</span>
 
     </aside>
 
@@ -11692,7 +11855,7 @@ manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1289</span>
+    <span class="phpdocumentor-element-found-in__line">1332</span>
 
     </aside>
 
@@ -11781,7 +11944,7 @@ change <code class="prettyprint">parent_id</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1357</span>
+    <span class="phpdocumentor-element-found-in__line">1400</span>
 
     </aside>
 
@@ -11866,7 +12029,7 @@ security actions do in the client.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1835</span>
+    <span class="phpdocumentor-element-found-in__line">1878</span>
 
     </aside>
 
@@ -11943,7 +12106,7 @@ security actions do in the client.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1228</span>
+    <span class="phpdocumentor-element-found-in__line">1271</span>
 
     </aside>
 
@@ -12018,7 +12181,7 @@ e.g. <code class="prettyprint">[1 =&gt; 'role_id_1', 3 =&gt; 'role_id_3']</code>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1605</span>
+    <span class="phpdocumentor-element-found-in__line">1648</span>
 
     </aside>
 
@@ -12095,7 +12258,7 @@ e.g. <code class="prettyprint">[1 =&gt; 'role_id_1', 3 =&gt; 'role_id_3']</code>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1751</span>
+    <span class="phpdocumentor-element-found-in__line">1794</span>
 
     </aside>
 
@@ -14669,7 +14832,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1586</span>
+    <span class="phpdocumentor-element-found-in__line">1629</span>
 
     </aside>
 
@@ -15264,6 +15427,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_createRole">createRole()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_createSticker">createSticker()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_fetchMemberPermissions">fetchMemberPermissions()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_fetchRolePermissions">fetchRolePermissions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_fetchVanityUrl">fetchVanityUrl()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getAuditLog">getAuditLog()</a></li>
