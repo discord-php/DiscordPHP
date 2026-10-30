@@ -47,7 +47,7 @@
         "wyrihaximus/react-cache-redis": "^4.5",
         "symfony/cache": "^5.4",
         "laravel/pint": "^1.21",
-        "pestphp/pest": "^4.1.2",
+        "pestphp/pest": "^5.3.4",
         "carthage-software/mago": "1.59.0"
     },
     "autoload": {
