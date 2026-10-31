@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use Discord\Discord;
 use Discord\Http\DriverInterface;
+use Discord\Http\Http;
 use Discord\Http\Request;
 use Discord\MessageCommandClient;
 use Psr\Http\Message\ResponseInterface;
@@ -25,6 +26,47 @@ use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
 
 const TIMEOUT = 10;
+
+trait OfflineClientStartup
+{
+    private bool $offlineDriverInstalled = false;
+
+    protected function resolveOptions(array $options = []): array
+    {
+        $options += ['dnsConfig' => new \React\Dns\Config\Config()];
+        $options['socket_options'] = ['dns' => false] + ($options['socket_options'] ?? []);
+
+        return parent::resolveOptions($options);
+    }
+
+    public function getHttpClient(): Http
+    {
+        $http = parent::getHttpClient();
+        if (! $this->offlineDriverInstalled) {
+            $http->setDriver(getMockHttpDriver(static function (string $method, string $url) {
+                throw new LogicException("Unexpected offline HTTP request: $method $url");
+            }, ['/gateway/bot', '/applications/@me']));
+            $this->offlineDriverInstalled = true;
+        }
+
+        return $http;
+    }
+
+    public function connectWs(): void
+    {
+        $this->getHttpClient();
+    }
+}
+
+class OfflineDiscordClient extends Discord
+{
+    use OfflineClientStartup;
+}
+
+class OfflineMessageCommandClient extends MessageCommandClient
+{
+    use OfflineClientStartup;
+}
 
 function wait(callable $callback, float $timeout = TIMEOUT, ?callable $timeoutFn = null)
 {
@@ -74,14 +116,19 @@ function wait(callable $callback, float $timeout = TIMEOUT, ?callable $timeoutFn
     return $result;
 }
 
-function getMockDiscord(): Discord
+function getMockDiscord(array $options = []): Discord
 {
-    return new MessageCommandClient(['token' => '', 'logger' => new NullLogger()]);
+    return getMockMessageCommandClient($options);
 }
 
-function getMockMessageCommandClient(): MessageCommandClient
+function getMockMessageCommandClient(array $options = []): MessageCommandClient
 {
-    return new MessageCommandClient(['token' => '', 'logger' => new NullLogger()]);
+    return new OfflineMessageCommandClient($options + ['token' => '', 'logger' => new NullLogger()]);
+}
+
+function getOfflineDiscord(array $options = []): Discord
+{
+    return new OfflineDiscordClient($options + ['token' => '', 'logger' => new NullLogger()]);
 }
 
 /**
@@ -90,22 +137,22 @@ function getMockMessageCommandClient(): MessageCommandClient
  * `$respond` receives the method and URL and returns the decoded response body; `null` answers 204 No Content,
  * and a response is sent as it is.
  */
-function getMockHttpDriver(callable $respond): DriverInterface
+function getMockHttpDriver(callable $respond, array $pendingPaths = ['/gateway/bot']): DriverInterface
 {
-    return new class($respond) implements DriverInterface {
+    return new class($respond, $pendingPaths) implements DriverInterface {
         /** @var array<int, array{method: string, url: string, content: mixed, raw: string, headers: array<string, string>}> */
         public array $requests = [];
 
-        public function __construct(private $respond)
+        public function __construct(private $respond, private array $pendingPaths)
         {
         }
 
         public function runRequest(Request $request): PromiseInterface
         {
-            // The client asks for the gateway as soon as it is built. Leave that
-            // unanswered, so it never connects, and out of what tests inspect.
-            if (str_ends_with($request->getUrl(), '/gateway/bot')) {
-                return (new Deferred())->promise();
+            foreach ($this->pendingPaths as $path) {
+                if (str_ends_with($request->getUrl(), $path)) {
+                    return (new Deferred())->promise();
+                }
             }
 
             $method = strtoupper($request->getMethod());
