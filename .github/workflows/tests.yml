@@ -76,6 +76,50 @@ jobs:
           DISCORD_TOKEN: ''
         run: php vendor/bin/phpunit tests/RPC
 
+  dependency-compatibility:
+    name: Development dependencies (${{ matrix.line }}, PHP ${{ matrix.php }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - line: older
+            php: '8.3'
+            cache: '^6.4'
+            pest: '^4.1.2'
+          - line: newer
+            php: '8.4'
+            cache: '^8.1'
+            pest: '^5.3.4'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: zlib, mbstring
+          coverage: none
+
+      - name: Install selected dependency lines
+        run: |
+          composer require --dev --no-update --no-interaction 'symfony/cache:${{ matrix.cache }}' 'pestphp/pest:${{ matrix.pest }}'
+          composer update --no-interaction --no-progress
+          composer show symfony/cache
+          composer show psr/simple-cache
+          composer show pestphp/pest
+
+      - name: Exercise cache adapter and Pest runner
+        env:
+          DISCORD_TOKEN: ''
+        run: |
+          php -r 'require "vendor/autoload.php"; require "tests/DependencyCompatibilityTest.php"; if ((new ReflectionMethod(DependencyCompatibilityTest::class, "setUpBeforeClass"))->getDeclaringClass()->getName() !== PHPUnit\Framework\TestCase::class) { fwrite(STDERR, "Unexpected test setup\n"); exit(1); }'
+          vendor/bin/pest --version
+          vendor/bin/pest tests/DependencyCompatibilityTest.php
+
   syntax:
     name: Syntax (PHP ${{ matrix.php }})
     runs-on: ubuntu-24.04
