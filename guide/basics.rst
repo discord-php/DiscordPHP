@@ -103,3 +103,37 @@ If you want to stop the bot without stopping the event loop, the close function 
 .. code:: php
 
    $discord->close(false);
+
+Observing the Gateway transport
+------------------------------
+
+``isConnected()`` reports an open Gateway WebSocket while the client is not closing.
+It does not mean that authentication succeeded, that ``init`` has fired, that guild
+or member caches are complete, or that continuity was uninterrupted. Continue using
+``init`` for initial startup and ``reconnected`` for recovery. Applications that need
+session observation can track READY/RESUMED and INVALID_SESSION/RECONNECT through the
+existing ``raw`` event; raw callbacks run before internal handling. Keep generations,
+snapshot validation and retry decisions in the application.
+
+Register ``disconnected`` before running the loop, not inside ``init``, to include
+loss before initialization:
+
+.. code:: php
+
+   $discord->on('disconnected', function (int $code, string $reason, Discord $discord) {
+       // isConnected() is already false. Invalidate application work here.
+   });
+
+The event fires synchronously once per connected transport, including normal and
+critical close codes. State becomes false before cleanup; notification occurs after
+existing timer cleanup and reconnect scheduling. On explicit ``close()``, state becomes
+false before requesting socket close, while notification happens after shutdown work
+(including ``closed`` and stopping the loop, if requested). A synchronous or delayed
+WebSocket close callback does not duplicate the notification. For explicit shutdown,
+the code and reason are locally requested, not a server acknowledgement. Failed
+connection attempts that never opened a transport do not emit it.
+
+Listeners run inline: keep them short and avoid throwing. A thrown listener exception
+propagates, but cannot skip the close cleanup or shutdown work that precedes notification.
+This event does not change the client's existing reconnection policy. It describes
+transport loss, not every possible session change or the validity of application data.

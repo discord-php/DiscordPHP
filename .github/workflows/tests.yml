@@ -165,5 +165,8 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
 
-      - name: Run php-cs-fixer
-        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+      - name: Run project formatter
+        run: composer cs
+
+      - name: Require formatter-clean tracked files
+        run: git diff --exit-code
