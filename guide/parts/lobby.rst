@@ -6,6 +6,26 @@ Lobbies contain a typed collection of ``Discord\Parts\Lobby\Member`` objects in
 ``$lobby->members``. The bot's ``$discord->lobbies`` repository manages membership
 through the `Lobby HTTP API <https://docs.discord.com/developers/resources/lobby>`_.
 
+Naming a lobby
+==============
+
+The bot's ``createLobby()`` and ``modifyLobby()`` methods and a player's
+``$session->lobbies->createOrJoin()`` accept an optional ``name`` in their data
+array. Discord's stable OpenAPI schema allows a string of 1-100 characters or
+explicit ``null``. The library forwards the value as supplied; omitting the key
+does not send a name update.
+
+.. code:: php
+
+   $discord->lobbies->createLobby(['name' => 'Friday co-op']);
+   $discord->lobbies->modifyLobby($lobbyId, ['name' => 'Saturday co-op']);
+   $session->lobbies->createOrJoin('match-42', ['name' => 'Friday co-op']);
+
+These are asynchronous requests that return promises resolving to lobby parts.
+The create-or-join request uses the player's OAuth2 token; bot operations use
+the bot token. The current Discord lobby response schema does not include
+``name``, so these request options do not imply a ``$lobby->name`` property.
+
 Updating the roster
 ===================
 

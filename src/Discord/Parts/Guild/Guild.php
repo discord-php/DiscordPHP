@@ -1213,6 +1213,49 @@ class Guild extends Part
     }
 
     /**
+     * Fetches a member's fully cascaded guild permissions, including @everyone.
+     *
+     * Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+     * Unlike Member::getPermissions(), this makes a REST request and needs no cached roles.
+     * The result does not replace the member's channel-specific permissions or role cache.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-member-permissions
+     * @since 10.71.0
+     *
+     * @param Member|User|string $member The member, user, or user ID.
+     *
+     * @return PromiseInterface<RolePermission>
+     */
+    public function fetchMemberPermissions(Member|User|string $member): PromiseInterface
+    {
+        $userId = $member instanceof Member || $member instanceof User ? $member->id : $member;
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_MEMBER_PERMISSIONS, $this->id, $userId))
+            ->then(fn ($response) => $this->factory->part(RolePermission::class, ['bitwise' => $response->permissions], true));
+    }
+
+    /**
+     * Fetches a role's guild permissions combined with @everyone's permissions.
+     *
+     * Proposed in discord/discord-api-docs#8695; the API may change before it is finalized.
+     * The result does not replace Role::$permissions, which describes only that role.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-role-permissions
+     * @since 10.71.0
+     *
+     * @param Role|string $role The role or role ID.
+     *
+     * @return PromiseInterface<RolePermission>
+     */
+    public function fetchRolePermissions(Role|string $role): PromiseInterface
+    {
+        $roleId = $role instanceof Role ? $role->id : $role;
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_ROLE_PERMISSIONS, $this->id, $roleId))
+            ->then(fn ($response) => $this->factory->part(RolePermission::class, ['bitwise' => $response->permissions], true));
+    }
+
+    /**
      * Updates the positions of a list of given roles.
      *
      * @link https://docs.discord.com/developers/resources/guild#modify-guild-role-positions

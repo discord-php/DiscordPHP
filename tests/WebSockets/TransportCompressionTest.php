@@ -58,7 +58,7 @@ final class TransportCompressionTest extends DiscordTestCase
             $this->markTestSkipped('ext-zstd with the incremental API is not loaded.');
         }
 
-        $client = new class(['token' => '', 'logger' => new NullLogger()]) extends Discord {
+        $client = new class(['token' => '', 'logger' => new NullLogger()]) extends OfflineDiscordClient {
             /** @var list<string> */
             public array $seen = [];
 

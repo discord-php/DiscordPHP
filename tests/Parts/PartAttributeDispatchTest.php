@@ -12,7 +12,6 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-use Discord\Discord;
 use Discord\Parts\Part;
 use Discord\Repository\Guild\MemberRepository;
 use Psr\Log\NullLogger;
@@ -21,7 +20,7 @@ final class PartAttributeDispatchTest extends DiscordTestCase
 {
     public function testAttributeDispatchPreservesRepositoryAndGetterPrecedence(): void
     {
-        $discord = $this->getMockBuilder(Discord::class)
+        $discord = $this->getMockBuilder(OfflineDiscordClient::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['connectWs'])
             ->getMock();

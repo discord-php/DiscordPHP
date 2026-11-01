@@ -133,11 +133,7 @@ class CacheWrapper
             return reject($throwable);
         }
 
-        if ($result instanceof PromiseInterface) {
-            return $result->then($handleValue);
-        }
-
-        return resolve($handleValue($result));
+        return resolve($result)->then($handleValue);
     }
 
     /**
@@ -151,7 +147,6 @@ class CacheWrapper
     public function set($key, $value, $ttl = null)
     {
         $ttl ??= $this->config->ttl;
-        $item = $this->serializer($value);
 
         $handleValue = function ($success) use ($key, $value) {
             if ($success) {
@@ -162,6 +157,7 @@ class CacheWrapper
         };
 
         try {
+            $item = $this->serializer($value);
             $result = $this->interface->set($this->prefix.$key, $item, $ttl);
         } catch (Throwable $throwable) {
             return reject($throwable);
@@ -235,11 +231,7 @@ class CacheWrapper
                 return reject($throwable);
             }
 
-            if ($result instanceof PromiseInterface) {
-                return $result->then($handleValue);
-            }
-
-            return resolve($handleValue($result));
+            return resolve($result)->then($handleValue);
         }
 
         $promises = [];
@@ -444,14 +436,14 @@ class CacheWrapper
     }
 
     /**
-     * @param string $value
+     * @param object|string $value
      *
      * @return ?Part
      */
     public function unserializer($value)
     {
         if (! ($this->interface instanceof ArrayCache)) {
-            if ($this->isZlibCompressed($value)) {
+            if (is_string($value) && $this->isZlibCompressed($value)) {
                 $value = zlib_decode($value);
             }
 

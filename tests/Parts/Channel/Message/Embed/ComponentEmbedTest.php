@@ -27,7 +27,6 @@ use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Events\MessageCreate;
 use Discord\WebSockets\Events\MessageUpdate;
 use Discord\WebSockets\Intents;
-use Psr\Log\NullLogger;
 
 use function Discord\promiseFromGenerator;
 
@@ -97,7 +96,7 @@ final class ComponentEmbedTest extends DiscordTestCase
     public function testRestFetchUsesTheSameHydration()
     {
         return wait(function (Discord $discord, $resolve) {
-            $mock = new Discord(['token' => '', 'logger' => new NullLogger(), 'loop' => $discord->getLoop()]);
+            $mock = getOfflineDiscord(['loop' => $discord->getLoop()]);
             $driver = getMockHttpDriver(fn () => $this->fixture());
             $mock->getHttpClient()->setDriver($driver);
             $repo = $mock->getFactory()->repository(MessageRepository::class, ['channel_id' => '20']);
@@ -112,7 +111,7 @@ final class ComponentEmbedTest extends DiscordTestCase
     public function testGatewayCreateAndPartialUpdatePreserveTypedCachedState()
     {
         return wait(function (Discord $discord, $resolve) {
-            $mock = new Discord(['token' => '', 'logger' => new NullLogger(), 'loop' => $discord->getLoop(), 'storeMessages' => true, 'intents' => Intents::MESSAGE_CONTENT]);
+            $mock = getOfflineDiscord(['loop' => $discord->getLoop(), 'storeMessages' => true, 'intents' => Intents::MESSAGE_CONTENT]);
             $mock->getHttpClient()->setDriver(getMockHttpDriver(fn () => null));
             promiseFromGenerator((new MessageCreate($mock))->handle($this->fixture()))
                 ->then(function (Message $message) use ($mock) {

@@ -18,6 +18,55 @@ The rest of the properties are listed under each permission type, all are type o
 
 ### Methods
 
+#### Fetch effective permissions from Discord
+
+Added in DiscordPHP 10.71.0; requires `discord-php/http` 10.9.9 or newer.
+
+`Guild::fetchMemberPermissions($member)` and `Guild::fetchRolePermissions($role)`
+fetch Discord's calculated guild-level permissions. Member results cascade all
+the member's roles, including `@everyone`. Role results combine the selected role
+with `@everyone`, rather than returning only `$role->permissions`.
+
+`Channel::fetchMemberPermissions($member, $implicit = true)` and
+`Channel::fetchRolePermissions($role, $implicit = true)` fetch permissions after
+channel overwrites. Threads expose the same methods and use their own channel ID.
+Discord requires the calling bot to have `VIEW_CHANNEL`. Pass `false` as the
+second argument to omit [implicit permissions](https://docs.discord.com/developers/topics/permissions#implicit-permissions);
+the default includes them. DM and group DM channels reject these operations.
+
+All four methods return a promise resolving to a `RolePermission` snapshot,
+preserving the full set of known guild and channel flags. Members may be passed
+as a `Member`, `User` or user ID string; roles as a `Role` or role ID string.
+The methods need no cached roles or overwrites and do not replace cached role,
+member or interaction permission data. API errors reject the promise.
+
+```php
+use Discord\Parts\Permissions\RolePermission;
+
+$guild->fetchMemberPermissions('user_id')->then(function (RolePermission $permissions) {
+    var_dump($permissions->manage_guild);
+}, function (Throwable $error) {
+    echo $error->getMessage(), PHP_EOL;
+});
+
+$channel->fetchRolePermissions('role_id', false)->then(function (RolePermission $permissions) {
+    var_dump($permissions->view_channel);
+    echo (string) $permissions, PHP_EOL; // Decimal bitfield.
+}, function (Throwable $error) {
+    echo $error->getMessage(), PHP_EOL;
+});
+```
+
+`$member->getPermissions($channel)` and `getBotPermissions()` still calculate
+permissions synchronously from local caches. Use the fetch methods when you need
+Discord's calculation without relying on a complete cache.
+
+These endpoints follow [Discord API documentation PR #8695](https://github.com/discord/discord-api-docs/pull/8695),
+reviewed at `a668a51dc1c8177684a7b6fa5a36b698ed655845`. The prose PR remains open,
+but all four operations are in Discord's stable OpenAPI description at
+`4e75626a4cedfbc397d66f5491c79a9a62a71fd5`. The prose may change; offline request
+tests do not establish live endpoint availability.
+
 #### Get all valid permissions
 
 Returns a list of valid permissions, in key value form. Static method.

@@ -12,7 +12,6 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-use Discord\Discord;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Psr\Log\NullLogger;
@@ -21,7 +20,7 @@ final class PartNestedAttributeTest extends DiscordTestCase
 {
     public function testEmbeddedPartsRetainTheirPayloadAndLifecycleRatherThanResolveTheCache(): void
     {
-        $discord = $this->getMockBuilder(Discord::class)
+        $discord = $this->getMockBuilder(OfflineDiscordClient::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['connectWs'])
             ->getMock();

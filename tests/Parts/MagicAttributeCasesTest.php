@@ -112,7 +112,7 @@ final class MagicAttributeCasesTest extends DiscordTestCase
 
     private function discord(): Discord
     {
-        $discord = $this->getMockBuilder(Discord::class)
+        $discord = $this->getMockBuilder(OfflineDiscordClient::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['connectWs'])
             ->getMock();

@@ -13,7 +13,6 @@ declare(strict_types=1);
  */
 
 use Discord\Discord;
-use Discord\MessageCommandClient;
 use Discord\Parts\Guild\Sound;
 use Discord\Parts\SKU\Subscription;
 use Discord\Parts\Application\Application;
@@ -149,7 +148,7 @@ final class GatewayEventsTest extends DiscordTestCase
      */
     private function recordingClient(): Discord
     {
-        $client = new class(['token' => '', 'logger' => new NullLogger()]) extends MessageCommandClient {
+        $client = new class(['token' => '', 'logger' => new NullLogger()]) extends OfflineMessageCommandClient {
             public array $sent = [];
 
             public function send(object|array $data, bool $force = false): void
