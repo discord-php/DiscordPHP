@@ -1008,40 +1008,47 @@ class Discord
      */
     public function handleWsClose(int $op, string $reason): void
     {
+        $wasConnected = $this->connected;
         $this->connected = false;
 
-        if (null !== $this->heartbeatTimer) {
-            $this->loop->cancelTimer($this->heartbeatTimer);
-            $this->heartbeatTimer = null;
-        }
+        try {
+            if (null !== $this->heartbeatTimer) {
+                $this->loop->cancelTimer($this->heartbeatTimer);
+                $this->heartbeatTimer = null;
+            }
 
-        if (null !== $this->heartbeatAckTimer) {
-            $this->loop->cancelTimer($this->heartbeatAckTimer);
-            $this->heartbeatAckTimer = null;
-        }
+            if (null !== $this->heartbeatAckTimer) {
+                $this->loop->cancelTimer($this->heartbeatAckTimer);
+                $this->heartbeatAckTimer = null;
+            }
 
-        if (null !== $this->payloadTimer) {
-            $this->loop->cancelTimer($this->payloadTimer);
-            $this->payloadTimer = null;
-        }
+            if (null !== $this->payloadTimer) {
+                $this->loop->cancelTimer($this->payloadTimer);
+                $this->payloadTimer = null;
+            }
 
-        if ($this->closing) {
-            return;
-        }
+            if ($this->closing) {
+                return;
+            }
 
-        $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
+            $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
 
-        if (in_array($op, Op::getCriticalCloseCodes())) {
-            $this->logger->error('not reconnecting - critical op code', ['op' => $op, 'reason' => $reason]);
-        } else {
-            $this->logger->warning('reconnecting in 2 seconds');
+            if (in_array($op, Op::getCriticalCloseCodes())) {
+                $this->logger->error('not reconnecting - critical op code', ['op' => $op, 'reason' => $reason]);
+            } else {
+                $this->logger->warning('reconnecting in 2 seconds');
 
-            $this->loop->addTimer(2, function () {
-                ++$this->reconnectCount;
-                $this->reconnecting = true;
-                $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
-                $this->connectWs();
-            });
+                $this->loop->addTimer(2, function () {
+                    ++$this->reconnectCount;
+                    $this->reconnecting = true;
+                    $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+                    $this->connectWs();
+                });
+            }
+        } finally {
+            if ($wasConnected) {
+                $this->emit('disconnected', [$op, $reason, $this]);
+            }
         }
     }
 
@@ -2221,6 +2228,17 @@ class Discord
     }
 
     /**
+     * Whether the Gateway WebSocket is open and the client is not closing.
+     * This does not imply authentication, loaded caches or uninterrupted continuity.
+     * Listen for disconnected(int $code, string $reason, Discord $discord) to
+     * observe transport loss synchronously, after close cleanup has run.
+     */
+    public function isConnected(): bool
+    {
+        return $this->connected && ! $this->closing;
+    }
+
+    /**
      * Starts the ReactPHP event loop.
      */
     public function run(): void
@@ -2236,15 +2254,24 @@ class Discord
     public function close(bool $closeLoop = true): void
     {
         $this->closing = true;
-        if ($this->ws) {
-            $this->ws->close($closeLoop ? Op::CLOSE_UNKNOWN_ERROR : Op::CLOSE_NORMAL, 'discordphp closing...');
-        }
-        $this->webhookEvents?->close();
-        $this->emit('closed', [$this]);
-        $this->logger->info('discord closed');
+        $wasConnected = $this->connected;
+        $this->connected = false;
+        $code = $closeLoop ? Op::CLOSE_UNKNOWN_ERROR : Op::CLOSE_NORMAL;
 
-        if ($closeLoop) {
-            $this->loop->stop();
+        try {
+            if ($this->ws) {
+                $this->ws->close($code, 'discordphp closing...');
+            }
+            $this->webhookEvents?->close();
+            $this->emit('closed', [$this]);
+            $this->logger->info('discord closed');
+        } finally {
+            if ($closeLoop) {
+                $this->loop->stop();
+            }
+            if ($wasConnected) {
+                $this->emit('disconnected', [$code, 'discordphp closing...', $this]);
+            }
         }
     }
 
