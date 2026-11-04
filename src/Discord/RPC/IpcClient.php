@@ -53,7 +53,7 @@ final class IpcClient extends EventEmitter
     private ?TimerInterface $connectTimer = null;
     private ?OAuthFlow $authentication = null;
 
-    /** Windows requires an injected asynchronous native pipe connector. See guide/rpc.rst for options. */
+    /** Windows requires an injected asynchronous connector, such as WindowsPipeConnector. See guide/rpc.rst for options. */
     public function __construct(?LoopInterface $loop = null, ?ConnectorInterface $connector = null, array $options = [])
     {
         $this->options = (new IpcOptions($options))->values();
