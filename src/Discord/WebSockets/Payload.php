@@ -48,7 +48,7 @@ class Payload implements JsonSerializable
      * @param int|null    $s  Sequence number (dispatch only).
      * @param string|null $t  Event name (dispatch only).
      */
-    public function __construct(int $op, $d = null, ?int $s = null, ?string $t = null)
+    public function __construct(int $op, #[\SensitiveParameter] $d = null, ?int $s = null, ?string $t = null)
     {
         $this->op = $op;
         $this->d = $d;
@@ -59,7 +59,7 @@ class Payload implements JsonSerializable
     /**
      * Convenience factory; see {@see __construct()} for the parameters.
      */
-    public static function new(int $op, $d = null, ?int $s = null, ?string $t = null): self
+    public static function new(int $op, #[\SensitiveParameter] $d = null, ?int $s = null, ?string $t = null): self
     {
         return new self($op, $d, $s, $t);
     }

@@ -54,7 +54,7 @@ class DiscordCommandClient extends Discord
      * @param  array      $options An array of options.
      * @throws \Exception
      */
-    public function __construct(array $options = [])
+    public function __construct(#[\SensitiveParameter] array $options = [])
     {
         $this->commandClientOptions = $this->resolveCommandClientOptions($options);
 
@@ -418,7 +418,7 @@ class DiscordCommandClient extends Discord
      *
      * @return array Options.
      */
-    protected function resolveCommandClientOptions(array $options): array
+    protected function resolveCommandClientOptions(#[\SensitiveParameter] array $options): array
     {
         $resolver = new OptionsResolver();
 
@@ -454,7 +454,7 @@ class DiscordCommandClient extends Discord
                 },
             ]);
 
-        $options = $resolver->resolve($options);
+        $options = static::resolveWithoutSecrets($resolver, $options, ['token']);
         $options['prefixes'][] = $options['prefix'];
 
         return $options;
