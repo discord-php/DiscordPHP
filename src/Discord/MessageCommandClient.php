@@ -49,7 +49,7 @@ class MessageCommandClient extends Discord
      *
      * @param array $options Client options (see resolveOptions()).
      */
-    public function __construct(array $options = [], ?CommandRegistry $registry = null)
+    public function __construct(#[\SensitiveParameter] array $options = [], ?CommandRegistry $registry = null)
     {
         $this->once('application-init', fn () => $this->prepareOnce());
         $this->once('init', fn () => $this->prepareOnce());
@@ -75,7 +75,7 @@ class MessageCommandClient extends Discord
      *
      * @return array Resolved options used by the client.
      */
-    protected function resolveOptions(array $options = []): array
+    protected function resolveOptions(#[\SensitiveParameter] array $options = []): array
     {
         $messageDefined = [
             'prefix',

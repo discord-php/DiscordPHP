@@ -490,7 +490,7 @@ class Discord
      * @throws IntentException
      * @throws \RuntimeException
      */
-    public function __construct(array $options = [])
+    public function __construct(#[\SensitiveParameter] array $options = [])
     {
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
@@ -1410,8 +1410,9 @@ class Discord
      */
     public function identify(): void
     {
+        // The token is added to the serialised array last, so it never sits in the
+        // arguments of Factory::part() or Part::__construct() in a stack trace.
         $identify = $this->factory->part(Identify::class, [
-            'token' => $this->token,
             'properties' => [
                 'os' => PHP_OS,
                 'browser' => $this->http->getUserAgent(),
@@ -1451,7 +1452,7 @@ class Discord
 
         $payload = Payload::new(
             Op::OP_IDENTIFY,
-            $identify->jsonSerialize(),
+            ['token' => $this->token] + $identify->jsonSerialize(),
         );
 
         $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
@@ -1470,14 +1471,13 @@ class Discord
     public function resume(#[\SensitiveParameter] string $token, string $session_id, int $seq): void
     {
         $resume = $this->factory->part(Resume::class, [
-            'token' => $token,
             'session_id' => $session_id,
             'seq' => $seq,
         ]);
 
         $payload = Payload::new(
             Op::OP_RESUME,
-            $resume->jsonSerialize(),
+            ['token' => $token] + $resume->jsonSerialize(),
         );
 
         $this->logger->info('resuming connection', ['payload' => $payload->__debugInfo()]);
@@ -2056,6 +2056,38 @@ class Discord
     }
 
     /**
+     * Resolves options while keeping secrets out of the resolver's arguments.
+     *
+     * Each string secret is swapped for an empty string while the resolver
+     * runs (so it is still checked as required and typed) and put back after,
+     * so an error raised inside the resolver never prints it in a stack trace.
+     *
+     * @param OptionsResolver $resolver The configured resolver.
+     * @param array           $options  The options to resolve.
+     * @param string[]        $secrets  The keys that hold secrets.
+     *
+     * @return array The resolved options.
+     */
+    protected static function resolveWithoutSecrets(OptionsResolver $resolver, #[\SensitiveParameter] array $options, array $secrets = ['token', 'clientSecret']): array
+    {
+        $hidden = [];
+        foreach ($secrets as $key) {
+            if (isset($options[$key]) && is_string($options[$key])) {
+                $hidden[$key] = $options[$key];
+                $options[$key] = '';
+            }
+        }
+
+        $options = $resolver->resolve($options);
+
+        foreach ($hidden as $key => $value) {
+            $options[$key] = $value;
+        }
+
+        return $options;
+    }
+
+    /**
      * Resolves the options.
      *
      * @param array $options Array of options.
@@ -2063,7 +2095,7 @@ class Discord
      * @return array           Options.
      * @throws IntentException
      */
-    protected function resolveOptions(array $options = []): array
+    protected function resolveOptions(#[\SensitiveParameter] array $options = []): array
     {
         $resolver = new OptionsResolver();
 
@@ -2147,7 +2179,7 @@ class Discord
             })
             ->setAllowedTypes('clientSecret', ['null', 'string']);
 
-        $options = $resolver->resolve($options);
+        $options = static::resolveWithoutSecrets($resolver, $options);
 
         $options['loop'] ??= Loop::get();
 
@@ -2157,6 +2189,14 @@ class Discord
             $streamHandler->setFormatter($lineFormatter);
             $logger = new Monolog('DiscordPHP', [$streamHandler]);
             $options['logger'] = $logger;
+        }
+
+        if (! isset($options['dnsConfig']) && is_string($options['socket_options']['dns'] ?? null)) {
+            // A nameserver given in socket_options is used as is, so the blocking
+            // system lookup (wmic on Windows) is skipped.
+            $dnsConfig = new \React\Dns\Config\Config();
+            $dnsConfig->nameservers[] = $options['socket_options']['dns'];
+            $options['dnsConfig'] = $dnsConfig;
         }
 
         if (! isset($options['dnsConfig'])) {
