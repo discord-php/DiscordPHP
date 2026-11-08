@@ -17398,7 +17398,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Windows\u0020requires\u0020an\u0020injected\u0020asynchronous\u0020native\u0020pipe\u0020connector.\u0020See\u0020guide\/rpc.rst\u0020for\u0020options.",
+            "summary": "Windows\u0020requires\u0020an\u0020injected\u0020asynchronous\u0020connector,\u0020such\u0020as\u0020WindowsPipeConnector.\u0020See\u0020guide\/rpc.rst\u0020for\u0020options.",
             "url": "classes/Discord-RPC-IpcClient.html#method___construct"
         },                {
             "fqsen": "\\Discord\\RPC\\IpcClient\u003A\u003AgetCandidatePaths\u0028\u0029",
@@ -17530,6 +17530,36 @@ Search.appendIndex(
             "name": "exchange",
             "summary": "",
             "url": "classes/Discord-RPC-TokenExchangeInterface.html#method_exchange"
+        },                {
+            "fqsen": "\\Discord\\RPC\\WindowsPipeConnector",
+            "name": "WindowsPipeConnector",
+            "summary": "Opt\u002Din\u0020native\u0020Windows\u0020pipe\u0020transport\u0020via\u0020a\u0020bundled\u0020Node.js\u0020helper.",
+            "url": "classes/Discord-RPC-WindowsPipeConnector.html"
+        },                {
+            "fqsen": "\\Discord\\RPC\\WindowsPipeConnector\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-RPC-WindowsPipeConnector.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\RPC\\WindowsPipeConnector\u003A\u003Aconnect\u0028\u0029",
+            "name": "connect",
+            "summary": "",
+            "url": "classes/Discord-RPC-WindowsPipeConnector.html#method_connect"
+        },                {
+            "fqsen": "\\Discord\\RPC\\WindowsPipeConnector\u003A\u003A\u0024loop",
+            "name": "loop",
+            "summary": "",
+            "url": "classes/Discord-RPC-WindowsPipeConnector.html#property_loop"
+        },                {
+            "fqsen": "\\Discord\\RPC\\WindowsPipeConnector\u003A\u003A\u0024nodeBinary",
+            "name": "nodeBinary",
+            "summary": "",
+            "url": "classes/Discord-RPC-WindowsPipeConnector.html#property_nodeBinary"
+        },                {
+            "fqsen": "\\Discord\\RPC\\WindowsPipeConnector\u003A\u003A\u0024timeout",
+            "name": "timeout",
+            "summary": "",
+            "url": "classes/Discord-RPC-WindowsPipeConnector.html#property_timeout"
         },                {
             "fqsen": "\\Discord\\Voice\\Any",
             "name": "Any",
