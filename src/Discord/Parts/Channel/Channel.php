@@ -255,6 +255,34 @@ class Channel extends Part implements Stringable
     ];
 
     /**
+     * Fields that stay real when Discord obfuscates a channel: Discord's `id`, `type`, `position` and `parent_id`,
+     * plus the `guild_id` DiscordPHP files the channel under. Everything else is redacted and should not be relied on.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels
+     *
+     * @since 10.73.0
+     */
+    public const OBFUSCATED_KEPT_FIELDS = ['id', 'type', 'guild_id', 'position', 'parent_id'];
+
+    /**
+     * Whether Discord sent this channel with its metadata obfuscated, because the bot cannot view it.
+     *
+     * Only `id`, `type`, `position` and `parent_id` are real on an obfuscated channel: its name is a placeholder,
+     * its other fields are nulled or reduced, and its permission overwrites are a single `@everyone` deny of
+     * `VIEW_CHANNEL`. Discord sends a full `CHANNEL_UPDATE` when the bot can view it again.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels
+     *
+     * @since 10.73.0
+     *
+     * @return bool
+     */
+    public function isObfuscated(): bool
+    {
+        return (bool) (((int) ($this->attributes['flags'] ?? 0)) & self::FLAG_CHANNEL_OBFUSCATED);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function afterConstruct(): void

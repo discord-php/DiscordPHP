@@ -19,7 +19,11 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
 /**
+ * A channel the bot can no longer view arrives obfuscated (see `Channel::isObfuscated()`); the cached copy is
+ * cleared down to the fields Discord keeps. Regaining view sends the full channel again.
+ *
  * @link https://docs.discord.com/developers/events/gateway-events#channel-update
+ * @link https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels
  *
  * @since 2.1.3
  */
@@ -52,7 +56,14 @@ class ChannelUpdate extends Event
             $channelPart = $oldChannel;
             $oldChannel = clone $oldChannel;
 
-            $channelPart->fill((array) $data);
+            $attributes = (array) $data;
+            if ($channelPart instanceof Channel && $channelPart->isObfuscated() !== (bool) (($attributes['flags'] ?? 0) & Channel::FLAG_CHANNEL_OBFUSCATED)) {
+                // The bot lost or regained view of the channel. Clear what the cached copy held, so fields the
+                // new payload leaves out are not carried over from the other side of the change.
+                $attributes += array_fill_keys(array_diff(array_keys($channelPart->getRawAttributes()), Channel::OBFUSCATED_KEPT_FIELDS, ['is_private']), null);
+            }
+
+            $channelPart->fill($attributes);
         }
 
         if ($repository) {

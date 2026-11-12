@@ -28,6 +28,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $change_nickname                     Allows for modification of own nickname
  * @property bool $manage_nicknames                    Allows for modification of other users nicknames
  * @property bool $manage_guild_expressions            Allows management and editing of emojis, stickers, and soundboard sounds
+ * @property bool $create_guild_expressions            Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user
  * @property bool $moderate_members                    Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels
  * @property bool $view_creator_monetization_analytics Allows for viewing role subscription insights
  *
