@@ -2200,12 +2200,23 @@ class Discord
         }
 
         if (! isset($options['dnsConfig'])) {
-            $dnsConfig = \React\Dns\Config\Config::loadSystemConfigBlocking();
+            $dnsConfig = static::loadSystemDnsConfig();
             if (! $dnsConfig->nameservers) {
                 $dnsConfig->nameservers[] = '8.8.8.8';
             }
 
             $options['dnsConfig'] = $dnsConfig;
+        }
+
+        if (! isset($options['socket_options']['dns'])) {
+            // Hand the resolved nameserver to react/socket so the gateway and
+            // HTTP connectors don't each repeat the blocking system lookup.
+            $nameserver = $options['dnsConfig'] instanceof \React\Dns\Config\Config
+                ? ($options['dnsConfig']->nameservers[0] ?? null)
+                : $options['dnsConfig'];
+            if (is_string($nameserver) && $nameserver !== '') {
+                $options['socket_options']['dns'] = $nameserver;
+            }
         }
 
         if (is_array($options['intents'])) {
@@ -2248,6 +2259,77 @@ class Discord
         $options['socket_options']['happy_eyeballs'] = false;
 
         return $options;
+    }
+
+    /**
+     * Loads the system DNS configuration.
+     *
+     * On Windows, react/dns reads nameservers through `wmic`, which recent
+     * Windows releases no longer ship. Calling it there prints "'wmic' is not
+     * recognized" and a PHP deprecation from `preg_match_all()`. This reads the
+     * nameservers through PowerShell instead and only falls back to `wmic`
+     * (with its errors silenced) when PowerShell returns nothing.
+     *
+     * @see https://github.com/reactphp/dns/issues/228
+     *
+     * @return \React\Dns\Config\Config
+     */
+    protected static function loadSystemDnsConfig(): \React\Dns\Config\Config
+    {
+        if (DIRECTORY_SEPARATOR !== '\\') {
+            return \React\Dns\Config\Config::loadSystemConfigBlocking();
+        }
+
+        $config = new \React\Dns\Config\Config();
+        if (! function_exists('shell_exec')) {
+            return $config;
+        }
+
+        $output = @shell_exec('powershell -NoProfile -NonInteractive -Command "Get-DnsClientServerAddress | Select-Object -ExpandProperty ServerAddresses" 2>NUL');
+        if (is_string($output)) {
+            $config->nameservers = static::parseNameservers($output);
+        }
+
+        if (! $config->nameservers) {
+            $output = @shell_exec('wmic NICCONFIG get "DNSServerSearchOrder" /format:CSV 2>NUL');
+            if (is_string($output) && preg_match_all('/(?<=[{;,"])([\da-f.:]{4,})(?=[};,"])/i', $output, $matches)) {
+                $config->nameservers = static::parseNameservers(implode("\n", $matches[1]));
+            }
+        }
+
+        return $config;
+    }
+
+    /**
+     * Extracts valid, unique nameserver addresses from line-separated output,
+     * listing IPv4 addresses before IPv6 ones.
+     *
+     * @param string $output
+     *
+     * @return string[]
+     */
+    protected static function parseNameservers(string $output): array
+    {
+        $ipv4 = $ipv6 = [];
+        foreach (preg_split('/\R/', $output) as $line) {
+            $ip = trim($line);
+            if (str_contains($ip, ':') && ($pos = strpos($ip, '%')) !== false) {
+                $ip = substr($ip, 0, $pos);
+            }
+            if ($ip === '' || @inet_pton($ip) === false) {
+                continue;
+            }
+            if (str_contains($ip, ':')) {
+                // Skip site-local placeholders Windows reports for unconfigured adapters.
+                if (stripos($ip, 'fec0:') !== 0) {
+                    $ipv6[$ip] = $ip;
+                }
+            } else {
+                $ipv4[$ip] = $ip;
+            }
+        }
+
+        return array_values($ipv4 + $ipv6);
     }
 
     /**
