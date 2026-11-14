@@ -1033,18 +1033,20 @@ class Discord
 
             $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
 
-            if (in_array($op, Op::getCriticalCloseCodes())) {
+            if (in_array($op, Op::getCriticalCloseCodes(), true)) {
                 $this->logger->error('not reconnecting - critical op code', ['op' => $op, 'reason' => $reason]);
-            } else {
-                $this->logger->warning('reconnecting in 2 seconds');
 
-                $this->loop->addTimer(2, function () {
-                    ++$this->reconnectCount;
-                    $this->reconnecting = true;
-                    $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
-                    $this->connectWs();
-                });
+                return;
             }
+
+            $this->logger->warning('reconnecting in 2 seconds');
+
+            $this->loop->addTimer(2, function () {
+                ++$this->reconnectCount;
+                $this->reconnecting = true;
+                $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+                $this->connectWs();
+            });
         } finally {
             if ($wasConnected) {
                 $this->emit('disconnected', [$op, $reason, $this]);

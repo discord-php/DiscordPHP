@@ -75,12 +75,10 @@ final class GatewayContinuityTest extends DiscordTestCase
             $client->handleWsConnection($socket);
             $loop = $this->getMockBuilder(LoopInterface::class)->getMock();
             $loop->expects($this->exactly(3))->method('cancelTimer');
-            if ($code === 4004) {
-                $loop->expects($this->never())->method('addTimer');
-            } else {
-                $loop->expects($this->once())->method('addTimer')->with(2, $this->isCallable())
-                    ->willReturn($this->createStub(TimerInterface::class));
-            }
+            // 4004 is a critical close code, so no reconnect is scheduled.
+            $loop->expects($code === 4004 ? $this->never() : $this->once())->method('addTimer')
+                ->with(2, $this->isCallable())
+                ->willReturn($this->createStub(TimerInterface::class));
             $this->set($client, 'loop', $loop);
             foreach (['heartbeatTimer', 'heartbeatAckTimer', 'payloadTimer'] as $name) {
                 $this->set($client, $name, $this->createStub(TimerInterface::class));
