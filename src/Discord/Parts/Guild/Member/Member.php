@@ -467,6 +467,9 @@ class Member extends Part implements Stringable
      *
      * @throws \InvalidArgumentException
      *
+     * In a channel Discord sent obfuscated (see `Channel::isObfuscated()`), the bot has no permissions unless it is
+     * an administrator, and other non-administrator members' permissions cannot be determined.
+     *
      * @return RolePermission|null `null` if permission is failed to be determined.
      */
     public function getPermissions($channel = null): ?RolePermission
@@ -521,6 +524,17 @@ class Member extends Part implements Stringable
 
             // Administrators ends here with all permissions
             return $newPermission;
+        }
+
+        // Discord hides an obfuscated channel's real overwrites. The bot sees it obfuscated because it lacks
+        // VIEW_CHANNEL there, which implicitly denies every other permission in the channel. Nobody else's
+        // permissions can be worked out from the placeholder overwrites.
+        if ($channel instanceof Channel && $channel->isObfuscated()) {
+            if ($this->id !== $this->discord->id) {
+                return null;
+            }
+
+            return $guild->createOf(RolePermission::class, ['bitwise' => 0]);
         }
 
         // If channel is specified (overwrites)

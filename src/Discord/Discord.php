@@ -137,7 +137,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.69.1';
+    public const VERSION = 'v10.72.1';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -490,7 +490,7 @@ class Discord
      * @throws IntentException
      * @throws \RuntimeException
      */
-    public function __construct(array $options = [])
+    public function __construct(#[\SensitiveParameter] array $options = [])
     {
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
@@ -1417,8 +1417,9 @@ class Discord
      */
     public function identify(): void
     {
+        // The token is added to the serialised array last, so it never sits in the
+        // arguments of Factory::part() or Part::__construct() in a stack trace.
         $identify = $this->factory->part(Identify::class, [
-            'token' => $this->token,
             'properties' => [
                 'os' => PHP_OS,
                 'browser' => $this->http->getUserAgent(),
@@ -1458,7 +1459,7 @@ class Discord
 
         $payload = Payload::new(
             Op::OP_IDENTIFY,
-            $identify->jsonSerialize(),
+            ['token' => $this->token] + $identify->jsonSerialize(),
         );
 
         $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
@@ -1477,14 +1478,13 @@ class Discord
     public function resume(#[\SensitiveParameter] string $token, string $session_id, int $seq): void
     {
         $resume = $this->factory->part(Resume::class, [
-            'token' => $token,
             'session_id' => $session_id,
             'seq' => $seq,
         ]);
 
         $payload = Payload::new(
             Op::OP_RESUME,
-            $resume->jsonSerialize(),
+            ['token' => $token] + $resume->jsonSerialize(),
         );
 
         $this->logger->info('resuming connection', ['payload' => $payload->__debugInfo()]);
@@ -2063,6 +2063,38 @@ class Discord
     }
 
     /**
+     * Resolves options while keeping secrets out of the resolver's arguments.
+     *
+     * Each string secret is swapped for an empty string while the resolver
+     * runs (so it is still checked as required and typed) and put back after,
+     * so an error raised inside the resolver never prints it in a stack trace.
+     *
+     * @param OptionsResolver $resolver The configured resolver.
+     * @param array           $options  The options to resolve.
+     * @param string[]        $secrets  The keys that hold secrets.
+     *
+     * @return array The resolved options.
+     */
+    protected static function resolveWithoutSecrets(OptionsResolver $resolver, #[\SensitiveParameter] array $options, array $secrets = ['token', 'clientSecret']): array
+    {
+        $hidden = [];
+        foreach ($secrets as $key) {
+            if (isset($options[$key]) && is_string($options[$key])) {
+                $hidden[$key] = $options[$key];
+                $options[$key] = '';
+            }
+        }
+
+        $options = $resolver->resolve($options);
+
+        foreach ($hidden as $key => $value) {
+            $options[$key] = $value;
+        }
+
+        return $options;
+    }
+
+    /**
      * Resolves the options.
      *
      * @param array $options Array of options.
@@ -2070,7 +2102,7 @@ class Discord
      * @return array           Options.
      * @throws IntentException
      */
-    protected function resolveOptions(array $options = []): array
+    protected function resolveOptions(#[\SensitiveParameter] array $options = []): array
     {
         $resolver = new OptionsResolver();
 
@@ -2154,7 +2186,7 @@ class Discord
             })
             ->setAllowedTypes('clientSecret', ['null', 'string']);
 
-        $options = $resolver->resolve($options);
+        $options = static::resolveWithoutSecrets($resolver, $options);
 
         $options['loop'] ??= Loop::get();
 
@@ -2166,13 +2198,32 @@ class Discord
             $options['logger'] = $logger;
         }
 
+        if (! isset($options['dnsConfig']) && is_string($options['socket_options']['dns'] ?? null)) {
+            // A nameserver given in socket_options is used as is, so the blocking
+            // system lookup (wmic on Windows) is skipped.
+            $dnsConfig = new \React\Dns\Config\Config();
+            $dnsConfig->nameservers[] = $options['socket_options']['dns'];
+            $options['dnsConfig'] = $dnsConfig;
+        }
+
         if (! isset($options['dnsConfig'])) {
-            $dnsConfig = \React\Dns\Config\Config::loadSystemConfigBlocking();
+            $dnsConfig = static::loadSystemDnsConfig();
             if (! $dnsConfig->nameservers) {
                 $dnsConfig->nameservers[] = '8.8.8.8';
             }
 
             $options['dnsConfig'] = $dnsConfig;
+        }
+
+        if (! isset($options['socket_options']['dns'])) {
+            // Hand the resolved nameserver to react/socket so the gateway and
+            // HTTP connectors don't each repeat the blocking system lookup.
+            $nameserver = $options['dnsConfig'] instanceof \React\Dns\Config\Config
+                ? ($options['dnsConfig']->nameservers[0] ?? null)
+                : $options['dnsConfig'];
+            if (is_string($nameserver) && $nameserver !== '') {
+                $options['socket_options']['dns'] = $nameserver;
+            }
         }
 
         if (is_array($options['intents'])) {
@@ -2215,6 +2266,77 @@ class Discord
         $options['socket_options']['happy_eyeballs'] = false;
 
         return $options;
+    }
+
+    /**
+     * Loads the system DNS configuration.
+     *
+     * On Windows, react/dns reads nameservers through `wmic`, which recent
+     * Windows releases no longer ship. Calling it there prints "'wmic' is not
+     * recognized" and a PHP deprecation from `preg_match_all()`. This reads the
+     * nameservers through PowerShell instead and only falls back to `wmic`
+     * (with its errors silenced) when PowerShell returns nothing.
+     *
+     * @see https://github.com/reactphp/dns/issues/228
+     *
+     * @return \React\Dns\Config\Config
+     */
+    protected static function loadSystemDnsConfig(): \React\Dns\Config\Config
+    {
+        if (DIRECTORY_SEPARATOR !== '\\') {
+            return \React\Dns\Config\Config::loadSystemConfigBlocking();
+        }
+
+        $config = new \React\Dns\Config\Config();
+        if (! function_exists('shell_exec')) {
+            return $config;
+        }
+
+        $output = @shell_exec('powershell -NoProfile -NonInteractive -Command "Get-DnsClientServerAddress | Select-Object -ExpandProperty ServerAddresses" 2>NUL');
+        if (is_string($output)) {
+            $config->nameservers = static::parseNameservers($output);
+        }
+
+        if (! $config->nameservers) {
+            $output = @shell_exec('wmic NICCONFIG get "DNSServerSearchOrder" /format:CSV 2>NUL');
+            if (is_string($output) && preg_match_all('/(?<=[{;,"])([\da-f.:]{4,})(?=[};,"])/i', $output, $matches)) {
+                $config->nameservers = static::parseNameservers(implode("\n", $matches[1]));
+            }
+        }
+
+        return $config;
+    }
+
+    /**
+     * Extracts valid, unique nameserver addresses from line-separated output,
+     * listing IPv4 addresses before IPv6 ones.
+     *
+     * @param string $output
+     *
+     * @return string[]
+     */
+    protected static function parseNameservers(string $output): array
+    {
+        $ipv4 = $ipv6 = [];
+        foreach (preg_split('/\R/', $output) as $line) {
+            $ip = trim($line);
+            if (str_contains($ip, ':') && ($pos = strpos($ip, '%')) !== false) {
+                $ip = substr($ip, 0, $pos);
+            }
+            if ($ip === '' || @inet_pton($ip) === false) {
+                continue;
+            }
+            if (str_contains($ip, ':')) {
+                // Skip site-local placeholders Windows reports for unconfigured adapters.
+                if (stripos($ip, 'fec0:') !== 0) {
+                    $ipv6[$ip] = $ip;
+                }
+            } else {
+                $ipv4[$ip] = $ip;
+            }
+        }
+
+        return array_values($ipv4 + $ipv6);
     }
 
     /**

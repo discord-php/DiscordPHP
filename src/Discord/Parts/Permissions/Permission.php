@@ -300,6 +300,7 @@ abstract class Permission extends Part
         'change_nickname' => self::CHANGE_NICKNAME,
         'manage_nicknames' => self::MANAGE_NICKNAMES,
         'manage_guild_expressions' => self::MANAGE_GUILD_EXPRESSIONS,
+        'create_guild_expressions' => self::CREATE_GUILD_EXPRESSIONS,
         'moderate_members' => self::MODERATE_MEMBERS,
         'view_creator_monetization_analytics' => self::VIEW_CREATOR_MONETIZATION_ANALYTICS,
     ];

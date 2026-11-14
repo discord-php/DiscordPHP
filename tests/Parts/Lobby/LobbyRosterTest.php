@@ -20,8 +20,6 @@ use Discord\Parts\Lobby\Member;
 use React\Http\Message\Response;
 use Discord\Helpers\CacheConfig;
 use Discord\Helpers\CacheWrapper;
-use Discord\MessageCommandClient;
-use Psr\Log\NullLogger;
 use React\Cache\ArrayCache;
 use React\Promise\Deferred;
 
@@ -166,7 +164,7 @@ final class LobbyRosterTest extends DiscordTestCase
     public function testSessionCachesAreIsolatedFromEachOtherAndBotWithSharedBackend()
     {
         return wait(function (Discord $discord, $resolve) {
-            $mock = new MessageCommandClient(['token' => '', 'logger' => new NullLogger(), 'cache' => new CacheConfig(new ArrayCache())]);
+            $mock = getMockMessageCommandClient(['cache' => new CacheConfig(new ArrayCache())]);
             $mock->getHttpClient()->setDriver(getMockHttpDriver(fn ($method) => $method === 'DELETE' ? null : ['id' => '7']));
             $one = new Session($mock, new AccessToken('one'));
             $two = new Session($mock, new AccessToken('two'));

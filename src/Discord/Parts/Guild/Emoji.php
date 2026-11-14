@@ -182,6 +182,14 @@ class Emoji extends Part implements Stringable
 
     /**
      * @inheritDoc
+     *
+     * Creating a guild emoji needs `create_guild_expressions`. Editing one the bot created needs
+     * `create_guild_expressions` or `manage_guild_expressions`; editing anyone else's needs
+     * `manage_guild_expressions`.
+     *
+     * @link https://docs.discord.com/developers/resources/emoji#modify-guild-emoji
+     *
+     * @throws NoPermissionsException Missing the permission Discord requires for this change.
      */
     public function save(?string $reason = null): PromiseInterface
     {
@@ -189,14 +197,17 @@ class Emoji extends Part implements Stringable
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
             if ($botperms = $guild->getBotPermissions()) {
-                if ($this->created) {
+                if (! $this->created) {
                     if (! $botperms->create_guild_expressions) {
                         return reject(new NoPermissionsException("You do not have permission to create emojis in the guild {$guild->id}."));
                     }
-                } elseif (! $botperms->manage_guild_expressions) {
-                    return reject(new NoPermissionsException("You do not have permission to manage emojis in the guild {$guild->id}."));
-                } elseif ($this->user->id === $this->discord->id && ! $botperms->create_guild_expressions) {
-                    return reject(new NoPermissionsException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
+                } elseif (($creator = $this->user) && $creator->id !== $this->discord->id) {
+                    if (! $botperms->manage_guild_expressions) {
+                        return reject(new NoPermissionsException("You do not have permission to save changes to the emoji {$this->id} in guild {$guild->id}."));
+                    }
+                } elseif (! $botperms->create_guild_expressions && ! $botperms->manage_guild_expressions) {
+                    // The bot's own emoji, or one whose creator Discord left out of the payload.
+                    return reject(new NoPermissionsException("You do not have permission to save changes to the emoji {$this->id} in guild {$guild->id}."));
                 }
             }
         }

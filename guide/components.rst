@@ -303,3 +303,24 @@ URL must share the page's host, parent domain or subdomain.
 
 See `Discord's component embed contract <https://docs.discord.com/developers/link-previews/component-embeds>`_
 and `link preview metadata <https://docs.discord.com/developers/link-previews/overview>`_.
+
+Content scanning results
+========================
+
+Received component media exposes ``$media->content_scan_metadata`` as a
+``Discord\Parts\Channel\Message\ContentScanMetadata`` Part when Discord
+provides a scan result. Its flags use bits 0 (explicit), 1 (gore), and 2
+(self-harm). Attachment and embed ``FLAG_CONTAINS_*_CONTENT`` constants instead
+use bits 4, 6, and 7. These are separate bitfields.
+
+Check the message returned after sending user media and any later
+``MESSAGE_UPDATE`` events. Scanning may finish after message creation; missing
+metadata or missing flags do not prove that media is safe. Interaction-resolved
+attachments do not carry scanning flags until sent in a message. Applications
+own any subsequent action, such as deleting a flagged repost. These response
+fields cannot be used to request or override a scanning result.
+
+See Discord's `content scanning documentation
+<https://github.com/discord/discord-api-docs/commit/2b434c56eca46b61461bf5578499dd7810e2f6af>`_
+(October 28, 2026). This support is based on the documented payload contract;
+live scanning timing and enforcement have not been tested.
