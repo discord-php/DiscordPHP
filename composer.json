@@ -48,7 +48,7 @@
         "symfony/cache": "^6.4 || ^8.1",
         "laravel/pint": "^1.21",
         "pestphp/pest": "^4.1.2 || ^5.3.4",
-        "carthage-software/mago": "1.59.0"
+        "carthage-software/mago": "1.60.1"
     },
     "autoload": {
         "files": [
