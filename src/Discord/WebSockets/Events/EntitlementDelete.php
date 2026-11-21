@@ -31,7 +31,7 @@ class EntitlementDelete extends Event
     {
         if ($entitlementPart = yield $this->discord->application->entitlements->cachePull($data->id)) {
             $entitlementPart->fill((array) $data);
-            $entitlementPart->created = false;
+            $entitlementPart->markDeleted();
         }
 
         return $entitlementPart ?? $this->factory->part(Entitlement::class, (array) $data);

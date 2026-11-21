@@ -48,7 +48,7 @@ class SubscriptionDelete extends Event
             }
         }
 
-        $subscriptionPart->created = false;
+        $subscriptionPart->markDeleted();
 
         return $subscriptionPart;
     }

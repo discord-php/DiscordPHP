@@ -273,7 +273,7 @@ trait AbstractRepositoryTrait
             if ($response) {
                 $part->fill((array) $response);
             }
-            $part->created = false;
+            $part->markDeleted();
 
             return $this->cache->delete($part->{$this->discrim})->then(fn ($success) => $part);
         });

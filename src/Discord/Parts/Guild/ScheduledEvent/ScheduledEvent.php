@@ -279,7 +279,7 @@ class ScheduledEvent extends Part
         return $this->http->delete(Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_EXCEPTION, $this->guild_id, $this->id, $exception_id), null, $headers)
             ->then(function () use ($exception_id) {
                 if ($part = $this->uncacheException($exception_id)) {
-                    $part->created = false;
+                    $part->markDeleted();
                 }
 
                 return $part;
