@@ -398,6 +398,14 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Channel-Channel.html#constant_OBFUSCATED_KEPT_FIELDS">OBFUSCATED_KEPT_FIELDS</a>
+    <span>
+        &nbsp;: mixed&nbsp;= [&#039;id&#039;, &#039;type&#039;, &#039;guild_id&#039;, &#039;position&#039;, &#039;parent_...                            </span>
+</dt>
+<dd>Fields that stay real when Discord obfuscates a channel: Discord&#039;s `id`, `type`, `position` and `parent_id`,
+plus the `guild_id` DiscordPHP files the channel under. Everything else is redacted and should not be relied on.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#constant_SORT_ORDER_CREATION_DATE">SORT_ORDER_CREATION_DATE</a>
     <span>
         &nbsp;: mixed&nbsp;= 1                            </span>
@@ -1108,6 +1116,13 @@
 <dd>The attribute subset sent when updating this Part (PATCH).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_isObfuscated">isObfuscated()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Whether Discord sent this channel with its metadata obfuscated, because the bot cannot view it.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -1800,6 +1815,58 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OBFUSCATED_KEPT_FIELDS">
+        OBFUSCATED_KEPT_FIELDS
+        <a href="classes/Discord-Parts-Channel-Channel.html#constant_OBFUSCATED_KEPT_FIELDS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">265</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Fields that stay real when Discord obfuscates a channel: Discord&#039;s `id`, `type`, `position` and `parent_id`,
+plus the `guild_id` DiscordPHP files the channel under. Everything else is redacted and should not be relied on.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OBFUSCATED_KEPT_FIELDS</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;type&#039;, &#039;guild_id&#039;, &#039;position&#039;, &#039;parent_id&#039;]</span>
+</code>
+
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_OBFUSCATED_KEPT_FIELDS_tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Channel.html#constant_OBFUSCATED_KEPT_FIELDS_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels"> https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.73.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
 
         
     </article>
@@ -4842,7 +4909,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1445</span>
+    <span class="phpdocumentor-element-found-in__line">1473</span>
 
     </aside>
 
@@ -5182,7 +5249,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">798</span>
+    <span class="phpdocumentor-element-found-in__line">826</span>
 
     </aside>
 
@@ -5324,7 +5391,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">578</span>
+    <span class="phpdocumentor-element-found-in__line">606</span>
 
     </aside>
 
@@ -5406,7 +5473,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">907</span>
+    <span class="phpdocumentor-element-found-in__line">935</span>
 
     </aside>
 
@@ -5859,7 +5926,7 @@ Requires VIEW_CHANNEL. The result does not replace the role's guild-level permis
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">763</span>
+    <span class="phpdocumentor-element-found-in__line">791</span>
 
     </aside>
 
@@ -6029,7 +6096,7 @@ Requires VIEW_CHANNEL. The result does not replace the role's guild-level permis
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1184</span>
+    <span class="phpdocumentor-element-found-in__line">1212</span>
 
     </aside>
 
@@ -6126,7 +6193,7 @@ Requires VIEW_CHANNEL. The result does not replace the role's guild-level permis
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1170</span>
+    <span class="phpdocumentor-element-found-in__line">1198</span>
 
     </aside>
 
@@ -6420,7 +6487,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1388</span>
+    <span class="phpdocumentor-element-found-in__line">1416</span>
 
     </aside>
 
@@ -6486,7 +6553,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1432</span>
+    <span class="phpdocumentor-element-found-in__line">1460</span>
 
     </aside>
 
@@ -6538,7 +6605,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1291</span>
+    <span class="phpdocumentor-element-found-in__line">1319</span>
 
     </aside>
 
@@ -6579,6 +6646,69 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_isObfuscated">
+        isObfuscated()
+        <a href="classes/Discord-Parts-Channel-Channel.html#method_isObfuscated" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">280</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether Discord sent this channel with its metadata obfuscated, because the bot cannot view it.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isObfuscated</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Only <code class="prettyprint">id</code>, <code class="prettyprint">type</code>, <code class="prettyprint">position</code> and <code class="prettyprint">parent_id</code> are real on an obfuscated channel: its name is a placeholder,
+its other fields are nulled or reduced, and its permission overwrites are a single <code class="prettyprint">@everyone</code> deny of
+<code class="prettyprint">VIEW_CHANNEL</code>. Discord sends a full <code class="prettyprint">CHANNEL_UPDATE</code> when the bot can view it again.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_isObfuscated_tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Channel.html#method_isObfuscated_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels"> https://docs.discord.com/developers/resources/channel#channel-object-obfuscated-channels </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.73.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
             </section>
 
 </article>
@@ -6789,7 +6919,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">880</span>
+    <span class="phpdocumentor-element-found-in__line">908</span>
 
     </aside>
 
@@ -6869,7 +6999,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">473</span>
+    <span class="phpdocumentor-element-found-in__line">501</span>
 
     </aside>
 
@@ -6949,7 +7079,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">508</span>
+    <span class="phpdocumentor-element-found-in__line">536</span>
 
     </aside>
 
@@ -7397,7 +7527,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1402</span>
+    <span class="phpdocumentor-element-found-in__line">1430</span>
 
     </aside>
 
@@ -7746,7 +7876,7 @@ rest of the arguments are disregarded.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">651</span>
+    <span class="phpdocumentor-element-found-in__line">679</span>
 
     </aside>
 
@@ -7879,7 +8009,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">413</span>
+    <span class="phpdocumentor-element-found-in__line">441</span>
 
     </aside>
 
@@ -7972,7 +8102,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">363</span>
+    <span class="phpdocumentor-element-found-in__line">391</span>
 
     </aside>
 
@@ -8069,7 +8199,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">322</span>
+    <span class="phpdocumentor-element-found-in__line">350</span>
 
     </aside>
 
@@ -8167,7 +8297,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">710</span>
+    <span class="phpdocumentor-element-found-in__line">738</span>
 
     </aside>
 
@@ -8262,7 +8392,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1029</span>
+    <span class="phpdocumentor-element-found-in__line">1057</span>
 
     </aside>
 
@@ -8377,7 +8507,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">613</span>
+    <span class="phpdocumentor-element-found-in__line">641</span>
 
     </aside>
 
@@ -8459,7 +8589,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">543</span>
+    <span class="phpdocumentor-element-found-in__line">571</span>
 
     </aside>
 
@@ -8699,7 +8829,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">260</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
@@ -9280,7 +9410,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">986</span>
+    <span class="phpdocumentor-element-found-in__line">1014</span>
 
     </aside>
 
@@ -9337,7 +9467,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">998</span>
+    <span class="phpdocumentor-element-found-in__line">1026</span>
 
     </aside>
 
@@ -9646,7 +9776,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">967</span>
+    <span class="phpdocumentor-element-found-in__line">995</span>
 
     </aside>
 
@@ -9689,7 +9819,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">272</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
@@ -9732,7 +9862,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">282</span>
+    <span class="phpdocumentor-element-found-in__line">310</span>
 
     </aside>
 
@@ -9771,7 +9901,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">296</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -9923,7 +10053,7 @@ ID-only relations should look up their current cached object instead.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">925</span>
+    <span class="phpdocumentor-element-found-in__line">953</span>
 
     </aside>
 
@@ -10056,6 +10186,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_LIST_VIEW">FORUM_LAYOUT_LIST_VIEW</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_NOT_SET">FORUM_LAYOUT_NOT_SET</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#constant_HIDE_MEDIA_DOWNLOAD_OPTIONS">HIDE_MEDIA_DOWNLOAD_OPTIONS</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#constant_OBFUSCATED_KEPT_FIELDS">OBFUSCATED_KEPT_FIELDS</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#constant_SORT_ORDER_CREATION_DATE">SORT_ORDER_CREATION_DATE</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#constant_SORT_ORDER_LATEST_ACTIVITY">SORT_ORDER_LATEST_ACTIVITY</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_ANNOUNCEMENT">TYPE_ANNOUNCEMENT</a></li>
@@ -10173,6 +10304,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRepository">getRepository()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_isObfuscated">isObfuscated()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isTextBased">isTextBased()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isVoiceBased">isVoiceBased()</a></li>

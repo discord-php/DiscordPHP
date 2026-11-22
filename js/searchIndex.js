@@ -3436,15 +3436,35 @@ Search.appendIndex(
             "summary": "Builds\u0020the\u0020gateway\u0020connection\u0020parameters\u0020and\u0020resolves\u0020the\u0020deferred\u0020with\u0020the\u0020gateway\u0020URL\u0020and\u0020session\u0020information.",
             "url": "classes/Discord-Discord.html#method_buildParams"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AresolveWithoutSecrets\u0028\u0029",
+            "name": "resolveWithoutSecrets",
+            "summary": "Resolves\u0020options\u0020while\u0020keeping\u0020secrets\u0020out\u0020of\u0020the\u0020resolver\u0027s\u0020arguments.",
+            "url": "classes/Discord-Discord.html#method_resolveWithoutSecrets"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AresolveOptions\u0028\u0029",
             "name": "resolveOptions",
             "summary": "Resolves\u0020the\u0020options.",
             "url": "classes/Discord-Discord.html#method_resolveOptions"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AloadSystemDnsConfig\u0028\u0029",
+            "name": "loadSystemDnsConfig",
+            "summary": "Loads\u0020the\u0020system\u0020DNS\u0020configuration.",
+            "url": "classes/Discord-Discord.html#method_loadSystemDnsConfig"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AparseNameservers\u0028\u0029",
+            "name": "parseNameservers",
+            "summary": "Extracts\u0020valid,\u0020unique\u0020nameserver\u0020addresses\u0020from\u0020line\u002Dseparated\u0020output,\nlisting\u0020IPv4\u0020addresses\u0020before\u0020IPv6\u0020ones.",
+            "url": "classes/Discord-Discord.html#method_parseNameservers"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AaddLargeGuild\u0028\u0029",
             "name": "addLargeGuild",
             "summary": "Adds\u0020a\u0020large\u0020guild\u0020to\u0020the\u0020large\u0020guild\u0020array.",
             "url": "classes/Discord-Discord.html#method_addLargeGuild"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AisConnected\u0028\u0029",
+            "name": "isConnected",
+            "summary": "Whether\u0020the\u0020Gateway\u0020WebSocket\u0020is\u0020open\u0020and\u0020the\u0020client\u0020is\u0020not\u0020closing.",
+            "url": "classes/Discord-Discord.html#method_isConnected"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003Arun\u0028\u0029",
             "name": "run",
@@ -6531,6 +6551,11 @@ Search.appendIndex(
             "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
             "url": "classes/Discord-Parts-Channel-Channel.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AisObfuscated\u0028\u0029",
+            "name": "isObfuscated",
+            "summary": "Whether\u0020Discord\u0020sent\u0020this\u0020channel\u0020with\u0020its\u0020metadata\u0020obfuscated,\u0020because\u0020the\u0020bot\u0020cannot\u0020view\u0020it.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_isObfuscated"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AafterConstruct\u0028\u0029",
             "name": "afterConstruct",
             "summary": "",
@@ -6870,6 +6895,11 @@ Search.appendIndex(
             "name": "FORUM_LAYOUT_GRID_VIEW",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_GRID_VIEW"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AOBFUSCATED_KEPT_FIELDS",
+            "name": "OBFUSCATED_KEPT_FIELDS",
+            "summary": "Fields\u0020that\u0020stay\u0020real\u0020when\u0020Discord\u0020obfuscates\u0020a\u0020channel\u003A\u0020Discord\u0027s\u0020\u0060id\u0060,\u0020\u0060type\u0060,\u0020\u0060position\u0060\u0020and\u0020\u0060parent_id\u0060,\nplus\u0020the\u0020\u0060guild_id\u0060\u0020DiscordPHP\u0020files\u0020the\u0020channel\u0020under.\u0020Everything\u0020else\u0020is\u0020redacted\u0020and\u0020should\u0020not\u0020be\u0020relied\u0020on.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_OBFUSCATED_KEPT_FIELDS"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -19488,7 +19518,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ChannelUpdate",
             "name": "ChannelUpdate",
-            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "summary": "A\u0020channel\u0020the\u0020bot\u0020can\u0020no\u0020longer\u0020view\u0020arrives\u0020obfuscated\u0020\u0028see\u0020\u0060Channel\u003A\u003AisObfuscated\u0028\u0029\u0060\u0029\u003B\u0020the\u0020cached\u0020copy\u0020is\ncleared\u0020down\u0020to\u0020the\u0020fields\u0020Discord\u0020keeps.\u0020Regaining\u0020view\u0020sends\u0020the\u0020full\u0020channel\u0020again.",
             "url": "classes/Discord-WebSockets-Events-ChannelUpdate.html"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ChannelUpdate\u003A\u003Ahandle\u0028\u0029",

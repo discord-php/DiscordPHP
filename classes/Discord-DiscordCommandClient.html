@@ -365,7 +365,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Discord.html#constant_VERSION">VERSION</a>
     <span>
-        &nbsp;: string&nbsp;= &#039;v10.72.0&#039;                            </span>
+        &nbsp;: string&nbsp;= &#039;v10.72.1&#039;                            </span>
 </dt>
 <dd>The client version.</dd>
 
@@ -1062,6 +1062,13 @@ object.</dd>
 <dd>Initializes the voice manager.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Discord.html#method_isConnected">isConnected()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Whether the Gateway WebSocket is open and the client is not closing.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Discord.html#method_joinVoiceChannel">joinVoiceChannel()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Voice\VoiceClient">VoiceClient</abbr>&gt;    </span>
@@ -1320,6 +1327,21 @@ resolves $guildLoad once $unavailable empties.</dd>
 <dd>Handles `VOICE_STATE_UPDATE` packets.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Discord.html#method_loadSystemDnsConfig">loadSystemDnsConfig()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Dns\Config\Config">Config</abbr>    </span>
+</dt>
+<dd>Loads the system DNS configuration.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Discord.html#method_parseNameservers">parseNameservers()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, string&gt;    </span>
+</dt>
+<dd>Extracts valid, unique nameserver addresses from line-separated output,
+listing IPv4 addresses before IPv6 ones.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Discord.html#method_processWsMessage">processWsMessage()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -1353,6 +1375,13 @@ resolves $guildLoad once $unavailable empties.</dd>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Resolves the options.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Discord.html#method_resolveWithoutSecrets">resolveWithoutSecrets()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Resolves options while keeping secrets out of the resolver&#039;s arguments.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Discord.html#method_retryRateLimitedRequest">retryRateLimitedRequest()</a>
@@ -1505,7 +1534,7 @@ resolves $guildLoad once $unavailable empties.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">VERSION</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;v10.72.0&#039;</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;v10.72.1&#039;</span>
 </code>
 
 
@@ -4179,7 +4208,7 @@ not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2492</span>
+    <span class="phpdocumentor-element-found-in__line">2643</span>
 
     </aside>
 
@@ -4296,7 +4325,7 @@ not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2507</span>
+    <span class="phpdocumentor-element-found-in__line">2658</span>
 
     </aside>
 
@@ -4383,7 +4412,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2407</span>
+    <span class="phpdocumentor-element-found-in__line">2558</span>
 
     </aside>
 
@@ -4439,7 +4468,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2218</span>
+    <span class="phpdocumentor-element-found-in__line">2349</span>
 
     </aside>
 
@@ -4559,7 +4588,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2236</span>
+    <span class="phpdocumentor-element-found-in__line">2378</span>
 
     </aside>
 
@@ -4606,7 +4635,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1721</span>
+    <span class="phpdocumentor-element-found-in__line">1730</span>
 
     </aside>
 
@@ -4641,7 +4670,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2264</span>
+    <span class="phpdocumentor-element-found-in__line">2415</span>
 
     </aside>
 
@@ -4733,7 +4762,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2358</span>
+    <span class="phpdocumentor-element-found-in__line">2509</span>
 
     </aside>
 
@@ -4784,7 +4813,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2433</span>
+    <span class="phpdocumentor-element-found-in__line">2584</span>
 
     </aside>
 
@@ -4839,7 +4868,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2374</span>
+    <span class="phpdocumentor-element-found-in__line">2525</span>
 
     </aside>
 
@@ -4995,7 +5024,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2274</span>
+    <span class="phpdocumentor-element-found-in__line">2425</span>
 
     </aside>
 
@@ -5034,7 +5063,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1966</span>
+    <span class="phpdocumentor-element-found-in__line">1975</span>
 
     </aside>
 
@@ -5096,7 +5125,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2346</span>
+    <span class="phpdocumentor-element-found-in__line">2497</span>
 
     </aside>
 
@@ -5142,7 +5171,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2284</span>
+    <span class="phpdocumentor-element-found-in__line">2435</span>
 
     </aside>
 
@@ -5181,7 +5210,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2334</span>
+    <span class="phpdocumentor-element-found-in__line">2485</span>
 
     </aside>
 
@@ -5220,7 +5249,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2324</span>
+    <span class="phpdocumentor-element-found-in__line">2475</span>
 
     </aside>
 
@@ -5259,7 +5288,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2296</span>
+    <span class="phpdocumentor-element-found-in__line">2447</span>
 
     </aside>
 
@@ -5312,7 +5341,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1851</span>
+    <span class="phpdocumentor-element-found-in__line">1860</span>
 
     </aside>
 
@@ -5363,7 +5392,7 @@ the session start limit, and emits it as the <code class="prettyprint">gateway</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2314</span>
+    <span class="phpdocumentor-element-found-in__line">2465</span>
 
     </aside>
 
@@ -5529,7 +5558,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1070</span>
+    <span class="phpdocumentor-element-found-in__line">1079</span>
 
     </aside>
 
@@ -5574,7 +5603,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1053</span>
+    <span class="phpdocumentor-element-found-in__line">1062</span>
 
     </aside>
 
@@ -5668,7 +5697,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1491</span>
+    <span class="phpdocumentor-element-found-in__line">1500</span>
 
     </aside>
 
@@ -5703,7 +5732,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1411</span>
+    <span class="phpdocumentor-element-found-in__line">1420</span>
 
     </aside>
 
@@ -5751,7 +5780,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1803</span>
+    <span class="phpdocumentor-element-found-in__line">1812</span>
 
     </aside>
 
@@ -5792,6 +5821,49 @@ emits them on the client like gateway events; nothing is received until it is gi
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_isConnected">
+        isConnected()
+        <a href="classes/Discord-Discord.html#method_isConnected" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">2360</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether the Gateway WebSocket is open and the client is not closing.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isConnected</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>This does not imply authentication, loaded caches or uninterrupted continuity.
+Listen for disconnected(int $code, string $reason, Discord $discord) to
+observe transport loss synchronously, after close cleanup has run.</p>
+</section>
+
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_joinVoiceChannel">
         joinVoiceChannel()
         <a href="classes/Discord-Discord.html#method_joinVoiceChannel" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5800,7 +5872,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1870</span>
+    <span class="phpdocumentor-element-found-in__line">1879</span>
 
     </aside>
 
@@ -5898,7 +5970,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2459</span>
+    <span class="phpdocumentor-element-found-in__line">2610</span>
 
     </aside>
 
@@ -5975,7 +6047,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1824</span>
+    <span class="phpdocumentor-element-found-in__line">1833</span>
 
     </aside>
 
@@ -6161,7 +6233,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1587</span>
+    <span class="phpdocumentor-element-found-in__line">1596</span>
 
     </aside>
 
@@ -6244,7 +6316,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1537</span>
+    <span class="phpdocumentor-element-found-in__line">1546</span>
 
     </aside>
 
@@ -6339,7 +6411,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1563</span>
+    <span class="phpdocumentor-element-found-in__line">1572</span>
 
     </aside>
 
@@ -6406,7 +6478,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1470</span>
+    <span class="phpdocumentor-element-found-in__line">1480</span>
 
     </aside>
 
@@ -6488,7 +6560,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2226</span>
+    <span class="phpdocumentor-element-found-in__line">2368</span>
 
     </aside>
 
@@ -6523,7 +6595,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1755</span>
+    <span class="phpdocumentor-element-found-in__line">1764</span>
 
     </aside>
 
@@ -6577,7 +6649,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2421</span>
+    <span class="phpdocumentor-element-found-in__line">2572</span>
 
     </aside>
 
@@ -6746,7 +6818,7 @@ emits them on the client like gateway events; nothing is received until it is gi
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1659</span>
+    <span class="phpdocumentor-element-found-in__line">1668</span>
 
     </aside>
 
@@ -6843,7 +6915,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1618</span>
+    <span class="phpdocumentor-element-found-in__line">1627</span>
 
     </aside>
 
@@ -6937,7 +7009,7 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2019</span>
+    <span class="phpdocumentor-element-found-in__line">2028</span>
 
     </aside>
 
@@ -7088,7 +7160,7 @@ detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1220</span>
+    <span class="phpdocumentor-element-found-in__line">1229</span>
 
     </aside>
 
@@ -7153,7 +7225,7 @@ detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1194</span>
+    <span class="phpdocumentor-element-found-in__line">1203</span>
 
     </aside>
 
@@ -7217,7 +7289,7 @@ detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1086</span>
+    <span class="phpdocumentor-element-found-in__line">1095</span>
 
     </aside>
 
@@ -7264,7 +7336,7 @@ detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1246</span>
+    <span class="phpdocumentor-element-found-in__line">1255</span>
 
     </aside>
 
@@ -7320,7 +7392,7 @@ detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1156</span>
+    <span class="phpdocumentor-element-found-in__line">1165</span>
 
     </aside>
 
@@ -7501,7 +7573,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1273</span>
+    <span class="phpdocumentor-element-found-in__line">1282</span>
 
     </aside>
 
@@ -7562,7 +7634,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1327</span>
+    <span class="phpdocumentor-element-found-in__line">1336</span>
 
     </aside>
 
@@ -7609,7 +7681,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1391</span>
+    <span class="phpdocumentor-element-found-in__line">1400</span>
 
     </aside>
 
@@ -7656,7 +7728,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1379</span>
+    <span class="phpdocumentor-element-found-in__line">1388</span>
 
     </aside>
 
@@ -7703,7 +7775,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1359</span>
+    <span class="phpdocumentor-element-found-in__line">1368</span>
 
     </aside>
 
@@ -7815,7 +7887,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1344</span>
+    <span class="phpdocumentor-element-found-in__line">1353</span>
 
     </aside>
 
@@ -7993,6 +8065,115 @@ resolves $guildLoad once $unavailable empties.</p>
         class="phpdocumentor-element
             -method
             -protected
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_loadSystemDnsConfig">
+        loadSystemDnsConfig()
+        <a href="classes/Discord-Discord.html#method_loadSystemDnsConfig" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">2286</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Loads the system DNS configuration.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">loadSystemDnsConfig</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Dns\Config\Config">Config</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>On Windows, react/dns reads nameservers through <code class="prettyprint">wmic</code>, which recent
+Windows releases no longer ship. Calling it there prints &quot;'wmic' is not
+recognized&quot; and a PHP deprecation from <code class="prettyprint">preg_match_all()</code>. This reads the
+nameservers through PowerShell instead and only falls back to <code class="prettyprint">wmic</code>
+(with its errors silenced) when PowerShell returns nothing.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_loadSystemDnsConfig_tags">
+        Tags
+        <a href="classes/Discord-Discord.html#method_loadSystemDnsConfig_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="https://github.com/reactphp/dns/issues/228">https://github.com/reactphp/dns/issues/228</a></span>
+                                                                
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Dns\Config\Config">Config</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_parseNameservers">
+        parseNameservers()
+        <a href="classes/Discord-Discord.html#method_parseNameservers" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">2320</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Extracts valid, unique nameserver addresses from line-separated output,
+listing IPv4 addresses before IPv6 ones.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">parseNameservers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$output</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, string&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$output</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, string&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_processWsMessage">
@@ -8050,7 +8231,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1774</span>
+    <span class="phpdocumentor-element-found-in__line">1783</span>
 
     </aside>
 
@@ -8199,7 +8380,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2066</span>
+    <span class="phpdocumentor-element-found-in__line">2107</span>
 
     </aside>
 
@@ -8258,6 +8439,83 @@ resolves $guildLoad once $unavailable empties.</p>
         class="phpdocumentor-element
             -method
             -protected
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_resolveWithoutSecrets">
+        resolveWithoutSecrets()
+        <a href="classes/Discord-Discord.html#method_resolveWithoutSecrets" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">2080</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Resolves options while keeping secrets out of the resolver&#039;s arguments.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">resolveWithoutSecrets</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Symfony\Component\OptionsResolver\OptionsResolver">OptionsResolver</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$resolver</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$secrets</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">['token', 'clientSecret']</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Each string secret is swapped for an empty string while the resolver
+runs (so it is still checked as required and typed) and put back after,
+so an error raised inside the resolver never prints it in a stack trace.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$resolver</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Symfony\Component\OptionsResolver\OptionsResolver">OptionsResolver</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The configured resolver.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$options</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The options to resolve.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$secrets</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, string&gt;</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">['token', 'clientSecret']</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The keys that hold secrets.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The resolved options.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_retryRateLimitedRequest">
@@ -8268,7 +8526,7 @@ resolves $guildLoad once $unavailable empties.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1131</span>
+    <span class="phpdocumentor-element-found-in__line">1140</span>
 
     </aside>
 
@@ -8334,7 +8592,7 @@ then, so the client does not become ready without its members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1178</span>
+    <span class="phpdocumentor-element-found-in__line">1187</span>
 
     </aside>
 
@@ -8444,7 +8702,7 @@ then, so the client does not become ready without its members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1979</span>
+    <span class="phpdocumentor-element-found-in__line">1988</span>
 
     </aside>
 
@@ -8534,7 +8792,7 @@ then, so the client does not become ready without its members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1704</span>
+    <span class="phpdocumentor-element-found-in__line">1713</span>
 
     </aside>
 
@@ -8581,7 +8839,7 @@ then, so the client does not become ready without its members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1906</span>
+    <span class="phpdocumentor-element-found-in__line">1915</span>
 
     </aside>
 
@@ -8655,7 +8913,7 @@ then, so the client does not become ready without its members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1886</span>
+    <span class="phpdocumentor-element-found-in__line">1895</span>
 
     </aside>
 
@@ -8857,6 +9115,7 @@ then, so the client does not become ready without its members.</p>
                                             <li class=""><a href="classes/Discord-Discord.html#method_heartbeat">heartbeat()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_identify">identify()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_initializeVoiceManager">initializeVoiceManager()</a></li>
+                                            <li class=""><a href="classes/Discord-Discord.html#method_isConnected">isConnected()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_joinVoiceChannel">joinVoiceChannel()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_listenCommand">listenCommand()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_listVoiceRegions">listVoiceRegions()</a></li>
@@ -8893,11 +9152,14 @@ then, so the client does not become ready without its members.</p>
                                             <li class=""><a href="classes/Discord-Discord.html#method_handleResume">handleResume()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_handleVoiceServerUpdate">handleVoiceServerUpdate()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_handleVoiceStateUpdate">handleVoiceStateUpdate()</a></li>
+                                            <li class=""><a href="classes/Discord-Discord.html#method_loadSystemDnsConfig">loadSystemDnsConfig()</a></li>
+                                            <li class=""><a href="classes/Discord-Discord.html#method_parseNameservers">parseNameservers()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_processWsMessage">processWsMessage()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_ready">ready()</a></li>
                                             <li class=""><a href="classes/Discord-DiscordCommandClient.html#method_resolveCommandClientOptions">resolveCommandClientOptions()</a></li>
                                             <li class=""><a href="classes/Discord-DiscordCommandClient.html#method_resolveCommandOptions">resolveCommandOptions()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_resolveOptions">resolveOptions()</a></li>
+                                            <li class=""><a href="classes/Discord-Discord.html#method_resolveWithoutSecrets">resolveWithoutSecrets()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_retryRateLimitedRequest">retryRateLimitedRequest()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_runDispatchHandler">runDispatchHandler()</a></li>
                                             <li class=""><a href="classes/Discord-Discord.html#method_sendChunks">sendChunks()</a></li>

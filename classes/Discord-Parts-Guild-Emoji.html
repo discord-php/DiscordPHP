@@ -2571,7 +2571,7 @@ Without this, isset() is false for every attribute and empty() is true.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Emoji.php"><a href="files/src-discord-parts-guild-emoji.html"><abbr title="src/Discord/Parts/Guild/Emoji.php">Emoji.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">210</span>
+    <span class="phpdocumentor-element-found-in__line">221</span>
 
     </aside>
 
@@ -3059,7 +3059,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Emoji.php"><a href="files/src-discord-parts-guild-emoji.html"><abbr title="src/Discord/Parts/Guild/Emoji.php">Emoji.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -3094,7 +3094,26 @@ JSON. Used for JsonSerializable.</p>
                 <span class="phpdocumentor-tag__name">inheritDoc</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        
+                                                                                                            <section class="phpdocumentor-description"><p>Creating a guild emoji needs <code class="prettyprint">create_guild_expressions</code>. Editing one the bot created needs
+<code class="prettyprint">create_guild_expressions</code> or <code class="prettyprint">manage_guild_expressions</code>; editing anyone else's needs
+<code class="prettyprint">manage_guild_expressions</code>.</p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">link</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/resources/emoji#modify-guild-emoji"> https://docs.discord.com/developers/resources/emoji#modify-guild-emoji </a>
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>Missing the permission Discord requires for this change.</p>
+</section>
+
                                     </dd>
                         </dl>
 

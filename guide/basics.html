@@ -402,6 +402,53 @@ include __DIR__.&#039;/vendor/autoload.php&#039;;</code></pre>
 
             <pre><code class="language-php">$discord-&gt;close(false);</code></pre>
 
+            <section class="section " id="observing-the-gateway-transport">
+            <h2>Observing the Gateway transport</h2>
+
+            
+    <p><code>isConnected()</code>
+ reports an open Gateway WebSocket while the client is not closing.
+It does not mean that authentication succeeded, that <code>init</code>
+ has fired, that guild
+or member caches are complete, or that continuity was uninterrupted. Continue using
+<code>init</code>
+ for initial startup and <code>reconnected</code>
+ for recovery. Applications that need
+session observation can track READY/RESUMED and INVALID_SESSION/RECONNECT through the
+existing <code>raw</code>
+ event; raw callbacks run before internal handling. Keep generations,
+snapshot validation and retry decisions in the application.</p>
+
+            
+    <p>Register <code>disconnected</code>
+ before running the loop, not inside <code>init</code>
+, to include
+loss before initialization:</p>
+
+            <pre><code class="language-php">$discord-&gt;on(&#039;disconnected&#039;, function (int $code, string $reason, Discord $discord) {
+    // isConnected() is already false. Invalidate application work here.
+});</code></pre>
+
+            
+    <p>The event fires synchronously once per connected transport, including normal and
+critical close codes. State becomes false before cleanup; notification occurs after
+existing timer cleanup and reconnect scheduling. On explicit <code>close()</code>
+, state becomes
+false before requesting socket close, while notification happens after shutdown work
+(including <code>closed</code>
+ and stopping the loop, if requested). A synchronous or delayed
+WebSocket close callback does not duplicate the notification. For explicit shutdown,
+the code and reason are locally requested, not a server acknowledgement. Failed
+connection attempts that never opened a transport do not emit it.</p>
+
+            
+    <p>Listeners run inline: keep them short and avoid throwing. A thrown listener exception
+propagates, but cannot skip the close cleanup or shutdown work that precedes notification.
+This event does not change the client&#039;s existing reconnection policy. It describes
+transport loss, not every possible session change or the validity of application data.</p>
+
+    </section>
+
     </section>
 
                             </div>
