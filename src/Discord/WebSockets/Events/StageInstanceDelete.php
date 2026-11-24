@@ -40,7 +40,7 @@ class StageInstanceDelete extends Event
                 /** @var ?StageInstance */
                 if ($stageInstancePart = yield $channel->stage_instances->cachePull($data->id)) {
                     $stageInstancePart->fill((array) $data);
-                    $stageInstancePart->created = false;
+                    $stageInstancePart->markDeleted();
                 }
             }
         }

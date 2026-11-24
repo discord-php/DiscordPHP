@@ -37,7 +37,7 @@ class GuildScheduledEventDelete extends Event
             /** @var ?ScheduledEvent */
             if ($scheduledEventPart = yield $guild->guild_scheduled_events->cachePull($data->id)) {
                 $scheduledEventPart->fill((array) $data);
-                $scheduledEventPart->created = false;
+                $scheduledEventPart->markDeleted();
             }
         }
 

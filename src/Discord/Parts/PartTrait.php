@@ -444,6 +444,22 @@ trait PartTrait
     }
 
     /**
+     * Marks this Part as deleted without changing the `created` status of the Part it was built from.
+     *
+     * A Part built with createOf() or loaded with its parent shares the parent's `created` status by
+     * reference, so assigning `created` directly would mark the parent and its other Parts deleted too.
+     *
+     * @internal
+     *
+     * @since 10.73.0
+     */
+    public function markDeleted(): void
+    {
+        $created = false;
+        $this->created = &$created;
+    }
+
+    /**
      * Converts a string to studlyCase.
      *
      * This is a port of updated Laravel's implementation, a non-regex with

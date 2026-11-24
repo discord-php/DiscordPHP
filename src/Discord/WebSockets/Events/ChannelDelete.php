@@ -37,7 +37,7 @@ class ChannelDelete extends Event
             /** @var Channel */
             if ($channelPart = yield $guild->channels->cachePull($data->id)) {
                 $channelPart->fill((array) $data);
-                $channelPart->created = false;
+                $channelPart->markDeleted();
             }
         }
 

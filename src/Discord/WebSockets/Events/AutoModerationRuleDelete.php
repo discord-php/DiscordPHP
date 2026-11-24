@@ -37,7 +37,7 @@ class AutoModerationRuleDelete extends Event
             /** @var ?Rule */
             if ($rulePart = yield $guild->auto_moderation_rules->cachePull($data->id)) {
                 $rulePart->fill((array) $data);
-                $rulePart->created = false;
+                $rulePart->markDeleted();
             }
         }
 
