@@ -55,6 +55,7 @@ class Embed extends Part
         self::TYPE_RICH => EmbedRich::class,
         self::TYPE_IMAGE => EmbedImage::class,
         self::TYPE_VIDEO => EmbedVideo::class,
+        self::TYPE_AUDIO => EmbedAudio::class,
         self::TYPE_GIFV => EmbedGifv::class,
         self::TYPE_ARTICLE => EmbedArticle::class,
         self::TYPE_LINK => EmbedLink::class,
@@ -68,6 +69,8 @@ class Embed extends Part
     public const TYPE_IMAGE = 'image';
     /** Video embed. */
     public const TYPE_VIDEO = 'video';
+    /** Direct audio link preview rendered with an inline player. */
+    public const TYPE_AUDIO = 'audio';
     /** Animated gif image embed rendered as a video embed. */
     public const TYPE_GIFV = 'gifv';
     /** Article embed. */
@@ -163,7 +166,7 @@ class Embed extends Part
     }
 
     /**
-     * Gets the audio attribute described by Discord's stable OpenAPI schema.
+     * Gets the audio resource, including metadata Discord returns for audio link previews.
      *
      * @since 10.69.0
      *
@@ -207,7 +210,7 @@ class Embed extends Part
     /**
      * Sets the fields attribute.
      *
-     * @param Field[] ...$fields
+     * @param array<Field|array<string, mixed>|\stdClass> $fields
      */
     protected function setFieldsAttribute($fields): void
     {
@@ -352,7 +355,7 @@ class Embed extends Part
     /**
      * Adds a field to the embed.
      *
-     * @param Field[] $fields
+     * @param Field|array<string, mixed>|\stdClass ...$fields
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      * @throws \LengthException   A field name is over 256 characters, a value over 1024, or the embed's text over 6000.
@@ -368,6 +371,8 @@ class Embed extends Part
 
             if ($field instanceof Field) {
                 $field = $field->getRawAttributes();
+            } elseif ($field instanceof \stdClass) {
+                $field = (array) $field;
             }
 
             $nameLength = poly_strlen((string) ($field['name'] ?? ''));
@@ -651,6 +656,7 @@ class Embed extends Part
             self::TYPE_RICH,
             self::TYPE_IMAGE,
             self::TYPE_VIDEO,
+            self::TYPE_AUDIO,
             self::TYPE_GIFV,
             self::TYPE_ARTICLE,
             self::TYPE_LINK,

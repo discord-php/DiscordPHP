@@ -21,6 +21,8 @@ use Discord\WebSockets\Event;
  * Received as a webhook event, through {@see \Discord\WebhookEvents\WebhookEventReceiver}.
  *
  * For Social SDK apps, the user's OAuth2 tokens are no longer valid and their account has been unmerged.
+ * Permanent deauthorization removes the game's friendships and friend requests from their Discord account.
+ * Ordinary Discord friendships are unaffected.
  *
  * @link https://docs.discord.com/developers/events/webhook-events#application-deauthorized
  *

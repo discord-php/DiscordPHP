@@ -1312,6 +1312,8 @@ class Guild extends Part
      *
      * Discord answers with no content and sends a `CHANNEL_UPDATE` for each channel it moved; the cached
      * channels are updated as soon as the request succeeds, so they are right before those arrive.
+     * A `parent_id` change is recorded as a `CHANNEL_UPDATE` audit-log entry for that channel.
+     * Discord records a `CHANNEL_POSITION_UPDATE` only if the request also changes a position.
      *
      * @link https://docs.discord.com/developers/resources/guild#modify-guild-channel-positions
      *

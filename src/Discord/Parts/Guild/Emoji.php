@@ -30,7 +30,11 @@ use function React\Promise\reject;
 /**
  * An emoji object represents a custom emoji.
  *
+ * Discord recommends requesting custom emoji from its CDN as WebP. Animated emoji uploaded
+ * as WebP or AVIF do not convert cleanly to GIF.
+ *
  * @link https://docs.discord.com/developers/resources/emoji
+ * @link https://docs.discord.com/developers/reference#image-formatting
  *
  * @since 4.0.2
  *
