@@ -329,9 +329,13 @@ $builder-&gt;setEmbeds($embeds);</code></pre>
             <h3>Embed audio</h3>
 
             
-    <p>Discord&#039;s stable OpenAPI schema includes an optional <code>audio</code>
- object on
-embeds. Received audio is exposed as a <code>Discord\Parts\Channel\Message\Embed\Audio</code>
+    <p>Share a direct link to an audio file in message content to let Discord generate
+an inline player. The received link preview has type <code>Embed::TYPE_AUDIO</code>
+ and
+hydrates as <code>EmbedAudio</code>
+. The optional <code>audio</code>
+ resource is exposed as a
+<code>Discord\Parts\Channel\Message\Embed\Audio</code>
  Part through
 <code>$embed-&gt;audio</code>
 , with <code>url</code>

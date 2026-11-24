@@ -913,7 +913,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">434</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -951,7 +951,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">293</span>
+    <span class="phpdocumentor-element-found-in__line">295</span>
 
     </aside>
 
@@ -1048,8 +1048,8 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>For confidential clients: requires the <code class="prettyprint">clientSecret</code> option. The caller must validate the
-authorization callback's state before calling this, and handle a denied authorization.</p>
+        <section class="phpdocumentor-description"><p>Uses HTTP Basic authentication (<code class="prettyprint">client_secret_basic</code>) and requires <code class="prettyprint">clientSecret</code>.
+The caller must validate the authorization callback's state and handle denied authorization.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1127,7 +1127,7 @@ authorization callback's state before calling this, and handle a denied authoriz
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">377</span>
+    <span class="phpdocumentor-element-found-in__line">382</span>
 
     </aside>
 
@@ -1211,7 +1211,7 @@ authorization callback's state before calling this, and handle a denied authoriz
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">336</span>
 
     </aside>
 
@@ -1295,7 +1295,7 @@ authorization callback's state before calling this, and handle a denied authoriz
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">275</span>
 
     </aside>
 
@@ -1346,7 +1346,7 @@ authorization callback's state before calling this, and handle a denied authoriz
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">182</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -1519,7 +1519,7 @@ Set, ready to give a JWT library to verify an ID token with. They need no token 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
@@ -1584,7 +1584,7 @@ Known provisional and child origins reject without a request; repeat their issua
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -1655,7 +1655,7 @@ Known provisional and child origins reject without a request; repeat their issua
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1669,6 +1669,8 @@ Known provisional and child origins reject without a request; repeat their issua
         </div>
     
         <section class="phpdocumentor-description"><p>Discord invalidates all access and refresh tokens for the authorization, not only this token.
+Permanently revoking a Social SDK game's authorization also removes its game relationships
+from the player's Discord account. Ordinary Discord friendships are unaffected.
 The caller must also clear their account mapping and any other local keys for that user.
 Requires the <code class="prettyprint">clientSecret</code> option. On HTTP failure the local session and token are retained.
 Retained Session objects must no longer be used after a successful revocation.</p>
@@ -1738,7 +1740,7 @@ Retained Session objects must no longer be used after a successful revocation.</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">354</span>
+    <span class="phpdocumentor-element-found-in__line">359</span>
 
     </aside>
 
@@ -1751,7 +1753,8 @@ Retained Session objects must no longer be used after a successful revocation.</
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>Needs the <code class="prettyprint">clientSecret</code> option.</p>
+        <section class="phpdocumentor-description"><p>Needs the <code class="prettyprint">clientSecret</code> option. Eligible game relationships move to the provisional account.
+Discord deletes the rest.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1813,7 +1816,7 @@ Retained Session objects must no longer be used after a successful revocation.</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">314</span>
+    <span class="phpdocumentor-element-found-in__line">318</span>
 
     </aside>
 
@@ -1826,7 +1829,9 @@ Retained Session objects must no longer be used after a successful revocation.</
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>Eligible game relationships move to the provisional account. Discord deletes the rest.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1877,7 +1882,7 @@ Retained Session objects must no longer be used after a successful revocation.</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">428</span>
+    <span class="phpdocumentor-element-found-in__line">433</span>
 
     </aside>
 
@@ -1916,7 +1921,7 @@ Retained Session objects must no longer be used after a successful revocation.</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">396</span>
 
     </aside>
 
@@ -1972,7 +1977,7 @@ Retained Session objects must no longer be used after a successful revocation.</
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/OAuth2/SessionManager.php"><a href="files/src-discord-oauth2-sessionmanager.html"><abbr title="src/Discord/OAuth2/SessionManager.php">SessionManager.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">410</span>
+    <span class="phpdocumentor-element-found-in__line">415</span>
 
     </aside>
 

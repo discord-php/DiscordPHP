@@ -2726,8 +2726,8 @@ Use the second parameter to specify local file path instead.</p>
 </tr>
 <tr>
 <td>referenced_message</td>
-<td><a href="#message">Message</a></td>
-<td>the message that is referenced in a reply</td>
+<td><a href="#message">Message</a> or null</td>
+<td>the referenced message, if available</td>
 </tr>
 <tr>
 <td>interaction</td>
@@ -2801,6 +2801,7 @@ Use the second parameter to specify local file path instead.</p>
 </tr>
 </tbody>
 </table>
+<p>Discord sends an explicit <code class="language-text">null</code> for a deleted referenced message or an unavailable thread starter. If Discord omits <code class="language-text">referenced_message</code>, DiscordPHP can still resolve the reference from its channel message cache.</p>
 <h3>Reply to a message</h3>
 <p>Sends a "reply" to the message. Returns the new message in a promise.</p>
 <h4>Parameters</h4>
@@ -2828,6 +2829,7 @@ Use the second parameter to specify local file path instead.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$message</span><span class="token operator">-></span><span class="token function">crosspost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Discord sends an explicit <code class="language-text">null</code> for a deleted referenced message or an unavailable thread starter. If Discord omits <code class="language-text">referenced_message</code>, DiscordPHP can still resolve the reference from its channel message cache.</p>
 <h3>Reply to a message after a delay</h3>
 <p>Similar to replying to a message, also takes a <code class="language-text">delay</code> parameter in which the reply will be sent after. Returns the new message in a promise.</p>
 <h4>Parameters</h4>
@@ -3636,6 +3638,8 @@ an example is shown on the right.</p>
 <p>You can also set the embeds from another array of embeds. Note this will remove the current embeds from the message.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$embeds</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token variable">$builder</span><span class="token operator">-></span><span class="token function">setEmbeds</span><span class="token punctuation">(</span><span class="token variable">$embeds</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<h4>Audio link previews</h4>
+<p>Share a direct audio file URL in message content to let Discord generate an inline player. A received preview has type <code class="language-text">Embed::TYPE_AUDIO</code> and hydrates as <code class="language-text">EmbedAudio</code>. Its <code class="language-text">$embed->audio</code> exposes <code class="language-text">url</code>, <code class="language-text">proxy_url</code>, <code class="language-text">content_type</code>, and <code class="language-text">description</code> when Discord provides them.</p>
 <h4>Replying to a message</h4>
 <p>Sets the message as replying to another message. Takes a <code class="language-text">Message</code> object.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">MESSAGE_CREATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token keyword">use</span> <span class="token punctuation">(</span><span class="token variable">$builder</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -3664,7 +3668,9 @@ does not exist.</p>
 Throws an <code class="language-text">InvalidArgumentException</code> if the given component is not an <code class="language-text">ActionRow</code> or <code class="language-text">SelectMenu</code>
 Throws an <code class="language-text">OverflowException</code> if you already have 5 components in the message.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$component</span> <span class="token operator">=</span> <span class="token class-name static-context">SelectMenu</span><span class="token operator">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token variable">$builder</span><span class="token operator">-></span><span class="token function">addComponent</span><span class="token punctuation">(</span><span class="token variable">$component</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="message-components">Message Components</h2><div class="api-module--section--1E1xV"><h2>Website component embeds</h2>
+<span class="token variable">$builder</span><span class="token operator">-></span><span class="token function">addComponent</span><span class="token punctuation">(</span><span class="token variable">$component</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="message-components">Message Components</h2><div class="api-module--section--1E1xV"><h2>Text Display</h2>
+<p>Discord allows up to 4,000 characters across all Text Displays in one message or modal, including nested Text Displays. <code class="language-text">TextDisplay::new()</code> and <code class="language-text">setContent()</code> check the length of each individual component. Keep the combined length within the limit when assembling the message or modal.</p>
+<h2>Website component embeds</h2>
 <p>Website link previews use a separate <code class="language-text">components</code> embed type. DiscordPHP hydrates
 these as <code class="language-text">Discord\Parts\Channel\Message\Embed\EmbedComponents</code>; its read-only
 <code class="language-text">components</code> collection contains one typed <code class="language-text">Container</code>. Child components and

@@ -7678,7 +7678,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AgetAudioAttribute\u0028\u0029",
             "name": "getAudioAttribute",
-            "summary": "Gets\u0020the\u0020audio\u0020attribute\u0020described\u0020by\u0020Discord\u0027s\u0020stable\u0020OpenAPI\u0020schema.",
+            "summary": "Gets\u0020the\u0020audio\u0020resource,\u0020including\u0020metadata\u0020Discord\u0020returns\u0020for\u0020audio\u0020link\u0020previews.",
             "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#method_getAudioAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003AgetProviderAttribute\u0028\u0029",
@@ -7821,6 +7821,11 @@ Search.appendIndex(
             "summary": "Video\u0020embed.",
             "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#constant_TYPE_VIDEO"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003ATYPE_AUDIO",
+            "name": "TYPE_AUDIO",
+            "summary": "Direct\u0020audio\u0020link\u0020preview\u0020rendered\u0020with\u0020an\u0020inline\u0020player.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-Embed.html#constant_TYPE_AUDIO"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\Embed\u003A\u003ATYPE_GIFV",
             "name": "TYPE_GIFV",
             "summary": "Animated\u0020gif\u0020image\u0020embed\u0020rendered\u0020as\u0020a\u0020video\u0020embed.",
@@ -7880,6 +7885,16 @@ Search.appendIndex(
             "name": "TYPE",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Embed-EmbedArticle.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\EmbedAudio",
+            "name": "EmbedAudio",
+            "summary": "An\u0020embed\u0020object\u0020received\u0020with\u0020a\u0020message,\u0020or\u0020a\u0020rich\u0020embed\u0020to\u0020send.",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-EmbedAudio.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\EmbedAudio\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Embed-EmbedAudio.html#constant_TYPE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Embed\\EmbedComponents",
             "name": "EmbedComponents",
@@ -8313,7 +8328,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Message\u003A\u003AgetReferencedMessageAttribute\u0028\u0029",
             "name": "getReferencedMessageAttribute",
-            "summary": "Gets\u0020the\u0020referenced\u0020message\u0020attribute,\u0020if\u0020present.",
+            "summary": "Gets\u0020the\u0020referenced\u0020message.\u0020Discord\u0020sends\u0020explicit\u0020null\u0020for\u0020a\u0020deleted\u0020reference\u0020or\u0020a\nthread\u0020starter\u0020that\u0020is\u0020unavailable\u0020to\u0020the\u0020requester.\u0020An\u0020omitted\u0020field\u0020still\u0020allows\u0020a\u0020cache\u0020lookup.",
             "url": "classes/Discord-Parts-Channel-Message-Message.html#method_getReferencedMessageAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Message\u003A\u003AgetMessageReferenceAttribute\u0028\u0029",

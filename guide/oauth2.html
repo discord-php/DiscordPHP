@@ -357,8 +357,20 @@ links. Keep tokens and the client secret on the backend.</p>
 Native SDK presence uses <code>openid sdk.social_layer_presence</code>
 ; communication
 uses <code>openid sdk.social_layer</code>
-. This exchange helper is for confidential
-clients with a secret; public-client PKCE authorization remains a separate flow.
+. This helper uses <code>client_secret_basic</code>
+
+(HTTP Basic authentication). Discord&#039;s <a href="https://discord.com/.well-known/openid-configuration">OpenID Connect discovery document</a> also advertises
+<code>client_secret_post</code>
+ and <code>none</code>
+. Any application can exchange an authorization
+code with <code>none</code>
+ by providing its client ID and an S256 PKCE verifier. Refresh
+with <code>none</code>
+ is limited to public clients, and the client credentials grant
+requires authentication. For a separate PKCE exchange, pass the returned token
+response to <code>$discord-&gt;sessions-&gt;open()</code>
+. The manager&#039;s refresh and revoke
+helpers require application credentials.
 See the <a href="https://docs.discord.com/developers/discord-social-sdk/development-guides/account-linking-on-web">web linking guide</a>
 and <a href="https://docs.discord.com/developers/discord-social-sdk/core-concepts/oauth2-scopes">SDK scopes</a>.</p>
 
@@ -385,6 +397,18 @@ state available for retry. A token-store rejection propagates; a <code>false</co
 
 deletion result reports incomplete local cleanup after remote revocation.
 Stop using retained Session objects after revocation.</p>
+
+            
+    <p>Permanent deauthorization removes the game&#039;s friendships and incoming or
+outgoing game friend requests from the player&#039;s Discord account. When Discord
+creates a new provisional account, eligible relationships move to it. The other
+player must still authorize the game with <code>sdk.social_layer</code>
+ or
+<code>sdk.social_layer_presence</code>
+. Blocks and relationship limits can also prevent
+a transfer. Discord deletes relationships that cannot transfer. Ordinary
+Discord friendships are unaffected. During a temporary ban, relationships
+that cannot transfer stay on the original account.</p>
 
             
     <p>Discord invalidates the authorization&#039;s access and refresh tokens together.
