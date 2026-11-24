@@ -17,6 +17,7 @@ use Discord\Discord;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\Embed\Audio;
 use Discord\Parts\Channel\Message\Embed\Embed;
+use Discord\Parts\Channel\Message\Embed\EmbedAudio;
 use Discord\Parts\Channel\Message\Message;
 use Discord\Repository\Channel\MessageRepository;
 
@@ -41,8 +42,12 @@ final class EmbedAudioTest extends DiscordTestCase
 
     public function testReceivedMessageHydratesAndRetainsAudio(): void
     {
-        $message = getMockDiscord()->getFactory()->part(Message::class, $this->fixture(), true);
+        $payload = $this->fixture();
+        $payload['embeds'][0]['type'] = 'audio';
+        $message = getMockDiscord()->getFactory()->part(Message::class, $payload, true);
         $embed = $message->embeds->first();
+        $this->assertInstanceOf(EmbedAudio::class, $embed);
+        $this->assertSame(Embed::TYPE_AUDIO, $embed->type);
         $audio = $embed->audio;
 
         $this->assertInstanceOf(Audio::class, $audio);

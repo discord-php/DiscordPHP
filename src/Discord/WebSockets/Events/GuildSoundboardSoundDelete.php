@@ -38,7 +38,7 @@ class GuildSoundboardSoundDelete extends Event
             $part = yield $guild->sounds->cachePull($data->sound_id);
             if ($part instanceof Sound) {
                 $part->fill((array) $data);
-                $part->created = false;
+                $part->markDeleted();
             }
         }
 

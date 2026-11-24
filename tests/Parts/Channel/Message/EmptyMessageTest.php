@@ -18,10 +18,34 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Channel\Message\Embed\Embed;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\User;
 
 final class EmptyMessageTest extends DiscordTestCase
 {
+    public function testUnavailableThreadStarterDoesNotFallBackToCache(): void
+    {
+        $discord = getOfflineDiscord();
+        $factory = $discord->getFactory();
+        $guild = $factory->part(Guild::class, ['id' => '9200'], true);
+        $discord->guilds->pushItem($guild);
+        $channel = $factory->part(Channel::class, ['id' => '9201', 'guild_id' => $guild->id, 'type' => Channel::TYPE_GUILD_TEXT], true);
+        $guild->channels->pushItem($channel);
+        $original = $factory->part(Message::class, ['id' => '9202', 'channel_id' => $channel->id], true);
+        $channel->messages->pushItem($original);
+
+        $starter = $factory->part(Message::class, [
+            'id' => '9203',
+            'type' => Message::TYPE_THREAD_STARTER_MESSAGE,
+            'message_reference' => (object) ['guild_id' => $guild->id, 'channel_id' => $channel->id, 'message_id' => $original->id],
+        ], true);
+
+        $this->assertSame($original, $starter->referenced_message);
+        $starter->fill(['referenced_message' => null]);
+        $this->assertNull($starter->referenced_message);
+        $this->assertSame($original, $channel->messages->get('id', $original->id));
+    }
+
     /**
      * @covers \Discord\Parts\Channel\Channel::sendMessage
      */

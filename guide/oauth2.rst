@@ -62,8 +62,15 @@ links. Keep tokens and the client secret on the backend.
 Request the scopes needed by your integration. ``identify`` permits
 ``getCurrentUser()``; game stats writes require ``application_identities.write``.
 Native SDK presence uses ``openid sdk.social_layer_presence``; communication
-uses ``openid sdk.social_layer``. This exchange helper is for confidential
-clients with a secret; public-client PKCE authorization remains a separate flow.
+uses ``openid sdk.social_layer``. This helper uses ``client_secret_basic``
+(HTTP Basic authentication). Discord's `OpenID Connect discovery document
+<https://discord.com/.well-known/openid-configuration>`_ also advertises
+``client_secret_post`` and ``none``. Any application can exchange an authorization
+code with ``none`` by providing its client ID and an S256 PKCE verifier. Refresh
+with ``none`` is limited to public clients, and the client credentials grant
+requires authentication. For a separate PKCE exchange, pass the returned token
+response to ``$discord->sessions->open()``. The manager's refresh and revoke
+helpers require application credentials.
 See the `web linking guide <https://docs.discord.com/developers/discord-social-sdk/development-guides/account-linking-on-web>`_
 and `SDK scopes <https://docs.discord.com/developers/discord-social-sdk/core-concepts/oauth2-scopes>`_.
 
@@ -86,6 +93,15 @@ unkeyed sessions resolve to ``true``. A rejected Discord request leaves local
 state available for retry. A token-store rejection propagates; a ``false``
 deletion result reports incomplete local cleanup after remote revocation.
 Stop using retained Session objects after revocation.
+
+Permanent deauthorization removes the game's friendships and incoming or
+outgoing game friend requests from the player's Discord account. When Discord
+creates a new provisional account, eligible relationships move to it. The other
+player must still authorize the game with ``sdk.social_layer`` or
+``sdk.social_layer_presence``. Blocks and relationship limits can also prevent
+a transfer. Discord deletes relationships that cannot transfer. Ordinary
+Discord friendships are unaffected. During a temporary ban, relationships
+that cannot transfer stay on the original account.
 
 Discord invalidates the authorization's access and refresh tokens together.
 Only the supplied session's local key is removed, because your application

@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Channel\Message\Embed\Field;
+use Discord\Parts\Channel\Message\Message;
 
 /**
  * Discord's embed field limits are enforced when a field is added, rather than by a 400 from Discord.
@@ -22,6 +23,23 @@ use Discord\Parts\Channel\Message\Embed\Field;
  */
 final class EmbedFieldLimitsTest extends DiscordTestCase
 {
+    public function testReceivedRichEmbedPreservesObjectFields()
+    {
+        $payload = json_decode(
+            '{"id":"1","embeds":[{"type":"rich","fields":[{"name":"Platform","value":"PHP","inline":true}]}]}',
+            false,
+            512,
+            JSON_THROW_ON_ERROR,
+        );
+        $message = getMockDiscord()->getFactory()->part(Message::class, (array) $payload, true);
+        $field = $message->embeds->first()->fields->first();
+
+        $this->assertInstanceOf(Field::class, $field);
+        $this->assertSame('Platform', $field->name);
+        $this->assertSame('PHP', $field->value);
+        $this->assertTrue($field->inline);
+    }
+
     public function testTwentyFiveFieldsFitAndTheTwentySixthDoesNot()
     {
         $embed = $this->embed();

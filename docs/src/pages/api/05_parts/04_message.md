@@ -35,7 +35,7 @@ Messages are present in channels and can be anything from a cross post to a repl
 | application                            | object                                   | application of the message, requires rich presence                                                 |
 | application_id                         | string                                   | if the message is a response to an Interaction, this is the id of the interaction's application    |
 | message_reference                      | object                                   | message that is referenced by the message                                                          |
-| referenced_message                     | [Message](#message)                      | the message that is referenced in a reply                                                          |
+| referenced_message                     | [Message](#message) or null              | the referenced message, if available                                                              |
 | interaction                            | object                                   | the interaction which triggered the message (application commands)                                 |
 | thread                                 | [Thread](#thread)                        | the thread that the message was sent in                                                            |
 | components                             | [Component](#component)                  | sent if the message contains components like buttons, action rows, or other interactive components |
@@ -50,6 +50,8 @@ Messages are present in channels and can be anything from a cross post to a repl
 | ephemeral                              | bool                                     | whether this message is only visible to the user who invoked the Interaction                       |
 | loading                                | bool                                     | whether this message is an Interaction Response and the bot is "thinking"                          |
 | failed_to_mention_some_roles_in_thread | bool                                     | this message failed to mention some roles and add their members to the thread                      |
+
+Discord sends an explicit `null` for a deleted referenced message or an unavailable thread starter. If Discord omits `referenced_message`, DiscordPHP can still resolve the reference from its channel message cache.
 
 ### Reply to a message
 
@@ -76,6 +78,8 @@ $message->crosspost()->then(function (Message $message) {
     // ...
 });
 ```
+
+Discord sends an explicit `null` for a deleted referenced message or an unavailable thread starter. If Discord omits `referenced_message`, DiscordPHP can still resolve the reference from its channel message cache.
 
 ### Reply to a message after a delay
 

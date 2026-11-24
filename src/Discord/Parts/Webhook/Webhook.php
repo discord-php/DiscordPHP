@@ -343,7 +343,7 @@ class Webhook extends Part
 
         return $this->http->delete(Endpoint::bind(Endpoint::WEBHOOK_TOKEN, $this->id, $this->token))
             ->then(function () {
-                $this->created = false;
+                $this->markDeleted();
 
                 return $this;
             });

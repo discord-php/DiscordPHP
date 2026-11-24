@@ -44,7 +44,7 @@ class GuildScheduledEventExceptionDelete extends Event
             }
         }
 
-        $scheduledEventExceptionPart->created = false;
+        $scheduledEventExceptionPart->markDeleted();
 
         return $scheduledEventExceptionPart;
     }

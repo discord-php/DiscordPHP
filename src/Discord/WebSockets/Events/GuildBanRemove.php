@@ -36,7 +36,7 @@ class GuildBanRemove extends Event
             /** @var ?Ban */
             if ($banPart = yield $guild->bans->cachePull($data->user->id)) {
                 $banPart->fill((array) $data);
-                $banPart->created = false;
+                $banPart->markDeleted();
             }
         }
 
