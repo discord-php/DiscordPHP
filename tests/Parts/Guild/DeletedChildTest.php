@@ -27,15 +27,15 @@ final class DeletedChildTest extends DiscordTestCase
     public function testDeletingAChannelLeavesTheGuildAndOtherChannels()
     {
         return wait(function (Discord $discord, $resolve) {
-            $mock = getMockDiscord();
+            $mock = getMockDiscord(['loop' => $discord->getLoop()]);
             $mock->getHttpClient()->setDriver(getMockHttpDriver(fn () => null));
-            [$guild, $a, $b] = $this->guildWithTwoChannels($mock);
+            [$guild, $deletedChannel, $otherChannel] = $this->guildWithTwoChannels($mock);
 
-            $guild->channels->delete($a)
-                ->then(function () use ($guild, $a, $b) {
-                    $this->assertFalse($a->created);
+            $guild->channels->delete($deletedChannel)
+                ->then(function () use ($guild, $deletedChannel, $otherChannel) {
+                    $this->assertFalse($deletedChannel->created);
                     $this->assertTrue($guild->created);
-                    $this->assertTrue($b->created);
+                    $this->assertTrue($otherChannel->created);
                 })
                 ->then($resolve, $resolve);
         });
@@ -44,15 +44,15 @@ final class DeletedChildTest extends DiscordTestCase
     public function testAChannelDeleteEventLeavesTheGuildAndOtherChannels()
     {
         return wait(function (Discord $discord, $resolve) {
-            $mock = getMockDiscord();
-            [$guild, $a, $b] = $this->guildWithTwoChannels($mock);
+            $mock = getMockDiscord(['loop' => $discord->getLoop()]);
+            [$guild, $deletedChannel, $otherChannel] = $this->guildWithTwoChannels($mock);
             $mock->guilds->pushItem($guild);
 
             promiseFromGenerator((new ChannelDelete($mock))->handle((object) ['id' => '101', 'guild_id' => '10', 'type' => Channel::TYPE_GUILD_TEXT]))
-                ->then(function () use ($guild, $a, $b) {
-                    $this->assertFalse($a->created);
+                ->then(function () use ($guild, $deletedChannel, $otherChannel) {
+                    $this->assertFalse($deletedChannel->created);
                     $this->assertTrue($guild->created);
-                    $this->assertTrue($b->created);
+                    $this->assertTrue($otherChannel->created);
                 })
                 ->then($resolve, $resolve);
         });
