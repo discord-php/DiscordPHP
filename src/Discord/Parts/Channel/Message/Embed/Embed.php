@@ -210,7 +210,7 @@ class Embed extends Part
     /**
      * Sets the fields attribute.
      *
-     * @param Field[] ...$fields
+     * @param array<Field|array<string, mixed>|\stdClass> $fields
      */
     protected function setFieldsAttribute($fields): void
     {
@@ -355,7 +355,7 @@ class Embed extends Part
     /**
      * Adds a field to the embed.
      *
-     * @param Field[] $fields
+     * @param Field|array<string, mixed>|\stdClass ...$fields
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      * @throws \LengthException   A field name is over 256 characters, a value over 1024, or the embed's text over 6000.
@@ -371,6 +371,8 @@ class Embed extends Part
 
             if ($field instanceof Field) {
                 $field = $field->getRawAttributes();
+            } elseif ($field instanceof \stdClass) {
+                $field = (array) $field;
             }
 
             $nameLength = poly_strlen((string) ($field['name'] ?? ''));
