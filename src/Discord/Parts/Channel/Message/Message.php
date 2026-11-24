@@ -81,7 +81,7 @@ use function React\Promise\reject;
  * @property      MessageReference|null                                    $message_reference               Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
  * @property-read MessageSnapshot|null                                     $message_snapshot                The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
  * @property      ExCollectionInterface<MessageSnapshot>|MessageSnapshot[] $message_snapshots               The messages associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
- * @property      ?Message|null                                            $referenced_message              The message that is referenced in a reply.
+ * @property      ?Message|null                                            $referenced_message              The referenced message, if available.
  * @property      MessageInteractionMetadata|null                          $interaction_metadata            Sent if the message is sent as a result of an interaction.
  * @property      MessageInteraction|null                                  $interaction                     Sent if the message is a response to an Interaction.
  * @property      Thread|null                                              $thread                          The thread that was started from this message, includes thread member object.
@@ -712,12 +712,17 @@ class Message extends Part
     }
 
     /**
-     * Gets the referenced message attribute, if present.
+     * Gets the referenced message. Discord sends explicit null for a deleted reference or a
+     * thread starter that is unavailable to the requester. An omitted field still allows a cache lookup.
      *
      * @return Message|null
      */
     protected function getReferencedMessageAttribute(): ?Message
     {
+        if (array_key_exists('referenced_message', $this->attributes) && $this->attributes['referenced_message'] === null) {
+            return null;
+        }
+
         // try to get the message from the relevant repository
         // otherwise, if message is present in payload, create it
         // otherwise, return null

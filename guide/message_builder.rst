@@ -57,8 +57,10 @@ You can also set the embeds from another array of embeds. Note this will remove 
 Embed audio
 -----------
 
-Discord's stable OpenAPI schema includes an optional ``audio`` object on
-embeds. Received audio is exposed as a ``Discord\Parts\Channel\Message\Embed\Audio`` Part through
+Share a direct link to an audio file in message content to let Discord generate
+an inline player. The received link preview has type ``Embed::TYPE_AUDIO`` and
+hydrates as ``EmbedAudio``. The optional ``audio`` resource is exposed as a
+``Discord\Parts\Channel\Message\Embed\Audio`` Part through
 ``$embed->audio``, with ``url``, ``proxy_url``, ``content_type`` and
 ``description`` attributes. Missing or null audio returns ``null``.
 

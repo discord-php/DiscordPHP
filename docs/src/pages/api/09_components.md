@@ -2,6 +2,10 @@
 title: "Message Components"
 ---
 
+## Text Display
+
+Discord allows up to 4,000 characters across all Text Displays in one message or modal, including nested Text Displays. `TextDisplay::new()` and `setContent()` check the length of each individual component. Keep the combined length within the limit when assembling the message or modal.
+
 ## Website component embeds
 
 Website link previews use a separate `components` embed type. DiscordPHP hydrates

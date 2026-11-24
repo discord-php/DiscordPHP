@@ -118,8 +118,8 @@ class SessionManager
     /**
      * Exchanges an authorization code for a user's token and opens a session as them.
      *
-     * For confidential clients: requires the `clientSecret` option. The caller must validate the
-     * authorization callback's state before calling this, and handle a denied authorization.
+     * Uses HTTP Basic authentication (`client_secret_basic`) and requires `clientSecret`.
+     * The caller must validate the authorization callback's state and handle denied authorization.
      *
      * @link https://docs.discord.com/developers/topics/oauth2#authorization-code-grant
      *
@@ -148,6 +148,8 @@ class SessionManager
      * Revokes a user's OAuth2 authorization at Discord, then forgets this session's stored token.
      *
      * Discord invalidates all access and refresh tokens for the authorization, not only this token.
+     * Permanently revoking a Social SDK game's authorization also removes its game relationships
+     * from the player's Discord account. Ordinary Discord friendships are unaffected.
      * The caller must also clear their account mapping and any other local keys for that user.
      * Requires the `clientSecret` option. On HTTP failure the local session and token are retained.
      * Retained Session objects must no longer be used after a successful revocation.
@@ -305,6 +307,8 @@ class SessionManager
     /**
      * Separates a provisional account from the Discord account it was merged into, using the bot token.
      *
+     * Eligible game relationships move to the provisional account. Discord deletes the rest.
+     *
      * @link https://docs.discord.com/developers/discord-social-sdk/development-guides/provisional-accounts/unmerging-accounts
      *
      * @param string $external_user_id The player's unique id in your account system, as given to {@see createProvisionalAccount()}.
@@ -342,7 +346,8 @@ class SessionManager
     /**
      * Separates a provisional account from the Discord account it was merged into, identifying the player by an external provider's token.
      *
-     * Needs the `clientSecret` option.
+     * Needs the `clientSecret` option. Eligible game relationships move to the provisional account.
+     * Discord deletes the rest.
      *
      * @link https://docs.discord.com/developers/discord-social-sdk/development-guides/provisional-accounts/unmerging-accounts
      *

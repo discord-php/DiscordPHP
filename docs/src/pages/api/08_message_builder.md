@@ -51,6 +51,10 @@ $embeds = [...];
 $builder->setEmbeds($embeds);
 ```
 
+#### Audio link previews
+
+Share a direct audio file URL in message content to let Discord generate an inline player. A received preview has type `Embed::TYPE_AUDIO` and hydrates as `EmbedAudio`. Its `$embed->audio` exposes `url`, `proxy_url`, `content_type`, and `description` when Discord provides them.
+
 #### Replying to a message
 
 Sets the message as replying to another message. Takes a `Message` object.

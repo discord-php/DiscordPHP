@@ -17,7 +17,8 @@ namespace Discord\Parts\Channel\Message;
 /**
  * A Text Display is a top-level content component that allows you to add text to your message formatted with markdown and mention users and roles. This is similar to the content field of a message, but allows you to add multiple text components, controlling the layout of your message.
  *
- * Text Displays are only available in messages.
+ * Text Displays can appear in messages and modals. Discord allows up to 4000 characters
+ * across all Text Displays in a single message or modal.
  *
  * @link https://docs.discord.com/developers/components/reference#text-display
  *
