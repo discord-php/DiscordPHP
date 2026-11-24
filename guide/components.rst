@@ -5,6 +5,14 @@ Message Components
 
 Message components are new components you can add to messages, such as buttons and select menus. There are currently four different types of message components:
 
+``TextDisplay``
+===============
+
+Discord allows up to 4000 characters across all Text Displays in one message
+or modal, including nested Text Displays. The builder checks the length of
+individual Text Displays. Keep the combined length within the limit when
+assembling the message or modal.
+
 ``ActionRow``
 =============
 
