@@ -14,13 +14,14 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
 /**
  * A received group of actions in an overflow menu.
  *
  * @property string|null                $label      Optional group heading.
- * @property-read list<MenuActionItem>  $components Actions in display order.
+ * @property-read ExCollectionInterface<MenuActionItem>  $components Actions in display order.
  */
 class OverflowMenuGroup extends Part
 {
@@ -29,19 +30,12 @@ class OverflowMenuGroup extends Part
     /**
      * Hydrates the received actions in display order.
      *
-     * @return list<MenuActionItem>
+     * @return ExCollectionInterface<MenuActionItem>
      */
-    protected function getComponentsAttribute(): array
+    protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $items = $this->attributes['components'] ?? [];
-
-        foreach ($items as &$item) {
-            if (! $item instanceof MenuActionItem) {
-                $item = $this->createOf(MenuActionItem::class, $item);
-            }
-        }
-        $this->attributes['components'] = $items;
-
-        return array_values($items);
+        // IDs are optional. Positional keys keep all items in display order
+        // without conflating a supplied ID with a generated array offset.
+        return $this->attributeCollectionHelper('components', MenuActionItem::class, null);
     }
 }

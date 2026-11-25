@@ -223,7 +223,7 @@ class ModalBuilder extends Builder implements JsonSerializable
         ];
     }
 
-    private function rejectOverflowMenuRow(mixed $component): void
+    protected function rejectOverflowMenuRow(mixed $component): void
     {
         if ($component instanceof ActionRow) {
             $children = $component->getComponents();

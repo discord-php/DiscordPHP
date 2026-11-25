@@ -24,7 +24,7 @@ use Discord\Parts\Part;
  * Group wrappers are not components. This builder does not register click handlers.
  *
  * @property-read int                      $type   Component type 25.
- * @property int|null                      $id     Optional numeric component ID, not a custom ID.
+ * @property-write int|string|null                      $id     Optional numeric component ID, not a custom ID.
  * @property-read list<OverflowMenuGroup>  $groups Groups in display order.
  *
  * @see OverflowMenuPart For the received message component.
@@ -36,7 +36,7 @@ class OverflowMenu extends ComponentObject
     protected $type = self::TYPE_OVERFLOW_MENU;
 
     /** @var list<OverflowMenuGroup> */
-    private array $groups = [];
+    protected array $groups = [];
 
     /**
      * Creates an empty menu. Add at least one group before serializing.
@@ -55,7 +55,7 @@ class OverflowMenu extends ComponentObject
      * @throws \InvalidArgumentException If a string does not represent an integer.
      * @return self
      */
-    public function setId(int|string|null $id = null): self
+    protected function setId(int|string|null $id = null): self
     {
         if (is_string($id) && filter_var($id, FILTER_VALIDATE_INT) === false) {
             throw new \InvalidArgumentException('A component ID must be an integer.');

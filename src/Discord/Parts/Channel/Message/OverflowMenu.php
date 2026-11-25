@@ -14,12 +14,14 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Helpers\ExCollectionInterface;
+
 /**
  * A received overflow menu nested in an action row or section accessory.
  *
  * @property int                           $type   Component type 25.
  * @property int|null                      $id     Optional numeric component ID.
- * @property-read list<OverflowMenuGroup>  $groups Groups in display order.
+ * @property-read ExCollectionInterface<OverflowMenuGroup>  $groups Groups in display order.
  */
 class OverflowMenu extends Component
 {
@@ -28,19 +30,11 @@ class OverflowMenu extends Component
     /**
      * Hydrates the message payload groups in display order.
      *
-     * @return list<OverflowMenuGroup>
+     * @return ExCollectionInterface<OverflowMenuGroup>
      */
-    protected function getGroupsAttribute(): array
+    protected function getGroupsAttribute(): ExCollectionInterface
     {
-        $groups = $this->attributes['groups'] ?? [];
-
-        foreach ($groups as &$group) {
-            if (! $group instanceof OverflowMenuGroup) {
-                $group = $this->createOf(OverflowMenuGroup::class, $group);
-            }
-        }
-        $this->attributes['groups'] = $groups;
-
-        return array_values($groups);
+        // Groups have no Discord ID. Keep their display order.
+        return $this->attributeCollectionHelper('groups', OverflowMenuGroup::class, null);
     }
 }

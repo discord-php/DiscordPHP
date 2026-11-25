@@ -25,7 +25,7 @@ use Discord\Parts\Part;
  * The optional numeric component ID is not a custom ID for registering callbacks.
  *
  * @property-read int            $type        Component type 26.
- * @property int|null            $id          Optional numeric component ID.
+ * @property-write int|string|null            $id          Optional numeric component ID.
  * @property string|null         $label       User-facing action text; required on serialization.
  * @property int                 $style       One of the STYLE_* constants.
  * @property string|null         $description Optional user-facing description.
@@ -45,11 +45,11 @@ class MenuActionItem extends ComponentObject
 
     protected $type = self::TYPE_MENU_ACTION_ITEM;
 
-    private ?string $label = null;
-    private int $style = self::STYLE_DEFAULT;
-    private ?string $description = null;
-    private ?string $url = null;
-    private array|Emoji|string|null $emoji = null;
+    protected ?string $label = null;
+    protected int $style = self::STYLE_DEFAULT;
+    protected ?string $description = null;
+    protected ?string $url = null;
+    protected array|Emoji|string|null $emoji = null;
 
     /**
      * Creates an action with a label and style.
@@ -71,7 +71,7 @@ class MenuActionItem extends ComponentObject
      * @throws \InvalidArgumentException If a string does not represent an integer.
      * @return self
      */
-    public function setId(int|string|null $id = null): self
+    protected function setId(int|string|null $id = null): self
     {
         if (is_string($id) && filter_var($id, FILTER_VALIDATE_INT) === false) {
             throw new \InvalidArgumentException('A component ID must be an integer.');
@@ -127,7 +127,7 @@ class MenuActionItem extends ComponentObject
      *
      * @return string|null
      */
-    public function getLabel(): ?string
+    protected function getLabel(): ?string
     {
         return $this->label;
     }
@@ -155,7 +155,7 @@ class MenuActionItem extends ComponentObject
      *
      * @return int
      */
-    public function getStyle(): int
+    protected function getStyle(): int
     {
         return $this->style;
     }
@@ -178,7 +178,7 @@ class MenuActionItem extends ComponentObject
      *
      * @return string|null
      */
-    public function getDescription(): ?string
+    protected function getDescription(): ?string
     {
         return $this->description;
     }
@@ -206,7 +206,7 @@ class MenuActionItem extends ComponentObject
      *
      * @return string|null
      */
-    public function getUrl(): ?string
+    protected function getUrl(): ?string
     {
         return $this->url;
     }
@@ -229,7 +229,7 @@ class MenuActionItem extends ComponentObject
      *
      * @return array{id?: string|null, name?: string|null, animated?: bool}|Emoji|string|null
      */
-    public function getEmoji(): array|Emoji|string|null
+    protected function getEmoji(): array|Emoji|string|null
     {
         return $this->emoji;
     }

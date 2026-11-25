@@ -25,6 +25,7 @@ use Discord\Builders\Components\TextDisplay;
 use Discord\Builders\MessageBuilder;
 use Discord\Builders\ModalBuilder;
 use Discord\Discord;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message\MenuActionItem as MenuActionItemPart;
 use Discord\Parts\Channel\Message\Message;
@@ -86,12 +87,46 @@ final class OverflowMenuTest extends DiscordTestCase
         $this->assertInstanceOf(OverflowMenuPart::class, $menu);
         $this->assertSame($menu, $part->accessory);
         $this->assertSame(25, $menu->type);
+        $this->assertInstanceOf(ExCollectionInterface::class, $menu->groups);
+        $this->assertInstanceOf(ExCollectionInterface::class, $menu->groups->first()->components);
+        $this->assertSame($menu->groups[0]->components[0], $menu->groups->first()->components->get('id', 2));
         $this->assertInstanceOf(OverflowMenuGroupPart::class, $menu->groups[0]);
         $this->assertInstanceOf(MenuActionItemPart::class, $menu->groups[0]->components[0]);
         $this->assertSame('⚠️', $menu->groups[0]->components[1]->emoji->name);
         $this->assertNull($menu->groups[1]->label);
         $this->assertSame(self::expectedMenu(), self::encode(OverflowMenu::fromPart($menu)));
         $this->assertSame($messageBody->countTotalComponents(), MessageBuilder::fromPart($message)->countTotalComponents());
+    }
+
+    public function testOptionalActionIdsDoNotCollideWithPositions(): void
+    {
+        $group = getMockDiscord()->getFactory()->part(OverflowMenuGroupPart::class, [
+            'components' => [
+                ['type' => 26, 'label' => 'No ID', 'style' => 1],
+                ['type' => 26, 'id' => 0, 'label' => 'Zero ID', 'style' => 1],
+                ['type' => 26, 'id' => 14, 'label' => 'Another', 'style' => 1],
+            ],
+        ], true);
+
+        $this->assertSame('No ID', $group->components->first()->label);
+        $this->assertSame('Zero ID', $group->components->get('id', 0)->label);
+        $this->assertSame('Another', $group->components->get('id', 14)->label);
+        $this->assertSame(['No ID', 'Zero ID', 'Another'], array_column(self::encode(OverflowMenuGroup::fromPart($group))['components'], 'label'));
+    }
+
+    public function testProtectedActionMutatorsRemainAvailableThroughBuilderProperties(): void
+    {
+        $item = MenuActionItem::new('Original');
+        $item->label = 'Updated';
+        $item->description = 'A description';
+        $item->id = 0;
+
+        $this->assertSame('Updated', $item->label);
+        $this->assertSame('A description', $item->description);
+        $this->assertSame(0, self::encode($item)['id']);
+
+        $item->id = null;
+        $this->assertArrayNotHasKey('id', self::encode($item));
     }
 
     public function testRowNestedInContainerCountsFortyThenRejectsMutationToFortyOne(): void
@@ -202,11 +237,15 @@ final class OverflowMenuTest extends DiscordTestCase
         $this->assertSame(self::expectedMenu(), $body['components'][0]['components'][0]);
     }
 
-    private static function menu(): OverflowMenu
+    protected static function menu(): OverflowMenu
     {
-        return OverflowMenu::new()->setId(13)
-            ->addGroup(OverflowMenuGroup::new('General')
-                ->addComponent(MenuActionItem::new('View')->setId(2))
+        $menu = OverflowMenu::new();
+        $menu->id = 13;
+        $view = MenuActionItem::new('View');
+        $view->id = '2';
+
+        return $menu->addGroup(OverflowMenuGroup::new('General')
+                ->addComponent($view)
                 ->addComponent(MenuActionItem::new('Archive', MenuActionItem::STYLE_DANGER)
                     ->setDescription('Hide this entry')
                     ->setEmoji('⚠️')))
@@ -215,17 +254,19 @@ final class OverflowMenuTest extends DiscordTestCase
                     ->setUrl('https://example.com/docs')));
     }
 
-    private static function group(int $count): OverflowMenuGroup
+    protected static function group(int $count): OverflowMenuGroup
     {
         $group = OverflowMenuGroup::new();
         for ($i = 1; $i <= $count; ++$i) {
-            $group->addComponent(MenuActionItem::new('Action '.$i)->setId(100 + $i));
+            $action = MenuActionItem::new('Action '.$i);
+            $action->id = 100 + $i;
+            $group->addComponent($action);
         }
 
         return $group;
     }
 
-    private static function expectedMenu(): array
+    protected static function expectedMenu(): array
     {
         return [
             'type' => 25,
@@ -242,7 +283,7 @@ final class OverflowMenuTest extends DiscordTestCase
         ];
     }
 
-    private static function encode(JsonSerializable $builder): array
+    protected static function encode(JsonSerializable $builder): array
     {
         return json_decode(json_encode($builder, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
     }

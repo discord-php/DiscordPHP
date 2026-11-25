@@ -57,9 +57,14 @@ the message's 40-component limit; group wrappers do not.
            ->addComponent(MenuActionItem::new('Read the guide', MenuActionItem::STYLE_LINK)
                ->setUrl('https://example.com/guide')));
 
+   $menu->id = 13; // Optional numeric component ID.
+
    $message = MessageBuilder::new()
        ->setIsComponentsV2Flag()
        ->addComponent(ActionRow::new()->addComponent($menu));
+
+Received menus expose their groups and actions as collections in display
+order. Builders still serialize those groups and actions as JSON lists.
 
 This preview covers authoring, serialization, and reading existing messages.
 The optional numeric component ID is not a ``custom_id``; the preview does

@@ -32,8 +32,8 @@ use JsonSerializable;
 class OverflowMenuGroup extends Builder implements JsonSerializable
 {
     /** @var list<MenuActionItem> */
-    private array $components = [];
-    private ?string $label = null;
+    protected array $components = [];
+    protected ?string $label = null;
 
     /**
      * Creates an empty group. Add at least one action before serializing.
@@ -85,7 +85,7 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
      *
      * @return string|null
      */
-    public function getLabel(): ?string
+    protected function getLabel(): ?string
     {
         return $this->label;
     }

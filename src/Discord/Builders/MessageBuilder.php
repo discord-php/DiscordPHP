@@ -568,7 +568,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         $this->components ??= [];
-        
+
         if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
             $this->enforceV2Limits();
             $this->assertTotalComponentLimit([...$this->components, $component]);
@@ -648,7 +648,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /** Reject oversized trees, including children added after the parent was attached. */
-    private function assertTotalComponentLimit(array $components): void
+    protected function assertTotalComponentLimit(array $components): void
     {
         if ($this->countTotalComponents($components) > 40) {
             throw new \OverflowException('You can only add 40 components to a message');
@@ -664,7 +664,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         return $this->components ?? [];
     }
-    
+
     /**
      * Sets the stickers of the builder. Removes the existing stickers in the process.
      *
@@ -682,7 +682,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
         return $this;
     }
-    
+
     /**
      * Adds a sticker to the builder. Only used for sending message or creating forum thread.
      *
