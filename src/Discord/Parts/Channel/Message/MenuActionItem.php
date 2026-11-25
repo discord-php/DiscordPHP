@@ -17,20 +17,25 @@ namespace Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Emoji;
 
 /**
- * An action in an overflow menu group.
+ * A received action inside an overflow menu group.
  *
- * @property int         $type
- * @property int|null    $id
- * @property string      $label
- * @property int         $style
- * @property string|null $description
- * @property string|null $url
- * @property Emoji|null  $emoji
+ * @property int         $type        Component type 26.
+ * @property int|null    $id          Optional numeric component ID, not a custom ID.
+ * @property string      $label       User-facing action text.
+ * @property int         $style       Default (1), Danger (2), or Link (3).
+ * @property string|null $description Optional user-facing description.
+ * @property string|null $url         Link destination, when present.
+ * @property Emoji|null  $emoji       Partial emoji data, when present.
  */
 class MenuActionItem extends Component
 {
     protected $fillable = ['type', 'id', 'label', 'style', 'description', 'url', 'emoji'];
 
+    /**
+     * Hydrates the optional partial emoji from the message payload.
+     *
+     * @return Emoji|null
+     */
     protected function getEmojiAttribute(): ?Emoji
     {
         return $this->attributePartHelper('emoji', Emoji::class);

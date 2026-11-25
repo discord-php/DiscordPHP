@@ -15,17 +15,21 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * An overflow menu in a message.
+ * A received overflow menu nested in an action row or section accessory.
  *
- * @property int                     $type
- * @property int|null                $id
- * @property-read OverflowMenuGroup[] $groups
+ * @property int                           $type   Component type 25.
+ * @property int|null                      $id     Optional numeric component ID.
+ * @property-read list<OverflowMenuGroup>  $groups Groups in display order.
  */
 class OverflowMenu extends Component
 {
     protected $fillable = ['type', 'id', 'groups'];
 
-    /** @return list<OverflowMenuGroup> */
+    /**
+     * Hydrates the message payload groups in display order.
+     *
+     * @return list<OverflowMenuGroup>
+     */
     protected function getGroupsAttribute(): array
     {
         $groups = $this->attributes['groups'] ?? [];

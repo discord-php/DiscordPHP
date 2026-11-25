@@ -17,7 +17,18 @@ namespace Discord\Builders\Components;
 use Discord\Parts\Channel\Message\OverflowMenu as OverflowMenuPart;
 use Discord\Parts\Part;
 
-/** An overflow menu for an action row or a section accessory. */
+/**
+ * Builds an overflow menu for an action row or a Section accessory.
+ *
+ * The menu and its action items each count toward the message component limit.
+ * Group wrappers are not components. This builder does not register click handlers.
+ *
+ * @property-read int                      $type   Component type 25.
+ * @property int|null                      $id     Optional numeric component ID, not a custom ID.
+ * @property-read list<OverflowMenuGroup>  $groups Groups in display order.
+ *
+ * @see OverflowMenuPart For the received message component.
+ */
 class OverflowMenu extends ComponentObject
 {
     public const USAGE = ['Message'];
@@ -27,12 +38,23 @@ class OverflowMenu extends ComponentObject
     /** @var list<OverflowMenuGroup> */
     private array $groups = [];
 
+    /**
+     * Creates an empty menu. Add at least one group before serializing.
+     *
+     * @return self
+     */
     public static function new(): self
     {
         return new self();
     }
 
-    /** Set Discord's optional numeric component ID. This is not a custom ID. */
+    /**
+     * Sets Discord's optional numeric component ID, not an interaction custom ID.
+     *
+     * @param int|string|null $id An integer, an integer string, or null to clear.
+     * @throws \InvalidArgumentException If a string does not represent an integer.
+     * @return self
+     */
     public function setId(int|string|null $id = null): self
     {
         if (is_string($id) && filter_var($id, FILTER_VALIDATE_INT) === false) {
@@ -44,6 +66,13 @@ class OverflowMenu extends ComponentObject
         return $this;
     }
 
+    /**
+     * Rebuilds an editable menu from a received message part.
+     *
+     * @param Part $part A received OverflowMenuPart instance.
+     * @throws \InvalidArgumentException If the part is not a OverflowMenuPart.
+     * @return self
+     */
     public static function fromPart(Part $part): self
     {
         if (! $part instanceof OverflowMenuPart) {
@@ -59,6 +88,12 @@ class OverflowMenu extends ComponentObject
         return $menu;
     }
 
+    /**
+     * Appends a group to the menu in display order.
+     *
+     * @param OverflowMenuGroup $group Group to append.
+     * @return self
+     */
     public function addGroup(OverflowMenuGroup $group): self
     {
         $this->groups[] = $group;
@@ -66,12 +101,22 @@ class OverflowMenu extends ComponentObject
         return $this;
     }
 
-    /** @return list<OverflowMenuGroup> */
+    /**
+     * Returns the menu groups in display order.
+     *
+     * @return list<OverflowMenuGroup>
+     */
     public function getGroups(): array
     {
         return $this->groups;
     }
 
+    /**
+     * Builds the API payload for this menu.
+     *
+     * @throws \DomainException If the menu contains no groups.
+     * @return array{type: int, groups: list<OverflowMenuGroup>, id?: int}
+     */
     public function jsonSerialize(): array
     {
         if ($this->groups === []) {

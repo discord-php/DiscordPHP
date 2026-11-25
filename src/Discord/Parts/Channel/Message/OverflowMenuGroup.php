@@ -17,16 +17,20 @@ namespace Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
 /**
- * A group of actions in an overflow menu.
+ * A received group of actions in an overflow menu.
  *
- * @property string|null          $label
- * @property-read MenuActionItem[] $components
+ * @property string|null                $label      Optional group heading.
+ * @property-read list<MenuActionItem>  $components Actions in display order.
  */
 class OverflowMenuGroup extends Part
 {
     protected $fillable = ['label', 'components'];
 
-    /** @return list<MenuActionItem> */
+    /**
+     * Hydrates the received actions in display order.
+     *
+     * @return list<MenuActionItem>
+     */
     protected function getComponentsAttribute(): array
     {
         $items = $this->attributes['components'] ?? [];

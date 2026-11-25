@@ -23,10 +23,10 @@ use Discord\Builders\ComponentsTrait;
  *
  * @since 10.5.0
  *
- * @property int              $type       9 for a section component.
- * @property ?int|null        $id         Optional identifier for the component.
- * @property TextDisplay[]    $components One to three text display components.
- * @property Thumbnail|Button|OverflowMenu $accessory  A thumbnail or button component.
+ * @property int                                $type       Component type 9.
+ * @property int|null                           $id         Optional component ID.
+ * @property TextDisplay[]                      $components One to three text display components.
+ * @property Thumbnail|Button|OverflowMenu|null $accessory  Optional until serialization; only these types are allowed.
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
@@ -49,7 +49,7 @@ class Section extends Layout implements Contracts\ComponentV2
     protected $components = [];
 
     /**
-     * Accessory component (Thumbnail or Button).
+     * Accessory component (Thumbnail, Button, or OverflowMenu).
      *
      * @var Thumbnail|Button|OverflowMenu|null
      */
@@ -102,7 +102,7 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @param Thumbnail|Button|OverflowMenu $component Thumbnail, Button, or OverflowMenu component.
      *
-     * @throws \InvalidArgumentException Component is not a Thumbnail or Button.
+     * @throws \InvalidArgumentException Component is not a Thumbnail, Button, or OverflowMenu.
      *
      * @return self
      */
@@ -127,7 +127,7 @@ class Section extends Layout implements Contracts\ComponentV2
     }
 
     /**
-     * Returns the accessory component.
+     * Returns the accessory component, or null if not yet set.
      *
      * @return Thumbnail|Button|OverflowMenu|null
      */

@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Helpers\ExCollectionInterface;
+
 /**
- * A Separator is a top-level layout component that adds vertical padding and visual division between other components.
- *
- * Separators are only available in messages.
+ * A Section displays one to three text components alongside an accessory in a message.
  *
  * @link https://docs.discord.com/developers/components/reference#section
  *
@@ -26,7 +26,7 @@ namespace Discord\Parts\Channel\Message;
  * @property int                                              $type       9 for section component.
  * @property int|null                                         $id         Optional identifier for component.
  * @property ExCollectionInterface<TextDisplay>|TextDisplay[] $components One to three text components.
- * @property Thumbnail|Button|OverflowMenu                                 $accessory  A thumbnail, button, or overflow menu component.
+ * @property Thumbnail|Button|OverflowMenu                             $accessory  A thumbnail, button, or overflow menu component.
  *
  * @phpstan-property ExCollectionInterface<TextDisplay> $components
  */
