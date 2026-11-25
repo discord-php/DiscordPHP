@@ -18,6 +18,9 @@ use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
+use Discord\Builders\Components\OverflowMenu;
+use Discord\Builders\Components\OverflowMenuGroup;
+use Discord\Builders\Components\Section;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
@@ -30,6 +33,7 @@ use Discord\Parts\Channel\Message\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Channel\Message\Embed\Audio;
 use Discord\Parts\Guild\Sticker;
+use Discord\Parts\Part;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\PrivateChannelRepository;
 use JsonSerializable;
@@ -555,7 +559,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('Invalid component type for messages.');
         }
 
-        if ($component instanceof Interactive) {
+        if ($component instanceof Interactive || $component instanceof OverflowMenu) {
             $component = ActionRow::new()->addComponent($component);
         }
 
@@ -567,6 +571,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         
         if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
             $this->enforceV2Limits();
+            $this->assertTotalComponentLimit([...$this->components, $component]);
         } else {
             $this->enforceV1Limits($component);
         }
@@ -616,12 +621,38 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         $components = $components ?? $this->components ?? [];
 
-        return (int) array_sum(array_map(
-            fn ($component) => is_array($component) && isset($component['components']) && is_array($component['components'])
-                ? 1 + $this->countTotalComponents($component['components'])
-                : 1,
-            $components
-        ));
+        $total = count($components);
+        foreach ($components as $component) {
+            $data = $component instanceof Part ? $component->getRawAttributes() : (array) $component;
+            $children = $component instanceof ComponentObject && method_exists($component, 'getComponents')
+                ? $component->getComponents()
+                : ($data['components'] ?? []);
+            $accessory = $component instanceof Section ? $component->getAccessory() : ($data['accessory'] ?? null);
+            $groups = $component instanceof OverflowMenu ? $component->getGroups() : ($data['groups'] ?? []);
+
+            $total += $this->countTotalComponents($children);
+            if ($accessory !== null) {
+                $total += $this->countTotalComponents([$accessory]);
+            }
+            foreach ($groups as $group) {
+                $items = match (true) {
+                    $group instanceof OverflowMenuGroup => $group->getComponents(),
+                    $group instanceof Part => $group->getRawAttributes()['components'] ?? [],
+                    default => ((array) $group)['components'] ?? [],
+                };
+                $total += $this->countTotalComponents($items);
+            }
+        }
+
+        return $total;
+    }
+
+    /** Reject oversized trees, including children added after the parent was attached. */
+    private function assertTotalComponentLimit(array $components): void
+    {
+        if ($this->countTotalComponents($components) > 40) {
+            throw new \OverflowException('You can only add 40 components to a message');
+        }
     }
 
     /**
@@ -1308,6 +1339,10 @@ class MessageBuilder extends Builder implements JsonSerializable
             if ($this->message_reference->type === Message::REFERENCE_FORWARD) {
                 $body = ['message_reference' => $this->message_reference];
             }
+        }
+
+        if (isset($body['components'])) {
+            $this->assertTotalComponentLimit($body['components']);
         }
 
         return $body;

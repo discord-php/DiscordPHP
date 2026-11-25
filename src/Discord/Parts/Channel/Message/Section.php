@@ -26,7 +26,7 @@ namespace Discord\Parts\Channel\Message;
  * @property int                                              $type       9 for section component.
  * @property int|null                                         $id         Optional identifier for component.
  * @property ExCollectionInterface<TextDisplay>|TextDisplay[] $components One to three text components.
- * @property Thumbnail|Button                                 $accessory  A thumbnail or a button component, with a future possibility of adding more compatible components.
+ * @property Thumbnail|Button|OverflowMenu                                 $accessory  A thumbnail, button, or overflow menu component.
  *
  * @phpstan-property ExCollectionInterface<TextDisplay> $components
  */
@@ -42,9 +42,13 @@ class Section extends Layout
         'accessory',
     ];
 
-    /** @return Thumbnail|Button */
+    /** @return Thumbnail|Button|OverflowMenu */
     protected function getAccessoryAttribute(): Component
     {
+        if (($this->attributes['accessory'] ?? null) instanceof Component) {
+            return $this->attributes['accessory'];
+        }
+
         $accessory = (array) ($this->attributes['accessory'] ?? []);
 
         return $this->attributePartHelper('accessory', Component::TYPES[$accessory['type'] ?? 0]);

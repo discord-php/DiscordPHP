@@ -64,6 +64,8 @@ class Component extends Part
         ComponentObject::TYPE_RADIO_GROUP => RadioGroup::class,
         ComponentObject::TYPE_CHECKBOX_GROUP => CheckboxGroup::class,
         ComponentObject::TYPE_CHECKBOX => Checkbox::class,
+        ComponentObject::TYPE_OVERFLOW_MENU => OverflowMenu::class,
+        ComponentObject::TYPE_MENU_ACTION_ITEM => MenuActionItem::class,
     ];
 
     /**

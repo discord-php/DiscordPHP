@@ -36,6 +36,36 @@ Functions
 | ``getComponents(): Component[]`` | returns all the action row components in an array.          |
 +----------------------------------+-------------------------------------------------------------+
 
+``OverflowMenu`` (preview)
+==========================
+
+An overflow menu can sit alongside buttons in an action row or serve as a
+section's accessory. Each group has an optional label and one or more
+``MenuActionItem`` entries. The menu and its action items each count toward
+the message's 40-component limit; group wrappers do not.
+
+.. code:: php
+
+   use Discord\Builders\Components\ActionRow;
+   use Discord\Builders\Components\MenuActionItem;
+   use Discord\Builders\Components\OverflowMenu;
+   use Discord\Builders\Components\OverflowMenuGroup;
+   use Discord\Builders\MessageBuilder;
+
+   $menu = OverflowMenu::new()
+       ->addGroup(OverflowMenuGroup::new('Resources')
+           ->addComponent(MenuActionItem::new('Read the guide', MenuActionItem::STYLE_LINK)
+               ->setUrl('https://example.com/guide')));
+
+   $message = MessageBuilder::new()
+       ->setIsComponentsV2Flag()
+       ->addComponent(ActionRow::new()->addComponent($menu));
+
+This preview covers authoring, serialization, and reading existing messages.
+The optional numeric component ID is not a ``custom_id``; the preview does
+not define click-event routing or a listener API. Discord's preview access
+requirements still apply.
+
 ``Button``
 ==========
 
