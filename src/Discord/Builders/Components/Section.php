@@ -17,16 +17,16 @@ namespace Discord\Builders\Components;
 use Discord\Builders\ComponentsTrait;
 
 /**
- * Section components allow you to define up to 3 text display components and add either a thumbnail or button to the right side.
+ * Section components allow you to define up to 3 text display components and add a thumbnail, button, or overflow menu to the right side.
  *
  * @link https://docs.discord.com/developers/components/reference#section
  *
  * @since 10.5.0
  *
- * @property int              $type       9 for a section component.
- * @property ?int|null        $id         Optional identifier for the component.
- * @property TextDisplay[]    $components One to three text display components.
- * @property Thumbnail|Button $accessory  A thumbnail or button component.
+ * @property int                                $type       Component type 9.
+ * @property int|null                           $id         Optional component ID.
+ * @property TextDisplay[]                      $components One to three text display components.
+ * @property Thumbnail|Button|OverflowMenu|null $accessory  Optional until serialization; only these types are allowed.
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
@@ -49,9 +49,9 @@ class Section extends Layout implements Contracts\ComponentV2
     protected $components = [];
 
     /**
-     * Accessory component (Thumbnail or Button).
+     * Accessory component (Thumbnail, Button, or OverflowMenu).
      *
-     * @var Thumbnail|Button|null
+     * @var Thumbnail|Button|OverflowMenu|null
      */
     protected $accessory;
 
@@ -68,7 +68,7 @@ class Section extends Layout implements Contracts\ComponentV2
     /**
      * Adds a text display component to the section.
      * Text displays can only be used within sections.
-     * Use setAccessory() instead for Thumbnail or Button.
+     * Use setAccessory() instead for Thumbnail, Button, or OverflowMenu.
      *
      * @param TextDisplay|string $component Text display component to add.
      *
@@ -98,18 +98,18 @@ class Section extends Layout implements Contracts\ComponentV2
 
     /**
      * Sets the accessory component of the section.
-     * Only Thumbnail or Button components can be used as accessories.
+     * Only Thumbnail, Button, or OverflowMenu components can be used as accessories.
      *
-     * @param Thumbnail|Button $component Thumbnail or Button component.
+     * @param Thumbnail|Button|OverflowMenu $component Thumbnail, Button, or OverflowMenu component.
      *
-     * @throws \InvalidArgumentException Component is not a Thumbnail or Button.
+     * @throws \InvalidArgumentException Component is not a Thumbnail, Button, or OverflowMenu.
      *
      * @return self
      */
     public function setAccessory(ComponentObject $component): self
     {
-        if (! ($component instanceof Thumbnail || $component instanceof Button)) {
-            throw new \InvalidArgumentException('Accessory may only contain Thumbnail or Button component.');
+        if (! ($component instanceof Thumbnail || $component instanceof Button || $component instanceof OverflowMenu)) {
+            throw new \InvalidArgumentException('Accessory may only contain Thumbnail, Button, or OverflowMenu component.');
         }
         $this->accessory = $component;
 
@@ -127,13 +127,13 @@ class Section extends Layout implements Contracts\ComponentV2
     }
 
     /**
-     * Returns the accessory component.
+     * Returns the accessory component, or null if not yet set.
      *
-     * @return Thumbnail|Button|null
+     * @return Thumbnail|Button|OverflowMenu|null
      */
-    public function getAccessory(): ComponentObject
+    public function getAccessory(): ?ComponentObject
     {
-        return $this->accessory;
+        return $this->accessory ?? null;
     }
 
     /**

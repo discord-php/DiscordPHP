@@ -14,9 +14,11 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
+use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\TextInput;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\Part;
 use JsonSerializable;
 
 use function Discord\poly_strlen;
@@ -156,6 +158,8 @@ class ModalBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('Invalid component type for modals.');
         }
 
+        $this->rejectOverflowMenuRow($component);
+
         if ($component instanceof TextInput) {
             $this->discord->logger->warning('Discord no longer recommends using Text Input within an Action Row in modals. Going forward all Text Inputs should be placed inside a Label component.');
         }
@@ -205,6 +209,10 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
+        foreach ($this->components as $component) {
+            $this->rejectOverflowMenuRow($component);
+        }
+
         return [
             'type' => $this->type,
             'data' => [
@@ -213,5 +221,28 @@ class ModalBuilder extends Builder implements JsonSerializable
                 'components' => $this->components,
             ],
         ];
+    }
+
+    protected function rejectOverflowMenuRow(mixed $component): void
+    {
+        if ($component instanceof ActionRow) {
+            $children = $component->getComponents();
+        } else {
+            $data = $component instanceof Part ? $component->getRawAttributes() : (array) $component;
+            $children = ($data['type'] ?? null) === ComponentObject::TYPE_ACTION_ROW
+                ? ($data['components'] ?? [])
+                : [];
+        }
+
+        foreach ($children as $child) {
+            $type = match (true) {
+                $child instanceof ComponentObject => $child->getType(),
+                $child instanceof Part => $child->type,
+                default => ((array) $child)['type'] ?? null,
+            };
+            if (in_array($type, [ComponentObject::TYPE_OVERFLOW_MENU, ComponentObject::TYPE_MENU_ACTION_ITEM], true)) {
+                throw new \InvalidArgumentException('Overflow menus and action items cannot be used in modals.');
+            }
+        }
     }
 }

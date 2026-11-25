@@ -26,7 +26,7 @@ use Discord\Builders\ComponentsTrait;
  * @since 7.0.0
  *
  * @property int               $type       1 for action row component.
- * @property ComponentObject[] $components Up to 5 interactive button components or a single select component.
+ * @property ComponentObject[] $components Up to 5 buttons or overflow menus, or one select component.
  */
 class ActionRow extends Layout
 {
@@ -68,6 +68,17 @@ class ActionRow extends Layout
     {
         if ($component instanceof ActionRow) {
             throw new \InvalidArgumentException('You cannot add another `ActionRow` to this action row.');
+        }
+
+        if ($component instanceof MenuActionItem) {
+            throw new \InvalidArgumentException('A menu action item must be placed in an overflow menu group.');
+        }
+
+        foreach ($this->components as $existingComponent) {
+            if (($component instanceof OverflowMenu && $existingComponent instanceof SelectMenu)
+                || ($component instanceof SelectMenu && $existingComponent instanceof OverflowMenu)) {
+                throw new \InvalidArgumentException('An overflow menu cannot share a row with a select menu.');
+            }
         }
 
         if ($component instanceof SelectMenu) {

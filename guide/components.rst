@@ -36,6 +36,49 @@ Functions
 | ``getComponents(): Component[]`` | returns all the action row components in an array.          |
 +----------------------------------+-------------------------------------------------------------+
 
+``OverflowMenu`` (preview)
+==========================
+
+An overflow menu can sit alongside buttons in an action row or serve as a
+section's accessory in a Components V2 message. A menu accepts up to eight
+groups, each with up to eight ``MenuActionItem`` entries. Group and item labels
+are limited to 80 characters, and item descriptions to 100. The menu and its
+items count toward the message's 40-component limit; group wrappers do not.
+Use a Text Display for the message text instead of legacy ``content``.
+
+.. code:: php
+
+   use Discord\Builders\Components\ActionRow;
+   use Discord\Builders\Components\MenuActionItem;
+   use Discord\Builders\Components\OverflowMenu;
+   use Discord\Builders\Components\OverflowMenuGroup;
+   use Discord\Builders\MessageBuilder;
+
+   $menu = OverflowMenu::new()
+       ->addGroup(OverflowMenuGroup::new('Resources')
+           ->addComponent(MenuActionItem::new('Edit')->setCustomId('edit'))
+           ->addComponent(MenuActionItem::new('Read the guide', MenuActionItem::STYLE_LINK)
+               ->setUrl('https://example.com/guide')));
+
+   $menu->id = 13; // Optional numeric component ID.
+
+   $message = MessageBuilder::new()
+       ->setIsComponentsV2Flag()
+       ->addComponent(ActionRow::new()->addComponent($menu));
+
+Received menus expose their groups and actions as collections in display
+order. Builders still serialize those groups and actions as JSON lists.
+
+Default and Danger items require a ``custom_id`` of one to 100 characters.
+Link items require a URL, omit ``custom_id``, and do not send an interaction.
+Use ``setDisabled()`` to disable an item.
+
+For a Default or Danger selection, handle the existing ``INTERACTION_CREATE``
+event and check the message component's ``data->component_type`` against
+``ComponentObject::TYPE_MENU_ACTION_ITEM``. The data contains the selected
+item's numeric ``id`` and string ``custom_id``, not the parent menu's ID.
+Discord's preview access requirements still apply.
+
 ``Button``
 ==========
 

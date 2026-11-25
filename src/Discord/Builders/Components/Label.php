@@ -133,6 +133,10 @@ class Label extends Layout
      */
     public function setComponent($component): self
     {
+        if ($component instanceof OverflowMenu || $component instanceof MenuActionItem) {
+            throw new \InvalidArgumentException('Overflow menus and action items cannot be used in labels.');
+        }
+
         // The disabled field on String Selects is not currently allowed in modals, and will trigger an error if used.
         if ($component instanceof StringSelect) {
             $component->setDisabled(null);

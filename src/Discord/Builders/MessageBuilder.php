@@ -18,6 +18,9 @@ use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
+use Discord\Builders\Components\OverflowMenu;
+use Discord\Builders\Components\OverflowMenuGroup;
+use Discord\Builders\Components\Section;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
@@ -30,6 +33,7 @@ use Discord\Parts\Channel\Message\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Channel\Message\Embed\Embed;
 use Discord\Parts\Channel\Message\Embed\Audio;
 use Discord\Parts\Guild\Sticker;
+use Discord\Parts\Part;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\PrivateChannelRepository;
 use JsonSerializable;
@@ -555,18 +559,19 @@ class MessageBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('Invalid component type for messages.');
         }
 
-        if ($component instanceof Interactive) {
+        if ($component instanceof Interactive || $component instanceof OverflowMenu) {
             $component = ActionRow::new()->addComponent($component);
         }
 
-        if ($component instanceof ComponentV2) {
+        if ($component instanceof ComponentV2 || $this->containsOverflowMenu([$component])) {
             $this->setIsComponentsV2Flag();
         }
 
         $this->components ??= [];
-        
+
         if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
             $this->enforceV2Limits();
+            $this->assertTotalComponentLimit([...$this->components, $component]);
         } else {
             $this->enforceV1Limits($component);
         }
@@ -616,12 +621,67 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         $components = $components ?? $this->components ?? [];
 
-        return (int) array_sum(array_map(
-            fn ($component) => is_array($component) && isset($component['components']) && is_array($component['components'])
-                ? 1 + $this->countTotalComponents($component['components'])
-                : 1,
-            $components
-        ));
+        $total = count($components);
+        foreach ($components as $component) {
+            $data = $component instanceof Part ? $component->getRawAttributes() : (array) $component;
+            $children = $component instanceof ComponentObject && method_exists($component, 'getComponents')
+                ? $component->getComponents()
+                : ($data['components'] ?? []);
+            $accessory = $component instanceof Section ? $component->getAccessory() : ($data['accessory'] ?? null);
+            $groups = $component instanceof OverflowMenu ? $component->getGroups() : ($data['groups'] ?? []);
+
+            $total += $this->countTotalComponents($children);
+            if ($accessory !== null) {
+                $total += $this->countTotalComponents([$accessory]);
+            }
+            foreach ($groups as $group) {
+                $items = match (true) {
+                    $group instanceof OverflowMenuGroup => $group->getComponents(),
+                    $group instanceof Part => $group->getRawAttributes()['components'] ?? [],
+                    default => ((array) $group)['components'] ?? [],
+                };
+                $total += $this->countTotalComponents($items);
+            }
+        }
+
+        return $total;
+    }
+
+    /**
+     * Finds an overflow menu in a builder tree or a hydrated message payload.
+     * @param  array $components Components in display order.
+     * @return bool
+     */
+    protected function containsOverflowMenu(array $components): bool
+    {
+        foreach ($components as $component) {
+            if ($component instanceof OverflowMenu) {
+                return true;
+            }
+
+            $data = $component instanceof Part ? $component->getRawAttributes() : (array) $component;
+            if (($data['type'] ?? null) === ComponentObject::TYPE_OVERFLOW_MENU) {
+                return true;
+            }
+
+            $children = $component instanceof ComponentObject && method_exists($component, 'getComponents')
+                ? $component->getComponents()
+                : ($data['components'] ?? []);
+            $accessory = $component instanceof Section ? $component->getAccessory() : ($data['accessory'] ?? null);
+            if ($this->containsOverflowMenu($children) || ($accessory !== null && $this->containsOverflowMenu([$accessory]))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** Reject oversized trees, including children added after the parent was attached. */
+    protected function assertTotalComponentLimit(array $components): void
+    {
+        if ($this->countTotalComponents($components) > 40) {
+            throw new \OverflowException('You can only add 40 components to a message');
+        }
     }
 
     /**
@@ -633,7 +693,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         return $this->components ?? [];
     }
-    
+
     /**
      * Sets the stickers of the builder. Removes the existing stickers in the process.
      *
@@ -651,7 +711,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
         return $this;
     }
-    
+
     /**
      * Adds a sticker to the builder. Only used for sending message or creating forum thread.
      *
@@ -1308,6 +1368,14 @@ class MessageBuilder extends Builder implements JsonSerializable
             if ($this->message_reference->type === Message::REFERENCE_FORWARD) {
                 $body = ['message_reference' => $this->message_reference];
             }
+        }
+
+        if (isset($body['components'])) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2) && $this->containsOverflowMenu($body['components'])) {
+                throw new \InvalidArgumentException('Overflow menus require the Components V2 message flag.');
+            }
+
+            $this->assertTotalComponentLimit($body['components']);
         }
 
         return $body;

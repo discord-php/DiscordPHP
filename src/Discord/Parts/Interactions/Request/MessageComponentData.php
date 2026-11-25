@@ -22,6 +22,7 @@ namespace Discord\Parts\Interactions\Request;
  * @since 10.19.0
  *
  * @property string        $custom_id      Custom ID of the component.
+ * @property int|null      $id             Numeric component ID, when supplied by Discord.
  * @property int           $component_type Type of the component.
  * @property string[]      $values         Values the user selected in a select menu component.
  * @property Resolved|null $resolved       Resolved entities from selected options.
@@ -29,6 +30,7 @@ namespace Discord\Parts\Interactions\Request;
 class MessageComponentData extends InteractionData
 {
     protected $fillable = [
+        'id',
         'custom_id',
         'component_type',
         'values',

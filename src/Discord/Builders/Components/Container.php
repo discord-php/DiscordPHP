@@ -100,7 +100,7 @@ class Container extends Layout implements Contracts\ComponentV2
     /**
      * Adds a component to the container.
      *
-     * @param ActionRow|SelectMenu|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
+     * @param ActionRow|SelectMenu|OverflowMenu|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      *
@@ -108,7 +108,7 @@ class Container extends Layout implements Contracts\ComponentV2
      */
     public function addComponent($component): self
     {
-        if ($component instanceof Interactive) {
+        if ($component instanceof Interactive || $component instanceof OverflowMenu) {
             $component = ActionRow::new()->addComponent($component);
         }
 
