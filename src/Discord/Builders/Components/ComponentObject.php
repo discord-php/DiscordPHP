@@ -61,8 +61,8 @@ abstract class ComponentObject extends Component
         ComponentObject::TYPE_RADIO_GROUP => RadioGroup::class,
         ComponentObject::TYPE_CHECKBOX_GROUP => CheckboxGroup::class,
         ComponentObject::TYPE_CHECKBOX => Checkbox::class,
-        self::TYPE_OVERFLOW_MENU => OverflowMenu::class,
-        self::TYPE_MENU_ACTION_ITEM => MenuActionItem::class,
+        ComponentObject::TYPE_OVERFLOW_MENU => OverflowMenu::class,
+        ComponentObject::TYPE_MENU_ACTION_ITEM => MenuActionItem::class,
     ];
 
     /** Container to display a row of interactive components. */

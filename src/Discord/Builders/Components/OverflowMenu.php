@@ -33,7 +33,7 @@ class OverflowMenu extends ComponentObject
 {
     public const USAGE = ['Message'];
 
-    protected $type = self::TYPE_OVERFLOW_MENU;
+    protected $type = ComponentObject::TYPE_OVERFLOW_MENU;
 
     /** @var list<OverflowMenuGroup> */
     protected array $groups = [];

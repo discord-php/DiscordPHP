@@ -43,7 +43,7 @@ class MenuActionItem extends ComponentObject
     /** Opens a URL rather than running an action callback. */
     public const STYLE_LINK = 3;
 
-    protected $type = self::TYPE_MENU_ACTION_ITEM;
+    protected $type = ComponentObject::TYPE_MENU_ACTION_ITEM;
 
     protected ?string $label = null;
     protected int $style = self::STYLE_DEFAULT;
