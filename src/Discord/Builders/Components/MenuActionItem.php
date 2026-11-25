@@ -24,16 +24,16 @@ use Discord\Parts\Part;
  * Link actions require a URL. Default and Danger actions must omit the URL.
  * The optional numeric component ID is not a custom ID for registering callbacks.
  *
- * @property-read int            $type        Component type 26.
- * @property int|string|null            $id          Optional numeric component ID.
- * @property string|null         $label       User-facing action text; required on serialization.
- * @property int                 $style       One of the STYLE_* constants.
- * @property string|null         $description Optional user-facing description.
- * @property string|null         $url         Destination for link actions only.
- * @property array{id?: string|null, name?: string|null, animated?: bool}|Emoji|string|null $emoji The optional emoji in its original input form.
+ * @property-read int                                                                            $type        Component type 26.
+ * @property      int|string|null                                                                $id          Optional numeric component ID.
+ * @property      string|null                                                                    $label       User-facing action text; required on serialization.
+ * @property      int                                                                            $style       One of the STYLE_* constants.
+ * @property      string|null                                                                    $description Optional user-facing description.
+ * @property      string|null                                                                    $url         Destination for link actions only.
+ * @property      array{id?: string|null, name?: string|null, animated?: bool}|Emoji|string|null $emoji       The optional emoji in its original input form.
  *
  * @property string|null $custom_id Developer-defined ID for Default or Danger actions.
- * @property bool|null $disabled Whether the action is disabled; null omits the field.
+ * @property bool|null   $disabled  Whether the action is disabled; null omits the field.
  *
  * @see MenuActionItemPart For the received message component.
  */
@@ -60,10 +60,10 @@ class MenuActionItem extends Interactive
     /**
      * Creates an action with a label and style.
      *
-     * @param string $label Non-empty action text (maximum 80 characters).
-     * @param int    $style One of the STYLE_* constants.
+     * @param  string                    $label Non-empty action text (maximum 80 characters).
+     * @param  int                       $style One of the STYLE_* constants.
      * @throws \InvalidArgumentException If the label is empty or the style is unknown.
-     * @throws \LengthException If the label exceeds 80 characters.
+     * @throws \LengthException          If the label exceeds 80 characters.
      * @return self
      */
     public static function new(string $label, int $style = self::STYLE_DEFAULT): self
@@ -74,7 +74,7 @@ class MenuActionItem extends Interactive
     /**
      * Sets Discord's optional numeric component ID, not an interaction custom ID.
      *
-     * @param int|string|null $id An integer, an integer string, or null to clear.
+     * @param  int|string|null           $id An integer, an integer string, or null to clear.
      * @throws \InvalidArgumentException If a string does not represent an integer.
      * @return self
      */
@@ -97,9 +97,9 @@ class MenuActionItem extends Interactive
 
     /**
      * Sets the action identifier returned in Default and Danger interactions.
-     * @param string|null $custom_id One to 100 characters, or null to clear.
+     * @param  string|null               $custom_id One to 100 characters, or null to clear.
      * @throws \InvalidArgumentException If the identifier is empty.
-     * @throws \LengthException If the identifier exceeds 100 characters.
+     * @throws \LengthException          If the identifier exceeds 100 characters.
      * @return self
      */
     public function setCustomId(?string $custom_id): self
@@ -119,7 +119,7 @@ class MenuActionItem extends Interactive
 
     /**
      * Sets whether the item is disabled.
-     * @param bool|null $disabled Null omits the field and uses Discord's default.
+     * @param  bool|null $disabled Null omits the field and uses Discord's default.
      * @return self
      */
     public function setDisabled(?bool $disabled = true): self
@@ -138,7 +138,7 @@ class MenuActionItem extends Interactive
     /**
      * Rebuilds an editable action from a received message part.
      *
-     * @param Part $part A received MenuActionItemPart instance.
+     * @param  Part                      $part A received MenuActionItemPart instance.
      * @throws \InvalidArgumentException If the part is not a MenuActionItemPart.
      * @return self
      */
@@ -162,9 +162,9 @@ class MenuActionItem extends Interactive
     /**
      * Sets the visible action text.
      *
-     * @param string $label Non-empty action text (maximum 80 characters).
+     * @param  string                    $label Non-empty action text (maximum 80 characters).
      * @throws \InvalidArgumentException If the label is empty.
-     * @throws \LengthException If the label exceeds 80 characters.
+     * @throws \LengthException          If the label exceeds 80 characters.
      * @return self
      */
     public function setLabel(string $label): self
@@ -193,7 +193,7 @@ class MenuActionItem extends Interactive
     /**
      * Sets the action style.
      *
-     * @param int $style One of the STYLE_* constants.
+     * @param  int                       $style One of the STYLE_* constants.
      * @throws \InvalidArgumentException If the style is unknown.
      * @return self
      */
@@ -221,7 +221,7 @@ class MenuActionItem extends Interactive
     /**
      * Sets the optional text shown with the action.
      *
-     * @param string|null $description Text (maximum 100 characters), or null to omit.
+     * @param  string|null      $description Text (maximum 100 characters), or null to omit.
      * @throws \LengthException If the description exceeds 100 characters.
      * @return self
      */
@@ -249,7 +249,7 @@ class MenuActionItem extends Interactive
     /**
      * Sets the link destination.
      *
-     * @param string|null $url Non-empty URL for a link action, or null to omit.
+     * @param  string|null               $url Non-empty URL for a link action, or null to omit.
      * @throws \InvalidArgumentException If the URL is an empty string.
      * @return self
      */
@@ -277,7 +277,7 @@ class MenuActionItem extends Interactive
     /**
      * Sets or clears the optional action emoji.
      *
-     * @param array{id?: string|null, name?: string|null, animated?: bool}|Emoji|string|null $emoji Partial emoji data, an Emoji part, a Unicode emoji, or null.
+     * @param  array{id?: string|null, name?: string|null, animated?: bool}|Emoji|string|null $emoji Partial emoji data, an Emoji part, a Unicode emoji, or null.
      * @return self
      */
     public function setEmoji(array|Emoji|string|null $emoji): self
@@ -300,7 +300,7 @@ class MenuActionItem extends Interactive
     /**
      * Builds the API payload for this action and omits unset optional fields.
      *
-     * @throws \DomainException If the label is missing or required or disallowed fields do not match the selected style.
+     * @throws \DomainException                                                                                                                                                                                     If the label is missing or required or disallowed fields do not match the selected style.
      * @return array{type: int, label: string, style: int, id?: int, custom_id?: string, disabled?: bool, description?: string, url?: string, emoji?: array{id?: string|null, name?: string|null, animated?: bool}}
      */
     public function jsonSerialize(): array

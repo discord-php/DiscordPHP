@@ -20,8 +20,8 @@ use Discord\Parts\Part;
 /**
  * A received group of actions in an overflow menu.
  *
- * @property string|null                $label      Optional group heading.
- * @property-read ExCollectionInterface<MenuActionItem>  $components Actions in display order.
+ * @property      string|null                           $label      Optional group heading.
+ * @property-read ExCollectionInterface<MenuActionItem> $components Actions in display order.
  */
 class OverflowMenuGroup extends Part
 {

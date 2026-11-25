@@ -19,9 +19,9 @@ use Discord\Helpers\ExCollectionInterface;
 /**
  * A received overflow menu nested in an action row or section accessory.
  *
- * @property int                           $type   Component type 25.
- * @property int|null                      $id     Optional numeric component ID.
- * @property-read ExCollectionInterface<OverflowMenuGroup>  $groups Groups in display order.
+ * @property      int                                      $type   Component type 25.
+ * @property      int|null                                 $id     Optional numeric component ID.
+ * @property-read ExCollectionInterface<OverflowMenuGroup> $groups Groups in display order.
  */
 class OverflowMenu extends Component
 {

@@ -22,7 +22,7 @@ trait OverflowMenuTextLimits
 {
     /**
      * @throws \InvalidArgumentException If the text is not valid UTF-8.
-     * @throws \LengthException If the text exceeds the field limit.
+     * @throws \LengthException          If the text exceeds the field limit.
      */
     protected static function validateOverflowTextLength(string $value, int $limit, string $field): void
     {

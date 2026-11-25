@@ -24,8 +24,8 @@ use JsonSerializable;
  *
  * A group is a wrapper, not a component. Each action item counts toward the message component limit.
  *
- * @property string|null                $label      Optional group heading.
- * @property-read list<MenuActionItem>  $components Actions in display order.
+ * @property      string|null          $label      Optional group heading.
+ * @property-read list<MenuActionItem> $components Actions in display order.
  *
  * @see OverflowMenuGroupPart For the received group.
  */
@@ -40,7 +40,7 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
     /**
      * Creates an empty group. Add at least one action before serializing.
      *
-     * @param string|null $label Optional group heading.
+     * @param  string|null $label Optional group heading.
      * @return self
      */
     public static function new(?string $label = null): self
@@ -51,7 +51,7 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
     /**
      * Rebuilds an editable group from a received message part.
      *
-     * @param Part $part A received OverflowMenuGroupPart instance.
+     * @param  Part                      $part A received OverflowMenuGroupPart instance.
      * @throws \InvalidArgumentException If the part is not a OverflowMenuGroupPart.
      * @return self
      */
@@ -72,7 +72,7 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
     /**
      * Sets or clears the group heading.
      *
-     * @param string|null $label Heading (maximum 80 characters), or null to omit.
+     * @param  string|null      $label Heading (maximum 80 characters), or null to omit.
      * @throws \LengthException If the label exceeds 80 characters.
      * @return self
      */
@@ -100,7 +100,7 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
     /**
      * Appends an action item in display order.
      *
-     * @param MenuActionItem $component Action to append.
+     * @param  MenuActionItem     $component Action to append.
      * @throws \OverflowException If this group already has eight actions.
      * @return self
      */
@@ -128,7 +128,7 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
     /**
      * Builds the untyped group payload.
      *
-     * @throws \DomainException If the group contains no actions.
+     * @throws \DomainException                                        If the group contains no actions.
      * @return array{components: list<MenuActionItem>, label?: string}
      */
     public function jsonSerialize(): array

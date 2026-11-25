@@ -649,7 +649,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Finds an overflow menu in a builder tree or a hydrated message payload.
-     * @param array $components Components in display order.
+     * @param  array $components Components in display order.
      * @return bool
      */
     protected function containsOverflowMenu(array $components): bool

@@ -26,7 +26,7 @@ use Discord\Helpers\ExCollectionInterface;
  * @property int                                              $type       9 for section component.
  * @property int|null                                         $id         Optional identifier for component.
  * @property ExCollectionInterface<TextDisplay>|TextDisplay[] $components One to three text components.
- * @property Thumbnail|Button|OverflowMenu                             $accessory  A thumbnail, button, or overflow menu component.
+ * @property Thumbnail|Button|OverflowMenu                    $accessory  A thumbnail, button, or overflow menu component.
  *
  * @phpstan-property ExCollectionInterface<TextDisplay> $components
  */

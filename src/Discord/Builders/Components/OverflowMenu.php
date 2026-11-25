@@ -23,9 +23,9 @@ use Discord\Parts\Part;
  * The menu and its action items each count toward the message component limit.
  * Group wrappers are not components. Interactive selections are sent for the action item, not the menu.
  *
- * @property-read int                      $type   Component type 25.
- * @property-write int|string|null                      $id     Optional numeric component ID, not a custom ID.
- * @property-read list<OverflowMenuGroup>  $groups Groups in display order.
+ * @property-read  int                     $type   Component type 25.
+ * @property-write int|string|null         $id     Optional numeric component ID, not a custom ID.
+ * @property-read  list<OverflowMenuGroup> $groups Groups in display order.
  *
  * @see OverflowMenuPart For the received message component.
  */
@@ -51,7 +51,7 @@ class OverflowMenu extends ComponentObject
     /**
      * Sets Discord's optional numeric component ID, not an interaction custom ID.
      *
-     * @param int|string|null $id An integer, an integer string, or null to clear.
+     * @param  int|string|null           $id An integer, an integer string, or null to clear.
      * @throws \InvalidArgumentException If a string does not represent an integer.
      * @return self
      */
@@ -69,7 +69,7 @@ class OverflowMenu extends ComponentObject
     /**
      * Rebuilds an editable menu from a received message part.
      *
-     * @param Part $part A received OverflowMenuPart instance.
+     * @param  Part                      $part A received OverflowMenuPart instance.
      * @throws \InvalidArgumentException If the part is not a OverflowMenuPart.
      * @return self
      */
@@ -91,7 +91,7 @@ class OverflowMenu extends ComponentObject
     /**
      * Appends a group to the menu in display order.
      *
-     * @param OverflowMenuGroup $group Group to append.
+     * @param  OverflowMenuGroup  $group Group to append.
      * @throws \OverflowException If this menu already has eight groups.
      * @return self
      */
@@ -119,7 +119,7 @@ class OverflowMenu extends ComponentObject
     /**
      * Builds the API payload for this menu.
      *
-     * @throws \DomainException If the menu contains no groups.
+     * @throws \DomainException                                            If the menu contains no groups.
      * @return array{type: int, groups: list<OverflowMenuGroup>, id?: int}
      */
     public function jsonSerialize(): array
