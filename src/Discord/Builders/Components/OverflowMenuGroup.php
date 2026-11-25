@@ -31,6 +31,8 @@ use JsonSerializable;
  */
 class OverflowMenuGroup extends Builder implements JsonSerializable
 {
+    use OverflowMenuTextLimits;
+
     /** @var list<MenuActionItem> */
     protected array $components = [];
     protected ?string $label = null;
@@ -70,11 +72,16 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
     /**
      * Sets or clears the group heading.
      *
-     * @param string|null $label Heading, or null to omit.
+     * @param string|null $label Heading (maximum 80 characters), or null to omit.
+     * @throws \LengthException If the label exceeds 80 characters.
      * @return self
      */
     public function setLabel(?string $label): self
     {
+        if ($label !== null) {
+            self::validateOverflowTextLength($label, 80, 'An overflow menu group label');
+        }
+
         $this->label = $label;
 
         return $this;
@@ -94,10 +101,15 @@ class OverflowMenuGroup extends Builder implements JsonSerializable
      * Appends an action item in display order.
      *
      * @param MenuActionItem $component Action to append.
+     * @throws \OverflowException If this group already has eight actions.
      * @return self
      */
     public function addComponent(MenuActionItem $component): self
     {
+        if (count($this->components) >= 8) {
+            throw new \OverflowException('An overflow menu group can have at most 8 actions.');
+        }
+
         $this->components[] = $component;
 
         return $this;

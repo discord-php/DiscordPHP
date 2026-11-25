@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  * Builds an overflow menu for an action row or a Section accessory.
  *
  * The menu and its action items each count toward the message component limit.
- * Group wrappers are not components. This builder does not register click handlers.
+ * Group wrappers are not components. Interactive selections are sent for the action item, not the menu.
  *
  * @property-read int                      $type   Component type 25.
  * @property-write int|string|null                      $id     Optional numeric component ID, not a custom ID.
@@ -92,10 +92,15 @@ class OverflowMenu extends ComponentObject
      * Appends a group to the menu in display order.
      *
      * @param OverflowMenuGroup $group Group to append.
+     * @throws \OverflowException If this menu already has eight groups.
      * @return self
      */
     public function addGroup(OverflowMenuGroup $group): self
     {
+        if (count($this->groups) >= 8) {
+            throw new \OverflowException('An overflow menu can have at most 8 groups.');
+        }
+
         $this->groups[] = $group;
 
         return $this;

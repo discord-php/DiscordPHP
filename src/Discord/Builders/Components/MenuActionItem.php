@@ -25,17 +25,22 @@ use Discord\Parts\Part;
  * The optional numeric component ID is not a custom ID for registering callbacks.
  *
  * @property-read int            $type        Component type 26.
- * @property-write int|string|null            $id          Optional numeric component ID.
+ * @property int|string|null            $id          Optional numeric component ID.
  * @property string|null         $label       User-facing action text; required on serialization.
  * @property int                 $style       One of the STYLE_* constants.
  * @property string|null         $description Optional user-facing description.
  * @property string|null         $url         Destination for link actions only.
  * @property array{id?: string|null, name?: string|null, animated?: bool}|Emoji|string|null $emoji The optional emoji in its original input form.
  *
+ * @property string|null $custom_id Developer-defined ID for Default or Danger actions.
+ * @property bool|null $disabled Whether the action is disabled; null omits the field.
+ *
  * @see MenuActionItemPart For the received message component.
  */
-class MenuActionItem extends ComponentObject
+class MenuActionItem extends Interactive
 {
+    use OverflowMenuTextLimits;
+
     /** An ordinary menu action. */
     public const STYLE_DEFAULT = 1;
     /** A potentially destructive menu action. */
@@ -49,14 +54,16 @@ class MenuActionItem extends ComponentObject
     protected int $style = self::STYLE_DEFAULT;
     protected ?string $description = null;
     protected ?string $url = null;
+    protected ?bool $disabled = null;
     protected array|Emoji|string|null $emoji = null;
 
     /**
      * Creates an action with a label and style.
      *
-     * @param string $label Non-empty action text.
+     * @param string $label Non-empty action text (maximum 80 characters).
      * @param int    $style One of the STYLE_* constants.
      * @throws \InvalidArgumentException If the label is empty or the style is unknown.
+     * @throws \LengthException If the label exceeds 80 characters.
      * @return self
      */
     public static function new(string $label, int $style = self::STYLE_DEFAULT): self
@@ -82,6 +89,52 @@ class MenuActionItem extends ComponentObject
         return $this;
     }
 
+    /** @return int|null The numeric component ID, independent of custom_id. */
+    protected function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Sets the action identifier returned in Default and Danger interactions.
+     * @param string|null $custom_id One to 100 characters, or null to clear.
+     * @throws \InvalidArgumentException If the identifier is empty.
+     * @throws \LengthException If the identifier exceeds 100 characters.
+     * @return self
+     */
+    public function setCustomId(?string $custom_id): self
+    {
+        if ($custom_id === '') {
+            throw new \InvalidArgumentException('A menu action item custom ID cannot be empty.');
+        }
+
+        if ($custom_id !== null) {
+            self::validateOverflowTextLength($custom_id, 100, 'A menu action item custom ID');
+        }
+
+        $this->custom_id = $custom_id;
+
+        return $this;
+    }
+
+    /**
+     * Sets whether the item is disabled.
+     * @param bool|null $disabled Null omits the field and uses Discord's default.
+     * @return self
+     */
+    public function setDisabled(?bool $disabled = true): self
+    {
+        $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /** @return bool|null The configured disabled value, if any. */
+    protected function getDisabled(): ?bool
+    {
+        return $this->disabled;
+    }
+
     /**
      * Rebuilds an editable action from a received message part.
      *
@@ -96,10 +149,12 @@ class MenuActionItem extends ComponentObject
         }
 
         $item = self::new($part->label, $part->style)
+            ->setCustomId($part->custom_id)
+            ->setDisabled($part->disabled)
             ->setDescription($part->description)
             ->setUrl($part->url)
             ->setEmoji($part->emoji);
-        $item->id = $part->id;
+        $item->setId($part->id);
 
         return $item;
     }
@@ -107,8 +162,9 @@ class MenuActionItem extends ComponentObject
     /**
      * Sets the visible action text.
      *
-     * @param string $label Non-empty action text.
+     * @param string $label Non-empty action text (maximum 80 characters).
      * @throws \InvalidArgumentException If the label is empty.
+     * @throws \LengthException If the label exceeds 80 characters.
      * @return self
      */
     public function setLabel(string $label): self
@@ -116,6 +172,8 @@ class MenuActionItem extends ComponentObject
         if ($label === '') {
             throw new \InvalidArgumentException('A menu action item label cannot be empty.');
         }
+
+        self::validateOverflowTextLength($label, 80, 'A menu action item label');
 
         $this->label = $label;
 
@@ -163,11 +221,16 @@ class MenuActionItem extends ComponentObject
     /**
      * Sets the optional text shown with the action.
      *
-     * @param string|null $description Text, or null to omit.
+     * @param string|null $description Text (maximum 100 characters), or null to omit.
+     * @throws \LengthException If the description exceeds 100 characters.
      * @return self
      */
     public function setDescription(?string $description): self
     {
+        if ($description !== null) {
+            self::validateOverflowTextLength($description, 100, 'A menu action item description');
+        }
+
         $this->description = $description;
 
         return $this;
@@ -237,8 +300,8 @@ class MenuActionItem extends ComponentObject
     /**
      * Builds the API payload for this action and omits unset optional fields.
      *
-     * @throws \DomainException If the label is missing or the style and URL do not agree.
-     * @return array{type: int, label: string, style: int, id?: int, description?: string, url?: string, emoji?: array{id?: string|null, name?: string|null, animated?: bool}}
+     * @throws \DomainException If the label is missing or required or disallowed fields do not match the selected style.
+     * @return array{type: int, label: string, style: int, id?: int, custom_id?: string, disabled?: bool, description?: string, url?: string, emoji?: array{id?: string|null, name?: string|null, animated?: bool}}
      */
     public function jsonSerialize(): array
     {
@@ -250,13 +313,17 @@ class MenuActionItem extends ComponentObject
             throw new \DomainException('A URL is required for link menu actions and must be omitted for other styles.');
         }
 
+        if (($this->style === self::STYLE_LINK) === ($this->custom_id !== null)) {
+            throw new \DomainException('A custom ID is required for Default and Danger actions and must be omitted for Link actions.');
+        }
+
         $data = [
             'type' => $this->type,
             'label' => $this->label,
             'style' => $this->style,
         ];
 
-        foreach (['id', 'description', 'url'] as $key) {
+        foreach (['id', 'custom_id', 'description', 'url', 'disabled'] as $key) {
             if (isset($this->{$key})) {
                 $data[$key] = $key === 'id' ? (int) $this->id : $this->{$key};
             }

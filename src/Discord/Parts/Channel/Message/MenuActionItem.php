@@ -21,15 +21,17 @@ use Discord\Parts\Guild\Emoji;
  *
  * @property int         $type        Component type 26.
  * @property int|null    $id          Optional numeric component ID, not a custom ID.
+ * @property string|null $custom_id   Developer-defined ID for Default and Danger actions.
+ * @property bool|null   $disabled    Whether the action is disabled; absent defaults to false.
  * @property string      $label       User-facing action text.
  * @property int         $style       Default (1), Danger (2), or Link (3).
  * @property string|null $description Optional user-facing description.
  * @property string|null $url         Link destination, when present.
  * @property Emoji|null  $emoji       Partial emoji data, when present.
  */
-class MenuActionItem extends Component
+class MenuActionItem extends Interactive
 {
-    protected $fillable = ['type', 'id', 'label', 'style', 'description', 'url', 'emoji'];
+    protected $fillable = ['type', 'id', 'custom_id', 'disabled', 'label', 'style', 'description', 'url', 'emoji'];
 
     /**
      * Hydrates the optional partial emoji from the message payload.

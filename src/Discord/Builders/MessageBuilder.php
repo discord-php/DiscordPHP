@@ -563,7 +563,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $component = ActionRow::new()->addComponent($component);
         }
 
-        if ($component instanceof ComponentV2) {
+        if ($component instanceof ComponentV2 || $this->containsOverflowMenu([$component])) {
             $this->setIsComponentsV2Flag();
         }
 
@@ -645,6 +645,35 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         return $total;
+    }
+
+    /**
+     * Finds an overflow menu in a builder tree or a hydrated message payload.
+     * @param array $components Components in display order.
+     * @return bool
+     */
+    protected function containsOverflowMenu(array $components): bool
+    {
+        foreach ($components as $component) {
+            if ($component instanceof OverflowMenu) {
+                return true;
+            }
+
+            $data = $component instanceof Part ? $component->getRawAttributes() : (array) $component;
+            if (($data['type'] ?? null) === ComponentObject::TYPE_OVERFLOW_MENU) {
+                return true;
+            }
+
+            $children = $component instanceof ComponentObject && method_exists($component, 'getComponents')
+                ? $component->getComponents()
+                : ($data['components'] ?? []);
+            $accessory = $component instanceof Section ? $component->getAccessory() : ($data['accessory'] ?? null);
+            if ($this->containsOverflowMenu($children) || ($accessory !== null && $this->containsOverflowMenu([$accessory]))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /** Reject oversized trees, including children added after the parent was attached. */
@@ -1342,6 +1371,10 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if (isset($body['components'])) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2) && $this->containsOverflowMenu($body['components'])) {
+                throw new \InvalidArgumentException('Overflow menus require the Components V2 message flag.');
+            }
+
             $this->assertTotalComponentLimit($body['components']);
         }
 

@@ -31,6 +31,8 @@ use Discord\Parts\Channel\Message\MenuActionItem as MenuActionItemPart;
 use Discord\Parts\Channel\Message\Message;
 use Discord\Parts\Channel\Message\OverflowMenu as OverflowMenuPart;
 use Discord\Parts\Channel\Message\OverflowMenuGroup as OverflowMenuGroupPart;
+use Discord\Parts\Interactions\MessageComponent;
+use Discord\WebSockets\Events\InteractionCreate;
 
 final class OverflowMenuTest extends DiscordTestCase
 {
@@ -41,6 +43,7 @@ final class OverflowMenuTest extends DiscordTestCase
             ->addComponent(self::menu());
 
         $body = self::encode(MessageBuilder::new()->addComponent($row));
+        $this->assertSame(Message::FLAG_IS_COMPONENTS_V2, $body['flags']);
         $this->assertSame(2, $body['components'][0]['components'][0]['type']);
         $this->assertSame(self::expectedMenu(), $body['components'][0]['components'][1]);
     }
@@ -102,9 +105,9 @@ final class OverflowMenuTest extends DiscordTestCase
     {
         $group = getMockDiscord()->getFactory()->part(OverflowMenuGroupPart::class, [
             'components' => [
-                ['type' => 26, 'label' => 'No ID', 'style' => 1],
-                ['type' => 26, 'id' => 0, 'label' => 'Zero ID', 'style' => 1],
-                ['type' => 26, 'id' => 14, 'label' => 'Another', 'style' => 1],
+                ['type' => 26, 'label' => 'No ID', 'style' => 1, 'custom_id' => 'no-id'],
+                ['type' => 26, 'id' => 0, 'label' => 'Zero ID', 'style' => 1, 'custom_id' => 'zero-id'],
+                ['type' => 26, 'id' => 14, 'label' => 'Another', 'style' => 1, 'custom_id' => 'another'],
             ],
         ], true);
 
@@ -120,10 +123,15 @@ final class OverflowMenuTest extends DiscordTestCase
         $item->label = 'Updated';
         $item->description = 'A description';
         $item->id = 0;
+        $item->custom_id = 'update';
+        $item->disabled = false;
 
         $this->assertSame('Updated', $item->label);
         $this->assertSame('A description', $item->description);
+        $this->assertSame(0, $item->id);
+        $this->assertSame('update', $item->custom_id);
         $this->assertSame(0, self::encode($item)['id']);
+        $this->assertFalse(self::encode($item)['disabled']);
 
         $item->id = null;
         $this->assertArrayNotHasKey('id', self::encode($item));
@@ -131,15 +139,16 @@ final class OverflowMenuTest extends DiscordTestCase
 
     public function testRowNestedInContainerCountsFortyThenRejectsMutationToFortyOne(): void
     {
-        $group = self::group(37);
-        $container = Container::new()->addComponent(OverflowMenu::new()->addGroup($group));
+        $menu = self::menuWithActions(37);
+        $container = Container::new()->addComponent($menu);
         $message = MessageBuilder::new()->addComponent($container);
 
         $this->assertSame(40, $message->countTotalComponents());
         $this->assertSame(40, $message->countTotalComponents(self::encode($message)['components']));
-        $this->assertCount(37, self::encode($message)['components'][0]['components'][0]['components'][0]['groups'][0]['components']);
+        $groups = self::encode($message)['components'][0]['components'][0]['components'][0]['groups'];
+        $this->assertSame([8, 8, 8, 8, 5], array_map(fn ($group) => count($group['components']), $groups));
 
-        $group->addComponent(MenuActionItem::new('Too late'));
+        $menu->getGroups()[4]->addComponent(MenuActionItem::new('Too late')->setCustomId('late'));
         $this->expectException(OverflowException::class);
         self::encode($message);
     }
@@ -147,7 +156,7 @@ final class OverflowMenuTest extends DiscordTestCase
     public function testSectionAccessoryCountsFortyThenRejectsNestedCandidate(): void
     {
         $section = Section::new()->addComponent('Actions')
-            ->setAccessory(OverflowMenu::new()->addGroup(self::group(36)));
+            ->setAccessory(self::menuWithActions(36));
         $message = MessageBuilder::new()->addComponent(TextDisplay::new('Intro'))->addComponent($section);
         $this->assertSame(40, $message->countTotalComponents());
         $this->assertCount(2, self::encode($message)['components']);
@@ -159,7 +168,7 @@ final class OverflowMenuTest extends DiscordTestCase
     public function testOversizedSectionIsRejectedWhenFirstAdded(): void
     {
         $section = Section::new()->addComponent('Actions')
-            ->setAccessory(OverflowMenu::new()->addGroup(self::group(38)));
+            ->setAccessory(self::menuWithActions(38));
         $this->expectException(OverflowException::class);
         MessageBuilder::new()->addComponent($section);
     }
@@ -228,25 +237,149 @@ final class OverflowMenuTest extends DiscordTestCase
         self::encode(MenuActionItem::new('A link', MenuActionItem::STYLE_LINK));
     }
 
-    public function testLegacyBuilderCanWrapAnOverflowMenuWithoutDroppingContent(): void
+    public function testStandaloneOverflowMenuWrapsInComponentsV2Row(): void
     {
-        $message = MessageBuilder::new()->setContent('Hello')->addComponent(self::menu());
+        $message = MessageBuilder::new()->addComponent(self::menu());
         $body = self::encode($message);
-        $this->assertSame('Hello', $body['content']);
+        $this->assertSame(Message::FLAG_IS_COMPONENTS_V2, $body['flags']);
         $this->assertSame(1, $body['components'][0]['type']);
         $this->assertSame(self::expectedMenu(), $body['components'][0]['components'][0]);
+    }
+
+    public function testLateRowMutationDoesNotSendOverflowMenuInLegacyMessage(): void
+    {
+        $row = ActionRow::new()->addComponent(Button::new(Button::STYLE_LINK)->setLabel('Existing')->setUrl('https://example.com'));
+        $message = MessageBuilder::new()->setContent('Legacy content')->addComponent($row);
+        $row->addComponent(self::menu());
+
+        $this->expectException(InvalidArgumentException::class);
+        self::encode($message);
+    }
+
+    public function testCannotClearV2FlagFromOverflowMenuMessage(): void
+    {
+        $message = MessageBuilder::new()->addComponent(self::menu())->setIsComponentsV2Flag(false);
+
+        $this->expectException(InvalidArgumentException::class);
+        self::encode($message);
+    }
+
+    public function testIncomingMenuActionInteractionUsesSelectedItemIds(): void
+    {
+        $interaction = (new InteractionCreate(getMockDiscord()))->handle((object) [
+            'id' => '999',
+            'type' => 3,
+            'data' => (object) ['component_type' => 26, 'id' => 2, 'custom_id' => 'view'],
+        ]);
+
+        $this->assertInstanceOf(MessageComponent::class, $interaction);
+        $this->assertSame('999', $interaction->id);
+        $this->assertSame(26, $interaction->data->component_type);
+        $this->assertSame(2, $interaction->data->id);
+        $this->assertSame('view', $interaction->data->custom_id);
+    }
+
+    public function testDefaultActionWithoutCustomIdIsRejected(): void
+    {
+        $this->expectException(DomainException::class);
+        self::encode(MenuActionItem::new('No ID'));
+    }
+
+    public function testDangerActionWithoutCustomIdIsRejected(): void
+    {
+        $this->expectException(DomainException::class);
+        self::encode(MenuActionItem::new('No ID', MenuActionItem::STYLE_DANGER));
+    }
+
+    public function testLinkActionDoesNotAcceptCustomId(): void
+    {
+        $this->expectException(DomainException::class);
+        self::encode(MenuActionItem::new('Link', MenuActionItem::STYLE_LINK)
+            ->setUrl('https://example.com')->setCustomId('no-interaction'));
+    }
+
+    public function testEmptyCustomIdIsRejected(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        MenuActionItem::new('Empty')->setCustomId('');
+    }
+
+    public function testCustomIdOver100CharactersIsRejected(): void
+    {
+        $this->expectException(LengthException::class);
+        MenuActionItem::new('Long ID')->setCustomId(str_repeat('a', 101));
+    }
+
+    public function testActionLabelOver80CharactersIsRejected(): void
+    {
+        $this->expectException(LengthException::class);
+        MenuActionItem::new(str_repeat('é', 81));
+    }
+
+    public function testGroupLabelOver80CharactersIsRejected(): void
+    {
+        $this->expectException(LengthException::class);
+        OverflowMenuGroup::new(str_repeat('é', 81));
+    }
+
+    public function testDescriptionOver100CharactersIsRejected(): void
+    {
+        $this->expectException(LengthException::class);
+        MenuActionItem::new('Description')->setDescription(str_repeat('é', 101));
+    }
+
+    public function testDocumentedTextLimitsAcceptExactBoundaries(): void
+    {
+        $label = str_repeat('é', 80);
+        $description = str_repeat('é', 100);
+        $customId = str_repeat('é', 100);
+        $group = OverflowMenuGroup::new($label)->addComponent(
+            MenuActionItem::new($label)->setDescription($description)->setCustomId($customId)
+        );
+        $body = self::encode($group);
+
+        $this->assertSame($label, $body['label']);
+        $this->assertSame($label, $body['components'][0]['label']);
+        $this->assertSame($description, $body['components'][0]['description']);
+        $this->assertSame($customId, $body['components'][0]['custom_id']);
+    }
+
+    public function testNinthGroupIsRejected(): void
+    {
+        $menu = OverflowMenu::new();
+        for ($i = 0; $i < 8; ++$i) {
+            $menu->addGroup(OverflowMenuGroup::new());
+        }
+        $this->assertCount(8, $menu->getGroups());
+
+        $this->expectException(OverflowException::class);
+        $menu->addGroup(OverflowMenuGroup::new());
+    }
+
+    public function testNinthActionInGroupIsRejected(): void
+    {
+        $group = OverflowMenuGroup::new();
+        for ($i = 0; $i < 8; ++$i) {
+            $group->addComponent(MenuActionItem::new('Item '.$i)->setCustomId('item-'.$i));
+        }
+        $this->assertCount(8, self::encode($group)['components']);
+
+        $this->expectException(OverflowException::class);
+        $group->addComponent(MenuActionItem::new('Ninth'));
     }
 
     protected static function menu(): OverflowMenu
     {
         $menu = OverflowMenu::new();
         $menu->id = 13;
-        $view = MenuActionItem::new('View');
+        $view = MenuActionItem::new('View')->setCustomId('view');
         $view->id = '2';
 
         return $menu->addGroup(OverflowMenuGroup::new('General')
                 ->addComponent($view)
                 ->addComponent(MenuActionItem::new('Archive', MenuActionItem::STYLE_DANGER)
+                    ->setCustomId('archive')
+                    ->setDisabled()
                     ->setDescription('Hide this entry')
                     ->setEmoji('⚠️')))
             ->addGroup(OverflowMenuGroup::new()
@@ -254,16 +387,21 @@ final class OverflowMenuTest extends DiscordTestCase
                     ->setUrl('https://example.com/docs')));
     }
 
-    protected static function group(int $count): OverflowMenuGroup
+    protected static function menuWithActions(int $count): OverflowMenu
     {
-        $group = OverflowMenuGroup::new();
-        for ($i = 1; $i <= $count; ++$i) {
-            $action = MenuActionItem::new('Action '.$i);
+        $menu = OverflowMenu::new();
+        for ($i = 0; $i < $count; ++$i) {
+            if ($i % 8 === 0) {
+                $group = OverflowMenuGroup::new();
+                $menu->addGroup($group);
+            }
+
+            $action = MenuActionItem::new('Action '.$i)->setCustomId('action-'.$i);
             $action->id = 100 + $i;
             $group->addComponent($action);
         }
 
-        return $group;
+        return $menu;
     }
 
     protected static function expectedMenu(): array
@@ -272,8 +410,8 @@ final class OverflowMenuTest extends DiscordTestCase
             'type' => 25,
             'groups' => [
                 ['components' => [
-                    ['type' => 26, 'label' => 'View', 'style' => 1, 'id' => 2],
-                    ['type' => 26, 'label' => 'Archive', 'style' => 2, 'description' => 'Hide this entry', 'emoji' => ['name' => '⚠️']],
+                    ['type' => 26, 'label' => 'View', 'style' => 1, 'id' => 2, 'custom_id' => 'view'],
+                    ['type' => 26, 'label' => 'Archive', 'style' => 2, 'custom_id' => 'archive', 'description' => 'Hide this entry', 'disabled' => true, 'emoji' => ['name' => '⚠️']],
                 ], 'label' => 'General'],
                 ['components' => [
                     ['type' => 26, 'label' => 'Docs', 'style' => 3, 'url' => 'https://example.com/docs'],
